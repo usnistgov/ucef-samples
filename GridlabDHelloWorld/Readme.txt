@@ -36,15 +36,6 @@ Add following to the deployment pom.xml
   			<type>jar</type>
 		</dependency>
 
-		<dependency>
-		 	<groupId>org.webgme.guest</groupId>
-  			<artifactId>GridlabDHelloWorld-impl-cpp</artifactId>
-  			<version>0.0.1-SNAPSHOT</version>
-  			<type>pom</type>
-		</dependency>
-
-
-
 
 Examples of the federation manager parameters for this GridlabDHelloWorld sample are as below (for easy reference):
 

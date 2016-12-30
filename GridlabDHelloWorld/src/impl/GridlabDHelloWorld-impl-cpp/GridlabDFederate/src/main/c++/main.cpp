@@ -74,6 +74,15 @@ void GridlabDFederate::execute( void )
   while ( (interactionRootSP = getNextInteraction() ) != 0 )
     {
       boost::shared_ptr<GridlabDInput> gldSP( boost::static_pointer_cast<GridlabDInput>( interactionRootSP ) );
+	  
+	  std::cout << "GridlabDFederate received GridlabDInput interaction with values:" << std::endl;
+	  std::cout << "\tObjectName: " << gldSP->get_ObjectName() << std::endl;
+	  std::cout << "\tModelName: " << gldSP->get_ModelName() << std::endl;
+	  std::cout << "\tParameter: " << gldSP->get_Parameter() << std::endl;
+	  std::cout << "\tOperation: " << gldSP->get_Operation() << std::endl;
+	  std::cout << "\tValue: " << gldSP->get_Value() << std::endl;
+	  std::cout << "\tUnits: " << gldSP->get_Units() << std::endl << std::flush;
+	  
       std::string objectName = gldSP->get_ObjectName();
       std::string parameterName = gldSP->get_Parameter();
       double value = gldSP->get_Value();
@@ -234,6 +243,8 @@ int main(int argc, char** argv)
   gldfed.run();
 
   kill(0, SIGKILL);
+  
+  exit(0);
 
   return 0;
 }
