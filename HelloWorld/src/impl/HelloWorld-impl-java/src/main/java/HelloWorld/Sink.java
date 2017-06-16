@@ -20,7 +20,8 @@
  */
 
 package HelloWorld;
-
+import c2w.hla.base.AdvanceTimeRequest;
+import c2w.hla.base.ObjectReflector;
 import c2w.hla.InteractionRoot;
 
 public class Sink extends SinkBase {

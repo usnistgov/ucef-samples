@@ -21,6 +21,8 @@
 
 package HelloWorld;
 
+import c2w.hla.base.AdvanceTimeRequest;
+import c2w.hla.base.ObjectReflector;
 
 public class PingCounter extends PingCounterBase {
 
