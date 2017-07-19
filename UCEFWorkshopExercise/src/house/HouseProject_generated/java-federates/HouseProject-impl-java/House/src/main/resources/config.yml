@@ -1,0 +1,8 @@
+houseid: 2
+solarconverionconstant: 1.0  #watts per solar direct
+uae: 172.0                    # Lumped Thermal Resistance W per 'C
+tau: 374400.0 # house thermal time constant seconds
+house_effective_area: 6.84  # Area in M2 exposed to sun
+sghc: 0.89  # Solar Heat Gain Coefficient
+hp_base_power: 1571.0 # heat pump power base consumption when running (will add temperature component)
+tsp: 20.0 # temperature setpoint 'C

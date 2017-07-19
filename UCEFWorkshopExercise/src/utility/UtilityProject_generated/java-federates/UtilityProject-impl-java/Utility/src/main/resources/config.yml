@@ -1,0 +1,5 @@
+max_houses: 50
+pricebulk: 0.07
+pricesolar: 0.0
+pricefixed: 0.04
+solarpowerperdirectsolar: 1000.0

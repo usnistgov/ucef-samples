@@ -1,0 +1,51 @@
+{
+	"variables": [],
+	"info": {
+		"name": "FedManager",
+		"_postman_id": "e0d602b1-b8ca-9b1d-7f50-8dd7a3a6d8c9",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Start Fed Manager",
+			"request": {
+				"url": "http://127.0.0.1:8083/api/fedmgr",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"action\": \"START\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Stop Fed Manager",
+			"request": {
+				"url": "http://127.0.0.1:8083/api/fedmgr",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"action\": \"TERMINATE\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
