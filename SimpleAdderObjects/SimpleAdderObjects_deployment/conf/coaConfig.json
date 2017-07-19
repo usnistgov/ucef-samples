@@ -1,0 +1,18 @@
+{
+  "script": {
+    "expect": [
+      {
+        "federateType": "Adder"
+      },
+      {
+        "federateType": "InputSource"
+      },
+      {
+        "federateType": "Output"
+      }
+    ],
+    "pauses": [],
+    "coaNodes": [],
+    "coaEdges": []
+  }
+}

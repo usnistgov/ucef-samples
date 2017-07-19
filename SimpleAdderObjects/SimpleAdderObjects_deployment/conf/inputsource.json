@@ -1,0 +1,10 @@
+{
+  "federateRTIInitWaitTimeMs": 200,
+  "federateType": "InputSource",
+  "federationId": "SimpleAdderObjects",
+  "isLateJoiner": false,
+  "lookAhead": "0.2",
+  "stepSize": "1.0",
+  "numOfInputs": 3,
+  "maxValue": 10
+}
