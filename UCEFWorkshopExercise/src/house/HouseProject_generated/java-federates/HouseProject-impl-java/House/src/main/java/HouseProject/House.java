@@ -5,6 +5,8 @@ import c2w.hla.base.AdvanceTimeRequest;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.SimpleTimeZone;
@@ -34,6 +36,8 @@ public class House extends HouseBase {
 	private static Configuration configuration;
 	private ResourcePhysicalState vResourcePhysicalState = create_ResourcePhysicalState();
 
+	
+	
 	private int houseid = 1;
 
 	/////////////////////////////////////////////
@@ -61,6 +65,7 @@ public class House extends HouseBase {
 	Long thisTime;
 	int timezone = 0; // zulu
 	String state = "NY";
+	DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
 	
 	/////////////////////////////////////////////
 	// variables needed in the simulation
@@ -209,8 +214,8 @@ public class House extends HouseBase {
 		thisTime = dt.getTimeInMillis();
 		hoy = (int) ((thisTime - soytime) / 3600000);
 
-		log.debug("LogicalTime: " + logicalTime + ", CalendarTime=:" + thisTime);
-		log.debug("hoy=:" + hoy);
+//		log.debug("LogicalTime: " + logicalTime + ", CalendarTime=:" + thisTime);
+//		log.debug("hoy=:" + hoy);
 
 	}
 
@@ -303,8 +308,10 @@ public class House extends HouseBase {
 				ComputeIndoorTemperature();
 	
 				// send out state
-				vResourcePhysicalState.set_power(Qh);
+				vResourcePhysicalState.set_power(Ph);
 				vResourcePhysicalState.sendInteraction(getRTI(), logicalTime);
+				
+				log.info("CurrentTime: " + formatter.format(dt.toInstant()) + ", Power: " + Ph + ", To: " + To + ", Ti: " + Ti);
 	   		}
 
             // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
