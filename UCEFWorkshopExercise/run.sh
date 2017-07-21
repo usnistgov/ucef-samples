@@ -55,6 +55,6 @@ xterm -hold $logtofile -e "java -jar interaction-injection-example-0.0.1-SNAPSHO
 sleep 20
 curl -i -X POST http://127.0.0.1:8083/api/fedmgr --data '{"action": "START"}' -H "Content-Type: application/json" 
  
-sleep 30
+sleep 90
 curl -i -X POST http://127.0.0.1:8083/api/fedmgr --data '{"action": "TERMINATE"}' -H "Content-Type: application/json"
 
