@@ -5,7 +5,6 @@ import c2w.hla.base.AdvanceTimeRequest;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -37,9 +36,6 @@ public class House extends HouseBase {
 	private ResourcePhysicalState vResourcePhysicalState = create_ResourcePhysicalState();
 
 	
-	
-	private int houseid = 1;
-
 	/////////////////////////////////////////////
 	// time elements
 	/////////////////////////////////////////////
@@ -48,22 +44,17 @@ public class House extends HouseBase {
 	boolean receivedTMY = false;
 	boolean firsttime = true;
 	
-	long startTime = 0;// 1243947600; 6/2/2009 9:00:00
+	long startTime = 0;
 	double ignoreTil = 1000;
 	double logicalTimeSec = 1;
 
+	/////////////////////////////////////////////
 	// Calendar Time variables used in simulation
+	/////////////////////////////////////////////
 	long dttime; // current date and time in msec
-	long soytime; // start of year time in msec
 	Calendar dt = null;
-	Calendar soy = null;
-	int hoy = 0; // hour of year
-	double hoy0 = 0; // hour
-	double hoy1 = 0;// hour
-	double hoy2 = 0; // hour
-	double now = 0;// minutes
 	Long thisTime;
-	int timezone = 0; // zulu
+	int timezone = -5; // NY
 	String state = "NY";
 	DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
 	
@@ -92,14 +83,16 @@ public class House extends HouseBase {
 	public double Ph = 0; // power consumed (produced) by house
 
 	
+	/////////////////////////////////////////////
 	// Fit to Net0 House:
-	public double UAe = 172.0; // Lumped Thermal Resistance W per 'C
+	/////////////////////////////////////////////
+	public double uae = 172.0; // Lumped Thermal Resistance W per 'C
 	public double tau = 104 * 3600.0; // seconds
-	public double houseEffectiveArea = 6.84; // M2 exposed to sun
+	public double houseeffectivearea = 6.84; // M2 exposed to sun
 	public double sghc = 0.89; // Solar Heat Gain Coefficient
-	public double hpBasePower = 1571.0; // heat pump power base consumption when running (will add temperature component)
-	public double solarconverionconstant = 1.0; // watts per solar direct
-	
+	public double hpbasepower = 1571.0; // heat pump power base consumption when running (will add temperature component)
+	public double solarconversionconstant = 1.0; // efficiency of solar panels
+	public double solarpaneleffectivearea = 0; // M2 of solar panel 	
 	public double Price=0; 		//current price per Wh
 	
    ///////////////////////////////////////////////////////////////////////
@@ -128,7 +121,7 @@ public class House extends HouseBase {
 	public void ComputeHouseLoad() {
 		// Heat pump capacity equation in W for cooling season (note: converted to farenheit in this equation)
 		if (heatpumprunning) {
-			Php = 7.1204*To + hpBasePower;	// power consumed by heatpump W
+			Php = 7.1204*(To*9.0/5.0+32.0) + hpbasepower;	// power consumed by heatpump W
 			Qhp = -(323.24 * (To*9.0/5.0+32.0) + 10576.0) / 3.412141633; // Heat pumped by heatpump W 
 		} else {
 			Php = 0; // W
@@ -136,8 +129,8 @@ public class House extends HouseBase {
 		}
 		
 		// Compute Solar Contribution
-		Qsolar = SolarInsolation * houseEffectiveArea * sghc; // heat gain
-		Psolar = - SolarInsolation * solarconverionconstant;	// power out
+		Qsolar = SolarInsolation * houseeffectivearea * sghc; // heat gain
+		Psolar = - SolarInsolation * solarconversionconstant * solarpaneleffectivearea ;	// power out
 	
 		// total energy consumed by house
 		Ph =  Php + Psolar + Pfixedload;
@@ -147,7 +140,7 @@ public class House extends HouseBase {
 
 	// Compute the new indoor temperature for this time step
 	public void ComputeIndoorTemperature() {
-		Ti = To + Qh/UAe + (Ti-To - Qh/UAe) * Math.exp(-logicalTimeSec/tau);
+		Ti = To + Qh/uae + (Ti-To - Qh/uae) * Math.exp(-logicalTimeSec/tau);
 	}
 	
 	private static void loadConfiguration(String filepath) throws IOException {
@@ -183,7 +176,6 @@ public class House extends HouseBase {
 
 		// establish calendar time reference
 		dt = new GregorianCalendar(tz); // get calendar
-		soy = new GregorianCalendar(tz); // get calendar
 
 		// inistialize with startTime
 		dt.setTimeInMillis(startTime * 1000);// 1243929600 without -7 hours
@@ -193,29 +185,15 @@ public class House extends HouseBase {
 		log.debug("Hour: " + dt.get(Calendar.HOUR)); // 9
 		log.debug("Minute:" + dt.get(Calendar.MINUTE)); // 0
 
-		// determine start time of year in UTC
-		soy.set(dt.get(Calendar.YEAR), 0, 1, 0, 0, 0);// e.g. 2009/1/1 0:0:0
-		log.debug("year=:" + soy.get(Calendar.YEAR)); // 2009
-		log.debug("month=:" + soy.get(Calendar.MONTH)); // 6
-		log.debug("Day: " + soy.get(Calendar.DAY_OF_MONTH)); // 2
-		log.debug("Hour: " + soy.get(Calendar.HOUR_OF_DAY)); // 9
-		log.debug("Minute:" + soy.get(Calendar.MINUTE)); // 0
 
 		// get current time in msec and hrs this year
 		dttime = dt.getTimeInMillis();
-		soytime = soy.getTimeInMillis();
-		hoy = (int) ((dttime - soytime) / 3600000); // 3656 vs 8760
-		log.debug("Hour of year=:" + hoy);
 	}
 
 	private void computeNextTimeStep() {
 		dt.setTimeInMillis((long) ((startTime + logicalTime * logicalTimeSec) * 1000));
 
 		thisTime = dt.getTimeInMillis();
-		hoy = (int) ((thisTime - soytime) / 3600000);
-
-//		log.debug("LogicalTime: " + logicalTime + ", CalendarTime=:" + thisTime);
-//		log.debug("hoy=:" + hoy);
 
 	}
 
@@ -244,16 +222,27 @@ public class House extends HouseBase {
         // TODO perform basic initialization below 
         /////////////////////////////////////////////
 		
-		houseid = configuration.getHouseid();
-		UAe = configuration.getUAe();
-		
+		uae = configuration.getUae();
+		del = configuration.getDel();
 		tau = configuration.getTau(); // seconds
-		houseEffectiveArea = configuration.getHouseEffectiveArea(); // M2 exposed to sun
+		houseeffectivearea = configuration.getHouseeffectivearea(); // M2 exposed to sun
 		sghc = configuration.getSghc(); // Solar Heat Gain Coefficient
-		hpBasePower = configuration.getHpBasePower(); // heat pump power base consumption when running (will add temperature component)
-		solarconverionconstant = configuration.getSolarconverionconstant();
+		hpbasepower = configuration.getHpbasepower(); // heat pump power base consumption when running (will add temperature component)
+		solarconversionconstant = configuration.getSolarconversionconstant();
 		Tsp = configuration.getTsp(); // temperature setpoint 'C
+		Pfixedload = configuration.getPlugload(); // plugload
+		solarpaneleffectivearea = configuration.getSolarpaneleffectivearea();
 		
+		log.info(
+				"uae: " + uae
+				+ ", del: " + del
+				+ ", tau: " + tau
+				+ ", sghc: " + sghc
+				+ ", solarconversionconstant: " + solarconversionconstant
+				+ ", hpbasepower: " + hpbasepower
+				+ ", houseeffectivearea: " + houseeffectivearea
+				+ ", solarpaneleffectivearea: " + solarpaneleffectivearea
+				);
 
         AdvanceTimeRequest atr = new AdvanceTimeRequest(logicalTime);
         putAdvanceTimeRequest(atr);
@@ -311,7 +300,13 @@ public class House extends HouseBase {
 				vResourcePhysicalState.set_power(Ph);
 				vResourcePhysicalState.sendInteraction(getRTI(), logicalTime);
 				
-				log.info("CurrentTime: " + formatter.format(dt.toInstant()) + ", Power: " + Ph + ", To: " + To + ", Ti: " + Ti);
+				log.info("CurrentTime: " + formatter.format(dt.toInstant()) 
+					+ ", Power: " + Ph 
+					+ ", SolarInsolation: " + SolarInsolation 
+					+ ", To: " + To 
+					+ ", Ti: " + Ti
+					+ ", heatpumprunning: " + heatpumprunning
+					);
 	   		}
 
             // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -327,7 +322,7 @@ public class House extends HouseBase {
     
     private void handleInteractionClass(SimTime interaction) {
         //////////////////////////////////////////////////////////////////////////
-        // TODO implement how to handle reception of the interaction            
+        // implement how to handle reception of the interaction            
         //////////////////////////////////////////////////////////////////////////
 		startTime = (long) interaction.get_startTime();
 		ignoreTil = interaction.get_ignoreTil();
@@ -342,14 +337,14 @@ public class House extends HouseBase {
     
     private void handleInteractionClass(Quote interaction) {
         //////////////////////////////////////////////////////////////////////////
-        // TODO implement how to handle reception of the interaction            
+        // implement how to handle reception of the interaction            
         //////////////////////////////////////////////////////////////////////////
 		Price = interaction.get_tenderComponent_PriceCurve_price();
     } 
     
     private void handleInteractionClass(TMYWeather interaction) {
         //////////////////////////////////////////////////////////////////////////
-        // TODO implement how to handle reception of the interaction            
+        // implement how to handle reception of the interaction            
         //////////////////////////////////////////////////////////////////////////
 		
 		To = interaction.get_dryBulbTemperature();
@@ -358,9 +353,6 @@ public class House extends HouseBase {
 		timezone = (int) interaction.get_timeZone();
 		receivedTMY = true;
     } 
-    
-
-    
 
     public static void main(String[] args) {
         try {

@@ -34,7 +34,7 @@ public class ExampleInject extends InterObjInjectionImpl {
 			String interactionName = federate.formatInteractionName("SimTime");
 			Map<String, String> parameters = new HashMap<String, String>();
 			parameters.put("secondsPerLogicalTime", "900"); // 15 minutes
-			parameters.put("startTime", "1243926000");
+			parameters.put("startTime", "1500091200");
 			parameters.put("stopTime", "0");
 			parameters.put("ignoreTil", "1");
 			addInteraction(interactionName, parameters);

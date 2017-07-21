@@ -1,78 +1,76 @@
 package HouseProject;
 
 public class Configuration {
-	
-	private int houseid = 1;
-	private double UAe = 172.0; // Lumped Thermal Resistance W per 'C
+	private double uae = 172.0; // Lumped Thermal Resistance W per 'C
 	private double tau = 104 * 3600.0; // seconds
-	private double houseEffectiveArea = 6.84; // M2 exposed to sun
+	private double houseeffectivearea = 6.84; // M2 exposed to sun
 	private double sghc = 0.89; // Solar Heat Gain Coefficient
-	private double hpBasePower = 1571.0; // heat pump power base consumption when running (will add temperature component)
-	private double solarconverionconstant = 1.0;
-	private double Tsp = 20.0; // temperature setpoint 'C
+	private double hpbasepower = 1571.0; // heat pump power base consumption when running (will add temperature component)
+	private double solarconversionconstant = 1.0;
+	private double tsp = 20.0; // temperature setpoint 'C
+	private double del=0.5;	// thermostat hysteresis
+	private double plugload=0;	// plugload
+	private double solarpaneleffectivearea=0;
 	
-	public double getUAe() {
-		return UAe;
+	public double getUae() {
+		return uae;
 	}
-
-	public void setUAe(double uAe) {
-		UAe = uAe;
+	public void setUae(double uae) {
+		this.uae = uae;
 	}
-
 	public double getTau() {
 		return tau;
 	}
-
 	public void setTau(double tau) {
 		this.tau = tau;
 	}
-
-	public double getHouseEffectiveArea() {
-		return houseEffectiveArea;
+	public double getHouseeffectivearea() {
+		return houseeffectivearea;
 	}
-
-	public void setHouseEffectiveArea(double houseEffectiveArea) {
-		this.houseEffectiveArea = houseEffectiveArea;
+	public void setHouseeffectivearea(double houseeffectivearea) {
+		this.houseeffectivearea = houseeffectivearea;
 	}
-
 	public double getSghc() {
 		return sghc;
 	}
-
 	public void setSghc(double sghc) {
 		this.sghc = sghc;
 	}
-
-	public double getHpBasePower() {
-		return hpBasePower;
+	public double getHpbasepower() {
+		return hpbasepower;
 	}
-
-	public void setHpBasePower(double hpBasePower) {
-		this.hpBasePower = hpBasePower;
+	public void setHpbasepower(double hpbasepower) {
+		this.hpbasepower = hpbasepower;
 	}
-
+	public double getSolarconversionconstant() {
+		return solarconversionconstant;
+	}
+	public void setSolarconversionconstant(double solarconversionconstant) {
+		this.solarconversionconstant = solarconversionconstant;
+	}
 	public double getTsp() {
-		return Tsp;
+		return tsp;
 	}
-
 	public void setTsp(double tsp) {
-		Tsp = tsp;
+		this.tsp = tsp;
 	}
-
+	public double getDel() {
+		return del;
+	}
+	public void setDel(double del) {
+		this.del = del;
+	}
+	public double getPlugload() {
+		return plugload;
+	}
+	public void setPlugload(double plugload) {
+		this.plugload = plugload;
+	}
+	public double getSolarpaneleffectivearea() {
+		return solarpaneleffectivearea;
+	}
+	public void setSolarpaneleffectivearea(double solarpaneleffectivearea) {
+		this.solarpaneleffectivearea = solarpaneleffectivearea;
+	}
 	
-	public double getSolarconverionconstant() {
-		return solarconverionconstant;
-	}
-
-	public void setSolarconverionconstant(double solarconverionconstant) {
-		this.solarconverionconstant = solarconverionconstant;
-	}
-
-	public int getHouseid() {
-		return houseid;
-	}
-
-	public void setHouseid(int houseid) {
-		this.houseid = houseid;
-	}
 }
