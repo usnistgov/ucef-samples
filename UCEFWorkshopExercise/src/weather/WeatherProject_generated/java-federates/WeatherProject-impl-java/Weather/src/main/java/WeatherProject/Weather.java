@@ -44,8 +44,6 @@ public class Weather extends WeatherBase {
 
 	// create interaction for use
 	TMYWeather tMY3WeatherData = create_TMYWeather();
-//	TMYWeather tMY3WeatherData = null;
-
 	
 	InterpolateType dointerpolate = InterpolateType.QUADRATIC;
 	double logicalTime = 0;
@@ -183,7 +181,6 @@ public class Weather extends WeatherBase {
 	
 			tmy3HeaderMsg = line.split(",", -1);
 			for (int k = 0; k < tmy3HeaderMsg.length; k++) {
-				//log.info("k=:" + k);
 				if (k == 0) {
 					log.info("Station ID Code=:" + tmy3HeaderMsg[0]);
 					Integer i = Integer.parseInt(tmy3HeaderMsg[0]);
@@ -460,32 +457,14 @@ public class Weather extends WeatherBase {
 			tMY3WeatherData.set_presentWeatherUncertainty(tmy3Data[hoy].presentWeatherUncertainty);
 			break;
 		case LINEAR:
-			// now = hoy+ts.minute/60;
-			// hoy0 = hoy;
-			// hoy1 = hoy+1;
-			// public double interpolate_linear(double t, double x0, double y0,
-			// double x1, double y1)
-
-			// tMY3WeatherData.set_date(interpolate_linear(now,hoy0,tmy3Data[hoy0].date,hoy1,tmy3Data[hoy1].date));
-
 			now = dt.get(Calendar.MINUTE) / 60.0 + hoy;// ?
 
 			hoy0 = hoy;
 			hoy1 = hoy + 1.0;
 
-			// log.info("hoy0=:"+hoy0);
-			// log.info("hoy1=:"+hoy1);
-			log.info("now=:" + now);
-
-			log.info("============================Interpolation:=" + dointerpolate);
-
 			tMY3WeatherData.set_date(
 					dt.get(Calendar.YEAR) + "/" + (dt.get(Calendar.MONTH) + 1) + "/" + dt.get(Calendar.DAY_OF_MONTH)); // tmy3Data[hoy].date
 			tMY3WeatherData.set_time(dt.get(Calendar.HOUR_OF_DAY) + ":" + dt.get(Calendar.MINUTE)); // tmy3Data[hoy].time
-
-			// hoy+1%8760
-			// log.info("hoy+1%8760=:"+hoy+1%8760);
-			// log.info("hoy+2%8760=:"+hoy+2%8760);
 
 			tMY3WeatherData.set_extraTerrestrialRadiation(interpolate_linear(now, hoy0,
 					tmy3Data[hoy].extraTerrestrialRadiation, hoy1, tmy3Data[hoy + 1 % 8760].extraTerrestrialRadiation));
@@ -494,9 +473,6 @@ public class Weather extends WeatherBase {
 			tMY3WeatherData.set_extraTerrestrialRadiationNormal(
 					interpolate_linear(now, hoy0, tmy3Data[hoy].extraTerrestrialRadiationNormal, hoy1,
 							tmy3Data[hoy + 1 % 8760].extraTerrestrialRadiationNormal));
-			// tmy3Data[hoy].extraTerrestrialRadiationNormal
-
-			// interpolate_linear(now,hoy0,tmy3Data[hoy0].,hoy1,tmy3Data[hoy1].)
 
 			tMY3WeatherData.set_globalHorizontalIrradiance(
 					interpolate_linear(now, hoy0, tmy3Data[hoy].globalHorizontalIrradiance, hoy1,
@@ -530,7 +506,7 @@ public class Weather extends WeatherBase {
 			tMY3WeatherData.set_globalHorizontalIlluminanceUncertainty(
 					interpolate_linear(now, hoy0, tmy3Data[hoy + 1 % 8760].globalHorizontalIlluminanceUncertainty, hoy1,
 							tmy3Data[hoy + 2 % 8760].globalHorizontalIlluminanceUncertainty));
-			// 16?????
+
 			tMY3WeatherData.set_directNormalIlluminance(interpolate_linear(now, hoy0,
 					tmy3Data[hoy].directNormalIlluminance, hoy1, tmy3Data[hoy + 1 % 8760].directNormalIlluminance));
 			tMY3WeatherData.set_directNormalIlluminanceSource(tmy3Data[hoy].directNormalIrradianceSource);
@@ -655,51 +631,29 @@ public class Weather extends WeatherBase {
 
 			break;
 		case QUADRATIC:
-			// now = hoy+ts.minute/60;
-			// hoy0 = hoy;
-			// hoy1 = hoy+1;
-			// hoy2 = hoy+2;
-
 			// public double interpolate_quadratic(double t, double x0, double
 			// y0, double x1, double y1, double x2, double y2)
 			// interpolate_quadratic(now,hoy0,tmy3Data[hoy0].,hoy1,tmy3Data[hoy1].,hoy2,tmy3Data[hoy2].)
 			double mini = dt.get(Calendar.MINUTE) / 60.0;
-
-			// log.info("mini=:"+mini);
-
 			now = mini + hoy;// ?
 
 			hoy0 = hoy;
 			hoy1 = hoy + 1;
 			hoy2 = hoy + 2;
-			// log.info("hoy0=:"+hoy0);
-			// log.info("hoy1=:"+hoy1);
-			// log.info("hoy2=:"+hoy2);
-			log.info("now=:" + now);
-
-			log.info("======================Interpolation:=" + dointerpolate);
-
-			// log.info("1%8760=:"+1%8760);
-			// log.info("2%8760=:"+2%8760);
-
-			// log.info("hoy+1%8760=:"+hoy+(1%8760));
-			// log.info("hoy+2%8760=:"+hoy+(2%8760));
 
 			tMY3WeatherData.set_date(
 					dt.get(Calendar.YEAR) + "/" + (dt.get(Calendar.MONTH) + 1) + "/" + dt.get(Calendar.DAY_OF_MONTH)); // tmy3Data[hoy].date
 			tMY3WeatherData.set_time(dt.get(Calendar.HOUR_OF_DAY) + ":" + dt.get(Calendar.MINUTE)); // tmy3Data[hoy].time
 
-			// //hoy+1%8760 hoy+2%/8760
 
 			tMY3WeatherData.set_extraTerrestrialRadiation(interpolate_quadratic(now, hoy0,
 					tmy3Data[hoy].extraTerrestrialRadiation, hoy1, tmy3Data[hoy + 1].extraTerrestrialRadiation, hoy2,
 					tmy3Data[hoy + 2].extraTerrestrialRadiation));
-			// tmy3Data[hoy].extraTerrestrialRadiation
+
 			tMY3WeatherData.set_extraTerrestrialRadiationNormal(
 					interpolate_quadratic(now, hoy0, tmy3Data[hoy].extraTerrestrialRadiationNormal, hoy1,
 							tmy3Data[hoy + 1 % 8760].extraTerrestrialRadiationNormal, hoy2,
 							tmy3Data[hoy + 2 % 8760].extraTerrestrialRadiationNormal));
-			// tmy3Data[hoy].extraTerrestrialRadiationNormal
 
 			tMY3WeatherData.set_globalHorizontalIrradiance(interpolate_quadratic(now, hoy0,
 					tmy3Data[hoy].globalHorizontalIrradiance, hoy1, tmy3Data[hoy + 1].globalHorizontalIrradiance, hoy2,
@@ -710,7 +664,6 @@ public class Weather extends WeatherBase {
 							tmy3Data[hoy + 1 % 8760].globalHorizontalIrradianceUncertainty, hoy2,
 							tmy3Data[hoy + 2 % 8760].globalHorizontalIrradianceUncertainty));
 
-			// ES 02-27-2017
 			tMY3WeatherData.set_directNormalIrradiance(
 					interpolate_quadratic(now, hoy0, tmy3Data[hoy].directNormalIrradiance, hoy1,
 							tmy3Data[hoy + 1].directNormalIrradiance, hoy2, tmy3Data[hoy + 2].directNormalIrradiance));
@@ -720,7 +673,6 @@ public class Weather extends WeatherBase {
 							tmy3Data[hoy + 1].directNormalIrradianceUncertainty, hoy2,
 							tmy3Data[hoy + 2].directNormalIrradianceUncertainty));
 
-			// ES 02-17-2017
 			tMY3WeatherData.set_diffuseHorizontalIrradiance(interpolate_quadratic(now, hoy0,
 					tmy3Data[hoy].diffuseHorizontalIrradiance, hoy1, tmy3Data[hoy + 1].diffuseHorizontalIrradiance,
 					hoy2, tmy3Data[hoy + 2].diffuseHorizontalIrradiance));
@@ -998,6 +950,15 @@ public class Weather extends WeatherBase {
 			interpolate();
 			tMY3WeatherData.sendInteraction(getRTI(), logicalTime);
 
+			log.info(
+					"now: " + now
+					+ ", hour of year: " + hoy
+					+ ", drybulb: " + tMY3WeatherData.get_dryBulbTemperature()
+					+ ", dni: " + tMY3WeatherData.get_directNormalIlluminance()
+					);
+			
+			
+			
 			CheckForInteractions("Main Loop");		
 
 
