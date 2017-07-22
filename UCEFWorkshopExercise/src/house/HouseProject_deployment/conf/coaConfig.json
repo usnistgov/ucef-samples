@@ -1,0 +1,12 @@
+{
+  "script": {
+    "expect": [
+      {
+        "federateType": "House"
+      }
+    ],
+    "pauses": [],
+    "coaNodes": [],
+    "coaEdges": []
+  }
+}

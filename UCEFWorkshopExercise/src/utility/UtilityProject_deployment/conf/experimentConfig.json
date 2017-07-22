@@ -1,0 +1,17 @@
+{
+  "federateTypesAllowed": [
+    "Utility"
+  ],
+  "expectedFederates": [
+    {
+      "federateType": "Utility",
+      "count": 0
+    }
+  ],
+  "lateJoinerFederates": [
+    {
+      "federateType": "Utility",
+      "count": 1
+    }
+  ]
+}

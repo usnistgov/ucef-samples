@@ -1,0 +1,12 @@
+{
+  "script": {
+    "expect": [
+      {
+        "federateType": "Utility"
+      }
+    ],
+    "pauses": [],
+    "coaNodes": [],
+    "coaEdges": []
+  }
+}

@@ -4,7 +4,7 @@ DIR=`pwd`
 logtofile="-l "
 #logtofile=""
 
-cp tmy3.csv $DIR/src/weather/WeatherProject_generated/java-federates/WeatherProject-impl-java/Weather/target
+cp tmy3.csv $DIR/src/weather/WeatherProject_generated/WeatherProject-java-federates/WeatherProject-impl-java/Weather/target
 
 cd $DIR/src/fedmanager
 xterm -hold $logtofile -e "./run.sh" &
@@ -12,14 +12,14 @@ xterm -hold $logtofile -e "./run.sh" &
 sleep 15 
 
 
-cd $DIR/src/weather/WeatherProject_generated/java-federates/WeatherProject-impl-java/Weather/target
+cd $DIR/src/weather/WeatherProject_generated/WeatherProject-java-federates/WeatherProject-impl-java/Weather/target
 xterm -hold $logtofile -e "java -jar Weather-0.0.1-SNAPSHOT.jar FedManager weather INFO" &
 
-cd $DIR/src/utility/UtilityProject_generated/java-federates/UtilityProject-impl-java/Utility/target
+cd $DIR/src/utility/UtilityProject_generated/UtilityProject-java-federates/UtilityProject-impl-java/Utility/target
 xterm -hold $logtofile -e "java -jar Utility-0.0.1-SNAPSHOT.jar FedManager utility INFO" &
 
 
-cd $DIR/src/house/HouseProject_generated/java-federates/HouseProject-impl-java/House/target
+cd $DIR/src/house/HouseProject_generated/HouseProject-java-federates/HouseProject-impl-java/House/target
 xterm -hold $logtofile -e "java -jar House-0.0.1-SNAPSHOT.jar FedManager house1 INFO" &
 xterm -hold $logtofile -e "java -jar House-0.0.1-SNAPSHOT.jar FedManager house2 INFO" &
 

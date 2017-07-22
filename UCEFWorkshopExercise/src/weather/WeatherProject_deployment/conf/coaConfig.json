@@ -1,0 +1,12 @@
+{
+  "script": {
+    "expect": [
+      {
+        "federateType": "Weather"
+      }
+    ],
+    "pauses": [],
+    "coaNodes": [],
+    "coaEdges": []
+  }
+}

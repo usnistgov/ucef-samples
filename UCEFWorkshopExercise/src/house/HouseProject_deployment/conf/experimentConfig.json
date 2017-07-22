@@ -1,0 +1,17 @@
+{
+  "federateTypesAllowed": [
+    "House"
+  ],
+  "expectedFederates": [
+    {
+      "federateType": "House",
+      "count": 0
+    }
+  ],
+  "lateJoinerFederates": [
+    {
+      "federateType": "House",
+      "count": 1
+    }
+  ]
+}
