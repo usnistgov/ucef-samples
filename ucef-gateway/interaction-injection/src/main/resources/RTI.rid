@@ -1,0 +1,13 @@
+portico.jgroups.udp.address=239.20.9.19
+portico.jgroups.udp.port=20919
+portico.jgroups.timeout=5000
+
+# portico.jgroups.udp.bindAddress=<IP>
+portico.jgroups.udp.bindAddress=SITE_LOCAL
+
+portico.jgroups.auditor.enabled = true
+portico.jgroups.auditor.details = full
+
+portico.bridge.tcp_port=30001
+
+

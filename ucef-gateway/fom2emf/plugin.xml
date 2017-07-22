@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated IEEE1516-DIF-2010 -->
+      <package
+            uri="http://standards.ieee.org/IEEE1516-2010"
+            class="org.ieee.standards.ieee1516._2010._2010Package"
+            genModel="model/IEEE1516-DIF-2010.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated IEEE1516-DIF-2010 -->
+      <parser
+            type="_2010"
+            class="org.ieee.standards.ieee1516._2010.util._2010ResourceFactoryImpl"/>
+   </extension>
+
+</plugin>
