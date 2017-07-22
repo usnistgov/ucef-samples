@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "FedManager",
-		"_postman_id": "e0d602b1-b8ca-9b1d-7f50-8dd7a3a6d8c9",
+		"_postman_id": "689a3e89-e9da-ea5b-e936-2f2211ba578a",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -10,7 +10,7 @@
 		{
 			"name": "Start Fed Manager",
 			"request": {
-				"url": "http://127.0.0.1:8083/api/fedmgr",
+				"url": "http://127.0.0.1:8083/fedmgr",
 				"method": "POST",
 				"header": [
 					{
@@ -30,7 +30,7 @@
 		{
 			"name": "Stop Fed Manager",
 			"request": {
-				"url": "http://127.0.0.1:8083/api/fedmgr",
+				"url": "http://127.0.0.1:8083/fedmgr",
 				"method": "POST",
 				"header": [
 					{
@@ -42,6 +42,66 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{\"action\": \"TERMINATE\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Resume Fed Manager",
+			"request": {
+				"url": "http://127.0.0.1:8083/fedmgr",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"action\": \"RESUME\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Pause Fed Manager",
+			"request": {
+				"url": "http://127.0.0.1:8083/fedmgr",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"action\": \"PAUSE\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Federation",
+			"request": {
+				"url": "http://127.0.0.1:8083/federates",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"action\": \"PAUSE\"}"
 				},
 				"description": ""
 			},

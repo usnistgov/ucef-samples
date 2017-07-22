@@ -1,0 +1,12 @@
+{
+  "script": {
+    "expect": [
+      {
+        "federateType": "interaction-injection-example"
+      }
+    ],
+    "pauses": [],
+    "coaNodes": [],
+    "coaEdges": []
+  }
+}

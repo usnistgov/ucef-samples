@@ -1,0 +1,15 @@
+{
+  "federateTypesAllowed": [
+    "InjectionFederate",
+    "utility",
+    "house",
+    "weather"
+  ],
+  "expectedFederates": [
+    {
+      "federateType": "InjectionFederate",
+      "count": 1
+    }
+  ],
+  "lateJoinerFederates": [ ]
+}
