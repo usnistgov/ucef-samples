@@ -7,7 +7,7 @@
         <artifactId>WeatherProject-impl-java</artifactId>
         <version>0.1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>WeatherProject-Weather</artifactId>
+    <artifactId>Weather</artifactId>
     <packaging>jar</packaging>
 
     <properties>
