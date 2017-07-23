@@ -4,24 +4,32 @@ DIR=`pwd`
 logtofile="-l "
 #logtofile=""
 
-cp tmy3.csv $DIR/src/weather/WeatherProject_generated/java-federates/WeatherProject-impl-java/Weather/target
+cp tmy3.csv $DIR/src/weather/WeatherProject_generated/WeatherProject-java-federates/WeatherProject-impl-java/Weather/target
 
 cd $DIR/src/fedmanager
 xterm -hold $logtofile -e "./run.sh" &
 
-sleep 15 
+sleep 25 
+
+curl -i -X POST http://127.0.0.1:8083/fedmgr --data '{"action": "START"}' -H "Content-Type: application/json" 
+
+sleep 5
+
+cd $DIR/src/interaction-injection-example/target
+xterm -hold $logtofile -e "java -jar interaction-injection-example-0.1.0-SNAPSHOT.jar" &
+
+sleep 15
+
+cd $DIR/src/weather/WeatherProject_generated/WeatherProject-java-federates/WeatherProject-impl-java/Weather/target
+xterm -hold $logtofile -e "java -jar Weather-0.1.0-SNAPSHOT.jar -configFile=conf/WeatherConfig.json" &
+
+#cd $DIR/src/utility/UtilityProject_generated/UtilityProject-java-federates/UtilityProject-impl-java/Utility/target
+#xterm -hold $logtofile -e "java -jar Utility-0.1.0-SNAPSHOT.jar -configFile=conf/UtilityConfig.json" &
 
 
-cd $DIR/src/weather/WeatherProject_generated/java-federates/WeatherProject-impl-java/Weather/target
-xterm -hold $logtofile -e "java -jar Weather-0.0.1-SNAPSHOT.jar FedManager weather INFO" &
-
-#cd $DIR/src/utility/UtilityProject_generated/java-federates/UtilityProject-impl-java/Utility/target
-#xterm -hold $logtofile -e "java -jar Utility-0.0.1-SNAPSHOT.jar FedManager utility INFO" &
-
-
-cd $DIR/src/house/HouseProject_generated/java-federates/HouseProject-impl-java/House/target
-xterm -hold $logtofile -e "java -jar House-0.0.1-SNAPSHOT.jar FedManager house1 INFO" &
-xterm -hold $logtofile -e "java -jar House-0.0.1-SNAPSHOT.jar FedManager house2 INFO" &
+#cd $DIR/src/house/HouseProject_generated/HouseProject-java-federates/HouseProject-impl-java/House/target
+#xterm -hold $logtofile -e "java -jar House-0.1.0-SNAPSHOT.jar -configFile=conf/HouseConfig.json -name=House1" &
+#xterm -hold $logtofile -e "java -jar House-0.1.0-SNAPSHOT.jar -configFile=conf/HouseConfig.json -name=House2" &
 
 #xterm -hold $logtofile -e "java -jar House-0.0.1-SNAPSHOT.jar FedManager house1 INFO" &
 #xterm -hold $logtofile -e "java -jar House-0.0.1-SNAPSHOT.jar FedManager house2 INFO" &
@@ -44,16 +52,11 @@ xterm -hold $logtofile -e "java -jar House-0.0.1-SNAPSHOT.jar FedManager house2 
 #xterm -hold $logtofile -e "java -jar House-0.0.1-SNAPSHOT.jar FedManager house19 INFO" &
 #xterm -hold $logtofile -e "java -jar House-0.0.1-SNAPSHOT.jar FedManager house20 INFO" &
 
-sleep 20
+sleep 90
 
 
 
 
-cd $DIR/src/interaction-injection-example/target
-xterm -hold $logtofile -e "java -jar interaction-injection-example-0.0.1-SNAPSHOT.jar" &
-
-#sleep 20
-#curl -i -X POST http://127.0.0.1:8083/api/fedmgr --data '{"action": "START"}' -H "Content-Type: application/json" 
  
 #sleep 30
 #curl -i -X POST http://127.0.0.1:8083/api/fedmgr --data '{"action": "TERMINATE"}' -H "Content-Type: application/json"

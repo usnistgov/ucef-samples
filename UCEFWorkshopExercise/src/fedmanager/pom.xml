@@ -150,9 +150,6 @@
                         <phase>process-resources</phase>
                         <configuration>
                             <tasks>
-                                <echo message="Creating folder for the execution..." />
-                                
-                                <mkdir dir="${project.basedir}/target/interaction-injection-example" />
                         	</tasks>
                     	</configuration>
 	                    <goals>
