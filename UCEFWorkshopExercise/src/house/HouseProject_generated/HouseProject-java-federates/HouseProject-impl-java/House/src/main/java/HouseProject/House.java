@@ -265,6 +265,7 @@ public class House extends HouseBase {
             currentTime += super.getStepSize();
 
             atr.requestSyncStart();
+            enteredTimeGrantedState();
 
             ////////////////////////////////////////////////////////////////////////////////////////
             // TODO send interactions that must be sent every logical time step below.

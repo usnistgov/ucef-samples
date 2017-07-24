@@ -939,6 +939,7 @@ public class Weather extends WeatherBase {
             currentTime += super.getStepSize();
 
             atr.requestSyncStart();
+            enteredTimeGrantedState();
 
             if(receivedSimTime==true){
 	       		if (firsttime == true){
