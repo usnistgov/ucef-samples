@@ -263,6 +263,7 @@ public class Utility extends UtilityBase {
             currentTime += super.getStepSize();
 
             atr.requestSyncStart();
+            enteredTimeGrantedState();
 
             ////////////////////////////////////////////////////////////////////////////////////////
             // TODO send interactions that must be sent every logical time step below.
