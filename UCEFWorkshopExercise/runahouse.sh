@@ -9,6 +9,9 @@ DIR=`pwd`
 logtofile="-l "
 #logtofile=""
 
+LOG4J=$DIR/log4j2.xml
+RTI_RID_FILE=$DIR/RTI.rid
+
 num=$((1 + RANDOM % 1000))
 
 if [ -z "$1" ]
@@ -19,8 +22,8 @@ else
 fi
 
 echo "running house federate name: $name" 
-cd $DIR/src/house/HouseProject_generated/java-federates/HouseProject-impl-java/House/target
-xterm -hold $logtofile -e "java -jar House-0.0.1-SNAPSHOT.jar -configFile=conf/HouseConfig.json -name=$name" &
+cd $DIR/src/house/HouseProject_generated/HouseProject-java-federates/HouseProject-impl-java/House/target
+xterm -hold $logtofile -e "java -Dlog4j.configurationFile=$LOG4J -jar House-0.1.0-SNAPSHOT.jar -configFile=conf/HouseConfig.json -name=$name" &
 
 cd $DIR
 

@@ -5,6 +5,8 @@ logtofile="-l "
 #logtofile=""
 
 LOG4J=$DIR/log4j2.xml
+RTI_RID_FILE=$DIR/RTI.rid
+
 
 cp tmy3.csv $DIR/src/weather/WeatherProject_generated/WeatherProject-java-federates/WeatherProject-impl-java/Weather/target
 
