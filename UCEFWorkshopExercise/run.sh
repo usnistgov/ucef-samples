@@ -14,26 +14,26 @@ cp tmy3.csv $DIR/src/weather/WeatherProject_generated/WeatherProject-java-federa
 
 cd $DIR/src/fedmanager
 cp $RTI_FILE ./RTI.rid
-xterm -hold $logtofile -e "mvn exec:java -X -P FederationManagerExecJava -Dlog4j.configurationFile='`pwd`/conf/log4j2.xml'" &
+xterm -hold -T "Federation Manager" $logtofile -e "mvn exec:java -X -P FederationManagerExecJava -Dlog4j.configurationFile='`pwd`/conf/log4j2.xml'" &
 
 sleep 25 
 
 cd $DIR/src/metronome/MetronomeProject_generated/MetronomeProject-java-federates/MetronomeProject-impl-java/Metronome/target
 cp $RTI_FILE ./RTI.rid
-xterm -hold $logtofile -e "java -Dlog4j.configurationFile=$LOG4J -jar Metronome-0.1.0-SNAPSHOT.jar -configFile=conf/MetronomeConfig.json" &
+xterm -hold -T "Metronome" $logtofile -e "java -Dlog4j.configurationFile=$LOG4J -jar Metronome-0.1.0-SNAPSHOT.jar -configFile=conf/MetronomeConfig.json" &
 
 cd $DIR/src/weather/WeatherProject_generated/WeatherProject-java-federates/WeatherProject-impl-java/Weather/target
 cp $RTI_FILE ./RTI.rid
-xterm -hold $logtofile -e "java -Dlog4j.configurationFile=$LOG4J  -jar Weather-0.1.0-SNAPSHOT.jar -configFile=conf/WeatherConfig.json" &
+xterm -hold -T "Weather" $logtofile -e "java -Dlog4j.configurationFile=$LOG4J  -jar Weather-0.1.0-SNAPSHOT.jar -configFile=conf/WeatherConfig.json" &
 
 cd $DIR/src/utility/UtilityProject_generated/UtilityProject-java-federates/UtilityProject-impl-java/Utility/target
 cp $RTI_FILE ./RTI.rid
-xterm -hold $logtofile -e "java -Dlog4j.configurationFile=$LOG4J -jar Utility-0.1.0-SNAPSHOT.jar -configFile=conf/UtilityConfig.json" &
+xterm -hold -T "Utility" $logtofile -e "java -Dlog4j.configurationFile=$LOG4J -jar Utility-0.1.0-SNAPSHOT.jar -configFile=conf/UtilityConfig.json" &
 
 cd $DIR/src/house/HouseProject_generated/HouseProject-java-federates/HouseProject-impl-java/House/target
 cp $RTI_FILE ./RTI.rid
-xterm -hold $logtofile -e "java -Dlog4j.configurationFile=$LOG4J  -jar House-0.1.0-SNAPSHOT.jar -configFile=conf/HouseConfig.json -name=House1" &
-xterm -hold $logtofile -e "java -Dlog4j.configurationFile=$LOG4J  -jar House-0.1.0-SNAPSHOT.jar -configFile=conf/HouseConfig.json -name=House2" &
+xterm -hold -T "House 1" $logtofile -e "java -Dlog4j.configurationFile=$LOG4J  -jar House-0.1.0-SNAPSHOT.jar -configFile=conf/HouseConfig.json -name=House1" &
+xterm -hold -T "House 2" $logtofile -e "java -Dlog4j.configurationFile=$LOG4J  -jar House-0.1.0-SNAPSHOT.jar -configFile=conf/HouseConfig.json -name=House2" &
 
 sleep 15
 

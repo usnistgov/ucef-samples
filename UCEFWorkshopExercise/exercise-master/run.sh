@@ -15,7 +15,7 @@ cd $DIR/src/fedmanager
 mkdir etc/
 cp $RTI_FILE ./RTI.rid
 cp $JGROUPS ./etc/jgroups-udp.xml
-xterm -hold $logtofile -e "mvn exec:java -X -P FederationManagerExecJava -Dlog4j.configurationFile='`pwd`/conf/log4j2.xml'" &
+xterm -hold -T "Federation Manager" -fn 10x20 $logtofile -e "mvn exec:java -X -P FederationManagerExecJava -Dlog4j.configurationFile='`pwd`/conf/log4j2.xml'" &
 
 sleep 25 
 
@@ -23,17 +23,17 @@ cd $DIR/src/metronome/MetronomeProject_generated/MetronomeProject-java-federates
 mkdir etc/
 cp $RTI_FILE ./RTI.rid
 cp $JGROUPS ./etc/jgroups-udp.xml
-xterm -hold $logtofile -e "java -Dlog4j.configurationFile=$LOG4J -jar Metronome-0.1.0-SNAPSHOT.jar -configFile=conf/MetronomeConfig.json" &
+xterm -hold -T "Metronome" $logtofile -e "java -Dlog4j.configurationFile=$LOG4J -jar Metronome-0.1.0-SNAPSHOT.jar -configFile=conf/MetronomeConfig.json" &
 
 cd $DIR/src/weather/WeatherProject_generated/WeatherProject-java-federates/WeatherProject-impl-java/Weather/target
 mkdir etc/
 cp $RTI_FILE ./RTI.rid
 cp $JGROUPS ./etc/jgroups-udp.xml
-xterm -hold $logtofile -e "java -Dlog4j.configurationFile=$LOG4J  -jar Weather-0.1.0-SNAPSHOT.jar -configFile=conf/WeatherConfig.json" &
+xterm -hold -T "Weather" $logtofile -e "java -Dlog4j.configurationFile=$LOG4J  -jar Weather-0.1.0-SNAPSHOT.jar -configFile=conf/WeatherConfig.json" &
 
 cd $DIR/src/utility/UtilityProject_generated/UtilityProject-java-federates/UtilityProject-impl-java/Utility/target
 mkdir etc/
 cp $RTI_FILE ./RTI.rid
 cp $JGROUPS ./etc/jgroups-udp.xml
-xterm -hold $logtofile -e "java -Dlog4j.configurationFile=$LOG4J -jar Utility-0.1.0-SNAPSHOT.jar -configFile=conf/UtilityConfig.json" &
+xterm -hold -T "Utility" -fn 10x20 $logtofile -e "java -Dlog4j.configurationFile=$LOG4J -jar Utility-0.1.0-SNAPSHOT.jar -configFile=conf/UtilityConfig.json" &
 
