@@ -5,8 +5,8 @@ DIR=`pwd`
 logtofile="-l "
 #logtofile=""
 
-LOG4J=../log4j2.xml
-RTI_FILE=../RTI.rid
+LOG4J=$DIR/../log4j2.xml
+RTI_FILE=$DIR/../RTI.rid
 
 cd $DIR/HouseProject_generated/HouseProject-java-federates/HouseProject-impl-java/House/target
 cp $RTI_FILE ./RTI.rid
