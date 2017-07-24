@@ -23,7 +23,7 @@
 		
 		<dependency><!-- The depenency for the user written code-->
 			<groupId>org.webgme.guest</groupId>
-			<artifactId>UtilityProject-Utility</artifactId>
+			<artifactId>Utility</artifactId>
 			<version>0.1.0-SNAPSHOT</version>
 		</dependency>
 		

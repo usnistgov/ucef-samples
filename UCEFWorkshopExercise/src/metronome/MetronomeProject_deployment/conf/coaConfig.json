@@ -2,7 +2,7 @@
   "script": {
     "expect": [
       {
-        "federateType": "metronome"
+        "federateType": "Metronome"
       }
     ],
     "pauses": [],

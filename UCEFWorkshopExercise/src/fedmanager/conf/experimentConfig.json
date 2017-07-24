@@ -1,15 +1,32 @@
 {
   "federateTypesAllowed": [
-    "InjectionFederate",
+    "metronome",
     "utility",
-    "house",
-    "weather"
+    "weather",
+    "house"
   ],
   "expectedFederates": [
     {
-      "federateType": "InjectionFederate",
-      "count": 1
+      "federateType": "metronome",
+      "count": 0
     }
   ],
-  "lateJoinerFederates": [ ]
+  "lateJoinerFederates": [
+    {
+      "federateType": "metronome",
+      "count": 1
+    },
+    {
+      "federateType": "utility",
+      "count": 1
+    },
+    {
+      "federateType": "weather",
+      "count": 1
+    },
+    {
+      "federateType": "house",
+      "count": 1
+    }
+  ]
 }

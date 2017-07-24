@@ -35,7 +35,6 @@ public class House extends HouseBase {
 	/////////////////////////////////////////////
 	// time elements
 	/////////////////////////////////////////////
-	double logicalTime = 0;
 	boolean receivedSimTime = false;	// flag to block waiting for the SimTime interactions
 	boolean receivedTMY = false;
 	boolean firsttime = true;
@@ -180,7 +179,7 @@ public class House extends HouseBase {
 	}
 
 	private void computeNextTimeStep() {
-		dt.setTimeInMillis((long) ((startTime + logicalTime * logicalTimeSec) * 1000));
+		dt.setTimeInMillis((long) ((startTime + currentTime * logicalTimeSec) * 1000));
 
 		thisTime = dt.getTimeInMillis();
 
@@ -296,13 +295,13 @@ public class House extends HouseBase {
 				vResourcePhysicalState.set_power(Ph);
 				vResourcePhysicalState.sendInteraction(getLRC(), currentTime);
 				
-				log.info("CurrentTime: " + formatter.format(dt.toInstant()) 
-					+ ", Power: " + Ph 
-					+ ", SolarInsolation: " + SolarInsolation 
-					+ ", To: " + To 
-					+ ", Ti: " + Ti
-					+ ", heatpumprunning: " + heatpumprunning
-					);
+				String l = "CurrentTime: " + formatter.format(dt.toInstant()) 
+				+ ", Power: " + Ph 
+				+ ", SolarInsolation: " + SolarInsolation 
+				+ ", To: " + To 
+				+ ", Ti: " + Ti
+				+ ", heatpumprunning: " + heatpumprunning;
+				log.info(l);
 	   		}
 
             // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -341,8 +340,10 @@ public class House extends HouseBase {
 		ignoreTil = interaction.get_ignoreTil();
 		logicalTimeSec = interaction.get_secondsPerLogicalTime();
 
-		log.info(
-				"startTime: " + startTime + ", ignoreTil: " + ignoreTil + ", logicalTimeSec: " + logicalTimeSec);
+		if(receivedSimTime == false){
+			log.info(
+					"startTime: " + startTime + ", ignoreTil: " + ignoreTil + ", logicalTimeSec: " + logicalTimeSec);
+		}
 
 		receivedSimTime = true;
     }
@@ -361,13 +362,15 @@ public class House extends HouseBase {
             House federate = new House(federateConfig);
 
 			// process parameters file
-			if (args.length >= 1) {
+            File f = new File("conf/config.yml");
+            if(f.exists() && !f.isDirectory()) { 
 				log.info("Parsing parameter file");
-				loadConfiguration(args[1]);
+				loadConfiguration(f.getAbsolutePath());
 			} else {
 				log.info("No parameter file");
 				loadConfiguration("classes/config.yml");
 			}
+
 
             federate.execute();
             System.exit(0);

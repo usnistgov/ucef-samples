@@ -13,6 +13,10 @@ import org.cpswt.utils.CpswtDefaults;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.SimpleTimeZone;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,14 +35,30 @@ public class Utility extends UtilityBase {
     double currentTime = 0;
 	private static Configuration configuration;
 	
-	// time elements
-	double logicalTime = 0;
+	/////////////////////////////////////////////
+	// startup time elements
+	/////////////////////////////////////////////
 	long startTime = 0;// 1243947600; 6/2/2009 9:00:00
 	double ignoreTil = 1000;
 	double logicalTimeSec = 1;	
-	boolean notReady = true;
+	boolean receivedSimTime = false;
+	boolean receivedTMY = false;
+	boolean firsttime = true;
 	String numOfLoop;
 	
+	/////////////////////////////////////////////
+	// Calendar Time variables used in simulation
+	/////////////////////////////////////////////
+	long dttime; // current date and time in msec
+	Calendar dt = null;
+	Long thisTime;
+	int timezone = -5; // NY
+	String state = "NY";
+	DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
+	
+	/////////////////////////////////////////////
+	// Demand and price computation variables
+	/////////////////////////////////////////////
 	private double price = 0;
 	private double currentDemand=0;
 	private double solarProvidedPower = 0;
@@ -74,6 +94,7 @@ public class Utility extends UtilityBase {
 			this.federatename = federatename;
 		}
 	}
+	
     public Utility(FederateConfig params) throws Exception {
         super(params);
         ///////////////////////////////////////////////////////////////////////
@@ -159,6 +180,43 @@ public class Utility extends UtilityBase {
 		}
 	}
 	
+	private void initializeTimeStep() {
+		
+		log.info("Initializing calendar time attributes");
+		
+		// initialize timezone support
+		int tzhours = timezone;// -7
+		log.info("time zone hours=:" + tzhours);
+		SimpleTimeZone tz = new SimpleTimeZone(tzhours * 3600000, "GMT");
+
+		// DST Support all of US uses same DST rules if not AZ,HI which doesn't switch over
+		if (!(state.equals("AZ") || state.equals("HI"))) {
+			tz.setStartRule(Calendar.MARCH, 8, -Calendar.SUNDAY, 2 * 60 * 60 * 1000);
+			tz.setEndRule(Calendar.NOVEMBER, 1, Calendar.SUNDAY, 2 * 60 * 60 * 1000);
+		}
+
+		// establish calendar time reference
+		dt = new GregorianCalendar(tz); // get calendar
+
+		// inistialize with startTime
+		dt.setTimeInMillis(startTime * 1000);// 1243929600 without -7 hours
+		log.debug("year=:" + dt.get(Calendar.YEAR)); // 2009
+		log.debug("month=:" + dt.get(Calendar.MONTH)); // 6
+		log.debug("Day: " + dt.get(Calendar.DAY_OF_MONTH)); // 2
+		log.debug("Hour: " + dt.get(Calendar.HOUR)); // 9
+		log.debug("Minute:" + dt.get(Calendar.MINUTE)); // 0
+
+
+		// get current time in msec and hrs this year
+		dttime = dt.getTimeInMillis();
+	}
+
+	private void computeNextTimeStep() {
+		dt.setTimeInMillis((long) ((startTime + currentTime * logicalTimeSec) * 1000));
+
+		thisTime = dt.getTimeInMillis();
+
+	}	
     private void execute() throws Exception {
         if(super.isLateJoiner()) {
             currentTime = super.getLBTS() - super.getLookAhead();
@@ -218,23 +276,32 @@ public class Utility extends UtilityBase {
 
 
            CheckReceivedSubscriptions("Main Loop");
-			
-			// after we handled interactions this logical time step, compute price
-			DoPriceComputation();
-			
-			// send price signal
-			Quote ps = create_Quote();
-			ps.set_tenderComponent_PriceCurve_price(price);
-			ps.sendInteraction(getLRC(), currentTime);            
 
-			// log status to database
-			// ToDo: add DoCmd("INSERT into table xxxx");
-
-			log.info("----------");
-			log.info("LogicalTime: " + logicalTime +"Num Houses: "+numhouses + " Total Demand: " + currentDemand + " Solar provided: " + solarProvidedPower + " Current Price: "+price);
-			for (int i=0; i < numhouses;i++){
-				log.info("-----> " + theHouses[i].getFederatename() + " demand: " + theHouses[i].getPower());
+	       	if ((receivedSimTime == true) && (receivedTMY == true)){
+	       		// if this is firs time we saw both, initialize calendar time for experiment
+	       		if (firsttime == true){
+	       			initializeTimeStep();
+	       			firsttime = false;
+	       		}
+				
+	       		// after we handled interactions this logical time step, compute price
+				DoPriceComputation();
+				
+				// send price signal
+				Quote ps = create_Quote();
+				ps.set_tenderComponent_PriceCurve_price(price);
+				ps.sendInteraction(getLRC(), currentTime);            
+	
+				// log status to database
+				// ToDo: add DoCmd("INSERT into table xxxx");
+	
+				log.info("----------");
+				log.info("LogicalTime: " + currentTime +"Num Houses: "+numhouses + " Total Demand: " + currentDemand + " Solar provided: " + solarProvidedPower + " Current Price: "+price);
+				for (int i=0; i < numhouses;i++){
+					log.info("-----> " + theHouses[i].getFederatename() + " demand: " + theHouses[i].getPower());
+				}	       	
 			}
+
 
             // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             // DO NOT MODIFY FILE BEYOND THIS LINE
@@ -260,12 +327,12 @@ public class Utility extends UtilityBase {
 		ignoreTil = interaction.get_ignoreTil();
 		logicalTimeSec = interaction.get_secondsPerLogicalTime();
 
-		log.info(
-				"startTime: " + startTime + ", ignoreTil: " + ignoreTil + ", logicalTimeSec: " + logicalTimeSec);
-		// check if we are past ignoreTil
-		if (logicalTime >= ignoreTil) {
-			notReady = false;
+		if(receivedSimTime == false){
+			log.info(
+					"startTime: " + startTime + ", ignoreTil: " + ignoreTil + ", logicalTimeSec: " + logicalTimeSec);
 		}
+
+		receivedSimTime = true;
 	} 
     
     private void handleInteractionClass(ResourcePhysicalState interaction) {
@@ -301,6 +368,7 @@ public class Utility extends UtilityBase {
         // TODO implement how to handle reception of the interaction            //
         //////////////////////////////////////////////////////////////////////////
 		directsolar = interaction.get_directNormalIlluminance();
+		receivedTMY = true;
 	} 
 
     public static void main(String[] args) {
@@ -308,14 +376,17 @@ public class Utility extends UtilityBase {
             FederateConfigParser federateConfigParser = new FederateConfigParser();
             FederateConfig federateConfig = federateConfigParser.parseArgs(args, FederateConfig.class);
             Utility federate = new Utility(federateConfig);
+
 			// process parameters file
-			if (args.length >= 1) {
-				log.info("Parsing parameter file", args[1]);
-				loadConfiguration(args[1]);
+            File f = new File("conf/config.yml");
+            if(f.exists() && !f.isDirectory()) { 
+				log.info("Parsing parameter file");
+				loadConfiguration(f.getAbsolutePath());
 			} else {
 				log.info("No parameter file");
 				loadConfiguration("classes/config.yml");
 			}
+
             federate.execute();
 
             System.exit(0);

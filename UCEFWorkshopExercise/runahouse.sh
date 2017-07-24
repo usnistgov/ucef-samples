@@ -20,7 +20,7 @@ fi
 
 echo "running house federate name: $name" 
 cd $DIR/src/house/HouseProject_generated/java-federates/HouseProject-impl-java/House/target
-xterm -hold $logtofile -e "java -jar House-0.0.1-SNAPSHOT.jar FedManager $name INFO" &
+xterm -hold $logtofile -e "java -jar House-0.0.1-SNAPSHOT.jar -configFile=conf/HouseConfig.json -name=$name" &
 
 cd $DIR
 

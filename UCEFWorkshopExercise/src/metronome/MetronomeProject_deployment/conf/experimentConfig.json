@@ -1,0 +1,17 @@
+{
+  "federateTypesAllowed": [
+    "Metronome"
+  ],
+  "expectedFederates": [
+    {
+      "federateType": "Metronome",
+      "count": 0
+    }
+  ],
+  "lateJoinerFederates": [
+    {
+      "federateType": "Metronome",
+      "count": 1
+    }
+  ]
+}

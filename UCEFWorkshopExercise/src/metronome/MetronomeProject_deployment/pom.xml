@@ -2,12 +2,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.webgme.guest</groupId>
-	<artifactId>WeatherProject_exec</artifactId>
+	<artifactId>MetronomeProject_exec</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<properties>
-		<federation.name>WeatherProject</federation.name>
+		<federation.name>MetronomeProject</federation.name>
 		<federation.version>0.1.0-SNAPSHOT</federation.version>
 		<cpswt.version>0.5.0-SNAPSHOT</cpswt.version>
 		<nar.version>3.3.0</nar.version>
@@ -17,13 +17,13 @@
 		
 		<dependency><!-- The depenency for the generated code-->
 			<groupId>org.webgme.guest</groupId>
-			<artifactId>WeatherProject-base-java</artifactId>
+			<artifactId>MetronomeProject-base-java</artifactId>
 			<version>0.1.0-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency><!-- The depenency for the user written code-->
 			<groupId>org.webgme.guest</groupId>
-			<artifactId>Weather</artifactId>
+			<artifactId>MetronomeProject-Metronome</artifactId>
 			<version>0.1.0-SNAPSHOT</version>
 		</dependency>
 		
@@ -160,7 +160,7 @@
                             <tasks>
                                 <echo message="Creating folder for the execution..." />
                                 
-                                <mkdir dir="${project.basedir}/target/Weather" />
+                                <mkdir dir="${project.basedir}/target/Metronome" />
                         	</tasks>
                     	</configuration>
 	                    <goals>
@@ -214,10 +214,10 @@
 	
 	<profiles>
         <profile>
-            <id>Weather</id>
+            <id>Metronome</id>
             <properties>
-                <federate.name>Weather</federate.name>
-                <federate.configFile>conf/weather.json</federate.configFile>
+                <federate.name>Metronome</federate.name>
+                <federate.configFile>conf/metronome.json</federate.configFile>
             </properties>
         </profile>
 		<profile>
@@ -291,7 +291,7 @@
                             </systemProperties>
 
                             <classpathScope>runtime</classpathScope>
-                            <mainClass>WeatherProject.${federate.name}</mainClass>
+                            <mainClass>MetronomeProject.${federate.name}</mainClass>
 							<arguments>
                                 <argument>-configFile</argument>
                                 <argument>${federate.configFile}</argument>
@@ -358,7 +358,7 @@
 						<version>1.4.0</version>
 						<configuration>
 							<workingDirectory>${project.basedir}/target/bin-exec</workingDirectory>
-              				<executable>./WeatherProject-${federate.name}-cpp</executable>
+              				<executable>./MetronomeProject-${federate.name}-cpp</executable>
 							<arguments>
 								<argument>${federation.name}</argument>
 					            <argument>${federate.name}</argument>

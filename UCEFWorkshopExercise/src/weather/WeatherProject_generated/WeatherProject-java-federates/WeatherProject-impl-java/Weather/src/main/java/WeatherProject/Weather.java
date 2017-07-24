@@ -42,10 +42,10 @@ public class Weather extends WeatherBase {
 	TMYWeather tMY3WeatherData = create_TMYWeather();
 	
 	InterpolateType dointerpolate = InterpolateType.QUADRATIC;
-	double logicalTime = 0;
 
-	boolean notReady = true;
 	String numOfLoop;
+	boolean receivedSimTime = false;
+	boolean firsttime = true;
 
 	// time elements
 	long startTime = 0;// 1243947600; 6/2/2009 9:00:00
@@ -871,12 +871,12 @@ public class Weather extends WeatherBase {
 	}
 
 	private void computeNextTimeStep() {
-		dt.setTimeInMillis((long) ((startTime + logicalTime * logicalTimeSec) * 1000));
+		dt.setTimeInMillis((long) ((startTime + currentTime * logicalTimeSec) * 1000));
 
 		thisTime = dt.getTimeInMillis();
 		hoy = (int) ((thisTime - soytime) / 3600000);
 
-		log.debug("LogicalTime: " + logicalTime + ", CalendarTime=:" + thisTime);
+		log.debug("LogicalTime: " + currentTime + ", CalendarTime=:" + thisTime);
 		log.debug("hoy=:" + hoy);
 
 	}
@@ -905,7 +905,7 @@ public class Weather extends WeatherBase {
 		// read in the tmy3 data
 		readTmy3Data();
 
-        AdvanceTimeRequest atr = new AdvanceTimeRequest(logicalTime);
+        AdvanceTimeRequest atr = new AdvanceTimeRequest(currentTime);
         putAdvanceTimeRequest(atr);
 
         if(!super.isLateJoiner()) {
@@ -917,12 +917,8 @@ public class Weather extends WeatherBase {
         // subscriptions published before the first time step.
         ///////////////////////////////////////////////////////////////////////
         
-		while(notReady){
-			CheckReceivedSubscriptions("After ReadyToPopulate");		
-		}
+		CheckReceivedSubscriptions("After ReadyToPopulate");		
 
-		// use the time parameters to compute the current calendar time reference for simulation
-		initializeTimeStep();
 		
         ///////////////////////////////////////////////////////////////////////
         // TODO perform initialization that depends on other federates below
@@ -944,6 +940,13 @@ public class Weather extends WeatherBase {
 
             atr.requestSyncStart();
 
+            if(receivedSimTime==true){
+	       		if (firsttime == true){
+	                // use the time parameters to compute the current calendar time reference for simulation
+	       			initializeTimeStep();
+	       			firsttime = false;
+	       		}
+            	
             ////////////////////////////////////////////////////////////////////////////////////////
             // TODO send interactions that must be sent every logical time step below.
 			// compute weather status and send interaction
@@ -1044,6 +1047,7 @@ public class Weather extends WeatherBase {
 					+ ", dni: " + tMY3WeatherData.get_directNormalIlluminance()
 					);
 			
+            }
 
 
             CheckReceivedSubscriptions("Main Loop");
@@ -1069,27 +1073,16 @@ public class Weather extends WeatherBase {
         //////////////////////////////////////////////////////////////////////////
         // TODO implement how to handle reception of the interaction            
         //////////////////////////////////////////////////////////////////////////
-		// Convert the interaction to the desired interaction class
 		startTime = (long) interaction.get_startTime();
 		ignoreTil = interaction.get_ignoreTil();
 		logicalTimeSec = interaction.get_secondsPerLogicalTime();
-
-		log.debug("startTime: " + startTime + ", ignoreTil: " + ignoreTil + ", logicalTimeSec: " + logicalTimeSec);
 		
-		notReady=false; // we got this one time interaction, federate can move forward
+		if(receivedSimTime == false){
+			log.info(
+					"startTime: " + startTime + ", ignoreTil: " + ignoreTil + ", logicalTimeSec: " + logicalTimeSec);
+		}
 
-/*		
-		// compute weather status and send interaction
-		initializeTimeStep();
-		computeNextTimeStep();
-		interpolate();
-		try {
-			tMY3WeatherData.sendInteraction(getRTI(), logicalTime+1);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
-*/		
+		receivedSimTime = true;		
 	}
 
     public static void main(String[] args) {

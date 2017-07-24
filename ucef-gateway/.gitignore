@@ -1,13 +1,31 @@
+# ignore these directories since they are built in compilation processes
 target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
+bin/
+logs/
+.classpath
+.settings/
+.DS_Store
+*.retry
 dependency-reduced-pom.xml
-buildNumber.properties
-.mvn/timing.properties
+*.*~
+Xterm.log.*
 *.log
 
-# Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
-!/.mvn/wrapper/maven-wrapper.jar
+# we are using maven so .project should not be stored
+.project
+
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# Configuration files
+RTI.rid
