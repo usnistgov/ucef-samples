@@ -8,6 +8,9 @@ logtofile="-l "
 LOG4J=$DIR/log4j2.xml
 RTI_FILE=$DIR/RTI.rid
 
+# delete exercise TCP settings
+find $DIR/src -name "jgroups-udp.xml" -delete
+
 cd $DIR/src/house/HouseProject_generated/HouseProject-java-federates/HouseProject-impl-java/House/target
 cp $RTI_FILE ./RTI.rid
 if [ -z "$1" ]

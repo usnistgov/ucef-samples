@@ -7,6 +7,9 @@ logtofile="-l "
 LOG4J=$DIR/log4j2.xml
 RTI_FILE=$DIR/RTI.rid
 
+# delete exercise TCP settings
+find $DIR/src -name "jgroups-udp.xml" -delete
+
 cp tmy3.csv $DIR/src/weather/WeatherProject_generated/WeatherProject-java-federates/WeatherProject-impl-java/Weather/target
 
 cd $DIR/src/fedmanager
