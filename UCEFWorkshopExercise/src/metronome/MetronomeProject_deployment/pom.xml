@@ -23,7 +23,7 @@
 		
 		<dependency><!-- The depenency for the user written code-->
 			<groupId>org.webgme.guest</groupId>
-			<artifactId>MetronomeProject-Metronome</artifactId>
+			<artifactId>Metronome</artifactId>
 			<version>0.1.0-SNAPSHOT</version>
 		</dependency>
 		
