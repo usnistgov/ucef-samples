@@ -97,10 +97,10 @@ A reference implementation of the House federated is located in $cpswt/cpswt-sam
 
 The following steps can be used to run your House federate after its complete implementation:
 
-1. Navigate to $cpswt/cpswt-samples/UCEFWorkshopExercise
+1. Navigate to $HOME/cpswt/cpswt-samples/UCEFWorkshopExercise
 1. Right click blank space and open a new terminal from this directory.
 1. From the command line, enter the command `./run.sh` to run the full workshop exercise in your virtual machine.
 1. Wait until the run script opens two new windows titled *House 1* and *House 2*.
-1. Navigate to $cpswt/cpswt-samples/UCEFWorkshopExercise/workspace
+1. Navigate to $HOME/cpswt/cpswt-samples/UCEFWorkshopExercise/workspace
 1. Open a new terminal in the workspace folder and enter the command `./runyourhouse.sh` - you can provide an additional argument to give it a unique name.
 1. If all of the federates from the run.sh script are running when you enter this last command, your House federate will join the federation and output to this new terminal.
