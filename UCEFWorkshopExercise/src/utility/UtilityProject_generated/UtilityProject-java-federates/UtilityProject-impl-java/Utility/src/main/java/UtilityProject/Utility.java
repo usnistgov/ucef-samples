@@ -247,6 +247,15 @@ public class Utility extends UtilityBase {
         ///////////////////////////////////////////////////////////////////////
         // TODO perform initialization that depends on other federates below //
         ///////////////////////////////////////////////////////////////////////
+        
+        
+		log.info(
+				"Price Bulk: " + configuration.getPricebulk()
+				+ ", Price Solar: " + configuration.getPricesolar()
+				+ ", Price Fixed: " + configuration.getPricefixed()
+				+ ", Solar Conversion (per DNI): " + configuration.getSolarpowerperdirectsolar()
+				);
+
 
         if(!super.isLateJoiner()) {
             readyToRun();
@@ -368,7 +377,7 @@ public class Utility extends UtilityBase {
         //////////////////////////////////////////////////////////////////////////
         // TODO implement how to handle reception of the interaction            //
         //////////////////////////////////////////////////////////////////////////
-		directsolar = interaction.get_directNormalIlluminance();
+		directsolar = interaction.get_directNormalIrradiance();
 		receivedTMY = true;
 	} 
 

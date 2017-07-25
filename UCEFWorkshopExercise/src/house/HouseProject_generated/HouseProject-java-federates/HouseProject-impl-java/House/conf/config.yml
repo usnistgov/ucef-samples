@@ -7,5 +7,5 @@ hpbasepower: 1571.0 # heat pump power base consumption when running (will add te
 #tsp: 22.2 # temperature setpoint 'C
 tsp: 20.0 # temperature setpoint 'C
 del: 0.5 # thermostat hysteresis
-plugload: 5900 # plugload W
+plugload: 1200 # plugload W
 solarpaneleffectivearea: 52.16 # M2 solar panel

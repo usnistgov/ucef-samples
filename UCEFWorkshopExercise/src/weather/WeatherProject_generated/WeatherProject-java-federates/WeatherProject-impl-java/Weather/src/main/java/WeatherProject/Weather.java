@@ -660,9 +660,9 @@ public class Weather extends WeatherBase {
 							tmy3Data[hoy + 1 % 8760].globalHorizontalIrradianceUncertainty, hoy2,
 							tmy3Data[hoy + 2 % 8760].globalHorizontalIrradianceUncertainty));
 
-			tMY3WeatherData.set_directNormalIrradiance(
-					interpolate_quadratic(now, hoy0, tmy3Data[hoy].directNormalIrradiance, hoy1,
-							tmy3Data[hoy + 1].directNormalIrradiance, hoy2, tmy3Data[hoy + 2].directNormalIrradiance));
+			double dni = interpolate_quadratic(now, hoy0, tmy3Data[hoy].directNormalIrradiance, hoy1,
+					tmy3Data[hoy + 1].directNormalIrradiance, hoy2, tmy3Data[hoy + 2].directNormalIrradiance);
+			tMY3WeatherData.set_directNormalIrradiance((dni >=0.0) ? dni:0.0);
 			tMY3WeatherData.set_directNormalIrradianceSource(tmy3Data[hoy].directNormalIrradianceSource);
 			tMY3WeatherData.set_directNormalIrradianceUncertainty(
 					interpolate_quadratic(now, hoy0, tmy3Data[hoy].directNormalIrradianceUncertainty, hoy1,
@@ -687,9 +687,10 @@ public class Weather extends WeatherBase {
 							tmy3Data[hoy + 1].globalHorizontalIlluminanceUncertainty, hoy2,
 							tmy3Data[hoy + 2].globalHorizontalIlluminanceUncertainty));
 			// 16
-			tMY3WeatherData.set_directNormalIlluminance(interpolate_quadratic(now, hoy0,
+			double dnil = interpolate_quadratic(now, hoy0,
 					tmy3Data[hoy].directNormalIlluminance, hoy1, tmy3Data[hoy + 1].directNormalIlluminance, hoy2,
-					tmy3Data[hoy + 2].directNormalIlluminance));
+					tmy3Data[hoy + 2].directNormalIlluminance);
+			tMY3WeatherData.set_directNormalIlluminance((dnil >=0.0)?dnil:0.0);
 			tMY3WeatherData.set_directNormalIlluminanceSource(tmy3Data[hoy].directNormalIrradianceSource);
 			tMY3WeatherData.set_directNormalIlluminanceUncertainty(
 					interpolate_quadratic(now, hoy0, tmy3Data[hoy].directNormalIlluminanceUncertainty, hoy1,

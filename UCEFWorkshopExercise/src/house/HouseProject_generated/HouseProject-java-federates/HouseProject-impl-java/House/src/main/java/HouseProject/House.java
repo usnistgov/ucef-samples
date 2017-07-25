@@ -327,7 +327,7 @@ public class House extends HouseBase {
         // TODO implement how to handle reception of the interaction            //
         //////////////////////////////////////////////////////////////////////////
 		To = interaction.get_dryBulbTemperature();
-		SolarInsolation = interaction.get_directNormalIlluminance();
+		SolarInsolation = interaction.get_directNormalIrradiance();
 		state = interaction.get_stationState();
 		timezone = (int) interaction.get_timeZone();
 		receivedTMY = true;
