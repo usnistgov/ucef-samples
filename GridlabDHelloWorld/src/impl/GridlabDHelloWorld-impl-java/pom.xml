@@ -2,25 +2,25 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.webgme.guest</groupId>
   <artifactId>GridlabDHelloWorld-impl-java</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <parent>
     <groupId>org.webgme.guest</groupId>
     <artifactId>GridlabDHelloWorld</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
   </parent>
 
   <dependencies>
     <dependency>
       <groupId>org.webgme.guest</groupId>
       <artifactId>GridlabDHelloWorld-base-java</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>0.1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.webgme.guest</groupId>
       <artifactId>GridlabDHelloWorld-rti-java</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>0.1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.porticoproject</groupId>
