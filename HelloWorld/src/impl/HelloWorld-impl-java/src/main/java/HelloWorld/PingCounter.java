@@ -21,63 +21,74 @@
 
 package HelloWorld;
 
-import c2w.hla.base.AdvanceTimeRequest;
-import c2w.hla.base.ObjectReflector;
+
+import org.cpswt.hla.base.AdvanceTimeRequest;
+import org.cpswt.hla.base.ObjectReflector;
+import org.cpswt.utils.CpswtDefaults;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.cpswt.config.FederateConfig;
+import org.cpswt.config.FederateConfigParser;
 
 public class PingCounter extends PingCounterBase {
 
-    public PingCounter( String federation_id, String federate_id ) throws Exception {
-        super( federation_id, federate_id );
-    }
+    private static final Logger logger = LogManager.getLogger(Source.class);
 
-    public PingCounter( String[] federationInfo ) throws Exception {
-        super( federationInfo );
+    public PingCounter(FederateConfig params) throws Exception {
+        super(params);
     }
 
     private void execute() throws Exception {
-        
-        double currentTime = 0;
-        
-        AdvanceTimeRequest atr = new AdvanceTimeRequest( currentTime );
-        putAdvanceTimeRequest( atr );
 
-        readyToPopulate();
-        readyToRun();
+        double currentTime = 0;
+
+        if (super.isLateJoiner()) {
+            currentTime = super.getLBTS() - super.getLookAhead();
+            super.disableTimeRegulation();
+        }
+
+        AdvanceTimeRequest atr = new AdvanceTimeRequest(currentTime);
+        putAdvanceTimeRequest(atr);
+
+        if(!super.isLateJoiner()) {
+            readyToPopulate();
+            readyToRun();
+        }
 
         startAdvanceTimeThread();
 
-        ObjectReflector objectReflector;    
-        
-        while( true ) {
+        ObjectReflector objectReflector;
+
+        while (true) {
             currentTime += 1;
 
             atr.requestSyncStart();
-            
-            while(  ( objectReflector = getNextObjectReflectorNoWait() ) != null ) {
+
+            while ((objectReflector = getNextObjectReflectorNoWait()) != null) {
                 objectReflector.reflect();
-                PingCount pingCount = (PingCount)objectReflector.getObjectRoot();
-                System.out.println(
-                 "Message from PingCounter:  " + pingCount.get_SinkName() + " has received " +
-                  pingCount.get_RunningCount() + " \"Ping\" interactions at time " + pingCount.getTime()
-                 );
+                PingCount pingCount = (PingCount) objectReflector.getObjectRoot();
+                logger.info("Message from PingCounter: {} has received {} \"Ping\" interactions at time {}",
+                        pingCount.get_SinkName(), pingCount.get_RunningCount(), pingCount.getTime());
             }
 
-            AdvanceTimeRequest newATR = new AdvanceTimeRequest( currentTime );
-            putAdvanceTimeRequest( newATR );
-            
+            AdvanceTimeRequest newATR = new AdvanceTimeRequest(currentTime);
+            putAdvanceTimeRequest(newATR);
+
             atr.requestSyncEnd();
             atr = newATR;
         }
 
     }
 
-    public static void main( String[] args ) {
+    public static void main(String[] args) {
         try {
-            PingCounter pingCounter = new PingCounter( args );
+            FederateConfigParser federateConfigParser = new FederateConfigParser();
+            FederateConfig federateConfig = federateConfigParser.parseArgs(args, FederateConfig.class);
+            PingCounter pingCounter = new PingCounter(federateConfig);
             pingCounter.execute();
-        } catch ( Exception e ) {
-            System.err.println( "Exception caught: " + e.getMessage() );
-            e.printStackTrace();
+        } catch (Exception e) {
+            logger.error("There was a problem executing the PingCounter federate: {}", e.getMessage());
+            logger.error(e);
         }
     }
 }

@@ -20,68 +20,85 @@
  */
 
 package HelloWorld;
-import c2w.hla.base.AdvanceTimeRequest;
-import c2w.hla.base.ObjectReflector;
-import c2w.hla.InteractionRoot;
+
+import org.cpswt.hla.InteractionRoot;
+import org.cpswt.hla.base.AdvanceTimeRequest;
+import org.cpswt.utils.CpswtDefaults;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.cpswt.config.FederateConfig;
+import org.cpswt.config.FederateConfigParser;
 
 public class Sink extends SinkBase {
 
-    public Sink( String args[] ) throws Exception {
-        super( args );
+    private static final Logger logger = LogManager.getLogger(Source.class);
+
+    public Sink(FederateConfig params) throws Exception {
+        super(params);
     }
 
     private void execute() throws Exception {
-        
-        double currentTime = 0;
-        double timeOrderOffsetIncrement = 0.00001;
-        
-        AdvanceTimeRequest atr = new AdvanceTimeRequest( currentTime );
-        putAdvanceTimeRequest( atr );
 
-        readyToPopulate();
-        readyToRun();
+        double currentTime = 0;
+
+        if (super.isLateJoiner()) {
+            currentTime = super.getLBTS() - super.getLookAhead();
+            super.disableTimeRegulation();
+        }
+
+        double timeOrderOffsetIncrement = 0.00001;
+
+        AdvanceTimeRequest atr = new AdvanceTimeRequest(currentTime);
+        putAdvanceTimeRequest(atr);
+
+        if(!super.isLateJoiner()) {
+            readyToPopulate();
+            readyToRun();
+        }
 
         startAdvanceTimeThread();
 
-        InteractionRoot interactionRoot;    
-        
-        PingCount pingCount = new PingCount();
-        pingCount.set_SinkName( "Sink" );
-        pingCount.set_RunningCount( 0 );
+        InteractionRoot interactionRoot;
 
-        pingCount.registerObject( getRTI() );
-        pingCount.updateAttributeValues( getRTI(), currentTime + getLookahead() );
-        
-        while( true ) {
+        PingCount pingCount = new PingCount();
+        pingCount.set_SinkName("Sink");
+        pingCount.set_RunningCount(0);
+
+        pingCount.registerObject(super.getLRC());
+        pingCount.updateAttributeValues(super.getLRC(), currentTime + super.getLookAhead());
+
+        while (true) {
             double timeOrderOffset = 0;
-            currentTime += 1;
+            currentTime += super.getStepSize();
 
             atr.requestSyncStart();
-            
-            while(  ( interactionRoot = getNextInteractionNoWait() ) != null ) {
-                Ping ping = (Ping)interactionRoot;
-                System.out.println( "Sink: Received Ping interaction #" + ping.get_Count() );
-                pingCount.set_RunningCount( pingCount.get_RunningCount() + 1 );
-                pingCount.updateAttributeValues( getRTI(), currentTime + getLookahead() + timeOrderOffset  );
+
+            while ((interactionRoot = getNextInteractionNoWait()) != null) {
+                Ping ping = (Ping) interactionRoot;
+                logger.info("Sink: Received Ping interaction #{}", ping.get_Count());
+                pingCount.set_RunningCount(pingCount.get_RunningCount() + 1);
+                pingCount.updateAttributeValues(super.getLRC(), currentTime + super.getLookAhead() + timeOrderOffset);
                 timeOrderOffset += timeOrderOffsetIncrement;
             }
 
-            AdvanceTimeRequest newATR = new AdvanceTimeRequest( currentTime );
-            putAdvanceTimeRequest( newATR );
-            
+            AdvanceTimeRequest newATR = new AdvanceTimeRequest(currentTime);
+            putAdvanceTimeRequest(newATR);
+
             atr.requestSyncEnd();
             atr = newATR;
         }
-        
+
     }
 
-    public static void main( String[] args ) {
+    public static void main(String[] args) {
         try {
-            Sink sink = new Sink( args );
+            FederateConfigParser federateConfigParser = new FederateConfigParser();
+            FederateConfig federateConfig = federateConfigParser.parseArgs(args, FederateConfig.class);
+            Sink sink = new Sink(federateConfig);
             sink.execute();
-        } catch ( Exception e ) {
-            System.err.println( "Exception caught: " + e.getMessage() );
-            e.printStackTrace();
+        } catch (Exception e) {
+            logger.error("There was a problem executing the Sink federate: {}", e.getMessage());
+            logger.error(e);
         }
     }
 }
