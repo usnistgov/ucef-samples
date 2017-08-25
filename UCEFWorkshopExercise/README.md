@@ -87,7 +87,7 @@ Some important information to keep at hand:
 
 # Additional Information
 
-A reference implementation of the House federate is located in *$HOME/cpswt/cpswt-samples/UCEFWorkshopExercise/workspace/resources/House.java*; the resources folder contains two other Java dependencies. You can copy these files into Eclipse to complete the House federate implementation. The workspace folder also contains a script called *build.sh* that you can use to compile your Eclipse project.
+A reference implementation of the House federate is located in *$HOME/cpswt/cpswt-samples/UCEFWorkshopExercise/workspace/resources/House.java*; the resources folder contains two other Java dependencies. You can copy these files into Eclipse to complete the House federate implementation. The *pom.xml* in the resource folder should be placed at *HouseProject_generated/HouseProject-java-federates/HouseProject-impl-java/House/pom.xml* in order to use these sample Java files. The workspace folder also contains a script called *build.sh* that you can use to compile your Eclipse project.
 
 You can use the following steps to run your House federate:
 
