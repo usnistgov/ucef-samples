@@ -41,5 +41,5 @@ curl -i -X POST http://127.0.0.1:8083/fedmgr --data '{"action": "START"}' -H "Co
 
 sleep 90
 
-curl -i -X POST http://127.0.1.0:8083/fedmgr --data '{"action": "TERMINATE"}' -H "Content-Type: application/json"
+curl -i -X POST http://127.0.0.1:8083/fedmgr --data '{"action": "TERMINATE"}' -H "Content-Type: application/json"
 
