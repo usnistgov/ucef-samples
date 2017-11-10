@@ -23,25 +23,33 @@
 #define _PINGCOUNTER_CLASS
 
 #include "PingCounter2Base.hpp"
+#include "FederateConfigParser.h"
+#include "FederateConfig.h"
+
 
 class PingCounter2 : public PingCounter2Base {
 private:
-    static double LOOKAHEAD;
+    // static double LOOKAHEAD;
     double _currentTime;
     
 public:
     typedef PingCounter2Base Super;
-	PingCounter2( int argc, char *argv[] ) : Super( argc, argv ), _currentTime( 0 ) { }
+	// PingCounter2( int argc, char *argv[] ) : Super( argc, argv ), _currentTime( 0 ) { }
+
+    PingCounter2(FederateConfig *fedconfigObj): Super(fedconfigObj) {
+       
+	}
+
 
 	virtual ~PingCounter2( void )
 	 throw (RTI::FederateInternalError) { }
 
     class PingCounter2ATRCallback : public ATRCallback {
     private:
-    	PingCounter2 &_pingCounter2;
+    	PingCounter2 &_PingCounter2;
     public:
-    	PingCounter2ATRCallback( PingCounter2 &pingCounter2 ) : _pingCounter2( pingCounter2 ) { }
-    	virtual void execute( void ) { _pingCounter2.execute(); }
+    	PingCounter2ATRCallback( PingCounter2 &PingCounter2 ) : _PingCounter2( PingCounter2 ) { }
+    	virtual void execute( void ) { _PingCounter2.execute(); }
 		virtual SP clone( void ) { return SP(  new PingCounter2ATRCallback( *this )  ); }
     };
 

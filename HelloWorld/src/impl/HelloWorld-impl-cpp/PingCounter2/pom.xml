@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.webgme.guest</groupId>
+    <groupId>org.cpswt.HelloWorld</groupId>
     <artifactId>HelloWorld-impl-cpp</artifactId>
     <version>0.1.0-SNAPSHOT</version>
   </parent>

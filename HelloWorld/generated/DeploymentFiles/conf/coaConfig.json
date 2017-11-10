@@ -1,0 +1,27 @@
+{
+  "script": {
+    "expect": [
+      {
+        "federateType": "PingCounter"
+      },
+      {
+        "federateType": "PingCounter2"
+      },
+      {
+        "federateType": "Sink"
+      },
+      {
+        "federateType": "Sink2"
+      },
+      {
+        "federateType": "Source"
+      },
+      {
+        "federateType": "Source2"
+      }
+    ],
+    "pauses": [],
+    "coaNodes": [],
+    "coaEdges": []
+  }
+}

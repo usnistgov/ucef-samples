@@ -19,10 +19,12 @@
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  */
 
-#ifndef _SINK_CLASS
-#define _SINK_CLASS
+#ifndef _Sink2_CLASS
+#define _Sink2_CLASS
 
 #include "Sink2Base.hpp"
+#include "FederateConfigParser.h"
+#include "FederateConfig.h"
 
 class Sink2 : public Sink2Base {
 private:
@@ -31,9 +33,12 @@ private:
     
 public:
     typedef Sink2Base Super;
-	Sink2( int argc, char *argv[] ) : Super( argc, argv ), _currentTime( 0 ) {
-//		_pingCount.set_SinkName( "Sink2" );
-//		_pingCount.set_RunningCount( 0 );
+//     Sink2( int argc, char *argv[] ) : Super( argc, argv ), _currentTime( 0 ) {
+// //		_pingCount.set_SinkName( "Sink2" );
+// //		_pingCount.set_RunningCount( 0 );
+// 	}
+	Sink2(FederateConfig *fedconfigObj): Super(fedconfigObj) {
+       
 	}
 
 	virtual ~Sink2( void )
@@ -41,10 +46,10 @@ public:
 
     class Sink2ATRCallback : public ATRCallback {
     private:
-    	Sink2 &_sink2;
+    	Sink2 &_Sink2;
     public:
-    	Sink2ATRCallback( Sink2 &sink2 ) : _sink2( sink2 ) { }
-    	virtual void execute( void ) { _sink2.execute(); }
+    	Sink2ATRCallback( Sink2 &Sink2 ) : _Sink2( Sink2 ) { }
+    	virtual void execute( void ) { _Sink2.execute(); }
 		virtual SP clone( void ) { return SP(  new Sink2ATRCallback( *this )  ); }
     };
 

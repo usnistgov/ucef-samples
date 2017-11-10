@@ -23,6 +23,8 @@
 #define _SOURCE_CLASS
 
 #include "Source2Base.hpp"
+#include "FederateConfigParser.h"
+#include "FederateConfig.h"
 
 class Source2 : public Source2Base {
 private:
@@ -31,17 +33,18 @@ private:
     
 public:
     typedef Source2Base Super;
-	Source2( int argc, char *argv[] ) : Super( argc, argv ), _currentTime( 0 ), _ix( 0 ) { }
+	// Source2( int argc, char *argv[] ) : Super( argc, argv ), _currentTime( 0 ), _ix( 0 ) { }
+    Source2(FederateConfig *fedconfigObj): Super(fedconfigObj),_ix( 0 ) { }
 
 	virtual ~Source2( void )
 	 throw (RTI::FederateInternalError) { }
 
     class Source2ATRCallback : public ATRCallback {
     private:
-    	Source2 &_source2;
+    	Source2 &_Source2;
     public:
-    	Source2ATRCallback( Source2 &source2 ) : _source2( source2 ) { }
-    	virtual void execute( void ) { _source2.execute(); }
+    	Source2ATRCallback( Source2 &Source2 ) : _Source2( Source2 ) { }
+    	virtual void execute( void ) { _Source2.execute(); }
 		virtual SP clone( void ) { return SP(  new Source2ATRCallback( *this )  ); }
     };
     

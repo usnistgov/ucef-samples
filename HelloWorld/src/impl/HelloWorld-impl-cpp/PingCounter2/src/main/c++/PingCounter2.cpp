@@ -24,10 +24,25 @@
 void PingCounter2::initialize( void ) {
 
 	PingCounter2ATRCallback pc2ATRCb( *this );
-	putAdvanceTimeRequest(  _currentTime, pc2ATRCb );
+	// putAdvanceTimeRequest(  _currentTime, pc2ATRCb );
 
-    readyToPopulate();
-    readyToRun();
+	_currentTime = 0;
+    
+    if (this->get_IsLateJoiner()) {
+        _currentTime = getLBTS() - getLookAhead();
+        disableTimeRegulation();
+    }
+
+    putAdvanceTimeRequest(  _currentTime, pc2ATRCb );
+
+    if(!this->get_IsLateJoiner()){
+        readyToPopulate();
+        readyToRun();
+    }
+
+
+    //readyToPopulate();
+    //readyToRun();
 }
 
 void PingCounter2::execute( void ) {
@@ -48,9 +63,10 @@ void PingCounter2::execute( void ) {
 
 int main( int argc, char *argv[] ) {
 
+	FederateConfigParser *parse_obj = new FederateConfigParser();
+    FederateConfig *fedconfigObj = parse_obj->parseArgs(argc, argv);
 	std::cout << "Statring PingCounter2";
-	PingCounter2 pingCounter2( argc, argv );
-	std::cout << "Created PingCounter2";
+    PingCounter2 pingCounter2(fedconfigObj);
 	pingCounter2.initialize();
 	std::cout << "Initialized PingCounter2";
 	pingCounter2.run();
