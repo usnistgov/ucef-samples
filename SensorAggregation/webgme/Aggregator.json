@@ -1,0 +1,300 @@
+{
+  "__OBJECTS__": {
+    "d9a048f6-f0a1-4500-a575-190671cf8781": {
+      "attributes": {
+        "name": "Aggregator",
+        "TimeRegulating": "true",
+        "TimeConstrained": "true",
+        "Step": "1.0",
+        "Meld": "false",
+        "Lookahead": "0.2",
+        "InstantiationScript": "",
+        "GeneratorClass": "",
+        "FederateType": "1",
+        "EnableROAsynchronousDelivery": "true"
+      },
+      "__FEDERATE_BASE__": "JavaFederate",
+      "federates": [],
+      "__FEDERATE_TYPE__": "directly deployable",
+      "parameters": [],
+      "inputs": [
+        {
+          "GUID": "17d0fb63-4d81-4e91-a131-421aeb504c97"
+        }
+      ],
+      "outputs": [
+        {
+          "GUID": "d0d3093a-6d23-451f-b6d3-99adba306a47"
+        },
+        {
+          "GUID": "e39d1ff1-e069-4616-a6b8-9256c61bb8b8"
+        }
+      ],
+      "RegistryInfo": "",
+      "documentation": "No documentation exists yet.",
+      "repository": "No repository exists yet.",
+      "GUID": "d9a048f6-f0a1-4500-a575-190671cf8781"
+    },
+    "aa71851f-0a27-4167-871c-758b6131b88e": {
+      "attributes": {
+        "name": "InteractionRoot",
+        "Order": "timestamp",
+        "LogLevel": "NORMAL",
+        "EnableLogging": "false",
+        "Delivery": "reliable"
+      },
+      "__INTERACTION_BASE__": {
+        "GUID": "673395d2-0ee2-4e42-8e4d-1cda1bea2ea1"
+      },
+      "parameters": [],
+      "GUID": "aa71851f-0a27-4167-871c-758b6131b88e"
+    },
+    "ec4b76ee-0202-4b65-8613-d498f62055a6": {
+      "attributes": {
+        "name": "C2WInteractionRoot",
+        "Order": "timestamp",
+        "LogLevel": "NORMAL",
+        "EnableLogging": "false",
+        "Delivery": "reliable"
+      },
+      "__INTERACTION_BASE__": {
+        "GUID": "aa71851f-0a27-4167-871c-758b6131b88e"
+      },
+      "parameters": [
+        {
+          "name": "originFed",
+          "ParameterType": "String",
+          "Hidden": "false"
+        },
+        {
+          "name": "sourceFed",
+          "ParameterType": "String",
+          "Hidden": "false"
+        },
+        {
+          "name": "actualLogicalGenerationTime",
+          "ParameterType": "double",
+          "Hidden": "false"
+        },
+        {
+          "name": "federateFilter",
+          "ParameterType": "String",
+          "Hidden": "false"
+        }
+      ],
+      "GUID": "ec4b76ee-0202-4b65-8613-d498f62055a6"
+    },
+    "26484829-8cd8-4cbc-a913-41d643cd8f82": {
+      "attributes": {
+        "name": "Report",
+        "Order": "timestamp",
+        "LogLevel": "NORMAL",
+        "EnableLogging": "false",
+        "Delivery": "reliable"
+      },
+      "__INTERACTION_BASE__": {
+        "GUID": "ec4b76ee-0202-4b65-8613-d498f62055a6"
+      },
+      "parameters": [
+        {
+          "name": "originFed",
+          "ParameterType": "String",
+          "Hidden": "false"
+        },
+        {
+          "name": "sourceFed",
+          "ParameterType": "String",
+          "Hidden": "false"
+        },
+        {
+          "name": "clusterId",
+          "ParameterType": "int",
+          "Hidden": "false"
+        },
+        {
+          "name": "aggregationMethod",
+          "ParameterType": "String",
+          "Hidden": "false"
+        },
+        {
+          "name": "actualLogicalGenerationTime",
+          "ParameterType": "double",
+          "Hidden": "false"
+        },
+        {
+          "name": "federateFilter",
+          "ParameterType": "String",
+          "Hidden": "false"
+        }
+      ],
+      "GUID": "26484829-8cd8-4cbc-a913-41d643cd8f82"
+    },
+    "d0d3093a-6d23-451f-b6d3-99adba306a47": {
+      "attributes": {
+        "name": "VolumeReport",
+        "Order": "timestamp",
+        "LogLevel": "NORMAL",
+        "EnableLogging": "false",
+        "Delivery": "reliable"
+      },
+      "__INTERACTION_BASE__": {
+        "GUID": "26484829-8cd8-4cbc-a913-41d643cd8f82"
+      },
+      "parameters": [
+        {
+          "name": "originFed",
+          "ParameterType": "String",
+          "Hidden": "false"
+        },
+        {
+          "name": "sourceFed",
+          "ParameterType": "String",
+          "Hidden": "false"
+        },
+        {
+          "name": "count",
+          "ParameterType": "int",
+          "Hidden": "false"
+        },
+        {
+          "name": "clusterId",
+          "ParameterType": "int",
+          "Hidden": "false"
+        },
+        {
+          "name": "aggregationMethod",
+          "ParameterType": "String",
+          "Hidden": "false"
+        },
+        {
+          "name": "actualLogicalGenerationTime",
+          "ParameterType": "double",
+          "Hidden": "false"
+        },
+        {
+          "name": "federateFilter",
+          "ParameterType": "String",
+          "Hidden": "false"
+        }
+      ],
+      "GUID": "d0d3093a-6d23-451f-b6d3-99adba306a47"
+    },
+    "e39d1ff1-e069-4616-a6b8-9256c61bb8b8": {
+      "attributes": {
+        "name": "SpeedReport",
+        "Order": "timestamp",
+        "LogLevel": "NORMAL",
+        "EnableLogging": "false",
+        "Delivery": "reliable"
+      },
+      "__INTERACTION_BASE__": {
+        "GUID": "26484829-8cd8-4cbc-a913-41d643cd8f82"
+      },
+      "parameters": [
+        {
+          "name": "originFed",
+          "ParameterType": "String",
+          "Hidden": "false"
+        },
+        {
+          "name": "sourceFed",
+          "ParameterType": "String",
+          "Hidden": "false"
+        },
+        {
+          "name": "speed",
+          "ParameterType": "float",
+          "Hidden": "false"
+        },
+        {
+          "name": "clusterId",
+          "ParameterType": "int",
+          "Hidden": "false"
+        },
+        {
+          "name": "aggregationMethod",
+          "ParameterType": "String",
+          "Hidden": "false"
+        },
+        {
+          "name": "actualLogicalGenerationTime",
+          "ParameterType": "double",
+          "Hidden": "false"
+        },
+        {
+          "name": "federateFilter",
+          "ParameterType": "String",
+          "Hidden": "false"
+        }
+      ],
+      "GUID": "e39d1ff1-e069-4616-a6b8-9256c61bb8b8"
+    },
+    "17d0fb63-4d81-4e91-a131-421aeb504c97": {
+      "attributes": {
+        "name": "AggregationControl",
+        "Order": "timestamp",
+        "LogLevel": "NORMAL",
+        "EnableLogging": "false",
+        "Delivery": "reliable"
+      },
+      "__INTERACTION_BASE__": {
+        "GUID": "ec4b76ee-0202-4b65-8613-d498f62055a6"
+      },
+      "parameters": [
+        {
+          "name": "originFed",
+          "ParameterType": "String",
+          "Hidden": "false"
+        },
+        {
+          "name": "sourceFed",
+          "ParameterType": "String",
+          "Hidden": "false"
+        },
+        {
+          "name": "aggregationMethod",
+          "ParameterType": "String",
+          "Hidden": "false"
+        },
+        {
+          "name": "clusterId",
+          "ParameterType": "int",
+          "Hidden": "false"
+        },
+        {
+          "name": "actualLogicalGenerationTime",
+          "ParameterType": "double",
+          "Hidden": "false"
+        },
+        {
+          "name": "federateFilter",
+          "ParameterType": "String",
+          "Hidden": "false"
+        }
+      ],
+      "GUID": "17d0fb63-4d81-4e91-a131-421aeb504c97"
+    }
+  },
+  "__ROOT_OBJECT__": {
+    "GUID": "d9a048f6-f0a1-4500-a575-190671cf8781",
+    "name": "Aggregator",
+    "version": "0.0.1",
+    "description": "Sensor data aggregator for the UCEF Gateway sensor aggregation example"
+  },
+  "Federates": {
+    "d9a048f6-f0a1-4500-a575-190671cf8781": ""
+  },
+  "COAs": {},
+  "Experiments": {},
+  "Interactions": {
+    "aa71851f-0a27-4167-871c-758b6131b88e": "",
+    "ec4b76ee-0202-4b65-8613-d498f62055a6": "",
+    "26484829-8cd8-4cbc-a913-41d643cd8f82": "",
+    "d0d3093a-6d23-451f-b6d3-99adba306a47": "",
+    "e39d1ff1-e069-4616-a6b8-9256c61bb8b8": "",
+    "17d0fb63-4d81-4e91-a131-421aeb504c97": ""
+  },
+  "Repositories": [],
+  "Builds": [],
+  "Executions": []
+}

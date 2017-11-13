@@ -1,0 +1,43 @@
+{
+  "__OBJECTS__": {
+    "30448ff5-a6a7-4062-868c-b20d60263c3e": {
+      "attributes": {
+        "name": "Environment",
+        "TimeRegulating": "true",
+        "TimeConstrained": "true",
+        "Step": "1.0",
+        "Meld": "false",
+        "Lookahead": "0.2",
+        "InstantiationScript": "",
+        "GeneratorClass": "",
+        "FederateType": "1",
+        "EnableROAsynchronousDelivery": "true"
+      },
+      "__FEDERATE_BASE__": "JavaFederate",
+      "federates": [],
+      "__FEDERATE_TYPE__": "directly deployable",
+      "parameters": [],
+      "inputs": [],
+      "outputs": [],
+      "RegistryInfo": "",
+      "documentation": "No documentation exists yet.",
+      "repository": "No repository exists yet.",
+      "GUID": "30448ff5-a6a7-4062-868c-b20d60263c3e"
+    }
+  },
+  "__ROOT_OBJECT__": {
+    "GUID": "30448ff5-a6a7-4062-868c-b20d60263c3e",
+    "name": "Environment",
+    "version": "0.0.1",
+    "description": "Transportation environment federate for the UCEF Gateway sensor aggregation example"
+  },
+  "Federates": {
+    "30448ff5-a6a7-4062-868c-b20d60263c3e": ""
+  },
+  "COAs": {},
+  "Experiments": {},
+  "Interactions": {},
+  "Repositories": [],
+  "Builds": [],
+  "Executions": []
+}
