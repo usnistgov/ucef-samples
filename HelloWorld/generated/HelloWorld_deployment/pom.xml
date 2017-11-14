@@ -49,6 +49,37 @@
 			<type>nar</type>
 		</dependency>
 		
+
+		<dependency><!-- The depenency for the generated code-->
+			<groupId>org.cpswt.HelloWorld</groupId>
+			<artifactId>HelloWorld-root</artifactId>
+			<version>0.1.0-SNAPSHOT</version>
+			<type>pom</type>
+		</dependency>
+		
+		<dependency><!-- The depenency for the user written code-->
+			<groupId>org.cpswt.HelloWorld</groupId>
+			<artifactId>HelloWorld-PingCounter2-cpp</artifactId>
+			<version>0.1.0-SNAPSHOT</version>
+			<type>nar</type>
+		</dependency>
+		
+		<dependency><!-- The depenency for the user written code-->
+			<groupId>org.cpswt.HelloWorld</groupId>
+			<artifactId>HelloWorld-Sink2-cpp</artifactId>
+			<version>0.1.0-SNAPSHOT</version>
+			<type>nar</type>
+		</dependency>
+		
+		<dependency><!-- The depenency for the user written code-->
+			<groupId>org.cpswt.HelloWorld</groupId>
+			<artifactId>HelloWorld-Source2-cpp</artifactId>
+			<version>0.1.0-SNAPSHOT</version>
+			<type>nar</type>
+		</dependency>
+		
+
+
 		
 		<dependency>
 	        <groupId>junit</groupId>

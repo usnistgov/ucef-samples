@@ -18,6 +18,7 @@
       
       <module>HelloWorld-rti-cpp</module> 
       <module>HelloWorld-base-cpp</module>
+      <module>HelloWorld-impl-cpp</module>
 
     </modules>  
 
