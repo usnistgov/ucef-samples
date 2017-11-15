@@ -1,0 +1,35 @@
+{
+  "federateTypesAllowed": [
+    "Aggregator",
+    "BaseStation",
+    "Environment"
+  ],
+  "expectedFederates": [
+    {
+      "federateType": "Aggregator",
+      "count": 0
+    },
+    {
+      "federateType": "BaseStation",
+      "count": 0
+    },
+    {
+      "federateType": "Environment",
+      "count": 1
+    }
+  ],
+  "lateJoinerFederates": [
+    {
+      "federateType": "Aggregator",
+      "count": 0
+    },
+    {
+      "federateType": "BaseStation",
+      "count": 0
+    },
+    {
+      "federateType": "Environment",
+      "count": 0
+    }
+  ]
+}
