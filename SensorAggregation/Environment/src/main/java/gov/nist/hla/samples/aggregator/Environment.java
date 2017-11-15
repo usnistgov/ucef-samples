@@ -3,9 +3,13 @@ package gov.nist.hla.samples.aggregator;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,9 +18,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import gov.nist.hla.ii.InjectionCallback;
 import gov.nist.hla.ii.InjectionFederate;
+import hla.rti.AttributeNotOwned;
 import hla.rti.FederateNotExecutionMember;
+import hla.rti.InvalidFederationTime;
 import hla.rti.NameNotFound;
 import hla.rti.ObjectClassNotPublished;
+import hla.rti.ObjectNotKnown;
 
 public class Environment implements InjectionCallback {
     private static final Logger log = LogManager.getLogger();
@@ -28,8 +35,8 @@ public class Environment implements InjectionCallback {
     
     private EnvironmentConfiguration configuration;
     
-    private Set<String> speedSensors = new HashSet<String>();
-    private Set<String> volumeSensors = new HashSet<String>();
+    private List<Set<String>> speedClusters = new ArrayList<Set<String>>();
+    private List<Set<String>> volumeClusters = new ArrayList<Set<String>>();
     
     public static void main(String[] args)
             throws IOException {
@@ -61,38 +68,37 @@ public class Environment implements InjectionCallback {
     }
     
     public void receiveInteraction(Double timeStep, String className, Map<String, String> parameters) {
-        // TODO Auto-generated method stub
-        
+        throw new RuntimeException("unexpected interaction received");
     }
 
     public void receiveObject(Double timeStep, String className, String instanceName, Map<String, String> attributes) {
-        // TODO Auto-generated method stub
-        
+        throw new RuntimeException("unexpected object reflection");
     }
 
     public void initializeSelf() {
-        final int speedClusters = configuration.getNumberOfSpeedClusters();
-        log.info("creating " + speedClusters + " object instances of " + OBJECT_SPEED_SENSOR);
-        for (int i = 0; i < speedClusters; i++) {
-            try {
-                String name = gateway.registerObjectInstance(OBJECT_SPEED_SENSOR);
-                log.debug("\tnew instance with name " + name);
-                speedSensors.add(name);
-            } catch (FederateNotExecutionMember | NameNotFound | ObjectClassNotPublished e) {
-                throw new RuntimeException(e);
+        final int min = configuration.getMinimumClusterSize();
+        final int max = configuration.getMaximumClusterSize();
+        
+        log.info("creating " + configuration.getNumberOfSpeedClusters() + " speed sensor clusters");
+        for (int i = 0; i < configuration.getNumberOfSpeedClusters(); i++) {
+            final int numberOfSensors = ThreadLocalRandom.current().nextInt(min, max + 1);
+            log.debug(String.format("on speed cluster %d with %d sensors", i, numberOfSensors));
+            Set<String> sensors = new HashSet<String>();
+            for (int k = 0; k < numberOfSensors; k++) {
+                sensors.add(createSensor(OBJECT_SPEED_SENSOR, i, k));
             }
+            speedClusters.add(sensors);
         }
         
-        final int volumeClusters = configuration.getNumberOfVolumeClusters();
-        log.info("creating " + volumeClusters + " object instances of " + OBJECT_VOLUME_SENSOR);
-        for (int i = 0; i < volumeClusters; i++) {
-            try {
-                String name = gateway.registerObjectInstance(OBJECT_VOLUME_SENSOR);
-                log.debug("\tnew instance with name " + name);
-                volumeSensors.add(name);
-            } catch (FederateNotExecutionMember | NameNotFound | ObjectClassNotPublished e) {
-                throw new RuntimeException(e);
+        log.info("creating " + configuration.getNumberOfVolumeClusters() + " volume sensor clusters");
+        for (int i = 0; i < configuration.getNumberOfVolumeClusters(); i++) {
+            final int numberOfSensors = ThreadLocalRandom.current().nextInt(min, max + 1);
+            log.debug(String.format("on volume cluster %d with %d sensors", i, numberOfSensors));
+            Set<String> sensors = new HashSet<String>();
+            for (int k = 0; k < numberOfSensors; k++) {
+                sensors.add(createSensor(OBJECT_VOLUME_SENSOR, i, k));
             }
+            volumeClusters.add(sensors);
         }
     }
 
@@ -101,18 +107,67 @@ public class Environment implements InjectionCallback {
     }
 
     public void beforeTimeStep(Double timeStep) {
-        // TODO Auto-generated method stub
+        log.info("updating the speed sensors for each cluster");
+        for (int i = 0; i < speedClusters.size(); i++) {
+            log.trace("on cluster " + i);
+            for (String sensor : speedClusters.get(i)) {
+                final float newValue = (float) (ThreadLocalRandom.current().nextInt(300, 600) / 10.0);
+                log.trace("\ton sensor " + sensor + " using value " + newValue);
+                updateSpeedSensor(sensor, newValue);
+            }
+        }
         
+        log.info("updating the volume sensors for each cluster");
+        for (int i = 0; i < volumeClusters.size(); i++) {
+            log.trace("on cluster " + i);
+            for (String sensor : volumeClusters.get(i)) {
+                final int newValue = ThreadLocalRandom.current().nextInt(1, 11);
+                log.trace("\ton sensor " + sensor + " using value " + newValue);
+                updateVolumeSensor(sensor, newValue);
+            }
+        }
     }
 
     public void afterTimeStep(Double timeStep) {
-        // TODO Auto-generated method stub
-        
+        log.trace("afterTimeStep " + timeStep);
     }
 
     public void afterResignation() {
-        // TODO Auto-generated method stub
-        
+        log.trace("afterResignation");
     }
-
+    
+    private String createSensor(String type, int cluster, int id) {
+        Map<String, String> initialValues = new HashMap<String, String>();
+        initialValues.put("clusterId", Integer.toString(cluster));
+        initialValues.put("sensorId", Integer.toString(id));
+        
+        try {
+            String name = gateway.registerObjectInstance(type);
+            log.debug("new " + type + " with name " + name);
+            gateway.updateObject(name, initialValues);
+            return name;
+        } catch (FederateNotExecutionMember | NameNotFound | ObjectClassNotPublished | ObjectNotKnown | AttributeNotOwned e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    private void updateSpeedSensor(String name, float speed) {
+        Map<String, String> updatedValues = new HashMap<String, String>();
+        updatedValues.put("speed", Float.toString(speed));
+        try {
+            gateway.updateObject(name, updatedValues, gateway.getTimeStamp());
+        } catch (FederateNotExecutionMember | ObjectNotKnown | NameNotFound | AttributeNotOwned | InvalidFederationTime e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    private void updateVolumeSensor(String name, int count) {
+        Map<String, String> updatedValues = new HashMap<String, String>();
+        updatedValues.put("count", Integer.toString(count));
+        try {
+            gateway.updateObject(name, updatedValues, gateway.getTimeStamp());
+        } catch (FederateNotExecutionMember | ObjectNotKnown | NameNotFound | AttributeNotOwned | InvalidFederationTime e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
