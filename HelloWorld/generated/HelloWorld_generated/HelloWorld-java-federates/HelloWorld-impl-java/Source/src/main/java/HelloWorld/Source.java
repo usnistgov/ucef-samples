@@ -1,110 +1,93 @@
+/*
+ * Copyright (c) 2008, Institute for Software Integrated Systems, Vanderbilt University
+ * All rights reserved.
+ *
+ * Permission to use, copy, modify, and distribute this software and its
+ * documentation for any purpose, without fee, and without written agreement is
+ * hereby granted, provided that the above copyright notice, the following
+ * two paragraphs and the author appear in all copies of this software.
+ *
+ * IN NO EVENT SHALL THE VANDERBILT UNIVERSITY BE LIABLE TO ANY PARTY FOR
+ * DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT
+ * OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE VANDERBILT
+ * UNIVERSITY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * THE VANDERBILT UNIVERSITY SPECIFICALLY DISCLAIMS ANY WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+ * AND FITNESS FOR A PARTICULAR PURPOSE.  THE SOFTWARE PROVIDED HEREUNDER IS
+ * ON AN "AS IS" BASIS, AND THE VANDERBILT UNIVERSITY HAS NO OBLIGATION TO
+ * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
+ */
+
 package HelloWorld;
 
-import org.cpswt.config.FederateConfig;
-import org.cpswt.config.FederateConfigParser;
+
 import org.cpswt.hla.base.AdvanceTimeRequest;
 import org.cpswt.utils.CpswtDefaults;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.cpswt.config.FederateConfig;
+import org.cpswt.config.FederateConfigParser;
 
-/**
- * The Source type of federate for the federation designed in WebGME.
- *
- */
 public class Source extends SourceBase {
 
-    private final static Logger log = LogManager.getLogger(Source.class);
-
-    double currentTime = 0;
+    private static final Logger logger = LogManager.getLogger(Source.class);
 
     public Source(FederateConfig params) throws Exception {
         super(params);
     }
 
     private void execute() throws Exception {
-        if(super.isLateJoiner()) {
+
+        double currentTime = 0;
+
+        if (super.isLateJoiner()) {
             currentTime = super.getLBTS() - super.getLookAhead();
             super.disableTimeRegulation();
         }
-
-        /////////////////////////////////////////////
-        // TODO perform basic initialization below //
-        /////////////////////////////////////////////
 
         AdvanceTimeRequest atr = new AdvanceTimeRequest(currentTime);
         putAdvanceTimeRequest(atr);
 
         if(!super.isLateJoiner()) {
             readyToPopulate();
-        }
-
-        ///////////////////////////////////////////////////////////////////////
-        // Call CheckReceivedSubscriptions(<message>) here to receive
-        // subscriptions published before the first time step.
-        ///////////////////////////////////////////////////////////////////////
-
-        ///////////////////////////////////////////////////////////////////////
-        // TODO perform initialization that depends on other federates below //
-        ///////////////////////////////////////////////////////////////////////
-
-        if(!super.isLateJoiner()) {
             readyToRun();
         }
 
         startAdvanceTimeThread();
 
-        // this is the exit condition of the following while loop
-        // it is used to break the loop so that latejoiner federates can
-        // notify the federation manager that they left the federation
-        boolean exitCondition = false;
-
+        int ix = 0;
         while (true) {
-            currentTime += super.getStepSize();
+            Ping ping = create_Ping();
+            ping.set_Count(ix);
+
+            currentTime += 1;
 
             atr.requestSyncStart();
-            enteredTimeGrantedState();
 
-            ////////////////////////////////////////////////////////////////////////////////////////
-            // TODO send interactions that must be sent every logical time step below.
-            // Set the interaction's parameters.
-            //
-            //    Ping vPing = create_Ping();
-            //    vPing.set_Count( < YOUR VALUE HERE > );
-            //    vPing.sendInteraction(getLRC(), currentTime);
-            //
-            ////////////////////////////////////////////////////////////////////////////////////////
+            logger.info("Source: Sending Ping interaction #{}", ix);
+            ping.sendInteraction(super.getLRC(), currentTime);
 
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            // DO NOT MODIFY FILE BEYOND THIS LINE
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             AdvanceTimeRequest newATR = new AdvanceTimeRequest(currentTime);
             putAdvanceTimeRequest(newATR);
+
             atr.requestSyncEnd();
             atr = newATR;
 
-            if(exitCondition) {
-                break;
-            }
+            ++ix;
         }
 
-        // while loop finished, notify FederationManager about resign
-        super.notifyFederationOfResign();
     }
 
     public static void main(String[] args) {
         try {
             FederateConfigParser federateConfigParser = new FederateConfigParser();
             FederateConfig federateConfig = federateConfigParser.parseArgs(args, FederateConfig.class);
-            Source federate = new Source(federateConfig);
-            federate.execute();
-
-            System.exit(0);
+            Source source = new Source(federateConfig);
+            source.execute();
         } catch (Exception e) {
-            log.error("There was a problem executing the Source federate: {}", e.getMessage());
-            log.error(e);
-
-            System.exit(1);
+            logger.error("There was a problem executing the Source federate: {}", e.getMessage());
+            logger.error(e);
         }
     }
 }

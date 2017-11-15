@@ -1,143 +1,104 @@
+/*
+ * Copyright (c) 2008, Institute for Software Integrated Systems, Vanderbilt University
+ * All rights reserved.
+ *
+ * Permission to use, copy, modify, and distribute this software and its
+ * documentation for any purpose, without fee, and without written agreement is
+ * hereby granted, provided that the above copyright notice, the following
+ * two paragraphs and the author appear in all copies of this software.
+ *
+ * IN NO EVENT SHALL THE VANDERBILT UNIVERSITY BE LIABLE TO ANY PARTY FOR
+ * DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT
+ * OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE VANDERBILT
+ * UNIVERSITY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * THE VANDERBILT UNIVERSITY SPECIFICALLY DISCLAIMS ANY WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+ * AND FITNESS FOR A PARTICULAR PURPOSE.  THE SOFTWARE PROVIDED HEREUNDER IS
+ * ON AN "AS IS" BASIS, AND THE VANDERBILT UNIVERSITY HAS NO OBLIGATION TO
+ * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
+ */
+
 package HelloWorld;
 
-import org.cpswt.config.FederateConfig;
-import org.cpswt.config.FederateConfigParser;
 import org.cpswt.hla.InteractionRoot;
 import org.cpswt.hla.base.AdvanceTimeRequest;
 import org.cpswt.utils.CpswtDefaults;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.cpswt.config.FederateConfig;
+import org.cpswt.config.FederateConfigParser;
 
-/**
- * The Sink type of federate for the federation designed in WebGME.
- *
- */
 public class Sink extends SinkBase {
 
-    private final static Logger log = LogManager.getLogger(Sink.class);
-
-    double currentTime = 0;
-
-    ///////////////////////////////////////////////////////////////////////
-    // TODO Instantiate objects that must be sent every logical time step
-    //
-    // PingCount vPingCount = new PingCount();
-    //
-    ///////////////////////////////////////////////////////////////////////
+    private static final Logger logger = LogManager.getLogger(Sink.class);
 
     public Sink(FederateConfig params) throws Exception {
         super(params);
-
-        ///////////////////////////////////////////////////////////////////////
-        // TODO Must register object instances after super(args)
-        //
-        // vPingCount.registerObject(getLRC());
-        //
-        ///////////////////////////////////////////////////////////////////////
     }
 
-    private void CheckReceivedSubscriptions(String s) {
-
-        InteractionRoot interaction = null;
-        while ((interaction = getNextInteractionNoWait()) != null) {
-            if (interaction instanceof Ping) {
-                handleInteractionClass((Ping) interaction);
-            }
-            log.info("Interaction received and handled: " + s);
-        }
-     }
-
     private void execute() throws Exception {
-        if(super.isLateJoiner()) {
+
+        double currentTime = 0;
+
+        if (super.isLateJoiner()) {
             currentTime = super.getLBTS() - super.getLookAhead();
             super.disableTimeRegulation();
         }
 
-        /////////////////////////////////////////////
-        // TODO perform basic initialization below //
-        /////////////////////////////////////////////
+        double timeOrderOffsetIncrement = 0.00001;
 
         AdvanceTimeRequest atr = new AdvanceTimeRequest(currentTime);
         putAdvanceTimeRequest(atr);
 
         if(!super.isLateJoiner()) {
             readyToPopulate();
-        }
-
-        ///////////////////////////////////////////////////////////////////////
-        // Call CheckReceivedSubscriptions(<message>) here to receive
-        // subscriptions published before the first time step.
-        ///////////////////////////////////////////////////////////////////////
-
-        ///////////////////////////////////////////////////////////////////////
-        // TODO perform initialization that depends on other federates below //
-        ///////////////////////////////////////////////////////////////////////
-
-        if(!super.isLateJoiner()) {
             readyToRun();
         }
 
         startAdvanceTimeThread();
 
-        // this is the exit condition of the following while loop
-        // it is used to break the loop so that latejoiner federates can
-        // notify the federation manager that they left the federation
-        boolean exitCondition = false;
+        InteractionRoot interactionRoot;
+
+        PingCount pingCount = new PingCount();
+        pingCount.set_SinkName("Sink");
+        pingCount.set_RunningCount(0);
+
+        pingCount.registerObject(super.getLRC());
+        pingCount.updateAttributeValues(super.getLRC(), currentTime + super.getLookAhead());
 
         while (true) {
+            double timeOrderOffset = 0;
             currentTime += super.getStepSize();
 
             atr.requestSyncStart();
-            enteredTimeGrantedState();
 
-            ////////////////////////////////////////////////////////////////////////////////////////
-            // TODO objects that must be sent every logical time step
-            //
-            //    vPingCount.set_RunningCount(<YOUR VALUE HERE >);
-            //    vPingCount.set_SinkName(<YOUR VALUE HERE >);
-            //    vPingCount.updateAttributeValues(getLRC(), currentTime);
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////
+            while ((interactionRoot = getNextInteractionNoWait()) != null) {
+                Ping ping = (Ping) interactionRoot;
+                logger.info("Sink: Received Ping interaction #{}", ping.get_Count());
+                pingCount.set_RunningCount(pingCount.get_RunningCount() + 1);
+                pingCount.updateAttributeValues(super.getLRC(), currentTime + super.getLookAhead() + timeOrderOffset);
+                timeOrderOffset += timeOrderOffsetIncrement;
+            }
 
-            CheckReceivedSubscriptions("Main Loop");
-
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            // DO NOT MODIFY FILE BEYOND THIS LINE
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             AdvanceTimeRequest newATR = new AdvanceTimeRequest(currentTime);
             putAdvanceTimeRequest(newATR);
+
             atr.requestSyncEnd();
             atr = newATR;
-
-            if(exitCondition) {
-                break;
-            }
         }
 
-        // while loop finished, notify FederationManager about resign
-        super.notifyFederationOfResign();
-    }
-
-    private void handleInteractionClass(Ping interaction) {
-        //////////////////////////////////////////////////////////////////////////
-        // TODO implement how to handle reception of the interaction            //
-        //////////////////////////////////////////////////////////////////////////
     }
 
     public static void main(String[] args) {
         try {
             FederateConfigParser federateConfigParser = new FederateConfigParser();
             FederateConfig federateConfig = federateConfigParser.parseArgs(args, FederateConfig.class);
-            Sink federate = new Sink(federateConfig);
-            federate.execute();
-
-            System.exit(0);
+            Sink sink = new Sink(federateConfig);
+            sink.execute();
         } catch (Exception e) {
-            log.error("There was a problem executing the Sink federate: {}", e.getMessage());
-            log.error(e);
-
-            System.exit(1);
+            logger.error("There was a problem executing the Sink federate: {}", e.getMessage());
+            logger.error(e);
         }
     }
 }
