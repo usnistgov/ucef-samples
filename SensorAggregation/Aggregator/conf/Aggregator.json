@@ -1,0 +1,10 @@
+{
+    "federateName": "Aggregator",
+    "federationId": "SensorAggregation",
+    "fomFilepath": "conf/SensorAggregation.xml",
+    "maxReconnectAttempts": 12,
+    "waitReconnectMs": 5000,
+    "isLateJoiner": false,
+    "stepSize": 1.0,
+    "lookAhead": 0.1
+}

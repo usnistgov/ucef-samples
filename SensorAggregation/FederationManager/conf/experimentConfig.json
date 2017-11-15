@@ -7,7 +7,7 @@
   "expectedFederates": [
     {
       "federateType": "Aggregator",
-      "count": 0
+      "count": 1
     },
     {
       "federateType": "BaseStation",

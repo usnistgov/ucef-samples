@@ -68,11 +68,11 @@ public class Environment implements InjectionCallback {
     }
     
     public void receiveInteraction(Double timeStep, String className, Map<String, String> parameters) {
-        throw new RuntimeException("unexpected interaction received");
+        log.error("unexpected interaction " + className);
     }
 
     public void receiveObject(Double timeStep, String className, String instanceName, Map<String, String> attributes) {
-        throw new RuntimeException("unexpected object reflection");
+        log.error("unexpected object " + className);
     }
 
     public void initializeSelf() {
