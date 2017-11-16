@@ -14,8 +14,8 @@ The environment federate has a configuration file with four properties:
 
 1.	minimumClusterSize – the minimum number of sensors in a cluster
 2.	maximumCluserSize – the maximum number of sensors in a cluster
-3.	numberOfIntegerClusters – the number of clusters that produce integer values
-4.	numberOfFloatClusters – the number of clusters that produce floating point values
+3.	numberOfVolumeClusters – the number of clusters that produce integer values
+4.	numberOfSpeedClusters – the number of clusters that produce floating point values
 
 It uses these settings to register and populate the sensor objects. During runtime, each integer sensor reports a random value 1 – 10 and each floating point sensor reports a random value 1.00 – 10.00.
 
