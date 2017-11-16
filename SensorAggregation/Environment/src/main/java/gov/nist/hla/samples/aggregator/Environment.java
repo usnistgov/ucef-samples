@@ -64,15 +64,19 @@ public class Environment implements InjectionCallback {
     }
     
     public void receiveInteraction(Double timeStep, String className, Map<String, String> parameters) {
+        log.trace(String.format("receiveInteraction %f %s %s", timeStep, className, parameters.toString()));
+        
         if (className.equals(INTERACTION_SIM_END)) {
             log.info("received " + INTERACTION_SIM_END);
         } else {
-            log.error("unexpected interaction " + className);
+            log.warn("unexpected interaction " + className);
         }
     }
 
     public void receiveObject(Double timeStep, String className, String instanceName, Map<String, String> attributes) {
-        log.error("unexpected object " + className);
+        log.trace(String.format("receiveObject %f %s %s %s", timeStep, className, instanceName, attributes.toString()));
+        
+        log.warn("unexpected object " + className);
     }
 
     public void initializeSelf() {
@@ -163,13 +167,14 @@ public class Environment implements InjectionCallback {
         } catch (FederateNotExecutionMember | NameNotFound | ObjectClassNotPublished e) {
             throw new RuntimeException(e);
         }
-        
+        /* broken due to incomplete object update
         try {
             gateway.updateObject(instanceName, initialValues);
             log.debug(String.format("initialized %s using %s", instanceName, initialValues.toString()));
         } catch (FederateNotExecutionMember | ObjectNotKnown | NameNotFound | AttributeNotOwned e) {
             throw new RuntimeException(e);
         }
+        */
         return instanceName;
     }
     
@@ -196,7 +201,7 @@ public class Environment implements InjectionCallback {
             for (String sensor : speedClusters.get(i)) {
                 log.trace("on speed sensor " + sensor);
                 final float newValue = (float) (ThreadLocalRandom.current().nextInt(300, 600) / 10.0);
-                updateSpeedSensor(sensor, newValue);
+                updateSpeedSensor(sensor, i, newValue);
             }
         }
     }
@@ -209,15 +214,16 @@ public class Environment implements InjectionCallback {
             for (String sensor : volumeClusters.get(i)) {
                 log.trace("on volume sensor " + sensor);
                 final int newValue = ThreadLocalRandom.current().nextInt(1, 25);
-                updateVolumeSensor(sensor, newValue);
+                updateVolumeSensor(sensor, i, newValue);
             }
         }
     }
     
-    private void updateSpeedSensor(String name, float speed) {
-        log.trace(String.format("updateSpeedSensor %s %f", name, speed));
+    private void updateSpeedSensor(String name, int cluster, float speed) {
+        log.trace(String.format("updateSpeedSensor %s %d %f", name, cluster, speed));
         
         Map<String, String> updatedValues = new HashMap<String, String>();
+        updatedValues.put("clusterId", Integer.toString(cluster));
         updatedValues.put("speed", Float.toString(speed));
         
         try {
@@ -229,10 +235,11 @@ public class Environment implements InjectionCallback {
         }
     }
     
-    private void updateVolumeSensor(String name, int count) {
-        log.trace(String.format("updateVolumeSensor %s %d", name, count));
+    private void updateVolumeSensor(String name, int cluster, int count) {
+        log.trace(String.format("updateVolumeSensor %s %d %d", name, cluster, count));
         
         Map<String, String> updatedValues = new HashMap<String, String>();
+        updatedValues.put("clusterId", Integer.toString(cluster));
         updatedValues.put("count", Integer.toString(count));
         
         try {
