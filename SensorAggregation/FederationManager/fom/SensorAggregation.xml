@@ -680,8 +680,8 @@
             </parameter>
 
             <parameter> 
-                <name>aggregateMethod</name>
-                <dataType>int</dataType>
+                <name>aggregationMethod</name>
+                <dataType>String</dataType>
                 <semantics></semantics>
             </parameter>
 
@@ -710,6 +710,48 @@
             </parameter>
         </interactionClass>
         <interactionClass>
+            <name>EnvironmentInfo</name>
+            <sharing>PublishSubscribe</sharing>
+            <transportation>HLAreliable</transportation>
+            <order>TimeStamp</order>
+
+            <parameter> 
+                <name>actualLogicalGenerationTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>federateFilter</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>numberOfSpeedClusters</name>
+                <dataType>int</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>numberOfVolumeClusters</name>
+                <dataType>int</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>originFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>sourceFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+        </interactionClass>
+        <interactionClass>
             <name>Report</name>
             <sharing>PublishSubscribe</sharing>
             <transportation>HLAreliable</transportation>
@@ -718,6 +760,12 @@
             <parameter> 
                 <name>actualLogicalGenerationTime</name>
                 <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>aggregationMethod</name>
+                <dataType>String</dataType>
                 <semantics></semantics>
             </parameter>
 
@@ -753,6 +801,12 @@
             <parameter> 
                 <name>actualLogicalGenerationTime</name>
                 <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>aggregationMethod</name>
+                <dataType>String</dataType>
                 <semantics></semantics>
             </parameter>
 
@@ -795,6 +849,12 @@
             <parameter> 
                 <name>actualLogicalGenerationTime</name>
                 <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>aggregationMethod</name>
+                <dataType>String</dataType>
                 <semantics></semantics>
             </parameter>
 
