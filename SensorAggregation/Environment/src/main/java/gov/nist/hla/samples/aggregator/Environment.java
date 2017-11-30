@@ -92,19 +92,15 @@ public class Environment implements InjectionCallback {
         sendEnvironmentInfo();
     }
     
-    public void beforeTimeStep(Double timeStep) {
-        log.trace("beforeTimeStep " + timeStep);
+    public void doTimeStep(Double timeStep) {
+        log.trace("doTimeStep " + timeStep);
         
         updateSpeedClusters();
         updateVolumeClusters();
     }
-    
-    public void afterTimeStep(Double timeStep) {
-        log.trace("afterTimeStep " + timeStep);
-    }
 
-    public void afterResignation() {
-        log.trace("afterResignation");
+    public void terminate() {
+        log.trace("terminate");
     }
     
     private static EnvironmentConfiguration readConfiguration(String filepath)

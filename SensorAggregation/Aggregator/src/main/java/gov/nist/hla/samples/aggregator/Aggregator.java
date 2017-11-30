@@ -104,13 +104,8 @@ public class Aggregator implements InjectionCallback {
             }
         }
     }
-
-    public void beforeTimeStep(Double timeStep) {
-        log.trace("beforeTimeStep " + timeStep);
-    }
-
-    public void afterTimeStep(Double timeStep) {
-        log.trace("afterTimeStep " + timeStep);
+    public void doTimeStep(Double timeStep) {
+        log.trace("doTimeStep " + timeStep);
         
         for (int i = 0; i < maxClusterSpeed.length; i++) {
             reportAggregateSpeed(i, maxClusterSpeed[i]);
@@ -121,8 +116,8 @@ public class Aggregator implements InjectionCallback {
         resetDataStructures();
     }
 
-    public void afterResignation() {
-        log.trace("afterResignation");
+    public void terminate() {
+        log.trace("terminate");
     }
     
     private void receiveEnvironmentInfo(Map<String, String> parameters) {
