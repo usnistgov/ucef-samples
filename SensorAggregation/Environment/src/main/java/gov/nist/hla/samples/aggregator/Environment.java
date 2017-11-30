@@ -195,7 +195,6 @@ public class Environment implements InjectionCallback {
         for (int i = 0; i < speedClusters.size(); i++) {
             log.trace("on speed cluster " + i);
             for (String sensor : speedClusters.get(i)) {
-                log.trace("on speed sensor " + sensor);
                 final float newValue = (float) (ThreadLocalRandom.current().nextInt(300, 600) / 10.0);
                 updateSpeedSensor(sensor, i, newValue);
             }
@@ -208,7 +207,6 @@ public class Environment implements InjectionCallback {
         for (int i = 0; i < volumeClusters.size(); i++) {
             log.trace("on volume cluster " + i);
             for (String sensor : volumeClusters.get(i)) {
-                log.trace("on volume sensor " + sensor);
                 final int newValue = ThreadLocalRandom.current().nextInt(1, 25);
                 updateVolumeSensor(sensor, i, newValue);
             }
