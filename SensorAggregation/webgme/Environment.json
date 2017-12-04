@@ -1,6 +1,6 @@
 {
   "__OBJECTS__": {
-    "30448ff5-a6a7-4062-868c-b20d60263c3e": {
+    "6aacc9c6-94c1-43c8-bf33-f8a9e8aebd92": {
       "attributes": {
         "name": "Environment",
         "TimeRegulating": "true",
@@ -22,17 +22,17 @@
       "RegistryInfo": "",
       "documentation": "No documentation exists yet.",
       "repository": "No repository exists yet.",
-      "GUID": "30448ff5-a6a7-4062-868c-b20d60263c3e"
+      "GUID": "6aacc9c6-94c1-43c8-bf33-f8a9e8aebd92"
     }
   },
   "__ROOT_OBJECT__": {
-    "GUID": "30448ff5-a6a7-4062-868c-b20d60263c3e",
+    "GUID": "6aacc9c6-94c1-43c8-bf33-f8a9e8aebd92",
     "name": "Environment",
     "version": "0.0.1",
-    "description": "Transportation environment federate for the UCEF Gateway sensor aggregation example"
+    "description": ""
   },
   "Federates": {
-    "30448ff5-a6a7-4062-868c-b20d60263c3e": ""
+    "6aacc9c6-94c1-43c8-bf33-f8a9e8aebd92": ""
   },
   "COAs": {},
   "Experiments": {},

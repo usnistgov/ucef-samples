@@ -51,11 +51,11 @@
   (attribute FederateType reliable timestamp) )
 (class Sensor
   (attribute clusterId reliable timestamp)
-  (attribute sensorId reliable timestamp)  (class SpeedSensor
+  (attribute sensorId reliable timestamp)  (class TemperatureSensor
   (attribute clusterId reliable timestamp)
   (attribute sensorId reliable timestamp)
-  (attribute speed reliable timestamp) )
-  (class VolumeSensor
+  (attribute temperature reliable timestamp) )
+  (class TrafficSensor
   (attribute clusterId reliable timestamp)
   (attribute count reliable timestamp)
   (attribute sensorId reliable timestamp) )
@@ -375,44 +375,18 @@
 (class AggregationControl reliable timestamp 
   (parameter actualLogicalGenerationTime)
   (parameter aggregationMethod)
-  (parameter clusterId)
   (parameter federateFilter)
   (parameter originFed)
   (parameter sourceFed)
 )
-(class EnvironmentInfo reliable timestamp 
-  (parameter actualLogicalGenerationTime)
-  (parameter federateFilter)
-  (parameter numberOfSpeedClusters)
-  (parameter numberOfVolumeClusters)
-  (parameter originFed)
-  (parameter sourceFed)
-)
-(class Report reliable timestamp 
+(class AggregationReport reliable timestamp 
   (parameter actualLogicalGenerationTime)
   (parameter aggregationMethod)
   (parameter clusterId)
   (parameter federateFilter)
   (parameter originFed)
+  (parameter report)
   (parameter sourceFed)
-(class SpeedReport reliable timestamp 
-  (parameter actualLogicalGenerationTime)
-  (parameter aggregationMethod)
-  (parameter clusterId)
-  (parameter federateFilter)
-  (parameter originFed)
-  (parameter sourceFed)
-  (parameter speed)
-)
-(class VolumeReport reliable timestamp 
-  (parameter actualLogicalGenerationTime)
-  (parameter aggregationMethod)
-  (parameter clusterId)
-  (parameter count)
-  (parameter federateFilter)
-  (parameter originFed)
-  (parameter sourceFed)
-)
 )
 )  
     )

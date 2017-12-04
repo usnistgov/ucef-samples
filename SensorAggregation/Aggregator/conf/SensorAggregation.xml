@@ -29,7 +29,7 @@
                 <semantics></semantics>
             </attribute>
         <objectClass>
-            <name>SpeedSensor</name>
+            <name>TemperatureSensor</name>
             <sharing>Subscribe</sharing>
             <semantics></semantics>
 
@@ -52,8 +52,8 @@
             </attribute>
 
             <attribute>
-                <name>speed</name>
-                <dataType>float</dataType>
+                <name>temperature</name>
+                <dataType>double</dataType>
                 <transportation>HLAreliable</transportation>
                 <order>TimeStamp</order>
                 <sharing>Subscribe</sharing>
@@ -61,7 +61,7 @@
             </attribute>
         </objectClass>
         <objectClass>
-            <name>VolumeSensor</name>
+            <name>TrafficSensor</name>
             <sharing>Subscribe</sharing>
             <semantics></semantics>
 
@@ -329,90 +329,7 @@
             </parameter>
         </interactionClass>
         <interactionClass>
-            <name>EnvironmentInfo</name>
-            <sharing>Subscribe</sharing>
-            <transportation>HLAreliable</transportation>
-            <order>TimeStamp</order>
-
-            <parameter> 
-                <name>actualLogicalGenerationTime</name>
-                <dataType>double</dataType>
-                <semantics></semantics>
-            </parameter>
-
-            <parameter> 
-                <name>federateFilter</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-
-            <parameter> 
-                <name>numberOfSpeedClusters</name>
-                <dataType>int</dataType>
-                <semantics></semantics>
-            </parameter>
-
-            <parameter> 
-                <name>numberOfVolumeClusters</name>
-                <dataType>int</dataType>
-                <semantics></semantics>
-            </parameter>
-
-            <parameter> 
-                <name>originFed</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-
-            <parameter> 
-                <name>sourceFed</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-        </interactionClass>
-        <interactionClass>
-            <name>Report</name>
-            <sharing>Neither</sharing>
-            <transportation>HLAreliable</transportation>
-            <order>TimeStamp</order>
-
-            <parameter> 
-                <name>actualLogicalGenerationTime</name>
-                <dataType>double</dataType>
-                <semantics></semantics>
-            </parameter>
-
-            <parameter> 
-                <name>aggregationMethod</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-
-            <parameter> 
-                <name>clusterId</name>
-                <dataType>int</dataType>
-                <semantics></semantics>
-            </parameter>
-
-            <parameter> 
-                <name>federateFilter</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-
-            <parameter> 
-                <name>originFed</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-
-            <parameter> 
-                <name>sourceFed</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-        <interactionClass>
-            <name>SpeedReport</name>
+            <name>AggregationReport</name>
             <sharing>Publish</sharing>
             <transportation>HLAreliable</transportation>
             <order>TimeStamp</order>
@@ -448,55 +365,7 @@
             </parameter>
 
             <parameter> 
-                <name>sourceFed</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-
-            <parameter> 
-                <name>speed</name>
-                <dataType>float</dataType>
-                <semantics></semantics>
-            </parameter>
-        </interactionClass>
-        <interactionClass>
-            <name>VolumeReport</name>
-            <sharing>Publish</sharing>
-            <transportation>HLAreliable</transportation>
-            <order>TimeStamp</order>
-
-            <parameter> 
-                <name>actualLogicalGenerationTime</name>
-                <dataType>double</dataType>
-                <semantics></semantics>
-            </parameter>
-
-            <parameter> 
-                <name>aggregationMethod</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-
-            <parameter> 
-                <name>clusterId</name>
-                <dataType>int</dataType>
-                <semantics></semantics>
-            </parameter>
-
-            <parameter> 
-                <name>count</name>
-                <dataType>int</dataType>
-                <semantics></semantics>
-            </parameter>
-
-            <parameter> 
-                <name>federateFilter</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-
-            <parameter> 
-                <name>originFed</name>
+                <name>report</name>
                 <dataType>String</dataType>
                 <semantics></semantics>
             </parameter>
@@ -506,7 +375,6 @@
                 <dataType>String</dataType>
                 <semantics></semantics>
             </parameter>
-        </interactionClass>
         </interactionClass>
         </interactionClass>
         </interactionClass>

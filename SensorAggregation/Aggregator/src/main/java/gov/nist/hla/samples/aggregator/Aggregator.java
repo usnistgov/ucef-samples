@@ -1,39 +1,64 @@
 package gov.nist.hla.samples.aggregator;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.ieee.standards.ieee1516._2010.AttributeType;
+import org.ieee.standards.ieee1516._2010.ObjectClassType;
 
 import gov.nist.hla.ii.InjectionCallback;
 import gov.nist.hla.ii.InjectionFederate;
 import gov.nist.hla.ii.config.InjectionFederateConfig;
 import hla.rti.FederateNotExecutionMember;
-import hla.rti.InteractionClassNotPublished;
-import hla.rti.InvalidFederationTime;
-import hla.rti.NameNotFound;
 
 public class Aggregator implements InjectionCallback {
     private static final Logger log = LogManager.getLogger();
     
-    private static final String OBJECT_SPEED_SENSOR = "ObjectRoot.Sensor.SpeedSensor";
-    private static final String OBJECT_VOLUME_SENSOR = "ObjectRoot.Sensor.VolumeSensor";
-    private static final String INTERACTION_ENV_INFO = "InteractionRoot.C2WInteractionRoot.EnvironmentInfo";
+    private static final String OBJECT_SENSOR = "ObjectRoot.Sensor";
+    private static final String INTERACTION_AGG_CONTROL = "InteractionRoot.C2WInteractionRoot.AggregationControl";
+    private static final String INTERACTION_AGG_REPORT = "InteractionRoot.C2WInteractionRoot.AggregationReport";
     private static final String INTERACTION_SIM_END = "InteractionRoot.C2WInteractionRoot.SimulationControl.SimEnd";
-    private static final String INTERACTION_SPEED_REPORT = "InteractionRoot.C2WInteractionRoot.Report.SpeedReport";
-    private static final String INTERACTION_VOLUME_REPORT = "InteractionRoot.C2WInteractionRoot.Report.VolumeReport";
+    
+    private class ObjectInfo {
+        private final int sensorId;
+        private final int clusterId;
+        
+        public ObjectInfo(int sensorId, int clusterId) {
+            this.sensorId = sensorId;
+            this.clusterId = clusterId;
+        }
+    }
+    
+    private class AggregateData {
+        private String maxValue;
+        private String sumValue;
+        private int numberOfValues;
+        
+        public AggregateData() {
+            this.numberOfValues = 0;
+        }
+        
+        public AggregateData(String initialValue) {
+            this.maxValue = initialValue;
+            this.sumValue = initialValue;
+            this.numberOfValues = 1;
+        }
+        
+        public String toString() {
+            return String.format("(values=%d max=%s sum=%s)", numberOfValues, maxValue, sumValue);
+        }
+    }
     
     private InjectionFederate gateway;
     
-    private Set<String> discoveredObjects = new HashSet<String>();
+    Map<String, ObjectInfo> discoveredObjects = new HashMap<String, ObjectInfo>();
     
-    private float[] maxClusterSpeed = null;
-    private int[] maxClusterVolume = null;
+    Map<Integer, Map<String, AggregateData>> clusterData = new HashMap<Integer, Map<String, AggregateData>>();
+    
+    private String aggregationMethod;
     
     private boolean initialized = false;
     
@@ -59,35 +84,6 @@ public class Aggregator implements InjectionCallback {
         gateway.run();
     }
     
-    public void receiveInteraction(Double timeStep, String className, Map<String, String> parameters) {
-        log.trace(String.format("receiveInteraction %f %s %s", timeStep, className, parameters.toString()));
-        
-        if (className.equals(INTERACTION_ENV_INFO)) {
-            receiveEnvironmentInfo(parameters);
-        } else if (className.equals(INTERACTION_SIM_END)) {
-            log.info("received " + INTERACTION_SIM_END);
-        } else {
-            log.warn("unexpected interaction " + className);
-        }
-    }
-
-    public void receiveObject(Double timeStep, String className, String instanceName, Map<String, String> attributes) {
-        log.trace(String.format("receiveObject %f %s %s %s", timeStep, className, instanceName, attributes.toString()));
-        
-        if (!discoveredObjects.contains(instanceName)) {
-            discoveredObjects.add(instanceName);
-            log.info(String.format("discovered object instance %s with class %s", instanceName, className));
-        }
-        
-        if (className.equals(OBJECT_SPEED_SENSOR)) {
-            receiveSpeedSensor(instanceName, attributes);
-        } else if (className.equals(OBJECT_VOLUME_SENSOR)) {
-            receiveVolumeSensor(instanceName, attributes);
-        } else {
-            log.warn("unexpected object update " + className);
-        }
-    }
-
     public void initializeSelf() {
         log.trace("initializeSelf");
     }
@@ -95,86 +91,138 @@ public class Aggregator implements InjectionCallback {
     public void initializeWithPeers() {
         log.trace("initializeWithPeers");
         
-        log.info("waiting to receive " + INTERACTION_ENV_INFO);
+        log.info("waiting to receive " + INTERACTION_AGG_CONTROL);
         while (!initialized) {
             try {
-                gateway.tick(); // wait for environment info interaction
+                gateway.tick();
             } catch (FederateNotExecutionMember e) {
                 throw new RuntimeException(e);
             }
         }
     }
+    
+    public void receiveInteraction(Double timeStep, String className, Map<String, String> parameters) {
+        log.trace(String.format("receiveInteraction %f %s %s", timeStep, className, parameters.toString()));
+        
+        if (className.equals(INTERACTION_AGG_CONTROL)) {
+            receiveAggregationControl(parameters);
+        } else if (className.equals(INTERACTION_SIM_END)) {
+            log.info("received " + INTERACTION_SIM_END);
+        } else {
+            log.warn("unexpected interaction " + className);
+        }
+    }
+    
+    public void receiveObject(Double timeStep, String className, String instanceName, Map<String, String> attributes) {
+        log.trace(String.format("receiveObject %f %s %s %s", timeStep, className, instanceName, attributes.toString()));
+        
+        if (className.contains(OBJECT_SENSOR)) {
+            if (!initialized) {
+                discoverSensor(instanceName, attributes);
+            } else if (discoveredObjects.containsKey(instanceName)) {
+                updateSensor(className, instanceName, attributes);
+            } else {
+                log.error("sensor object not discovered during initialization: " + instanceName);
+            }
+        } else {
+            log.warn("unexpected object update " + className);
+        }
+    }
+    
     public void doTimeStep(Double timeStep) {
         log.trace("doTimeStep " + timeStep);
         
-        for (int i = 0; i < maxClusterSpeed.length; i++) {
-            reportAggregateSpeed(i, maxClusterSpeed[i]);
+        for (Map<String, AggregateData> data : clusterData.values()) {
+            data.clear();
         }
-        for (int i = 0; i < maxClusterVolume.length; i++) {
-            reportAggregateVolume(i, maxClusterVolume[i]);
-        }
-        resetDataStructures();
     }
 
     public void terminate() {
         log.trace("terminate");
     }
     
-    private void receiveEnvironmentInfo(Map<String, String> parameters) {
-        log.trace("receiveEnvironmentInfo " + parameters.toString());
+    private void receiveAggregationControl(Map<String, String> parameters) {
+        log.trace("receiveAggregationControl " + parameters.toString());
         
-        final int numSpeedClusters = Integer.parseInt(parameters.get("numberOfSpeedClusters"));
-        final int numVolumeClusters = Integer.parseInt(parameters.get("numberOfVolumeClusters"));
-        
-        this.maxClusterSpeed = new float[numSpeedClusters];
-        this.maxClusterVolume = new int[numVolumeClusters];
-        resetDataStructures();
+        this.aggregationMethod = parameters.get("aggregationMethod");
         this.initialized = true;
-        
-        log.debug(String.format("initialized %d speed and %d volume clusters", numSpeedClusters, numVolumeClusters));
+        log.info("configured to use the aggregation method: " + aggregationMethod);
     }
     
-    private void resetDataStructures() {
-        log.trace("resetDataStructures");
+    private void discoverSensor(String instanceName, Map<String, String> attributes) {
+        log.trace(String.format("discoverObject %s %s", instanceName, attributes.toString()));
         
-        Arrays.fill(maxClusterSpeed, -1);
-        Arrays.fill(maxClusterVolume, -1);
+        final int sensorId = Integer.parseInt(attributes.get("sensorId"));
+        final int clusterId = Integer.parseInt(attributes.get("clusterId"));
+        ObjectInfo discoveredObject = new ObjectInfo(sensorId, clusterId);
+        
+        if (discoveredObjects.put(instanceName, discoveredObject) != null) {
+            log.warn("discovered multiple sensors named " + instanceName);
+        }
+        if (!clusterData.containsKey(clusterId)) {
+            log.info("discovered new cluster with id " + clusterId);
+            clusterData.put(clusterId, new HashMap<String, AggregateData>());
+        }
     }
     
-    private void receiveSpeedSensor(String instanceName, Map<String, String> attributes) {
-        log.trace(String.format("receiveSpeedSensor %s %s", instanceName, attributes.toString()));
+    private void updateSensor(String className, String instanceName, Map<String, String> attributes) {
+        log.trace(String.format("updateSensor %s %s %s", className, instanceName, attributes.toString()));
         
-        final int cluster = Integer.parseInt(attributes.get("clusterId"));
-        final float speed = Float.parseFloat(attributes.get("speed"));
+        // we do not check for duplicate updates from the same sensor
+        final int sensorId = discoveredObjects.get(instanceName).sensorId;
+        final int clusterId = discoveredObjects.get(instanceName).clusterId;
+        log.info("received update from sensor " + sensorId + " in cluster " + clusterId);
         
-        if (cluster < 0 || cluster >= maxClusterSpeed.length) {
-            log.error("speed sensor reported invalid cluster ID " + cluster);
-        } else {
-            log.debug(String.format("received update from speed sensor %d-%s", cluster, instanceName));
-            if (maxClusterSpeed[cluster] < speed) {
-                maxClusterSpeed[cluster] = speed;
-                log.trace("new max speed " + speed);
+        for (Map.Entry<String, String> entry : attributes.entrySet()) {
+            final String attribute = entry.getKey();
+            final String stringValue = entry.getValue();
+            final String dataType = getDataType(className, attribute);
+            
+            Map<String, AggregateData> data = clusterData.get(clusterId);
+            if (data.containsKey(attribute)) {
+                aggregateValues(data.get(attribute), stringValue, dataType);
+            } else {
+                data.put(attribute, new AggregateData(stringValue));
+                log.debug("initial aggregate " + data.get(attribute).toString());
             }
         }
     }
     
-    private void receiveVolumeSensor(String instanceName, Map<String, String> attributes) {
-        log.trace(String.format("receiveVolumeSensor %s %s", instanceName, attributes.toString()));
+    private String getDataType(String className, String attributeName) {
+        ObjectClassType objectClass = this.gateway.getObjectModel().getObject(className);
+        AttributeType attributeClass = this.gateway.getObjectModel().getAttribute(objectClass, attributeName);
+        return attributeClass.getDataType().getValue();
+    }
+    
+    private void aggregateValues(AggregateData data, String stringValue, String dataType) {
+        log.trace(String.format("aggregateValues %s %s %s", data.toString(), stringValue, dataType));
         
-        final int cluster = Integer.parseInt(attributes.get("clusterId"));
-        final int count = Integer.parseInt(attributes.get("count"));
-        
-        if (cluster < 0 || cluster >= maxClusterVolume.length) {
-            log.error("volume sensor reported invalid cluster ID " + cluster);
-        } else {
-            log.debug(String.format("received update from volume sensor %d-%s", cluster, instanceName));
-            if (maxClusterVolume[cluster] < count) {
-                maxClusterVolume[cluster] = count;
-                log.trace("new max volume " + count);
+        if (dataType.equals("double")) {
+            final double value = Double.parseDouble(stringValue);
+            double sum = Double.parseDouble(data.sumValue) + value;
+            
+            if (Double.parseDouble(data.maxValue) < value) {
+                data.maxValue = stringValue;
             }
+            data.sumValue = Double.toString(sum);
+            data.numberOfValues = data.numberOfValues + 1;
+            log.debug("new aggregate " + data.toString());
+        } else if (dataType.equals("int")) {
+            final int value = Integer.parseInt(stringValue);
+            int sum = Integer.parseInt(data.sumValue) + value;
+            
+            if (Integer.parseInt(data.maxValue) < value) {
+                data.maxValue = stringValue;
+            }
+            data.sumValue = Integer.toString(sum);
+            data.numberOfValues = data.numberOfValues + 1;
+            log.debug("new aggregate " + data.toString());
+        } else {
+            log.warn("not supported");
         }
     }
     
+    /*
     private void reportAggregateSpeed(int cluster, float maxSpeed) {
         log.trace(String.format("reportAggregateSpeed %d %f", cluster, maxSpeed));
         
@@ -197,27 +245,5 @@ public class Aggregator implements InjectionCallback {
             log.info(String.format("speed cluster %d reports aggregate value %f", cluster, maxSpeed));
         }
     }
-    
-    private void reportAggregateVolume(int cluster, int maxVolume) {
-        log.trace(String.format("reportAggregateVolume %d %d", cluster, maxVolume));
-        
-        if (maxVolume < 0) {
-            log.warn("received no updates for volume cluster " + cluster);
-        } else {
-            Map<String, String> parameters = new HashMap<String, String>();
-            parameters.put("clusterId", Integer.toString(cluster));
-            parameters.put("count", Integer.toString(maxVolume));
-            parameters.put("aggregationMethod", "maxValue");
-            
-            try {
-                gateway.injectInteraction(INTERACTION_VOLUME_REPORT, parameters, gateway.getTimeStamp());
-                log.debug(String.format("sent %s using %s", INTERACTION_VOLUME_REPORT, parameters.toString()));
-            } catch (FederateNotExecutionMember | NameNotFound | InteractionClassNotPublished
-                    | InvalidFederationTime e) {
-                throw new RuntimeException(e);
-            }
-            
-            log.info(String.format("volume cluster %d reports aggregate value %d", cluster, maxVolume));
-        }
-    }
+    */
 }

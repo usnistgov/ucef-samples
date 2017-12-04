@@ -1,8 +1,8 @@
 {
   "federateTypesAllowed": [
     "Aggregator",
-    "BaseStation",
-    "Environment"
+    "Environment",
+    "Reporter"
   ],
   "expectedFederates": [
     {
@@ -10,11 +10,11 @@
       "count": 1
     },
     {
-      "federateType": "BaseStation",
-      "count": 0
+      "federateType": "Environment",
+      "count": 1
     },
     {
-      "federateType": "Environment",
+      "federateType": "Reporter",
       "count": 1
     }
   ],
@@ -24,11 +24,11 @@
       "count": 0
     },
     {
-      "federateType": "BaseStation",
+      "federateType": "Environment",
       "count": 0
     },
     {
-      "federateType": "Environment",
+      "federateType": "Reporter",
       "count": 0
     }
   ]
