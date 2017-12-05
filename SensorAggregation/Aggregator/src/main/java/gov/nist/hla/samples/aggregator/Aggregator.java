@@ -9,10 +9,18 @@ import org.apache.logging.log4j.Logger;
 import org.ieee.standards.ieee1516._2010.AttributeType;
 import org.ieee.standards.ieee1516._2010.ObjectClassType;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import gov.nist.hla.ii.InjectionCallback;
 import gov.nist.hla.ii.InjectionFederate;
 import gov.nist.hla.ii.config.InjectionFederateConfig;
 import hla.rti.FederateNotExecutionMember;
+import hla.rti.InteractionClassNotPublished;
+import hla.rti.InvalidFederationTime;
+import hla.rti.NameNotFound;
 
 public class Aggregator implements InjectionCallback {
     private static final Logger log = LogManager.getLogger();
@@ -33,22 +41,20 @@ public class Aggregator implements InjectionCallback {
     }
     
     private class AggregateData {
+        private String dataType;
         private String maxValue;
         private String sumValue;
         private int numberOfValues;
         
-        public AggregateData() {
-            this.numberOfValues = 0;
-        }
-        
-        public AggregateData(String initialValue) {
+        public AggregateData(String initialValue, String dataType) {
+            this.dataType = dataType;
             this.maxValue = initialValue;
             this.sumValue = initialValue;
             this.numberOfValues = 1;
         }
         
         public String toString() {
-            return String.format("(values=%d max=%s sum=%s)", numberOfValues, maxValue, sumValue);
+            return String.format("(type=%s values=%d max=%s sum=%s)", dataType, numberOfValues, maxValue, sumValue);
         }
     }
     
@@ -130,7 +136,32 @@ public class Aggregator implements InjectionCallback {
     public void doTimeStep(Double timeStep) {
         log.trace("doTimeStep " + timeStep);
         
-        for (Map<String, AggregateData> data : clusterData.values()) {
+        ObjectMapper mapper = new ObjectMapper();
+        for (int clusterId : clusterData.keySet()) {
+            ArrayNode root = mapper.createArrayNode();
+            Map<String, AggregateData> data = clusterData.get(clusterId);
+            for (Map.Entry<String, AggregateData> entry : data.entrySet()) {
+                String attributeName = entry.getKey();
+                String aggregateValue;
+                if (aggregationMethod.equals("maximum")) {
+                    aggregateValue = entry.getValue().maxValue;
+                } else if (aggregationMethod.equals("sum")) {
+                    aggregateValue = entry.getValue().sumValue;
+                } else {
+                    log.warn("unsupported aggregation method " + aggregationMethod);
+                    continue;
+                }
+                ObjectNode node = mapper.createObjectNode();
+                node.put("name", attributeName);
+                node.put("value", aggregateValue);
+                node.put("type", entry.getValue().dataType);
+                root.add(node);
+            }
+            try {
+                sendReportInteraction(clusterId, aggregationMethod, mapper.writeValueAsString(root));
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
             data.clear();
         }
     }
@@ -177,9 +208,9 @@ public class Aggregator implements InjectionCallback {
             
             Map<String, AggregateData> data = clusterData.get(clusterId);
             if (data.containsKey(attribute)) {
-                aggregateValues(data.get(attribute), stringValue, dataType);
+                aggregateValues(data.get(attribute), stringValue);
             } else {
-                data.put(attribute, new AggregateData(stringValue));
+                data.put(attribute, new AggregateData(stringValue, dataType));
                 log.debug("initial aggregate " + data.get(attribute).toString());
             }
         }
@@ -191,10 +222,10 @@ public class Aggregator implements InjectionCallback {
         return attributeClass.getDataType().getValue();
     }
     
-    private void aggregateValues(AggregateData data, String stringValue, String dataType) {
-        log.trace(String.format("aggregateValues %s %s %s", data.toString(), stringValue, dataType));
+    private void aggregateValues(AggregateData data, String stringValue) {
+        log.trace(String.format("aggregateValues %s %s", data.toString(), stringValue));
         
-        if (dataType.equals("double")) {
+        if (data.dataType.equals("double")) {
             final double value = Double.parseDouble(stringValue);
             double sum = Double.parseDouble(data.sumValue) + value;
             
@@ -204,7 +235,7 @@ public class Aggregator implements InjectionCallback {
             data.sumValue = Double.toString(sum);
             data.numberOfValues = data.numberOfValues + 1;
             log.debug("new aggregate " + data.toString());
-        } else if (dataType.equals("int")) {
+        } else if (data.dataType.equals("int")) {
             final int value = Integer.parseInt(stringValue);
             int sum = Integer.parseInt(data.sumValue) + value;
             
@@ -219,28 +250,20 @@ public class Aggregator implements InjectionCallback {
         }
     }
     
-    /*
-    private void reportAggregateSpeed(int cluster, float maxSpeed) {
-        log.trace(String.format("reportAggregateSpeed %d %f", cluster, maxSpeed));
+    private void sendReportInteraction(int clusterId, String aggregationMethod, String report) {
+        log.trace(String.format("sendReportInteraction %d %s %s", clusterId, aggregationMethod, report));
         
-        if (maxSpeed < 0) {
-            log.warn("received no updates for speed cluster " + cluster);
-        } else {
-            Map<String, String> parameters = new HashMap<String, String>();
-            parameters.put("clusterId", Integer.toString(cluster));
-            parameters.put("speed", Float.toString(maxSpeed));
-            parameters.put("aggregationMethod", "maxValue");
-            
-            try {
-                gateway.injectInteraction(INTERACTION_SPEED_REPORT, parameters, gateway.getTimeStamp());
-                log.debug(String.format("sent %s using %s", INTERACTION_SPEED_REPORT, parameters.toString()));
-            } catch (FederateNotExecutionMember | NameNotFound | InteractionClassNotPublished
-                    | InvalidFederationTime e) {
-                throw new RuntimeException(e);
-            }
-            
-            log.info(String.format("speed cluster %d reports aggregate value %f", cluster, maxSpeed));
+        Map<String, String> parameters = new HashMap<String, String>();
+        parameters.put("clusterId", Integer.toString(clusterId));
+        parameters.put("aggregationMethod", aggregationMethod);
+        parameters.put("report", report);
+        
+        try {
+            gateway.injectInteraction(INTERACTION_AGG_REPORT, parameters, gateway.getTimeStamp());
+            log.debug(String.format("sent %s using %s", INTERACTION_AGG_REPORT, parameters.toString()));
+        } catch (FederateNotExecutionMember | NameNotFound | InteractionClassNotPublished
+                | InvalidFederationTime e) {
+            throw new RuntimeException(e);
         }
     }
-    */
 }

@@ -112,6 +112,9 @@ public class Reporter implements InjectionCallback {
     private void handleAggregationReport(Double timeStep, Map<String, String> parameters) {
         log.trace(String.format("handleAggregationReport %f %s", timeStep, parameters.toString()));
         
-        log.info(String.format("t=%f received report:\n%s", timeStep, parameters.get("report")));
+        final int cluster = Integer.parseInt(parameters.get("clusterId"));
+        final String method = parameters.get("aggregationMethod");
+        final String report = parameters.get("report");
+        log.info(String.format("t=%f cluster %d report (using %s):\n%s", timeStep, cluster, method, report));
     }
 }
