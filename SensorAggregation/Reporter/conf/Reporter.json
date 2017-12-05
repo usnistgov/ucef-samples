@@ -6,5 +6,6 @@
     "waitReconnectMs": 5000,
     "isLateJoiner": false,
     "stepSize": 1.0,
-    "lookAhead": 0.1
+    "lookAhead": 0.1,
+    "aggregationMethod": "maximum"
 }

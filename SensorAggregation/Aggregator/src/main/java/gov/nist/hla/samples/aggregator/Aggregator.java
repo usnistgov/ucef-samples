@@ -58,9 +58,7 @@ public class Aggregator implements InjectionCallback {
     
     Map<Integer, Map<String, AggregateData>> clusterData = new HashMap<Integer, Map<String, AggregateData>>();
     
-    private String aggregationMethod;
-    
-    private boolean initialized = false;
+    private String aggregationMethod = null;
     
     public static void main(String[] args)
             throws IOException {
@@ -92,7 +90,7 @@ public class Aggregator implements InjectionCallback {
         log.trace("initializeWithPeers");
         
         log.info("waiting to receive " + INTERACTION_AGG_CONTROL);
-        while (!initialized) {
+        while (aggregationMethod == null) {
             try {
                 gateway.tick();
             } catch (FederateNotExecutionMember e) {
@@ -117,7 +115,7 @@ public class Aggregator implements InjectionCallback {
         log.trace(String.format("receiveObject %f %s %s %s", timeStep, className, instanceName, attributes.toString()));
         
         if (className.contains(OBJECT_SENSOR)) {
-            if (!initialized) {
+            if (!gateway.hasTimeStarted()) {
                 discoverSensor(instanceName, attributes);
             } else if (discoveredObjects.containsKey(instanceName)) {
                 updateSensor(className, instanceName, attributes);
@@ -145,7 +143,6 @@ public class Aggregator implements InjectionCallback {
         log.trace("receiveAggregationControl " + parameters.toString());
         
         this.aggregationMethod = parameters.get("aggregationMethod");
-        this.initialized = true;
         log.info("configured to use the aggregation method: " + aggregationMethod);
     }
     

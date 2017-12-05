@@ -71,13 +71,13 @@ public class Environment implements InjectionCallback {
     
     public void initializeSelf() {
         log.trace("initializeSelf");
-        
-        initializeTrafficClusters();
-        initializeTemperatureClusters();
     }
     
     public void initializeWithPeers() {
         log.trace("initializeWithPeers");
+        
+        initializeTrafficClusters();
+        initializeTemperatureClusters();
     }
     
     public void receiveInteraction(Double timeStep, String className, Map<String, String> parameters) {
