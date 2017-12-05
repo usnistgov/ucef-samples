@@ -207,7 +207,7 @@ public class Environment implements InjectionCallback {
         for (int clusterId : temperatureClusters.keySet()) {
             log.trace("on temperature cluster " + clusterId);
             for (String sensor : temperatureClusters.get(clusterId)) {
-                final double newValue = ThreadLocalRandom.current().nextInt(20, 26) / 10.0;
+                final double newValue = ThreadLocalRandom.current().nextInt(200, 260) / 10.0;
                 updateTemperatureSensor(sensor, newValue);
             }
         }
