@@ -33,6 +33,7 @@ public class Environment implements InjectionCallback {
     private InjectionFederate gateway;
     private EnvironmentConfiguration configuration;
     
+    // cluster id -> set of HLA object instance names in that cluster
     private Map<Integer, Set<String>> trafficClusters = new HashMap<Integer, Set<String>>();
     private Map<Integer, Set<String>> temperatureClusters = new HashMap<Integer, Set<String>>();
     
@@ -41,7 +42,7 @@ public class Environment implements InjectionCallback {
     public static void main(String[] args)
             throws IOException {
         if (args.length != 1) {
-            log.error("command line argument for JSON configuration file not specified");
+            log.error("missing command line argument for JSON configuration file");
             return;
         }
         
@@ -165,7 +166,7 @@ public class Environment implements InjectionCallback {
         }
         
         try {
-            gateway.updateObject(instanceName, initialValues); // RO
+            gateway.updateObject(instanceName, initialValues);
             log.debug(String.format("initialized %s using %s", instanceName, initialValues.toString()));
         } catch (FederateNotExecutionMember | ObjectNotKnown | NameNotFound | AttributeNotOwned e) {
             throw new RuntimeException(e);
@@ -177,9 +178,9 @@ public class Environment implements InjectionCallback {
     private void updateTrafficClusters() {
         log.trace("updateTrafficClusters");
         
-        for (int clusterId : trafficClusters.keySet()) {
-            log.trace("on traffic cluster " + clusterId);
-            for (String sensor : trafficClusters.get(clusterId)) {
+        for (Map.Entry<Integer, Set<String>> entry : trafficClusters.entrySet()) {
+            log.trace("on traffic cluster " + entry.getKey());
+            for (String sensor : entry.getValue()) {
                 final int newValue = ThreadLocalRandom.current().nextInt(0, 11);
                 updateTrafficSensor(sensor, newValue);
             }
@@ -193,8 +194,8 @@ public class Environment implements InjectionCallback {
         updatedValues.put("count", Integer.toString(count));
         
         try {
-            gateway.updateObject(name, updatedValues, gateway.getTimeStamp()); // TSO
-            log.debug(String.format("updated %s using %s", name, updatedValues.toString()));
+            gateway.updateObject(name, updatedValues, gateway.getTimeStamp());
+            log.info(String.format("updated %s using %s", name, updatedValues.toString()));
         } catch (FederateNotExecutionMember | ObjectNotKnown | NameNotFound | AttributeNotOwned
                 | InvalidFederationTime e) {
             throw new RuntimeException(e);
@@ -204,9 +205,9 @@ public class Environment implements InjectionCallback {
     private void updateTemperatureClusters() {
         log.trace("updateTemperatureClusters");
         
-        for (int clusterId : temperatureClusters.keySet()) {
-            log.trace("on temperature cluster " + clusterId);
-            for (String sensor : temperatureClusters.get(clusterId)) {
+        for (Map.Entry<Integer, Set<String>> entry : temperatureClusters.entrySet()) {
+            log.trace("on temperature cluster " + entry.getKey());
+            for (String sensor : entry.getValue()) {
                 final double newValue = ThreadLocalRandom.current().nextInt(200, 260) / 10.0;
                 updateTemperatureSensor(sensor, newValue);
             }
@@ -220,8 +221,8 @@ public class Environment implements InjectionCallback {
         updatedValues.put("temperature", Double.toString(temperature));
         
         try {
-            gateway.updateObject(name, updatedValues, gateway.getTimeStamp()); // TSO
-            log.debug(String.format("updated %s using %s", name, updatedValues.toString()));
+            gateway.updateObject(name, updatedValues, gateway.getTimeStamp());
+            log.info(String.format("updated %s using %s", name, updatedValues.toString()));
         } catch (FederateNotExecutionMember | ObjectNotKnown | NameNotFound | AttributeNotOwned
                 | InvalidFederationTime e) {
             throw new RuntimeException(e);

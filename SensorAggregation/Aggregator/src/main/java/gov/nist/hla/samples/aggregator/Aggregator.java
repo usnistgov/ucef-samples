@@ -30,11 +30,11 @@ public class Aggregator implements InjectionCallback {
     private static final String INTERACTION_AGG_REPORT = "InteractionRoot.C2WInteractionRoot.AggregationReport";
     private static final String INTERACTION_SIM_END = "InteractionRoot.C2WInteractionRoot.SimulationControl.SimEnd";
     
-    private class ObjectInfo {
+    private class SensorInfo {
         private final int sensorId;
         private final int clusterId;
         
-        public ObjectInfo(int sensorId, int clusterId) {
+        public SensorInfo(int sensorId, int clusterId) {
             this.sensorId = sensorId;
             this.clusterId = clusterId;
         }
@@ -46,7 +46,7 @@ public class Aggregator implements InjectionCallback {
         private String sumValue;
         private int numberOfValues;
         
-        public AggregateData(String initialValue, String dataType) {
+        public AggregateData(String dataType, String initialValue) {
             this.dataType = dataType;
             this.maxValue = initialValue;
             this.sumValue = initialValue;
@@ -54,22 +54,31 @@ public class Aggregator implements InjectionCallback {
         }
         
         public String toString() {
-            return String.format("(type=%s values=%d max=%s sum=%s)", dataType, numberOfValues, maxValue, sumValue);
+            return String.format("type=%s values=%d max=%s sum=%sW", dataType, numberOfValues, maxValue, sumValue);
         }
+    }
+    
+    private enum AggregationMethod {
+        MAXIMUM,
+        SUM
     }
     
     private InjectionFederate gateway;
     
-    Map<String, ObjectInfo> discoveredObjects = new HashMap<String, ObjectInfo>();
+    // HLA object instance name -> static sensor information
+    Map<String, SensorInfo> discoveredObjects = new HashMap<String, SensorInfo>();
     
+    // cluster id -> aggregate data for all sensor attributes in that cluster
     Map<Integer, Map<String, AggregateData>> clusterData = new HashMap<Integer, Map<String, AggregateData>>();
     
-    private String aggregationMethod = null;
+    private ObjectMapper mapper = new ObjectMapper();
+    
+    private AggregationMethod aggregationMethod = null;
     
     public static void main(String[] args)
             throws IOException {
         if (args.length != 1) {
-            log.error("command line argument for JSON configuration file not specified");
+            log.error("missing command line argument for JSON configuration file");
             return;
         }
         
@@ -98,7 +107,7 @@ public class Aggregator implements InjectionCallback {
         log.info("waiting to receive " + INTERACTION_AGG_CONTROL);
         while (aggregationMethod == null) {
             try {
-                gateway.tick();
+                gateway.tick(); // this will call receiveInteraction
             } catch (FederateNotExecutionMember e) {
                 throw new RuntimeException(e);
             }
@@ -123,10 +132,8 @@ public class Aggregator implements InjectionCallback {
         if (className.contains(OBJECT_SENSOR)) {
             if (!gateway.hasTimeStarted()) {
                 discoverSensor(instanceName, attributes);
-            } else if (discoveredObjects.containsKey(instanceName)) {
-                updateSensor(className, instanceName, attributes);
             } else {
-                log.error("sensor object not discovered during initialization: " + instanceName);
+                updateSensor(className, instanceName, attributes);
             }
         } else {
             log.warn("unexpected object update " + className);
@@ -136,36 +143,23 @@ public class Aggregator implements InjectionCallback {
     public void doTimeStep(Double timeStep) {
         log.trace("doTimeStep " + timeStep);
         
-        ObjectMapper mapper = new ObjectMapper();
-        for (int clusterId : clusterData.keySet()) {
-            ArrayNode root = mapper.createArrayNode();
-            Map<String, AggregateData> data = clusterData.get(clusterId);
-            for (Map.Entry<String, AggregateData> entry : data.entrySet()) {
-                String attributeName = entry.getKey();
-                String aggregateValue;
-                if (aggregationMethod.equals("maximum")) {
-                    aggregateValue = entry.getValue().maxValue;
-                } else if (aggregationMethod.equals("sum")) {
-                    aggregateValue = entry.getValue().sumValue;
-                } else {
-                    log.warn("unsupported aggregation method " + aggregationMethod);
+        for (Map.Entry<Integer, Map<String, AggregateData>> entry : clusterData.entrySet()) {
+            try {
+                final int clusterId = entry.getKey();
+                final String report = createReport(entry.getValue());
+                
+                log.trace("on cluster " + clusterId);
+                if (report.equals("[]")) {
+                    log.info("no update for cluster " + clusterId);
                     continue;
                 }
-                ObjectNode node = mapper.createObjectNode();
-                node.put("name", attributeName);
-                node.put("value", aggregateValue);
-                node.put("type", entry.getValue().dataType);
-                root.add(node);
-            }
-            try {
-                sendReportInteraction(clusterId, aggregationMethod, mapper.writeValueAsString(root));
+                sendReportInteraction(entry.getKey(), aggregationMethod, createReport(entry.getValue()));
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
-            data.clear();
         }
     }
-
+    
     public void terminate() {
         log.trace("terminate");
     }
@@ -173,16 +167,21 @@ public class Aggregator implements InjectionCallback {
     private void receiveAggregationControl(Map<String, String> parameters) {
         log.trace("receiveAggregationControl " + parameters.toString());
         
-        this.aggregationMethod = parameters.get("aggregationMethod");
-        log.info("configured to use the aggregation method: " + aggregationMethod);
+        String stringValue = parameters.get("aggregationMethod");
+        this.aggregationMethod = AggregationMethod.valueOf(stringValue.toUpperCase());
+        log.info("configured to use the aggregation method: " + aggregationMethod.toString());
     }
     
     private void discoverSensor(String instanceName, Map<String, String> attributes) {
-        log.trace(String.format("discoverObject %s %s", instanceName, attributes.toString()));
+        log.trace(String.format("discoverSensor %s %s", instanceName, attributes.toString()));
+        
+        if (!attributes.containsKey("sensorId") || !attributes.containsKey("clusterId")) {
+            throw new RuntimeException("missing expected attributes for " + instanceName);
+        }
         
         final int sensorId = Integer.parseInt(attributes.get("sensorId"));
         final int clusterId = Integer.parseInt(attributes.get("clusterId"));
-        ObjectInfo discoveredObject = new ObjectInfo(sensorId, clusterId);
+        SensorInfo discoveredObject = new SensorInfo(sensorId, clusterId);
         
         if (discoveredObjects.put(instanceName, discoveredObject) != null) {
             log.warn("discovered multiple sensors named " + instanceName);
@@ -196,74 +195,109 @@ public class Aggregator implements InjectionCallback {
     private void updateSensor(String className, String instanceName, Map<String, String> attributes) {
         log.trace(String.format("updateSensor %s %s %s", className, instanceName, attributes.toString()));
         
+        if (!discoveredObjects.containsKey(instanceName)) {
+            throw new RuntimeException("update from undiscovered sensor " + instanceName);
+        }
+        
         // we do not check for duplicate updates from the same sensor
         final int sensorId = discoveredObjects.get(instanceName).sensorId;
         final int clusterId = discoveredObjects.get(instanceName).clusterId;
-        log.info("received update from sensor " + sensorId + " in cluster " + clusterId);
+        log.debug("received update from sensor " + sensorId + " in cluster " + clusterId);
+        
+        Map<String, AggregateData> data = clusterData.get(clusterId);
         
         for (Map.Entry<String, String> entry : attributes.entrySet()) {
             final String attribute = entry.getKey();
             final String stringValue = entry.getValue();
             final String dataType = getDataType(className, attribute);
             
-            Map<String, AggregateData> data = clusterData.get(clusterId);
+            if (!dataType.equals("double") && !dataType.equals("int")) {
+                log.warn(String.format("skipping attribute %s with unsupported type %s", attribute, dataType));
+            }
+            
             if (data.containsKey(attribute)) {
-                aggregateValues(data.get(attribute), stringValue);
+                updateAggregateData(data.get(attribute), stringValue);
             } else {
-                data.put(attribute, new AggregateData(stringValue, dataType));
-                log.debug("initial aggregate " + data.get(attribute).toString());
+                data.put(attribute, new AggregateData(dataType, stringValue));
+                log.debug(String.format("initial value for %s set to %s", attribute, data.get(attribute).toString()));
             }
         }
     }
     
     private String getDataType(String className, String attributeName) {
-        ObjectClassType objectClass = this.gateway.getObjectModel().getObject(className);
-        AttributeType attributeClass = this.gateway.getObjectModel().getAttribute(objectClass, attributeName);
+        ObjectClassType objectClass = gateway.getObjectModel().getObject(className);
+        AttributeType attributeClass = gateway.getObjectModel().getAttribute(objectClass, attributeName);
         return attributeClass.getDataType().getValue();
     }
     
-    private void aggregateValues(AggregateData data, String stringValue) {
-        log.trace(String.format("aggregateValues %s %s", data.toString(), stringValue));
+    private void updateAggregateData(AggregateData data, String stringValue) {
+        log.trace(String.format("updateAggregateData %s %s", data.toString(), stringValue));
         
         if (data.dataType.equals("double")) {
             final double value = Double.parseDouble(stringValue);
-            double sum = Double.parseDouble(data.sumValue) + value;
             
             if (Double.parseDouble(data.maxValue) < value) {
                 data.maxValue = stringValue;
             }
-            data.sumValue = Double.toString(sum);
+            data.sumValue = Double.toString(Double.parseDouble(data.sumValue) + value);
             data.numberOfValues = data.numberOfValues + 1;
             log.debug("new aggregate " + data.toString());
         } else if (data.dataType.equals("int")) {
             final int value = Integer.parseInt(stringValue);
-            int sum = Integer.parseInt(data.sumValue) + value;
             
             if (Integer.parseInt(data.maxValue) < value) {
                 data.maxValue = stringValue;
             }
-            data.sumValue = Integer.toString(sum);
+            data.sumValue = Integer.toString(Integer.parseInt(data.sumValue) + value);
             data.numberOfValues = data.numberOfValues + 1;
             log.debug("new aggregate " + data.toString());
         } else {
-            log.warn("not supported");
+            throw new RuntimeException("unsupported data type " + data.dataType);
         }
     }
     
-    private void sendReportInteraction(int clusterId, String aggregationMethod, String report) {
+    private void sendReportInteraction(int clusterId, AggregationMethod aggregationMethod, String report) {
         log.trace(String.format("sendReportInteraction %d %s %s", clusterId, aggregationMethod, report));
         
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("clusterId", Integer.toString(clusterId));
-        parameters.put("aggregationMethod", aggregationMethod);
+        parameters.put("aggregationMethod", aggregationMethod.toString());
         parameters.put("report", report);
         
         try {
             gateway.injectInteraction(INTERACTION_AGG_REPORT, parameters, gateway.getTimeStamp());
-            log.debug(String.format("sent %s using %s", INTERACTION_AGG_REPORT, parameters.toString()));
+            log.info(String.format("sent %s using %s", INTERACTION_AGG_REPORT, parameters.toString()));
         } catch (FederateNotExecutionMember | NameNotFound | InteractionClassNotPublished
                 | InvalidFederationTime e) {
             throw new RuntimeException(e);
         }
+    }
+    
+    private String createReport(Map<String, AggregateData> data)
+            throws JsonProcessingException {
+        log.trace("createReport " + data.toString());
+        
+        ArrayNode root = mapper.createArrayNode();
+        for (Map.Entry<String, AggregateData> entry : data.entrySet()) {
+            root.add(createReportNode(entry.getKey(), entry.getValue()));
+        }
+        return mapper.writeValueAsString(root);
+    }
+    
+    private ObjectNode createReportNode(String attributeName, AggregateData data) {
+        log.trace("createReportNode " + attributeName + " " + data.toString());
+        
+        ObjectNode node = mapper.createObjectNode();
+        node.put("name", attributeName);
+        node.put("type", data.dataType);
+        switch (aggregationMethod) {
+            case MAXIMUM:
+                node.put("value", data.maxValue);
+                break;
+            case SUM:
+                node.put("value", data.sumValue);
+                break;
+        }
+        return node;
     }
 }

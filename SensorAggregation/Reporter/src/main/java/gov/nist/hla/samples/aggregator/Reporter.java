@@ -17,7 +17,6 @@ import hla.rti.FederateNotExecutionMember;
 import hla.rti.InteractionClassNotPublished;
 import hla.rti.NameNotFound;
 
-
 public class Reporter implements InjectionCallback {
     private static final Logger log = LogManager.getLogger();
     
@@ -31,7 +30,7 @@ public class Reporter implements InjectionCallback {
     public static void main(String[] args)
             throws IOException {
         if (args.length != 1) {
-            log.error("command line argument for JSON configuration file not specified");
+            log.error("missing command line argument for JSON configuration file");
             return;
         }
         
@@ -102,7 +101,7 @@ public class Reporter implements InjectionCallback {
         values.put("aggregationMethod", configuration.getAggregationMethod());
         
         try {
-            gateway.injectInteraction(INTERACTION_AGG_CONTROL, values); // RO
+            gateway.injectInteraction(INTERACTION_AGG_CONTROL, values);
             log.info(String.format("sent %s using %s", INTERACTION_AGG_CONTROL, values.toString()));
         } catch (FederateNotExecutionMember | NameNotFound | InteractionClassNotPublished e) {
             throw new RuntimeException(e);
@@ -115,6 +114,6 @@ public class Reporter implements InjectionCallback {
         final int cluster = Integer.parseInt(parameters.get("clusterId"));
         final String method = parameters.get("aggregationMethod");
         final String report = parameters.get("report");
-        log.info(String.format("t=%f cluster %d report (using %s):\n%s", timeStep, cluster, method, report));
+        log.info(String.format("t=%f cluster %d report (using %s): %s", timeStep, cluster, method, report));
     }
 }
