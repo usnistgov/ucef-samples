@@ -54,7 +54,7 @@ public class Aggregator implements InjectionCallback {
         }
         
         public String toString() {
-            return String.format("type=%s values=%d max=%s sum=%sW", dataType, numberOfValues, maxValue, sumValue);
+            return String.format("type=%s values=%d max=%s sum=%s", dataType, numberOfValues, maxValue, sumValue);
         }
     }
     
