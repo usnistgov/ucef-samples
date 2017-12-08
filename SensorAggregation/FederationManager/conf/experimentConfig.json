@@ -31,5 +31,9 @@
       "federateType": "Reporter",
       "count": 0
     }
-  ]
+  ],
+  "pauseTimes": [],
+  "coaDefinition": "conf/coaConfig.json",
+  "coaSelection": "conf/coaSelection.json",
+  "terminateOnCOAFinish": false
 }

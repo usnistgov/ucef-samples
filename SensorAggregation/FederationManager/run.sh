@@ -12,7 +12,7 @@ if [ ! -d log ]; then
     mkdir log
 fi
 
-xterm -l -lf log/federation-manager-${timestamp}.log -T "Federation Manager" -e "mvn exec:java -P FederationManagerExecJava" &
+xterm -l -lf log/federation-manager-${timestamp}.log -T "Federation Manager" -e "export CPSWT_ROOT=`pwd` && mvn exec:java -P FederationManagerExecJava" &
 
 printf "Waiting for the federation manager to come online.."
 until $(curl -o /dev/null -s -f -X GET http://127.0.0.1:8083/fedmgr); do
