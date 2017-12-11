@@ -11,9 +11,8 @@ The goal of the Sensor Aggregation federation is to create an Aggregator federat
 ## Installation and Use
 
 1. Clone and install v1.0.0 of the UCEF-Gateway federate (https://github.com/usnistgov/ucef-gateway)
-2. Run `mvn install` in the Aggregator, Environment, and Reporter directories of this project
-3. Run `./run.sh` in the FederationManager directory of this project, and wait for the server to come online
-4. Run `./run.sh` in the Aggregator, Environment, and Reporter directories of this project in any order
+2. Run `./build.sh` from the top directory of this project to compile the federates
+3. Run `./run.sh` from the top directory of this project to run the federation
 
 ## Environment Federate
 
