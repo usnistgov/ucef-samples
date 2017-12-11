@@ -14,8 +14,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import gov.nist.hla.ii.InjectionCallback;
-import gov.nist.hla.ii.InjectionFederate;
+import gov.nist.hla.gateway.GatewayCallback;
+import gov.nist.hla.gateway.GatewayFederate;
 import hla.rti.AttributeNotOwned;
 import hla.rti.FederateNotExecutionMember;
 import hla.rti.InvalidFederationTime;
@@ -23,14 +23,14 @@ import hla.rti.NameNotFound;
 import hla.rti.ObjectClassNotPublished;
 import hla.rti.ObjectNotKnown;
 
-public class Environment implements InjectionCallback {
+public class Environment implements GatewayCallback {
     private static final Logger log = LogManager.getLogger();
     
     private static final String OBJECT_TRAFFIC_SENSOR = "ObjectRoot.Sensor.TrafficSensor";
     private static final String OBJECT_TEMPERATURE_SENSOR = "ObjectRoot.Sensor.TemperatureSensor";
     private static final String INTERACTION_SIM_END = "InteractionRoot.C2WInteractionRoot.SimulationControl.SimEnd";
     
-    private InjectionFederate gateway;
+    private GatewayFederate gateway;
     private EnvironmentConfiguration configuration;
     
     // cluster id -> set of HLA object instance names in that cluster
@@ -60,7 +60,7 @@ public class Environment implements InjectionCallback {
     }
     
     public Environment(EnvironmentConfiguration configuration) {
-        this.gateway = new InjectionFederate(configuration, this);
+        this.gateway = new GatewayFederate(configuration, this);
         this.configuration = configuration;
     }
     

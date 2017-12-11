@@ -11,20 +11,20 @@ import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import gov.nist.hla.ii.InjectionCallback;
-import gov.nist.hla.ii.InjectionFederate;
+import gov.nist.hla.gateway.GatewayCallback;
+import gov.nist.hla.gateway.GatewayFederate;
 import hla.rti.FederateNotExecutionMember;
 import hla.rti.InteractionClassNotPublished;
 import hla.rti.NameNotFound;
 
-public class Reporter implements InjectionCallback {
+public class Reporter implements GatewayCallback {
     private static final Logger log = LogManager.getLogger();
     
     private static final String INTERACTION_AGG_CONTROL = "InteractionRoot.C2WInteractionRoot.AggregationControl";
     private static final String INTERACTION_AGG_REPORT = "InteractionRoot.C2WInteractionRoot.AggregationReport";
     private static final String INTERACTION_SIM_END = "InteractionRoot.C2WInteractionRoot.SimulationControl.SimEnd";
     
-    private InjectionFederate gateway;
+    private GatewayFederate gateway;
     private ReporterConfiguration configuration;
     
     public static void main(String[] args)
@@ -48,7 +48,7 @@ public class Reporter implements InjectionCallback {
     }
     
     public Reporter(ReporterConfiguration configuration) {
-        this.gateway = new InjectionFederate(configuration, this);
+        this.gateway = new GatewayFederate(configuration, this);
         this.configuration = configuration;
     }
     
@@ -101,7 +101,7 @@ public class Reporter implements InjectionCallback {
         values.put("aggregationMethod", configuration.getAggregationMethod());
         
         try {
-            gateway.injectInteraction(INTERACTION_AGG_CONTROL, values);
+            gateway.sendInteraction(INTERACTION_AGG_CONTROL, values);
             log.info(String.format("sent %s using %s", INTERACTION_AGG_CONTROL, values.toString()));
         } catch (FederateNotExecutionMember | NameNotFound | InteractionClassNotPublished e) {
             throw new RuntimeException(e);

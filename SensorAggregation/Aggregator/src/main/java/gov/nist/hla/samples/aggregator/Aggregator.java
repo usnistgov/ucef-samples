@@ -14,15 +14,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import gov.nist.hla.ii.InjectionCallback;
-import gov.nist.hla.ii.InjectionFederate;
-import gov.nist.hla.ii.config.InjectionFederateConfig;
+import gov.nist.hla.gateway.GatewayCallback;
+import gov.nist.hla.gateway.GatewayFederate;
+import gov.nist.hla.gateway.GatewayFederateConfig;
 import hla.rti.FederateNotExecutionMember;
 import hla.rti.InteractionClassNotPublished;
 import hla.rti.InvalidFederationTime;
 import hla.rti.NameNotFound;
 
-public class Aggregator implements InjectionCallback {
+public class Aggregator implements GatewayCallback {
     private static final Logger log = LogManager.getLogger();
     
     private static final String OBJECT_SENSOR = "ObjectRoot.Sensor";
@@ -63,7 +63,7 @@ public class Aggregator implements InjectionCallback {
         SUM
     }
     
-    private InjectionFederate gateway;
+    private GatewayFederate gateway;
     
     // HLA object instance name -> static sensor information
     Map<String, SensorInfo> discoveredObjects = new HashMap<String, SensorInfo>();
@@ -82,13 +82,13 @@ public class Aggregator implements InjectionCallback {
             return;
         }
         
-        InjectionFederateConfig config = InjectionFederate.readConfiguration(args[0]);
+        GatewayFederateConfig config = GatewayFederate.readConfiguration(args[0]);
         Aggregator environmentFederate = new Aggregator(config);
         environmentFederate.run();
     }
     
-    public Aggregator(InjectionFederateConfig configuration) {
-        this.gateway = new InjectionFederate(configuration, this);
+    public Aggregator(GatewayFederateConfig configuration) {
+        this.gateway = new GatewayFederate(configuration, this);
     }
     
     public void run() {
@@ -265,7 +265,7 @@ public class Aggregator implements InjectionCallback {
         parameters.put("report", report);
         
         try {
-            gateway.injectInteraction(INTERACTION_AGG_REPORT, parameters, gateway.getTimeStamp());
+            gateway.sendInteraction(INTERACTION_AGG_REPORT, parameters, gateway.getTimeStamp());
             log.info(String.format("sent %s using %s", INTERACTION_AGG_REPORT, parameters.toString()));
         } catch (FederateNotExecutionMember | NameNotFound | InteractionClassNotPublished
                 | InvalidFederationTime e) {

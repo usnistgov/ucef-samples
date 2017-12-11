@@ -1,8 +1,8 @@
 package gov.nist.hla.samples.aggregator;
 
-import gov.nist.hla.ii.config.InjectionFederateConfig;
+import gov.nist.hla.gateway.GatewayFederateConfig;
 
-public class EnvironmentConfiguration extends InjectionFederateConfig {
+public class EnvironmentConfiguration extends GatewayFederateConfig {
     private int minimumClusterSize = 2;
     private int maximumClusterSize = 2;
     private int numberOfTrafficClusters = 1;

@@ -1,9 +1,9 @@
 package gov.nist.hla.samples.aggregator;
 
-import gov.nist.hla.ii.config.InjectionFederateConfig;
-import gov.nist.hla.ii.exception.ValueNotSet;
+import gov.nist.hla.gateway.GatewayFederateConfig;
+import gov.nist.hla.gateway.exception.ValueNotSet;
 
-public class ReporterConfiguration extends InjectionFederateConfig {
+public class ReporterConfiguration extends GatewayFederateConfig {
     private String aggregationMethod;
     private boolean aggregationMethodSet;
     
