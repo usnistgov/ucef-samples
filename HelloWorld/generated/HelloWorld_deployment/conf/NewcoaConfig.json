@@ -1,0 +1,158 @@
+{
+  "COA1": {
+    "nodes": [
+      {
+        "Count": "10",
+        "name": "Ping",
+        "nodeType": "Action",
+        "ID": "b72e4910-7362-c566-0223-388fe7c77241"
+      },
+      {
+        "time": 10,
+        "minBranchesToSync": "-1",
+        "name": "t10s",
+        "nodeType": "SyncPoint",
+        "ID": "5bff9c33-44ab-f91d-d43d-7039c3bc8cf4"
+      }
+    ],
+    "edges": [
+      {
+        "name": "COAFlow",
+        "type": "COAFlow",
+        "ID": "403d67a4-1932-90ba-c454-53686e8e170a",
+        "fromNode": "5bff9c33-44ab-f91d-d43d-7039c3bc8cf4",
+        "toNode": "b72e4910-7362-c566-0223-388fe7c77241"
+      }
+    ]
+  },
+  "COA2": {
+    "nodes": [
+      {
+        "time": 5,
+        "name": "dur5s",
+        "nodeType": "Dur",
+        "ID": "8a3af66b-cc3a-5a0e-d422-5494088b7f7a"
+      },
+      {
+        "interactionName": "",
+        "name": "Ping",
+        "nodeType": "Outcome",
+        "ID": "65591bb1-773f-328a-ac90-0d888a8951f2"
+      },
+      {
+        "time": 25,
+        "minBranchesToSync": "-1",
+        "name": "t25s",
+        "nodeType": "SyncPoint",
+        "ID": "b171a4a8-477e-285c-f2a8-3310d70e0483"
+      }
+    ],
+    "edges": [
+      {
+        "name": "COAFlow",
+        "type": "COAFlow",
+        "ID": "5e0faf33-182a-ed10-c759-d4495e179b6f",
+        "fromNode": "b171a4a8-477e-285c-f2a8-3310d70e0483",
+        "toNode": "8a3af66b-cc3a-5a0e-d422-5494088b7f7a"
+      },
+      {
+        "name": "COAFlow",
+        "type": "COAFlow",
+        "ID": "592556ff-93e8-1314-0f8d-e87a8c0400db",
+        "fromNode": "8a3af66b-cc3a-5a0e-d422-5494088b7f7a",
+        "toNode": "65591bb1-773f-328a-ac90-0d888a8951f2"
+      }
+    ]
+  },
+  "COA3": {
+    "nodes": [
+      {
+        "time": 25,
+        "name": "dur25s",
+        "nodeType": "Dur",
+        "ID": "ff99b752-9449-b707-24af-13f8957a948f"
+      },
+      {
+        "Count": "20",
+        "name": "Ping",
+        "nodeType": "Action",
+        "ID": "ec98bdcc-d200-6840-8248-b3838901d87f"
+      },
+      {
+        "interactionName": "",
+        "name": "Ping",
+        "nodeType": "Outcome",
+        "ID": "29d4afe5-f8af-8ed2-5d47-a83c035007c9"
+      },
+      {
+        "time": 5,
+        "minBranchesToSync": "-1",
+        "name": "t5s",
+        "nodeType": "SyncPoint",
+        "ID": "c44ce2f3-d718-1713-b252-ecf45fa2278e"
+      },
+      {
+        "isDecisionPoint": "false",
+        "name": "Fork",
+        "nodeType": "Fork",
+        "ID": "4ebc05c9-36d0-cb65-9099-72bccca2c95a"
+      }
+    ],
+    "edges": [
+      {
+        "name": "COAFlow",
+        "type": "COAFlow",
+        "ID": "fdb81f6f-74c9-471e-8c68-c76474dfa182",
+        "fromNode": "4ebc05c9-36d0-cb65-9099-72bccca2c95a",
+        "toNode": "ff99b752-9449-b707-24af-13f8957a948f"
+      },
+      {
+        "name": "COAFlow",
+        "type": "COAFlow",
+        "ID": "7b957eaa-462d-10eb-68a4-06113e455da4",
+        "fromNode": "ff99b752-9449-b707-24af-13f8957a948f",
+        "toNode": "29d4afe5-f8af-8ed2-5d47-a83c035007c9"
+      },
+      {
+        "name": "COAFlow",
+        "type": "COAFlow",
+        "ID": "457fd9f7-d82f-d584-a7bc-5025201f263a",
+        "fromNode": "4ebc05c9-36d0-cb65-9099-72bccca2c95a",
+        "toNode": "ec98bdcc-d200-6840-8248-b3838901d87f"
+      },
+      {
+        "name": "COAFlow",
+        "type": "COAFlow",
+        "ID": "9730a702-acc1-80c6-cb4c-71e59c5ac7a4",
+        "fromNode": "c44ce2f3-d718-1713-b252-ecf45fa2278e",
+        "toNode": "4ebc05c9-36d0-cb65-9099-72bccca2c95a"
+      }
+    ]
+  },
+  "COA4": {
+    "nodes": [
+      {
+        "time": 50,
+        "minBranchesToSync": "-1",
+        "name": "t50s",
+        "nodeType": "SyncPoint",
+        "ID": "ed391f2f-c33d-9530-d2ee-cfa87230f255"
+      },
+      {
+        "interactionName": "",
+        "name": "Ping",
+        "nodeType": "Outcome",
+        "ID": "f789cf00-bbda-c00c-8b02-b13d80f6a508"
+      }
+    ],
+    "edges": [
+      {
+        "name": "COAFlow",
+        "type": "COAFlow",
+        "ID": "8890780a-6d50-61c1-b8fa-5bfd8fcb5b78",
+        "fromNode": "ed391f2f-c33d-9530-d2ee-cfa87230f255",
+        "toNode": "f789cf00-bbda-c00c-8b02-b13d80f6a508"
+      }
+    ]
+  }
+}
