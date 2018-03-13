@@ -1,0 +1,12 @@
+{
+  "script": {
+    "expect": [
+      {
+        "federateType": "metronome"
+      }
+    ],
+    "pauses": [],
+    "coaNodes": [],
+    "coaEdges": []
+  }
+}
