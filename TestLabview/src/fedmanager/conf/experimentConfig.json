@@ -8,10 +8,6 @@
   ],
   "expectedFederates": [
     {
-      "federateType": "Controller",
-      "count": 1
-    },
-    {
       "federateType": "Metronome",
       "count": 1
     },
@@ -21,33 +17,17 @@
     },
     {
       "federateType": "Weather",
-      "count": 1
-    },
-    {
-      "federateType": "Zone",
       "count": 1
     }
   ],
   "lateJoinerFederates": [
     {
       "federateType": "Controller",
-      "count": 0
-    },
-    {
-      "federateType": "Metronome",
-      "count": 0
-    },
-    {
-      "federateType": "TestLabVIEW",
-      "count": 0
-    },
-    {
-      "federateType": "Weather",
-      "count": 0
+      "count": 4
     },
     {
       "federateType": "Zone",
-      "count": 0
+      "count": 4
     }
   ]
 }
