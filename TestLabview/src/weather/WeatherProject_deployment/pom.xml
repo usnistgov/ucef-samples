@@ -9,7 +9,7 @@
 	<properties>
 		<federation.name>WeatherProject</federation.name>
 		<federation.version>0.1.0-SNAPSHOT</federation.version>
-		<cpswt.version>0.5.0-SNAPSHOT</cpswt.version>
+		<cpswt.version>0.6.0-SNAPSHOT</cpswt.version>
 		<nar.version>3.3.0</nar.version>
 	</properties>
 
