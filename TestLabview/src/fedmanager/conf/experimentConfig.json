@@ -23,11 +23,11 @@
   "lateJoinerFederates": [
     {
       "federateType": "Controller",
-      "count": 4
+      "count": 1
     },
     {
       "federateType": "Zone",
-      "count": 4
+      "count": 1
     }
   ],
   "coaDefinition" : "conf/coadefinition.json", 

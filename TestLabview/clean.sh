@@ -14,9 +14,9 @@ mvn clean
 #cd $DIR/src/weather/WeatherProject_deployment
 #mvn clean
 
-cd $DIR/src/labview/TestLabVIEW_generated
+cd $DIR/src/labview/TestLabview_generated
 mvn clean
-#cd $DIR/src/labview/TestLabVIEW_deployment
+#cd $DIR/src/labview/TestLabview_deployment
 #mvn clean
 
 cd $DIR/src/controller/Controller_generated

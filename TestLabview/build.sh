@@ -14,9 +14,9 @@ cd $DIR/src/weather/WeatherProject_generated
 #cd $DIR/src/weather/WeatherProject_deployment
 #./build.sh
 
-cd $DIR/src/labview/TestLabVIEW_generated
+cd $DIR/src/labview/TestLabview_generated
 ./build.sh
-#cd $DIR/src/labview/TestLabVIEW_deployment
+#cd $DIR/src/labview/TestLabview_deployment
 #./build.sh
 
 cd $DIR/src/controller/Controller_generated
