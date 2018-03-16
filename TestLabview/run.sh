@@ -42,11 +42,11 @@ xterm -hold -T "Controller1" $logtofile -e "java -Dlog4j.configurationFile=$LOG4
 #xterm -hold -T "Controller3" $logtofile -e "java -Dlog4j.configurationFile=$LOG4J  -jar Controller-0.1.0-SNAPSHOT.jar -configFile=conf/ControllerConfig.json -name=Controller3" &
 #xterm -hold -T "Controller4" $logtofile -e "java -Dlog4j.configurationFile=$LOG4J  -jar Controller-0.1.0-SNAPSHOT.jar -configFile=conf/ControllerConfig.json -name=Controller4" &
 
-#sleep 20
+sleep 20
 
-#curl -i -X POST http://127.0.0.1:8083/fedmgr --data '{"action": "START"}' -H "Content-Type: application/json" 
+curl -i -X POST http://127.0.0.1:8083/fedmgr --data '{"action": "START"}' -H "Content-Type: application/json" 
 
-#sleep 90
+sleep 90
 
-#curl -i -X POST http://127.0.0.1:8083/fedmgr --data '{"action": "TERMINATE"}' -H "Content-Type: application/json"
+curl -i -X POST http://127.0.0.1:8083/fedmgr --data '{"action": "TERMINATE"}' -H "Content-Type: application/json"
 
