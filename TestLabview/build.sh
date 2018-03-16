@@ -9,19 +9,24 @@ cd $DIR/src/metronome/MetronomeProject_generated
 #cd $DIR/src/metronome/MetronomeProject_deployment
 #./build.sh
 
-cd $DIR/src/zone/Zone_generated
-./build.sh
-#cd $DIR/src/zone/Zone_deployment
-#./build.sh
-
 cd $DIR/src/weather/WeatherProject_generated
 ./build.sh
 #cd $DIR/src/weather/WeatherProject_deployment
 #./build.sh
 
+cd $DIR/src/labview/TestLabVIEW_generated
+./build.sh
+#cd $DIR/src/labview/TestLabVIEW_deployment
+#./build.sh
+
 cd $DIR/src/controller/Controller_generated
 ./build.sh
 #cd $DIR/src/controller/Controller_deployment
+#./build.sh
+
+cd $DIR/src/zone/Zone_generated
+./build.sh
+#cd $DIR/src/zone/Zone_deployment
 #./build.sh
 
 

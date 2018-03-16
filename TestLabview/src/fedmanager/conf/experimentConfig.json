@@ -29,5 +29,8 @@
       "federateType": "Zone",
       "count": 4
     }
-  ]
+  ],
+  "coaDefinition" : "conf/coadefinition.json", 
+  "coaSelection": "conf/coaselection.json",
+  "terminateOnCOAFinish" : true
 }
