@@ -1,4 +1,4 @@
-package HouseProject;
+package Controller;
 
 public class ValueNotSet extends RuntimeException {
 	  public ValueNotSet(String message) {

@@ -46,7 +46,7 @@ public class Controller extends ControllerBase {
     ///////////////////////////////////////////////////////////////////////
     // TODO Must register object instances after super(args)
     //
-     vControllerState.registerObject(getLRC());
+//%%% must correct     vControllerState.registerObject(getLRC());
     //
     ///////////////////////////////////////////////////////////////////////
 
@@ -201,6 +201,7 @@ public class Controller extends ControllerBase {
             FederateConfigParser federateConfigParser = new FederateConfigParser();
             FederateConfig federateConfig = federateConfigParser.parseArgs(args, FederateConfig.class);
             Controller federate = new Controller(federateConfig);
+            
 			// process parameters file
             File f = new File("conf/config.yml");
             if(f.exists() && !f.isDirectory()) { 

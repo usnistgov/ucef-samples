@@ -1,11 +1,4 @@
-solarconversionconstant: 0.194  #solar efficiency
-uae: 172.0                    # Lumped Thermal Resistance W per 'C
-tau: 374400.0 # house thermal time constant seconds
-houseeffectivearea: 6.84  # Area in M2 exposed to sun
-sghc: 0.89  # Solar Heat Gain Coefficient
-hpbasepower: 1571.0 # heat pump power base consumption when running (will add temperature component)
-#tsp: 22.2 # temperature setpoint 'C
-tsp: 20.0 # temperature setpoint 'C
-del: 0.5 # thermostat hysteresis
-plugload: 1200 # plugload W
-solarpaneleffectivearea: 52.16 # M2 solar panel
+kp: 1.0
+kd: 0.0
+ki: 0.0
+hyst: 1.0
