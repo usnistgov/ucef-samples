@@ -44,15 +44,16 @@ public class Controller extends ControllerBase {
      ControllerState vControllerState = new ControllerState();
     //
     ///////////////////////////////////////////////////////////////////////
-    // TODO Must register object instances after super(args)
-    //
-//%%% must correct     vControllerState.registerObject(getLRC());
-    //
-    ///////////////////////////////////////////////////////////////////////
 
 
     public Controller(FederateConfig params) throws Exception {
         super(params);
+        // TODO Must register object instances after super(args)
+        //
+        vControllerState.registerObject(getLRC());
+        //
+        ///////////////////////////////////////////////////////////////////////
+        
     }
     
 	public void DoThermostat() {
@@ -154,15 +155,20 @@ public class Controller extends ControllerBase {
             atr.requestSyncStart();
             enteredTimeGrantedState();
 
+            // get the current info
+            CheckReceivedSubscriptions("Main Loop");
+            
+            //calculate damper state
+            DoThermostat();
+
+            // send the current updated state
             ////////////////////////////////////////////////////////////////////////////////////////
             // TODO objects that must be sent every logical time step
             //
-                vControllerState.set_DamperPostionPct(damper);
-                vControllerState.updateAttributeValues(getLRC(), currentTime);
+            vControllerState.set_DamperPostionPct(damper);
+            vControllerState.updateAttributeValues(getLRC(), currentTime);
             //
             //////////////////////////////////////////////////////////////////////////////////////////
-
-            CheckReceivedSubscriptions("Main Loop");
 
             // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             // DO NOT MODIFY FILE BEYOND THIS LINE
