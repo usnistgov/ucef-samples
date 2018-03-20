@@ -10,6 +10,8 @@ The goal of the Sensor Aggregation federation is to create an Aggregator federat
 
 ## Installation and Use
 
+The run script requires jq which is not part of the default UCEF installation. Run `sudo apt-get install jq` if the run script outputs an error. 
+
 1. Clone and install v1.0.0 of the UCEF-Gateway federate (https://github.com/usnistgov/ucef-gateway)
 2. Run `./build.sh` from the top directory of this project to compile the federates
 3. Run `./run.sh` from the top directory of this project to run the federation
@@ -46,7 +48,7 @@ This federation was designed to cover the following features of UCEF Gateway:
 1.	Sending and receiving interactions
 2.	Sending and receiving object reflections
 3.	Registering and reusing persistent object instances
-4. Performing initialization between federates using receive order messages
+4.  Performing initialization between federates using receive order messages
 5.	Converting received values into the correct data types (integer and double)
 6.	Working with full interaction/object class paths
 7.	Using a custom JSON configuration file
