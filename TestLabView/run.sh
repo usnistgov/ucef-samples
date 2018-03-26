@@ -9,7 +9,7 @@ timestamp=`date +"%F_%T"`
 
 # set to true to skip the wait period between launching federates
 #   WARNING - will break logical time sychronization between federates
-skip_wait_until_join=true
+skip_wait_until_join=false
 
 function getNumberJoined {
     if (( $# != 1 ))
@@ -45,7 +45,7 @@ function waitUntilJoined {
         return
     fi
 
-    printf "Waiting for $expectedNumber instances of $federateType to join.."
+    printf "Waiting for $expectedNumber instance(s) of $federateType to join.."
     while (( $(getNumberJoined $federateType) != $expectedNumber))
     do
         printf "."
@@ -111,10 +111,11 @@ xterm -fg green -bg black -l -lf $logs_directory/controller1-${timestamp}.log -T
     -e "java -Dlog4j.configurationFile=$root_directory/conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar Controller-0.1.0-SNAPSHOT.jar -configFile=conf/ControllerConfig.json -name=Controller1" &
 waitUntilJoined Controller 1
 
-cd $root_directory/src/labview/TestLabview-java-federates/TestLabview-impl-java/TestLabVIEW/target
+cd $root_directory/src/labview/target
 cp $root_directory/conf/RTI.rid ./RTI.rid
+cp -r $root_directory/src/labview/conf/ .
 xterm -fg yellow -bg black -l -lf $logs_directory/labview-${timestamp}.log -T "LabVIEW" -geometry 140x40+900+300 \
-    -e "java -Dlog4j.configurationFile=$root_directory/conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar TestLabVIEW-0.1.0-SNAPSHOT.jar -configFile=conf/TestLabVIEWConfig.json" &
+    -e "java -Dlog4j.configurationFile=$root_directory/conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar TestLabView-0.1.0-SNAPSHOT.jar conf/LabVIEW.json" &
 
 # terminate the simulation
 read -n 1 -r -s -p "Press any key to terminate the federation execution..."
