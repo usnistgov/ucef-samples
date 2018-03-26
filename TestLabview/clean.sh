@@ -2,6 +2,7 @@
 DIR=`pwd`
 
 cd $DIR/src/fedmanager
+rm RTI.rid
 mvn clean
 
 cd $DIR/src/metronome

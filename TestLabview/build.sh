@@ -1,9 +1,6 @@
 #!/bin/bash
 DIR=`pwd`
 
-cd $DIR/src/fedmanager
-mvn clean install -U
-
 cd $DIR/src/metronome
 mvn clean install -U
 

@@ -74,8 +74,7 @@ fi
 cd $root_directory/src/fedmanager
 cp $root_directory/conf/RTI.rid ./RTI.rid
 xterm -fg white -bg black -l -lf $logs_directory/federation-manager-${timestamp}.log -T "Federation Manager" -geometry 140x40+0+0 \
-    -e "mvn exec:java -P FederationManagerExecJava -Dlog4j.configurationFile=/conf/log4j2.xml" &
-#    -e "export CPSWT_ROOT=`pwd` && mvn exec:java -P FederationManagerExecJava" &
+    -e "export CPSWT_ROOT=`pwd` && mvn exec:java -P FederationManagerExecJava" &
 
 printf "Waiting for the federation manager to come online.."
 until $(curl -o /dev/null -s -f -X GET http://$fedmgr_host:$fedmgr_port/fedmgr); do
