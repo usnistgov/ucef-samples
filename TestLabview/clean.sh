@@ -1,33 +1,21 @@
-
+#!/bin/bash
 DIR=`pwd`
- 
+
 cd $DIR/src/fedmanager
-./build.sh
-
-cd $DIR/src/metronome/MetronomeProject_generated
 mvn clean
-#cd $DIR/src/metronome/MetronomeProject_deployment
-#mvn clean
 
-cd $DIR/src/weather/WeatherProject_generated
+cd $DIR/src/metronome
 mvn clean
-#cd $DIR/src/weather/WeatherProject_deployment
-#mvn clean
 
-cd $DIR/src/labview/TestLabview_generated
+cd $DIR/src/weather
 mvn clean
-#cd $DIR/src/labview/TestLabview_deployment
-#mvn clean
 
-cd $DIR/src/controller/Controller_generated
+cd $DIR/src/labview
 mvn clean
-#cd $DIR/src/controller/Controller_deployment
-#mvn clean
 
-cd $DIR/src/zone/Zone_generated
+cd $DIR/src/controller
 mvn clean
-#cd $DIR/src/zone/Zone_deployment
-#mvn clean
 
-cd $DIR
+cd $DIR/src/zone
+mvn clean
 
