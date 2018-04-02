@@ -1,0 +1,21 @@
+{
+  "federateTypesAllowed": [
+    "Controller",
+    "Damper"
+  ],
+  "expectedFederates": [
+    {
+      "federateType": "Controller",
+      "count": 1
+    },
+    {
+      "federateType": "Damper",
+      "count": 1
+    }
+  ],
+  "lateJoinerFederates": [],
+  "coaDefinition": "conf/coaDefinition.json",
+  "coaSelection": "conf/coaSelection.json",
+  "terminateOnCOAFinish": false,
+  "COASelectionToExecute": "FixedSetPoint"
+}

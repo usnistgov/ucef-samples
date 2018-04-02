@@ -1,0 +1,26 @@
+{
+  "FixedSetPoint": [
+    [
+      {
+        "Name": "FixedSetPoint",
+        "ID": "3ffcc990-fb06-d5e4-ea05-d643f7bc6a80"
+      }
+    ]
+  ],
+  "SummerSchedule": [
+    [
+      {
+        "Name": "SummerSchedule",
+        "ID": "1c7f370d-4d5f-0c9b-f10b-f570223a2fcb"
+      }
+    ]
+  ],
+  "WinterSchedule": [
+    [
+      {
+        "Name": "WinterSchedule",
+        "ID": "5d550733-0a7e-c6f6-1de6-097b7d958d86"
+      }
+    ]
+  ]
+}

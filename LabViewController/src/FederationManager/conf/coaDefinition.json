@@ -1,0 +1,198 @@
+{
+  "FixedSetPoint": {
+    "nodes": [
+      {
+        "time": 0,
+        "minBranchesToSync": "-1",
+        "name": "t0",
+        "nodeType": "SyncPoint",
+        "ID": "56e8e73d-96f9-bbb2-184d-bc5f2f60d669"
+      },
+      {
+        "interactionName": "InteractionRoot.C2WInteractionRoot.ControllerSetPoint",
+        "temperatureSetPoint": "23",
+        "isOccupied": "true",
+        "name": "FixedSetPoint",
+        "nodeType": "Action",
+        "ID": "9e889f85-3566-0764-93ae-d4527100f126"
+      }
+    ],
+    "edges": [
+      {
+        "name": "COAFlow",
+        "type": "COAFlow",
+        "ID": "57970c71-27e5-5b92-bebe-c3b7ba384252",
+        "fromNode": "56e8e73d-96f9-bbb2-184d-bc5f2f60d669",
+        "toNode": "9e889f85-3566-0764-93ae-d4527100f126"
+      }
+    ]
+  },
+  "SummerSchedule": {
+    "nodes": [
+      {
+        "interactionName": "InteractionRoot.C2WInteractionRoot.ControllerSetPoint",
+        "temperatureSetPoint": "28",
+        "isOccupied": "false",
+        "name": "AfternoonSchedule",
+        "nodeType": "Action",
+        "ID": "24af407e-ca6a-53d8-edd8-044b129162d8"
+      },
+      {
+        "time": 25,
+        "name": "delay25",
+        "nodeType": "Dur",
+        "ID": "9d8fe461-36b9-b698-097b-e54c35aa6875"
+      },
+      {
+        "time": 10,
+        "name": "delay10",
+        "nodeType": "Dur",
+        "ID": "3ea20bd2-2d68-da67-556e-5f9c9dec514c"
+      },
+      {
+        "interactionName": "InteractionRoot.C2WInteractionRoot.ControllerSetPoint",
+        "temperatureSetPoint": "23",
+        "isOccupied": "true",
+        "name": "EveningSchedule",
+        "nodeType": "Action",
+        "ID": "e2e06077-9e62-9c86-9ac8-9e5cebe5190c"
+      },
+      {
+        "time": "0",
+        "minBranchesToSync": "-1",
+        "name": "t0",
+        "nodeType": "SyncPoint",
+        "ID": "1f47450a-3de2-cb7a-311a-c97e3cae9f42"
+      },
+      {
+        "interactionName": "InteractionRoot.C2WInteractionRoot.ControllerSetPoint",
+        "temperatureSetPoint": "23",
+        "isOccupied": "true",
+        "name": "MorningSchedule",
+        "nodeType": "Action",
+        "ID": "419bdf8e-5667-f76d-014e-bcb3d3a34fc6"
+      }
+    ],
+    "edges": [
+      {
+        "name": "COAFlow",
+        "type": "COAFlow",
+        "ID": "ef2818ff-6cbe-0258-997a-182d2c6aa7cd",
+        "fromNode": "3ea20bd2-2d68-da67-556e-5f9c9dec514c",
+        "toNode": "24af407e-ca6a-53d8-edd8-044b129162d8"
+      },
+      {
+        "name": "COAFlow",
+        "type": "COAFlow",
+        "ID": "e041f44f-d314-252b-08bf-f0e359a115fa",
+        "fromNode": "419bdf8e-5667-f76d-014e-bcb3d3a34fc6",
+        "toNode": "3ea20bd2-2d68-da67-556e-5f9c9dec514c"
+      },
+      {
+        "name": "COAFlow",
+        "type": "COAFlow",
+        "ID": "806a8a26-aa74-5e32-347e-72e559a65cb2",
+        "fromNode": "24af407e-ca6a-53d8-edd8-044b129162d8",
+        "toNode": "9d8fe461-36b9-b698-097b-e54c35aa6875"
+      },
+      {
+        "name": "COAFlow",
+        "type": "COAFlow",
+        "ID": "84c0814f-25d1-4813-6513-6b4a8388889f",
+        "fromNode": "1f47450a-3de2-cb7a-311a-c97e3cae9f42",
+        "toNode": "419bdf8e-5667-f76d-014e-bcb3d3a34fc6"
+      },
+      {
+        "name": "COAFlow",
+        "type": "COAFlow",
+        "ID": "fb365ef3-b113-4943-0a9b-ddd7f9131bd4",
+        "fromNode": "9d8fe461-36b9-b698-097b-e54c35aa6875",
+        "toNode": "e2e06077-9e62-9c86-9ac8-9e5cebe5190c"
+      }
+    ]
+  },
+  "WinterSchedule": {
+    "nodes": [
+      {
+        "interactionName": "InteractionRoot.C2WInteractionRoot.ControllerSetPoint",
+        "temperatureSetPoint": "20",
+        "isOccupied": "false",
+        "name": "AfternoonSchedule",
+        "nodeType": "Action",
+        "ID": "65857040-8d4b-99b5-0135-f8404d3ec095"
+      },
+      {
+        "time": "0",
+        "minBranchesToSync": "-1",
+        "name": "t0",
+        "nodeType": "SyncPoint",
+        "ID": "e76d7534-7ac3-0117-ddf7-357563013d0f"
+      },
+      {
+        "time": 25,
+        "name": "delay25",
+        "nodeType": "Dur",
+        "ID": "7ba5d45f-7198-7cf5-e596-19476a05ca38"
+      },
+      {
+        "time": 10,
+        "name": "delay10",
+        "nodeType": "Dur",
+        "ID": "44883bec-6a49-100a-b983-a397c243f301"
+      },
+      {
+        "interactionName": "InteractionRoot.C2WInteractionRoot.ControllerSetPoint",
+        "temperatureSetPoint": "23",
+        "isOccupied": "true",
+        "name": "EveningSchedule",
+        "nodeType": "Action",
+        "ID": "a0ca5049-d943-56eb-7625-6257b44abb41"
+      },
+      {
+        "interactionName": "InteractionRoot.C2WInteractionRoot.ControllerSetPoint",
+        "temperatureSetPoint": "23",
+        "isOccupied": "true",
+        "name": "MorningSchedule",
+        "nodeType": "Action",
+        "ID": "21b1efb0-1146-3d00-eda3-40b88c0ced8b"
+      }
+    ],
+    "edges": [
+      {
+        "name": "COAFlow",
+        "type": "COAFlow",
+        "ID": "e50228c1-2b9f-c835-7597-e42673c50580",
+        "fromNode": "44883bec-6a49-100a-b983-a397c243f301",
+        "toNode": "65857040-8d4b-99b5-0135-f8404d3ec095"
+      },
+      {
+        "name": "COAFlow",
+        "type": "COAFlow",
+        "ID": "856bc471-9435-ef46-e452-0ce8060eb7b7",
+        "fromNode": "21b1efb0-1146-3d00-eda3-40b88c0ced8b",
+        "toNode": "44883bec-6a49-100a-b983-a397c243f301"
+      },
+      {
+        "name": "COAFlow",
+        "type": "COAFlow",
+        "ID": "4740ba18-ed55-945f-d893-8eee0609feff",
+        "fromNode": "65857040-8d4b-99b5-0135-f8404d3ec095",
+        "toNode": "7ba5d45f-7198-7cf5-e596-19476a05ca38"
+      },
+      {
+        "name": "COAFlow",
+        "type": "COAFlow",
+        "ID": "d4eab171-62f0-827e-89fe-9741dc272ad2",
+        "fromNode": "e76d7534-7ac3-0117-ddf7-357563013d0f",
+        "toNode": "21b1efb0-1146-3d00-eda3-40b88c0ced8b"
+      },
+      {
+        "name": "COAFlow",
+        "type": "COAFlow",
+        "ID": "921c6ecd-f632-832e-e676-21dca6bcb999",
+        "fromNode": "7ba5d45f-7198-7cf5-e596-19476a05ca38",
+        "toNode": "a0ca5049-d943-56eb-7625-6257b44abb41"
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+    "federateName": "Controller",
+    "federationId": "LabViewController",
+    "fomFilepath": "conf/LabViewController.xml",
+    "maxReconnectAttempts": 12,
+    "waitReconnectMs": 5000,
+    "isLateJoiner": false,
+    "stepSize": 1.0,
+    "lookAhead": 0.1
+}
+
