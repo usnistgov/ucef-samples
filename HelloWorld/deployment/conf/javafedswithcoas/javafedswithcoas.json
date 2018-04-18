@@ -1,0 +1,27 @@
+{
+  "federateTypesAllowed": [
+    "PingCounter",
+    "Sink",
+    "Source"
+  ],
+  "expectedFederates": [
+    {
+      "federateType": "Source",
+      "count": 1
+    }
+  ],
+  "lateJoinerFederates": [
+    {
+      "federateType": "PingCounter",
+      "count": 1
+    },
+    {
+      "federateType": "Sink",
+      "count": 1
+    }
+  ],
+  "coaDefinition": "conf/NewcoaConfig.json",
+  "coaSelection": "conf/javafedswithcoas/coaSelection_javafedswithcoas.json",
+  "terminateOnCOAFinish": false,
+  "COASelectionToExecute": "COA1-COA3-COA4"
+}
