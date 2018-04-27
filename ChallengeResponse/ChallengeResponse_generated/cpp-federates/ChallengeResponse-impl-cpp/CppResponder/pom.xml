@@ -7,7 +7,7 @@
     <version>0.1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>CppResponder</artifactId>
+  <artifactId>ChallengeResponse-CppResponder-cpp</artifactId>
   <packaging>nar</packaging>
  </project>
 
