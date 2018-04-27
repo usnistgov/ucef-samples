@@ -51,18 +51,18 @@
  *
  */
 
-#ifndef _ChallengeInteraction_CLASS
-#define _ChallengeInteraction_CLASS
+#ifndef _InteractionBase_CLASS
+#define _InteractionBase_CLASS
 
-#include "BaseInteraction.hpp"
+#include "C2WInteractionRoot.hpp"
 #include "C2WException.hpp"
 
 
-class ChallengeInteraction : public BaseInteraction {
+class InteractionBase : public C2WInteractionRoot {
 
 public:
-	typedef BaseInteraction Super;
-	typedef boost::shared_ptr< ChallengeInteraction > SP;
+	typedef C2WInteractionRoot Super;
+	typedef boost::shared_ptr< InteractionBase > SP;
 
 	static StringVector get_parameter_names() {
 		return getDatamemberNames();
@@ -72,27 +72,22 @@ public:
 		return getAllDatamemberNames();
 	}
 
-	ChallengeInteraction( void ) { }
+	InteractionBase( void ) { }
 	
-	static SP create( void ) { return SP( new ChallengeInteraction ); }
+	static SP create( void ) { return SP( new InteractionBase ); }
 
 private:
 	
 	
-	static int &get_integerValue_handle_var( void ) {
-		static int integerValue_handle;
-		return integerValue_handle;
-	}
-	static int &get_stringValue_handle_var( void ) {
-		static int stringValue_handle;
-		return stringValue_handle;
+	static int &get_id_handle_var( void ) {
+		static int id_handle;
+		return id_handle;
 	}
 	
 public:
 	
 	
-	static int get_integerValue_handle( void ) { return get_integerValue_handle_var(); }
-	static int get_stringValue_handle( void ) { return get_stringValue_handle_var(); }
+	static int get_id_handle( void ) { return get_id_handle_var(); }
 	
 
 
@@ -104,7 +99,7 @@ private:
 
 public:
 	static int get_handle( void ) { return getHandle(); }
-	static std::string get_class_name( void ) { return "ChallengeInteraction"; }
+	static std::string get_class_name( void ) { return "InteractionBase"; }
 
 private:
 	static StringVector &getDatamemberNames( void ) {
@@ -122,12 +117,12 @@ private:
 private:
 
 	static InteractionRoot::SP factory( void ) {
-		return InteractionRoot::SP( new ChallengeInteraction() );
+		return InteractionRoot::SP( new InteractionBase() );
 	}
 
 
 	static std::string &getInitErrorMessage( void ) {
-		static std::string initErrorMessage( "Error:  ChallengeInteraction:  could not initialize:  " );
+		static std::string initErrorMessage( "Error:  InteractionBase:  could not initialize:  " );
 		return initErrorMessage;
 	}
 
@@ -141,7 +136,7 @@ private:
 	}
 	
 	static std::string &getPublishErrorMessage( void ) {
-		static std::string publishErrorMessage = "Error:  ChallengeInteraction:  could not publish:  ";
+		static std::string publishErrorMessage = "Error:  InteractionBase:  could not publish:  ";
 		return publishErrorMessage;
 	}
 	
@@ -150,7 +145,7 @@ public:
 	
 private:
 	static std::string &getUnpublishErrorMessage( void ) {
-		static std::string unpublishErrorMessage = "Error:  ChallengeInteraction:  could not unpublish:  ";
+		static std::string unpublishErrorMessage = "Error:  InteractionBase:  could not unpublish:  ";
 		return unpublishErrorMessage;
 	}
 
@@ -163,7 +158,7 @@ private:
 		return isSubscribed;
 	}
 	static std::string &getSubscribeErrorMessage( void ) {
-		static std::string subscribedErrorMessage = "Error:  ChallengeInteraction:  could not subscribe:  ";
+		static std::string subscribedErrorMessage = "Error:  InteractionBase:  could not subscribe:  ";
 		return subscribedErrorMessage;
 	}
 
@@ -172,7 +167,7 @@ public:
 		
 private:
 	static std::string getUnsubscribeErrorMessage( void ) {
-		static std::string unsubscribeErrorMessage = "Error:  ChallengeInteraction:  could not unsubscribe:  ";
+		static std::string unsubscribeErrorMessage = "Error:  InteractionBase:  could not unsubscribe:  ";
 		return unsubscribeErrorMessage;
 	}
 	
@@ -192,7 +187,7 @@ public:
 	virtual void subscribeInteraction( RTI::RTIambassador *rti ) { subscribe( rti ); }
 
 	virtual InteractionRoot::SP clone( void ) {
-		return InteractionRoot::SP(  new ChallengeInteraction( *this )  );
+		return InteractionRoot::SP(  new InteractionBase( *this )  );
 	}
 
 
@@ -204,34 +199,26 @@ public:
 private:
 	
 	
-	int _integerValue;
-	
-	std::string _stringValue;
+	std::string _id;
 	
 public:
 		
-	void set_integerValue( int integerValue ) { _integerValue = integerValue; }
-	int get_integerValue( void ) const { return _integerValue; }
-	
-	void set_stringValue( const std::string & stringValue ) { _stringValue = stringValue; }
-	const std::string & get_stringValue( void ) const { return _stringValue; }
+	void set_id( const std::string & id ) { _id = id; }
+	const std::string & get_id( void ) const { return _id; }
 	
 
 
-	ChallengeInteraction( const RTI::ParameterHandleValuePairSet &datamemberMap ) : Super( datamemberMap ) { }
+	InteractionBase( const RTI::ParameterHandleValuePairSet &datamemberMap ) : Super( datamemberMap ) { }
 	
-	ChallengeInteraction( const RTI::ParameterHandleValuePairSet &datamemberMap, const RTIfedTime &logicalTime ) : Super( datamemberMap, logicalTime ) { }
+	InteractionBase( const RTI::ParameterHandleValuePairSet &datamemberMap, const RTIfedTime &logicalTime ) : Super( datamemberMap, logicalTime ) { }
 	
 	
 public:
 	TypeMedley getParameter( const std::string &datamemberName ) const {
 		
 		
-		if ( "integerValue" == datamemberName ) {
-			return TypeMedley( get_integerValue() );
-		}
-		else if ( "stringValue" == datamemberName ) {
-			return TypeMedley( get_stringValue() );
+		if ( "id" == datamemberName ) {
+			return TypeMedley( get_id() );
 		} else {
 			return Super::getParameter( datamemberName );
 		}
@@ -240,11 +227,8 @@ public:
 	TypeMedley getParameter( int datamemberHandle ) const {
 		
 		
-		if ( get_integerValue_handle() == datamemberHandle ) {
-			return TypeMedley( get_integerValue() );
-		}
-		else if ( get_stringValue_handle() == datamemberHandle ) {
-			return TypeMedley( get_stringValue() );
+		if ( get_id_handle() == datamemberHandle ) {
+			return TypeMedley( get_id() );
 		} else {
 			return Super::getParameter( datamemberHandle );
 		}
@@ -255,11 +239,8 @@ protected:
 		bool retval = true;		
 		
 		
-		if ( param_handle == get_integerValue_handle() ) {
-			set_integerValue(  TypeMedley( val )  );
-		}
-		else if ( param_handle == get_stringValue_handle() ) {
-			set_stringValue(  TypeMedley( val )  );
+		if ( param_handle == get_id_handle() ) {
+			set_id(  TypeMedley( val )  );
 		} else {
 			retval = Super::setParameterAux( param_handle, val );
 		}
@@ -270,11 +251,8 @@ protected:
 		bool retval = true;
 		
 		
-		if ( "integerValue" == datamemberName ) {
-			set_integerValue(  TypeMedley( val )  );
-		}
-		else if ( "stringValue" == datamemberName ) {
-			set_stringValue(  TypeMedley( val )  );
+		if ( "id" == datamemberName ) {
+			set_id(  TypeMedley( val )  );
 		} else {
 			retval = Super::setParameterAux( datamemberName, val );
 		}
@@ -286,11 +264,8 @@ protected:
 		bool retval = true;
 		
 		
-		if ( "integerValue" == datamemberName ) {\
-			set_integerValue( val );
-		}
-		else if ( "stringValue" == datamemberName ) {\
-			set_stringValue( val );
+		if ( "id" == datamemberName ) {\
+			set_id( val );
 		} else {
 			retval = Super::setParameterAux( datamemberName, val );
 		}
@@ -307,10 +282,10 @@ protected:
 	
 };
 
-typedef ChallengeInteraction::SP ChallengeInteractionSP;
+typedef InteractionBase::SP InteractionBaseSP;
 
-static bool call_ChallengeInteraction_static_init = ChallengeInteraction::static_init();
+static bool call_InteractionBase_static_init = InteractionBase::static_init();
 
-std::ostream &operator<<( std::ostream &os, ChallengeInteraction::SP entitySP );
-std::ostream &operator<<( std::ostream &os, const ChallengeInteraction &entity );
+std::ostream &operator<<( std::ostream &os, InteractionBase::SP entitySP );
+std::ostream &operator<<( std::ostream &os, const InteractionBase &entity );
 #endif

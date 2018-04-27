@@ -49,10 +49,10 @@
   (attribute FederateHandle reliable timestamp)
   (attribute FederateHost reliable timestamp)
   (attribute FederateType reliable timestamp) )
-(class BaseObject
-  (attribute id reliable timestamp)  (class ChallengeObject
+(class ObjectBase
+  (attribute id reliable timestamp)  (class ObjectChallenge
+  (attribute beginIndex reliable timestamp)
   (attribute id reliable timestamp)
-  (attribute integerValue reliable timestamp)
   (attribute stringValue reliable timestamp) )
  )   ) 
   )
@@ -367,29 +367,28 @@
   (parameter sourceFed)
 )
 )
-(class BaseInteraction reliable timestamp 
+(class InteractionBase reliable timestamp 
   (parameter actualLogicalGenerationTime)
   (parameter federateFilter)
   (parameter id)
   (parameter originFed)
   (parameter sourceFed)
-(class ChallengeInteraction reliable timestamp 
+(class InteractionChallenge reliable timestamp 
   (parameter actualLogicalGenerationTime)
+  (parameter beginIndex)
   (parameter federateFilter)
   (parameter id)
-  (parameter integerValue)
-  (parameter originFed)
-  (parameter sourceFed)
-  (parameter stringValue)
-(class Response reliable timestamp 
-  (parameter actualLogicalGenerationTime)
-  (parameter federateFilter)
-  (parameter id)
-  (parameter integerValue)
   (parameter originFed)
   (parameter sourceFed)
   (parameter stringValue)
 )
+(class Response reliable timestamp 
+  (parameter actualLogicalGenerationTime)
+  (parameter federateFilter)
+  (parameter id)
+  (parameter originFed)
+  (parameter sourceFed)
+  (parameter substring)
 )
 )
 )  

@@ -15,10 +15,9 @@
 
  
     <modules>
-      
       <module>ChallengeResponse-base-cpp</module>
-      <module>ChallengeResponse-rti-cpp</module>
-      <module>ChallengeResponse-impl-cpp</module> 
+      <module>ChallengeResponse-rti-cpp</module> 
+      <module>ChallengeResponse-impl-cpp</module>
     </modules>  
 
     <properties>

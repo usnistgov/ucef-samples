@@ -51,18 +51,18 @@
  *
  */
 
-#ifndef _ChallengeObject_CLASS
-#define _ChallengeObject_CLASS
+#ifndef _ObjectBase_CLASS
+#define _ObjectBase_CLASS
 
-#include "BaseObject.hpp"
+#include "ObjectRoot.hpp"
 #include "C2WException.hpp"
 
 
-class ChallengeObject : public BaseObject {
+class ObjectBase : public ObjectRoot {
 
 public:
-	typedef BaseObject Super;
-	typedef boost::shared_ptr< ChallengeObject > SP;
+	typedef ObjectRoot Super;
+	typedef boost::shared_ptr< ObjectBase > SP;
 
 	static StringVector get_attribute_names() {
 		return getDatamemberNames();
@@ -72,27 +72,22 @@ public:
 		return getAllDatamemberNames();
 	}
 
-	ChallengeObject( void ) { }
+	ObjectBase( void ) { }
 	
-	static SP create( void ) { return SP( new ChallengeObject ); }
+	static SP create( void ) { return SP( new ObjectBase ); }
 
 private:
 	
 	
-	static int &get_integerValue_handle_var( void ) {
-		static int integerValue_handle;
-		return integerValue_handle;
-	}
-	static int &get_stringValue_handle_var( void ) {
-		static int stringValue_handle;
-		return stringValue_handle;
+	static int &get_id_handle_var( void ) {
+		static int id_handle;
+		return id_handle;
 	}
 	
 public:
 	
 	
-	static int get_integerValue_handle( void ) { return get_integerValue_handle_var(); }
-	static int get_stringValue_handle( void ) { return get_stringValue_handle_var(); }
+	static int get_id_handle( void ) { return get_id_handle_var(); }
 	
 
 
@@ -104,7 +99,7 @@ private:
 
 public:
 	static int get_handle( void ) { return getHandle(); }
-	static std::string get_class_name( void ) { return "ChallengeObject"; }
+	static std::string get_class_name( void ) { return "ObjectBase"; }
 
 private:
 	static StringVector &getDatamemberNames( void ) {
@@ -120,7 +115,7 @@ private:
 
 private:
 	static RTI::AttributeHandleSet &getPublishedAttributeHandleSet_var( void ) {
-		static RTI::AttributeHandleSet *publishedAttributeHandleSetPtr = RTI::AttributeHandleSetFactory::create( 3 );
+		static RTI::AttributeHandleSet *publishedAttributeHandleSetPtr = RTI::AttributeHandleSetFactory::create( 1 );
 		return *publishedAttributeHandleSetPtr;
 	}
 	static StringVector &getPublishAttributeNameVector( void ) {
@@ -129,7 +124,7 @@ private:
 	}	
 	
 	static RTI::AttributeHandleSet &getSubscribedAttributeHandleSet_var( void ) {
-		static RTI::AttributeHandleSet *subscribedAttributeHandleSet = RTI::AttributeHandleSetFactory::create( 3 );
+		static RTI::AttributeHandleSet *subscribedAttributeHandleSet = RTI::AttributeHandleSetFactory::create( 1 );
 		return *subscribedAttributeHandleSet;
 	}
 	static StringVector &getSubscribeAttributeNameVector( void ) {
@@ -141,12 +136,12 @@ private:
 private:
 
 	static ObjectRoot::SP factory( void ) {
-		return ObjectRoot::SP( new ChallengeObject() );
+		return ObjectRoot::SP( new ObjectBase() );
 	}
 
 
 	static std::string &getInitErrorMessage( void ) {
-		static std::string initErrorMessage( "Error:  ChallengeObject:  could not initialize:  " );
+		static std::string initErrorMessage( "Error:  ObjectBase:  could not initialize:  " );
 		return initErrorMessage;
 	}
 
@@ -160,7 +155,7 @@ private:
 	}
 	
 	static std::string &getPublishErrorMessage( void ) {
-		static std::string publishErrorMessage = "Error:  ChallengeObject:  could not publish:  ";
+		static std::string publishErrorMessage = "Error:  ObjectBase:  could not publish:  ";
 		return publishErrorMessage;
 	}
 	
@@ -169,7 +164,7 @@ public:
 	
 private:
 	static std::string &getUnpublishErrorMessage( void ) {
-		static std::string unpublishErrorMessage = "Error:  ChallengeObject:  could not unpublish:  ";
+		static std::string unpublishErrorMessage = "Error:  ObjectBase:  could not unpublish:  ";
 		return unpublishErrorMessage;
 	}
 
@@ -182,7 +177,7 @@ private:
 		return isSubscribed;
 	}
 	static std::string &getSubscribeErrorMessage( void ) {
-		static std::string subscribedErrorMessage = "Error:  ChallengeObject:  could not subscribe:  ";
+		static std::string subscribedErrorMessage = "Error:  ObjectBase:  could not subscribe:  ";
 		return subscribedErrorMessage;
 	}
 
@@ -191,7 +186,7 @@ public:
 		
 private:
 	static std::string getUnsubscribeErrorMessage( void ) {
-		static std::string unsubscribeErrorMessage = "Error:  ChallengeObject:  could not unsubscribe:  ";
+		static std::string unsubscribeErrorMessage = "Error:  ObjectBase:  could not unsubscribe:  ";
 		return unsubscribeErrorMessage;
 	}
 	
@@ -211,7 +206,7 @@ public:
 	virtual void subscribeObject( RTI::RTIambassador *rti ) { subscribe( rti ); }
 
 	virtual ObjectRoot::SP clone( void ) {
-		return ObjectRoot::SP(  new ChallengeObject( *this )  );
+		return ObjectRoot::SP(  new ObjectBase( *this )  );
 	}
 
 
@@ -239,89 +234,40 @@ public:
 		getSubscribeAttributeNameVector().erase( std::remove( getSubscribeAttributeNameVector().begin(), getSubscribeAttributeNameVector().end(), "id" ), getSubscribeAttributeNameVector().end() );
 	}
 	
-	
-	static void publish_integerValue( void ) {
-		getPublishAttributeNameVector().push_back( "integerValue" );
-	}
-	static void unpublish_integerValue( void ) {
-		getPublishAttributeNameVector().erase( std::remove( getPublishAttributeNameVector().begin(), getPublishAttributeNameVector().end(), "integerValue" ), getPublishAttributeNameVector().end() );
-	}
-	
-	static void subscribe_integerValue( void ) {
-		getSubscribeAttributeNameVector().push_back( "integerValue" );
-	}
-	static void unsubscribe_integerValue(void ) {
-		getSubscribeAttributeNameVector().erase( std::remove( getSubscribeAttributeNameVector().begin(), getSubscribeAttributeNameVector().end(), "integerValue" ), getSubscribeAttributeNameVector().end() );
-	}
-	
-	
-	static void publish_stringValue( void ) {
-		getPublishAttributeNameVector().push_back( "stringValue" );
-	}
-	static void unpublish_stringValue( void ) {
-		getPublishAttributeNameVector().erase( std::remove( getPublishAttributeNameVector().begin(), getPublishAttributeNameVector().end(), "stringValue" ), getPublishAttributeNameVector().end() );
-	}
-	
-	static void subscribe_stringValue( void ) {
-		getSubscribeAttributeNameVector().push_back( "stringValue" );
-	}
-	static void unsubscribe_stringValue(void ) {
-		getSubscribeAttributeNameVector().erase( std::remove( getSubscribeAttributeNameVector().begin(), getSubscribeAttributeNameVector().end(), "stringValue" ), getSubscribeAttributeNameVector().end() );
-	}
-	
 private:
 	
 	
-	Attribute< int, int > _integerValue;
-	
-	Attribute< int, std::string > _stringValue;
+	Attribute< int, std::string > _id;
 	
 public:
 	
 	
-	void set_integerValue( int integerValue ) {
-		_integerValue.setValue( integerValue );
-		_integerValue.setTime( getTime() );
+	void set_id( const std::string & id ) {
+		_id.setValue( id );
+		_id.setTime( getTime() );
 	}
 	
-	int get_integerValue( void ) const {
-		return _integerValue.getValue();
+	const std::string & get_id( void ) const {
+		return _id.getValue();
 	}
 	
-	double get_integerValue_time( void ) {
-		return _integerValue.getTime();
-	}
-	
-	
-	void set_stringValue( const std::string & stringValue ) {
-		_stringValue.setValue( stringValue );
-		_stringValue.setTime( getTime() );
-	}
-	
-	const std::string & get_stringValue( void ) const {
-		return _stringValue.getValue();
-	}
-	
-	double get_stringValue_time( void ) {
-		return _stringValue.getTime();
+	double get_id_time( void ) {
+		return _id.getTime();
 	}
 	
 
 
-	ChallengeObject( const RTI::AttributeHandleValuePairSet &datamemberMap ) : Super( datamemberMap ) { }
+	ObjectBase( const RTI::AttributeHandleValuePairSet &datamemberMap ) : Super( datamemberMap ) { }
 	
-	ChallengeObject( const RTI::AttributeHandleValuePairSet &datamemberMap, const RTIfedTime &logicalTime ) : Super( datamemberMap, logicalTime ) { }
+	ObjectBase( const RTI::AttributeHandleValuePairSet &datamemberMap, const RTIfedTime &logicalTime ) : Super( datamemberMap, logicalTime ) { }
 	
 	
 public:
 	TypeMedley getAttribute( const std::string &datamemberName ) const {
 		
 		
-		if ( "integerValue" == datamemberName ) {
-			return TypeMedley( get_integerValue() );
-		}
-		else if ( "stringValue" == datamemberName ) {
-			return TypeMedley( get_stringValue() );
+		if ( "id" == datamemberName ) {
+			return TypeMedley( get_id() );
 		} else {
 			return Super::getAttribute( datamemberName );
 		}
@@ -330,11 +276,8 @@ public:
 	TypeMedley getAttribute( int datamemberHandle ) const {
 		
 		
-		if ( get_integerValue_handle() == datamemberHandle ) {
-			return TypeMedley( get_integerValue() );
-		}
-		else if ( get_stringValue_handle() == datamemberHandle ) {
-			return TypeMedley( get_stringValue() );
+		if ( get_id_handle() == datamemberHandle ) {
+			return TypeMedley( get_id() );
 		} else {
 			return Super::getAttribute( datamemberHandle );
 		}
@@ -345,11 +288,8 @@ protected:
 		bool retval = true;		
 		
 		
-		if ( param_handle == get_integerValue_handle() ) {
-			set_integerValue(  TypeMedley( val )  );
-		}
-		else if ( param_handle == get_stringValue_handle() ) {
-			set_stringValue(  TypeMedley( val )  );
+		if ( param_handle == get_id_handle() ) {
+			set_id(  TypeMedley( val )  );
 		} else {
 			retval = Super::setAttributeAux( param_handle, val );
 		}
@@ -360,11 +300,8 @@ protected:
 		bool retval = true;
 		
 		
-		if ( "integerValue" == datamemberName ) {
-			set_integerValue(  TypeMedley( val )  );
-		}
-		else if ( "stringValue" == datamemberName ) {
-			set_stringValue(  TypeMedley( val )  );
+		if ( "id" == datamemberName ) {
+			set_id(  TypeMedley( val )  );
 		} else {
 			retval = Super::setAttributeAux( datamemberName, val );
 		}
@@ -376,11 +313,8 @@ protected:
 		bool retval = true;
 		
 		
-		if ( "integerValue" == datamemberName ) {\
-			set_integerValue( val );
-		}
-		else if ( "stringValue" == datamemberName ) {\
-			set_stringValue( val );
+		if ( "id" == datamemberName ) {\
+			set_id( val );
 		} else {
 			retval = Super::setAttributeAux( datamemberName, val );
 		}
@@ -397,10 +331,10 @@ protected:
 	
 };
 
-typedef ChallengeObject::SP ChallengeObjectSP;
+typedef ObjectBase::SP ObjectBaseSP;
 
-static bool call_ChallengeObject_static_init = ChallengeObject::static_init();
+static bool call_ObjectBase_static_init = ObjectBase::static_init();
 
-std::ostream &operator<<( std::ostream &os, ChallengeObject::SP entitySP );
-std::ostream &operator<<( std::ostream &os, const ChallengeObject &entity );
+std::ostream &operator<<( std::ostream &os, ObjectBase::SP entitySP );
+std::ostream &operator<<( std::ostream &os, const ObjectBase &entity );
 #endif

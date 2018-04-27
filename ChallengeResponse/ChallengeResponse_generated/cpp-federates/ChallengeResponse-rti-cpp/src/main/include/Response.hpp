@@ -54,14 +54,14 @@
 #ifndef _Response_CLASS
 #define _Response_CLASS
 
-#include "ChallengeInteraction.hpp"
+#include "InteractionBase.hpp"
 #include "C2WException.hpp"
 
 
-class Response : public ChallengeInteraction {
+class Response : public InteractionBase {
 
 public:
-	typedef ChallengeInteraction Super;
+	typedef InteractionBase Super;
 	typedef boost::shared_ptr< Response > SP;
 
 	static StringVector get_parameter_names() {
@@ -79,10 +79,15 @@ public:
 private:
 	
 	
+	static int &get_substring_handle_var( void ) {
+		static int substring_handle;
+		return substring_handle;
+	}
 	
 public:
 	
 	
+	static int get_substring_handle( void ) { return get_substring_handle_var(); }
 	
 
 
@@ -194,14 +199,85 @@ public:
 private:
 	
 	
+	std::string _substring;
+	
 public:
 		
+	void set_substring( const std::string & substring ) { _substring = substring; }
+	const std::string & get_substring( void ) const { return _substring; }
+	
 
 
 	Response( const RTI::ParameterHandleValuePairSet &datamemberMap ) : Super( datamemberMap ) { }
 	
 	Response( const RTI::ParameterHandleValuePairSet &datamemberMap, const RTIfedTime &logicalTime ) : Super( datamemberMap, logicalTime ) { }
 	
+	
+public:
+	TypeMedley getParameter( const std::string &datamemberName ) const {
+		
+		
+		if ( "substring" == datamemberName ) {
+			return TypeMedley( get_substring() );
+		} else {
+			return Super::getParameter( datamemberName );
+		}
+	}
+	
+	TypeMedley getParameter( int datamemberHandle ) const {
+		
+		
+		if ( get_substring_handle() == datamemberHandle ) {
+			return TypeMedley( get_substring() );
+		} else {
+			return Super::getParameter( datamemberHandle );
+		}
+	}
+
+protected:
+	virtual bool setParameterAux( int param_handle, const std::string &val ) {
+		bool retval = true;		
+		
+		
+		if ( param_handle == get_substring_handle() ) {
+			set_substring(  TypeMedley( val )  );
+		} else {
+			retval = Super::setParameterAux( param_handle, val );
+		}
+		return retval;
+	}
+	
+	virtual bool setParameterAux( const std::string &datamemberName, const std::string &val ) {
+		bool retval = true;
+		
+		
+		if ( "substring" == datamemberName ) {
+			set_substring(  TypeMedley( val )  );
+		} else {
+			retval = Super::setParameterAux( datamemberName, val );
+		}
+		
+		return retval;
+	}
+	
+	virtual bool setParameterAux( const std::string &datamemberName, const TypeMedley &val ) {
+		bool retval = true;
+		
+		
+		if ( "substring" == datamemberName ) {\
+			set_substring( val );
+		} else {
+			retval = Super::setParameterAux( datamemberName, val );
+		}
+		
+		return retval;
+	}
+
+	virtual ParameterHandleValuePairSetSP createDatamemberHandleValuePairSet( RTI::ULong count );
+
+	virtual ParameterHandleValuePairSetSP createDatamemberHandleValuePairSet( ) {
+		return createDatamemberHandleValuePairSet( 0 );
+	}
 	
 	
 };

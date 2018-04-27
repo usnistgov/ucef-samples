@@ -10,19 +10,19 @@
   "expectedFederates": [
     {
       "federateType": "CppChallenger",
-      "count": 1
+      "count": 0
     },
     {
       "federateType": "CppResponder",
-      "count": 1
+      "count": 0
     },
     {
       "federateType": "GatewayChallenger",
-      "count": 1
+      "count": 0
     },
     {
       "federateType": "GatewayResponder",
-      "count": 1
+      "count": 0
     },
     {
       "federateType": "JavaChallenger",

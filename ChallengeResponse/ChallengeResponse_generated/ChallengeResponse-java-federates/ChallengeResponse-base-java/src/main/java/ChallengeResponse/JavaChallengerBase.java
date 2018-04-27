@@ -30,7 +30,7 @@ public class JavaChallengerBase extends SynchronizedFederate {
 		enableAsynchronousDelivery();
         // interaction pubsub
         
-        ChallengeInteraction.publish(getLRC());
+        InteractionChallenge.publish(getLRC());
         
         Response.subscribe(getLRC());
         _subscribedInteractionFilter.setFedFilters( 
@@ -41,15 +41,15 @@ public class JavaChallengerBase extends SynchronizedFederate {
 		// object pubsub
         
         	
-        ChallengeObject.publish_id();
-        ChallengeObject.publish_integerValue();
-        ChallengeObject.publish_stringValue();
-        ChallengeObject.publish(getLRC());
+        ObjectChallenge.publish_beginIndex();
+        ObjectChallenge.publish_id();
+        ObjectChallenge.publish_stringValue();
+        ObjectChallenge.publish(getLRC());
                 	}
         
 	
-	public ChallengeInteraction create_ChallengeInteraction() {
-	   ChallengeInteraction interaction = new ChallengeInteraction();
+	public InteractionChallenge create_InteractionChallenge() {
+	   InteractionChallenge interaction = new InteractionChallenge();
 	   interaction.set_sourceFed( getFederateId() );
 	   interaction.set_originFed( getFederateId() );
 	   return interaction;

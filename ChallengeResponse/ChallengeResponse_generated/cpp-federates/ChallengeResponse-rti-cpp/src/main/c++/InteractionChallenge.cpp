@@ -1,23 +1,23 @@
 
 
-#include "ChallengeInteraction.hpp"
+#include "InteractionChallenge.hpp"
 
 
 
 
-void ChallengeInteraction::init( RTI::RTIambassador *rti ) {
+void InteractionChallenge::init( RTI::RTIambassador *rti ) {
 	static bool isInitialized = false;
 	if ( isInitialized ) {
 		return;
 	}
 	isInitialized = true;
 
-	BaseInteraction::init( rti );
+	InteractionBase::init( rti );
 
 	bool isNotInitialized = true;
 	while( isNotInitialized ) {
 		try {
-			getHandle() = rti->getInteractionClassHandle( "InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction" );
+			getHandle() = rti->getInteractionClassHandle( "InteractionRoot.C2WInteractionRoot.InteractionBase.InteractionChallenge" );
 			isNotInitialized = false;
 		} catch ( RTI::FederateNotExecutionMember & ) {
 			std::cerr << getInitErrorMessage() << "Federate Not Execution Member" << std::endl;
@@ -30,8 +30,8 @@ void ChallengeInteraction::init( RTI::RTIambassador *rti ) {
 		}
 	}
 
-	getClassNameHandleMap().insert(  std::make_pair( "ChallengeInteraction", get_handle() )  );
-	getClassHandleNameMap().insert(  std::make_pair( get_handle(), "ChallengeInteraction" )  );
+	getClassNameHandleMap().insert(  std::make_pair( "InteractionChallenge", get_handle() )  );
+	getClassHandleNameMap().insert(  std::make_pair( get_handle(), "InteractionChallenge" )  );
 
 
 	isNotInitialized = true;
@@ -39,7 +39,7 @@ void ChallengeInteraction::init( RTI::RTIambassador *rti ) {
 		try {		
 			
 			
-			get_integerValue_handle_var() = rti->getParameterHandle( "integerValue", get_handle() );
+			get_beginIndex_handle_var() = rti->getParameterHandle( "beginIndex", get_handle() );
 			get_stringValue_handle_var() = rti->getParameterHandle( "stringValue", get_handle() );
 			isNotInitialized = false;
 		} catch ( RTI::FederateNotExecutionMember & ) {
@@ -57,14 +57,14 @@ void ChallengeInteraction::init( RTI::RTIambassador *rti ) {
 	}
 	
 	
-	getDatamemberNameHandleMap().insert(  std::make_pair( "ChallengeInteraction,integerValue", get_integerValue_handle() )  );
+	getDatamemberNameHandleMap().insert(  std::make_pair( "InteractionChallenge,beginIndex", get_beginIndex_handle() )  );
 	
-	getDatamemberHandleNameMap().insert(  std::make_pair( get_integerValue_handle(), "integerValue" )  );
+	getDatamemberHandleNameMap().insert(  std::make_pair( get_beginIndex_handle(), "beginIndex" )  );
 	
-	getDatamemberTypeMap().insert( std::make_pair("integerValue", "int") );
+	getDatamemberTypeMap().insert( std::make_pair("beginIndex", "int") );
 	
 	
-	getDatamemberNameHandleMap().insert(  std::make_pair( "ChallengeInteraction,stringValue", get_stringValue_handle() )  );
+	getDatamemberNameHandleMap().insert(  std::make_pair( "InteractionChallenge,stringValue", get_stringValue_handle() )  );
 	
 	getDatamemberHandleNameMap().insert(  std::make_pair( get_stringValue_handle(), "stringValue" )  );
 	
@@ -73,7 +73,7 @@ void ChallengeInteraction::init( RTI::RTIambassador *rti ) {
 
 }
 
-void ChallengeInteraction::publish( RTI::RTIambassador *rti ) {
+void InteractionChallenge::publish( RTI::RTIambassador *rti ) {
 	if ( getIsPublished() ) {
 		return;
 	}
@@ -101,7 +101,7 @@ void ChallengeInteraction::publish( RTI::RTIambassador *rti ) {
 	getIsPublished() = true;
 }
 
-void ChallengeInteraction::unpublish( RTI::RTIambassador *rti ) {
+void InteractionChallenge::unpublish( RTI::RTIambassador *rti ) {
 	if ( !getIsPublished() ) {
 		return;
 	}
@@ -130,7 +130,7 @@ void ChallengeInteraction::unpublish( RTI::RTIambassador *rti ) {
 	getIsPublished() = false;
 }
 
-void ChallengeInteraction::subscribe( RTI::RTIambassador *rti ) {
+void InteractionChallenge::subscribe( RTI::RTIambassador *rti ) {
 	if ( getIsSubscribed() ) {
 		return;
 	}
@@ -157,7 +157,7 @@ void ChallengeInteraction::subscribe( RTI::RTIambassador *rti ) {
 	getIsSubscribed() = true;
 }
 	
-void ChallengeInteraction::unsubscribe( RTI::RTIambassador *rti ) {
+void InteractionChallenge::unsubscribe( RTI::RTIambassador *rti ) {
 	if ( !getIsSubscribed() ) {
 		return;
 	}
@@ -186,31 +186,31 @@ void ChallengeInteraction::unsubscribe( RTI::RTIambassador *rti ) {
 	getIsSubscribed() = false;
 }
 
-bool ChallengeInteraction::static_init( void ) {
+bool InteractionChallenge::static_init( void ) {
 	static bool isInitialized = false;
 	if ( isInitialized ) {
 		return true;
 	}
 	isInitialized = true;
 	
-	getClassNameSet().insert( "ChallengeInteraction" );
+	getClassNameSet().insert( "InteractionChallenge" );
 	
-	getClassNameFactoryMap().insert(  std::make_pair( "ChallengeInteraction", &ChallengeInteraction::factory )  );
-	getClassNamePublishMap().insert(   std::make_pair(  "ChallengeInteraction", (PubsubFunctionPtr)( &ChallengeInteraction::publish )  )   );
-	getClassNameUnpublishMap().insert(   std::make_pair(  "ChallengeInteraction", (PubsubFunctionPtr)( &ChallengeInteraction::unpublish )  )   );
-	getClassNameSubscribeMap().insert(   std::make_pair(  "ChallengeInteraction", (PubsubFunctionPtr)( &ChallengeInteraction::subscribe )  )   );
-	getClassNameUnsubscribeMap().insert(   std::make_pair(  "ChallengeInteraction", (PubsubFunctionPtr)( &ChallengeInteraction::unsubscribe )  )   );
+	getClassNameFactoryMap().insert(  std::make_pair( "InteractionChallenge", &InteractionChallenge::factory )  );
+	getClassNamePublishMap().insert(   std::make_pair(  "InteractionChallenge", (PubsubFunctionPtr)( &InteractionChallenge::publish )  )   );
+	getClassNameUnpublishMap().insert(   std::make_pair(  "InteractionChallenge", (PubsubFunctionPtr)( &InteractionChallenge::unpublish )  )   );
+	getClassNameSubscribeMap().insert(   std::make_pair(  "InteractionChallenge", (PubsubFunctionPtr)( &InteractionChallenge::subscribe )  )   );
+	getClassNameUnsubscribeMap().insert(   std::make_pair(  "InteractionChallenge", (PubsubFunctionPtr)( &InteractionChallenge::unsubscribe )  )   );
 
-	getDatamemberClassNameVectorPtrMap().insert(  std::make_pair( "ChallengeInteraction", &getDatamemberNames() )  );
-	getAllDatamemberClassNameVectorPtrMap().insert(  std::make_pair( "ChallengeInteraction", &getAllDatamemberNames() )  );
+	getDatamemberClassNameVectorPtrMap().insert(  std::make_pair( "InteractionChallenge", &getDatamemberNames() )  );
+	getAllDatamemberClassNameVectorPtrMap().insert(  std::make_pair( "InteractionChallenge", &getAllDatamemberNames() )  );
 	
 	
 	
-	getDatamemberNames().push_back( "integerValue" );
+	getDatamemberNames().push_back( "beginIndex" );
 	getDatamemberNames().push_back( "stringValue" );
 	
 	
-	getAllDatamemberNames().push_back( "integerValue" );
+	getAllDatamemberNames().push_back( "beginIndex" );
 	getAllDatamemberNames().push_back( "stringValue" );
 
 
@@ -218,18 +218,18 @@ bool ChallengeInteraction::static_init( void ) {
 	return true;
 }
 
-std::ostream &operator<<( std::ostream &os, ChallengeInteraction::SP entitySP ) {
+std::ostream &operator<<( std::ostream &os, InteractionChallenge::SP entitySP ) {
 	return os << *entitySP;
 }
-std::ostream &operator<<( std::ostream &os, const ChallengeInteraction &entity ) {
-	return os << "ChallengeInteraction("  << "actualLogicalGenerationTime:" << entity.get_actualLogicalGenerationTime() << ", " << "federateFilter:" << entity.get_federateFilter() << ", " << "id:" << entity.get_id() << ", " << "integerValue:" << entity.get_integerValue() << ", " << "originFed:" << entity.get_originFed() << ", " << "sourceFed:" << entity.get_sourceFed() << ", " << "stringValue:" << entity.get_stringValue()	<< ")";
+std::ostream &operator<<( std::ostream &os, const InteractionChallenge &entity ) {
+	return os << "InteractionChallenge("  << "actualLogicalGenerationTime:" << entity.get_actualLogicalGenerationTime() << ", " << "beginIndex:" << entity.get_beginIndex() << ", " << "federateFilter:" << entity.get_federateFilter() << ", " << "id:" << entity.get_id() << ", " << "originFed:" << entity.get_originFed() << ", " << "sourceFed:" << entity.get_sourceFed() << ", " << "stringValue:" << entity.get_stringValue()	<< ")";
 }
 
 
 
 
 
-ChallengeInteraction::ParameterHandleValuePairSetSP ChallengeInteraction::createDatamemberHandleValuePairSet( RTI::ULong count ) {
+InteractionChallenge::ParameterHandleValuePairSetSP InteractionChallenge::createDatamemberHandleValuePairSet( RTI::ULong count ) {
 	ParameterHandleValuePairSetSP datamembers = Super::createDatamemberHandleValuePairSet( count + 2 );
 
 	std::string stringConversion;
@@ -237,8 +237,8 @@ ChallengeInteraction::ParameterHandleValuePairSetSP ChallengeInteraction::create
 
 	
 	
-	stringConversion = static_cast< std::string >(  TypeMedley( get_integerValue() )  );
-	datamembers->add( get_integerValue_handle(), stringConversion.c_str(), stringConversion.size() );
+	stringConversion = static_cast< std::string >(  TypeMedley( get_beginIndex() )  );
+	datamembers->add( get_beginIndex_handle(), stringConversion.c_str(), stringConversion.size() );
 	
 	stringConversion = static_cast< std::string >(  TypeMedley( get_stringValue() )  );
 	datamembers->add( get_stringValue_handle(), stringConversion.c_str(), stringConversion.size() );

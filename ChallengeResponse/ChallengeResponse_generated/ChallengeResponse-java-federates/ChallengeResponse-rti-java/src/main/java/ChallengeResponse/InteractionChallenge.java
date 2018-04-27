@@ -14,32 +14,32 @@ import org.cpswt.utils.CpswtUtils;
 import org.cpswt.hla.*;
 
 /**
-* The ChallengeInteraction class implements the ChallengeInteraction interaction in the
+* The InteractionChallenge class implements the InteractionChallenge interaction in the
 * ChallengeResponse simulation.
 */
-public class ChallengeInteraction extends BaseInteraction {
+public class InteractionChallenge extends InteractionBase {
 
-	private static final Logger logger = LogManager.getLogger(ChallengeInteraction.class);
+	private static final Logger logger = LogManager.getLogger(InteractionChallenge.class);
 
 	/**
-	* Default constructor -- creates an instance of the ChallengeInteraction interaction
+	* Default constructor -- creates an instance of the InteractionChallenge interaction
 	* class with default parameter values.
 	*/
-	public ChallengeInteraction() { }
+	public InteractionChallenge() { }
 
 	
 	
-	private static int _integerValue_handle;
+	private static int _beginIndex_handle;
 	private static int _stringValue_handle;
 	
 	
 	/**
-	* Returns the handle (RTI assigned) of the "integerValue" parameter of
+	* Returns the handle (RTI assigned) of the "beginIndex" parameter of
 	* its containing interaction class.
 	*
-	* @return the handle (RTI assigned) of the "integerValue" parameter
+	* @return the handle (RTI assigned) of the "beginIndex" parameter
 	*/
-	public static int get_integerValue_handle() { return _integerValue_handle; }
+	public static int get_beginIndex_handle() { return _beginIndex_handle; }
 	
 	/**
 	* Returns the handle (RTI assigned) of the "stringValue" parameter of
@@ -56,7 +56,7 @@ public class ChallengeInteraction extends BaseInteraction {
 	private static int _handle;
 
 	/**
-	* Returns the handle (RTI assigned) of the ChallengeInteraction interaction class.
+	* Returns the handle (RTI assigned) of the InteractionChallenge interaction class.
 	* Note: As this is a static method, it is NOT polymorphic, and so, if called on
 	* a reference will return the handle of the class pertaining to the reference,\
 	* rather than the handle of the class for the instance referred to by the reference.
@@ -65,27 +65,27 @@ public class ChallengeInteraction extends BaseInteraction {
 	public static int get_handle() { return _handle; }
 
 	/**
-	* Returns the fully-qualified (dot-delimited) name of the ChallengeInteraction
+	* Returns the fully-qualified (dot-delimited) name of the InteractionChallenge
 	* interaction class.
 	* Note: As this is a static method, it is NOT polymorphic, and so, if called on
 	* a reference will return the name of the class pertaining to the reference,\
 	* rather than the name of the class for the instance referred to by the reference.
 	* For the polymorphic version of this method, use {@link #getClassName()}.
 	*/
-	public static String get_class_name() { return "InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction"; }
+	public static String get_class_name() { return "InteractionRoot.C2WInteractionRoot.InteractionBase.InteractionChallenge"; }
 
 	/**
 	* Returns the simple name (the last name in the dot-delimited fully-qualified
-	* class name) of the ChallengeInteraction interaction class.
+	* class name) of the InteractionChallenge interaction class.
 	*/
-	public static String get_simple_class_name() { return "ChallengeInteraction"; }
+	public static String get_simple_class_name() { return "InteractionChallenge"; }
 
 	private static Set< String > _datamemberNames = new HashSet< String >();
 	private static Set< String > _allDatamemberNames = new HashSet< String >();
 
 	/**
 	* Returns a set containing the names of all of the non-hidden parameters in the
-	* ChallengeInteraction interaction class.
+	* InteractionChallenge interaction class.
 	* Note: As this is a static method, it is NOT polymorphic, and so, if called on
 	* a reference will return a set of parameter names pertaining to the reference,\
 	* rather than the parameter names of the class for the instance referred to by
@@ -99,7 +99,7 @@ public class ChallengeInteraction extends BaseInteraction {
 
 	/**
 	* Returns a set containing the names of all of the parameters in the
-	* ChallengeInteraction interaction class.
+	* InteractionChallenge interaction class.
 	* Note: As this is a static method, it is NOT polymorphic, and so, if called on
 	* a reference will return a set of parameter names pertaining to the reference,\
 	* rather than the parameter names of the class for the instance referred to by
@@ -114,33 +114,33 @@ public class ChallengeInteraction extends BaseInteraction {
 	
 
 	static {
-		_classNameSet.add("InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction");
-		_classNameClassMap.put("InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction", ChallengeInteraction.class);
+		_classNameSet.add("InteractionRoot.C2WInteractionRoot.InteractionBase.InteractionChallenge");
+		_classNameClassMap.put("InteractionRoot.C2WInteractionRoot.InteractionBase.InteractionChallenge", InteractionChallenge.class);
 		
-		_datamemberClassNameSetMap.put("InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction", _datamemberNames);
-		_allDatamemberClassNameSetMap.put("InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction", _allDatamemberNames);
+		_datamemberClassNameSetMap.put("InteractionRoot.C2WInteractionRoot.InteractionBase.InteractionChallenge", _datamemberNames);
+		_allDatamemberClassNameSetMap.put("InteractionRoot.C2WInteractionRoot.InteractionBase.InteractionChallenge", _allDatamemberNames);
 
 		
 		
 		
+		_datamemberNames.add("beginIndex");
 		
 		
-		_datamemberNames.add("integerValue");
 		
 		
 		_datamemberNames.add("stringValue");
 		
 		
 		_allDatamemberNames.add("actualLogicalGenerationTime");
+		_allDatamemberNames.add("beginIndex");
 		_allDatamemberNames.add("federateFilter");
 		_allDatamemberNames.add("id");
-		_allDatamemberNames.add("integerValue");
 		_allDatamemberNames.add("originFed");
 		_allDatamemberNames.add("sourceFed");
 		_allDatamemberNames.add("stringValue");
 		
 		
-		_datamemberTypeMap.put("integerValue", "int");
+		_datamemberTypeMap.put("beginIndex", "int");
 		_datamemberTypeMap.put("stringValue", "String");
 	
 	
@@ -148,17 +148,17 @@ public class ChallengeInteraction extends BaseInteraction {
 	}
 
 
-	private static String initErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction:  could not initialize:  ";
+	private static String initErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.InteractionBase.InteractionChallenge:  could not initialize:  ";
 	protected static void init(RTIambassador rti) {
 		if (_isInitialized) return;
 		_isInitialized = true;
 		
-		BaseInteraction.init(rti);
+		InteractionBase.init(rti);
 		
 		boolean isNotInitialized = true;
 		while(isNotInitialized) {
 			try {
-				_handle = rti.getInteractionClassHandle("InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction");
+				_handle = rti.getInteractionClassHandle("InteractionRoot.C2WInteractionRoot.InteractionBase.InteractionChallenge");
 				isNotInitialized = false;
 			} catch (FederateNotExecutionMember f) {
 				logger.error("{} Federate Not Execution Member", initErrorMessage);
@@ -174,16 +174,16 @@ public class ChallengeInteraction extends BaseInteraction {
 			}
 		}
 
-		_classNameHandleMap.put("InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction", get_handle());
-		_classHandleNameMap.put(get_handle(), "InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction");
-		_classHandleSimpleNameMap.put(get_handle(), "ChallengeInteraction");
+		_classNameHandleMap.put("InteractionRoot.C2WInteractionRoot.InteractionBase.InteractionChallenge", get_handle());
+		_classHandleNameMap.put(get_handle(), "InteractionRoot.C2WInteractionRoot.InteractionBase.InteractionChallenge");
+		_classHandleSimpleNameMap.put(get_handle(), "InteractionChallenge");
 
 		
 		isNotInitialized = true;
 		while(isNotInitialized) {
 			try {
 							
-				_integerValue_handle = rti.getParameterHandle("integerValue", get_handle());			
+				_beginIndex_handle = rti.getParameterHandle("beginIndex", get_handle());			
 				_stringValue_handle = rti.getParameterHandle("stringValue", get_handle());
 				isNotInitialized = false;
 			} catch (FederateNotExecutionMember f) {
@@ -205,20 +205,20 @@ public class ChallengeInteraction extends BaseInteraction {
 		}
 			
 			
-		_datamemberNameHandleMap.put("InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction,integerValue", get_integerValue_handle());
-		_datamemberNameHandleMap.put("InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction,stringValue", get_stringValue_handle());
+		_datamemberNameHandleMap.put("InteractionRoot.C2WInteractionRoot.InteractionBase.InteractionChallenge,beginIndex", get_beginIndex_handle());
+		_datamemberNameHandleMap.put("InteractionRoot.C2WInteractionRoot.InteractionBase.InteractionChallenge,stringValue", get_stringValue_handle());
 			
 			
-		_datamemberHandleNameMap.put(get_integerValue_handle(), "integerValue");
+		_datamemberHandleNameMap.put(get_beginIndex_handle(), "beginIndex");
 		_datamemberHandleNameMap.put(get_stringValue_handle(), "stringValue");
 		
 	}
 
 	private static boolean _isPublished = false;
-	private static String publishErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction:  could not publish:  ";
+	private static String publishErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.InteractionBase.InteractionChallenge:  could not publish:  ";
 
 	/**
-	* Publishes the ChallengeInteraction interaction class for a federate.
+	* Publishes the InteractionChallenge interaction class for a federate.
 	*
 	* @param rti handle to the Local RTI Component
 	*/
@@ -253,9 +253,9 @@ public class ChallengeInteraction extends BaseInteraction {
 		_isPublished = true;
 	}
 
-	private static String unpublishErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction:  could not unpublish:  ";
+	private static String unpublishErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.InteractionBase.InteractionChallenge:  could not unpublish:  ";
 	/**
-	* Unpublishes the ChallengeInteraction interaction class for a federate.
+	* Unpublishes the InteractionChallenge interaction class for a federate.
 	*
 	* @param rti handle to the Local RTI Component
 	*/
@@ -292,9 +292,9 @@ public class ChallengeInteraction extends BaseInteraction {
 	}
 
 	private static boolean _isSubscribed = false;
-	private static String subscribeErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction:  could not subscribe:  ";
+	private static String subscribeErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.InteractionBase.InteractionChallenge:  could not subscribe:  ";
 	/**
-	* Subscribes a federate to the ChallengeInteraction interaction class.
+	* Subscribes a federate to the InteractionChallenge interaction class.
 	*
 	* @param rti handle to the Local RTI Component
 	*/
@@ -328,9 +328,9 @@ public class ChallengeInteraction extends BaseInteraction {
 		_isSubscribed = true;
 	}
 
-	private static String unsubscribeErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction:  could not unsubscribe:  ";
+	private static String unsubscribeErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.InteractionBase.InteractionChallenge:  could not unsubscribe:  ";
 	/**
-	* Unsubscribes a federate from the ChallengeInteraction interaction class.
+	* Unsubscribes a federate from the InteractionChallenge interaction class.
 	*
 	* @param rti handle to the Local RTI Component
 	*/
@@ -368,12 +368,12 @@ public class ChallengeInteraction extends BaseInteraction {
 
 	/**
 	* Return true if "handle" is equal to the handle (RTI assigned) of this class
-	* (that is, the ChallengeInteraction interaction class).
+	* (that is, the InteractionChallenge interaction class).
 	*
 	* @param handle handle to compare to the value of the handle (RTI assigned) of
-	* this class (the ChallengeInteraction interaction class).
+	* this class (the InteractionChallenge interaction class).
 	* @return "true" if "handle" matches the value of the handle of this class
-	* (that is, the ChallengeInteraction interaction class).
+	* (that is, the InteractionChallenge interaction class).
 	*/
 	public static boolean match(int handle) { return handle == get_handle(); }
 
@@ -448,10 +448,10 @@ public class ChallengeInteraction extends BaseInteraction {
 	
 
 	public String toString() {
-		return "ChallengeInteraction("
+		return "InteractionChallenge("
 			
 			
-			+ "integerValue:" + get_integerValue()
+			+ "beginIndex:" + get_beginIndex()
 			+ "," + "stringValue:" + get_stringValue()
 			+ ")";
 	}
@@ -461,25 +461,25 @@ public class ChallengeInteraction extends BaseInteraction {
 
 	
 	
-	private int _integerValue = 0;
+	private int _beginIndex = 0;
 	
 	private String _stringValue = "";
 
 	
 	
 	/**
-	* Set the value of the "integerValue" parameter to "value" for this parameter.
+	* Set the value of the "beginIndex" parameter to "value" for this parameter.
 	*
-	* @param value the new value for the "integerValue" parameter
+	* @param value the new value for the "beginIndex" parameter
 	*/
-	public void set_integerValue( int value ) { _integerValue = value; }
+	public void set_beginIndex( int value ) { _beginIndex = value; }
 	
 	/**
-	* Returns the value of the "integerValue" parameter of this interaction.
+	* Returns the value of the "beginIndex" parameter of this interaction.
 	*
-	* @return the value of the "integerValue" parameter
+	* @return the value of the "beginIndex" parameter
 	*/
-	public int get_integerValue() { return _integerValue; }
+	public int get_beginIndex() { return _beginIndex; }
 	
 	
 	/**
@@ -498,58 +498,58 @@ public class ChallengeInteraction extends BaseInteraction {
 	
 
 
-	protected ChallengeInteraction( ReceivedInteraction datamemberMap, boolean initFlag ) {
+	protected InteractionChallenge( ReceivedInteraction datamemberMap, boolean initFlag ) {
 		super( datamemberMap, false );
 		if ( initFlag ) setParameters( datamemberMap );
 	}
 	
-	protected ChallengeInteraction( ReceivedInteraction datamemberMap, LogicalTime logicalTime, boolean initFlag ) {
+	protected InteractionChallenge( ReceivedInteraction datamemberMap, LogicalTime logicalTime, boolean initFlag ) {
 		super( datamemberMap, logicalTime, false );
 		if ( initFlag ) setParameters( datamemberMap );
 	}
 
 
 	/**
-	* Creates an instance of the ChallengeInteraction interaction class, using
+	* Creates an instance of the InteractionChallenge interaction class, using
 	* "datamemberMap" to initialize its parameter values.
 	* "datamemberMap" is usually acquired as an argument to an RTI federate
 	* callback method, such as "receiveInteraction".
 	*
 	* @param datamemberMap data structure containing initial values for the
-	* parameters of this new ChallengeInteraction interaction class instance
+	* parameters of this new InteractionChallenge interaction class instance
 	*/
-	public ChallengeInteraction( ReceivedInteraction datamemberMap ) {
+	public InteractionChallenge( ReceivedInteraction datamemberMap ) {
 		this( datamemberMap, true );
 	}
 	
 	/**
-	* Like {@link #ChallengeInteraction( ReceivedInteraction datamemberMap )}, except this
-	* new ChallengeInteraction interaction class instance is given a timestamp of
+	* Like {@link #InteractionChallenge( ReceivedInteraction datamemberMap )}, except this
+	* new InteractionChallenge interaction class instance is given a timestamp of
 	* "logicalTime".
 	*
 	* @param datamemberMap data structure containing initial values for the
-	* parameters of this new ChallengeInteraction interaction class instance
-	* @param logicalTime timestamp for this new ChallengeInteraction interaction class
+	* parameters of this new InteractionChallenge interaction class instance
+	* @param logicalTime timestamp for this new InteractionChallenge interaction class
 	* instance
 	*/
-	public ChallengeInteraction( ReceivedInteraction datamemberMap, LogicalTime logicalTime ) {
+	public InteractionChallenge( ReceivedInteraction datamemberMap, LogicalTime logicalTime ) {
 		this( datamemberMap, logicalTime, true );
 	}
 
 	/**
-	* Creates a new ChallengeInteraction interaction class instance that is a duplicate
-	* of the instance referred to by ChallengeInteraction_var.
+	* Creates a new InteractionChallenge interaction class instance that is a duplicate
+	* of the instance referred to by InteractionChallenge_var.
 	*
-	* @param ChallengeInteraction_var ChallengeInteraction interaction class instance of which
-	* this newly created ChallengeInteraction interaction class instance will be a
+	* @param InteractionChallenge_var InteractionChallenge interaction class instance of which
+	* this newly created InteractionChallenge interaction class instance will be a
 	* duplicate
 	*/
-	public ChallengeInteraction( ChallengeInteraction ChallengeInteraction_var ) {
-		super( ChallengeInteraction_var );
+	public InteractionChallenge( InteractionChallenge InteractionChallenge_var ) {
+		super( InteractionChallenge_var );
 		
 		
-		set_integerValue( ChallengeInteraction_var.get_integerValue() );
-		set_stringValue( ChallengeInteraction_var.get_stringValue() );
+		set_beginIndex( InteractionChallenge_var.get_beginIndex() );
+		set_stringValue( InteractionChallenge_var.get_stringValue() );
 	}
 
 
@@ -566,7 +566,7 @@ public class ChallengeInteraction extends BaseInteraction {
 		
 		
 		
-		if (  "integerValue".equals( datamemberName )  ) return new Integer(get_integerValue());
+		if (  "beginIndex".equals( datamemberName )  ) return new Integer(get_beginIndex());
 		else if (  "stringValue".equals( datamemberName )  ) return get_stringValue();
 		else return super.getParameter( datamemberName );
 	}
@@ -584,7 +584,7 @@ public class ChallengeInteraction extends BaseInteraction {
 		
 				
 		
-		if ( get_integerValue_handle() == datamemberHandle ) return new Integer(get_integerValue());
+		if ( get_beginIndex_handle() == datamemberHandle ) return new Integer(get_beginIndex());
 		else if ( get_stringValue_handle() == datamemberHandle ) return get_stringValue();
 		else return super.getParameter( datamemberHandle );
 	}
@@ -594,7 +594,7 @@ public class ChallengeInteraction extends BaseInteraction {
 		
 			
 		
-		if ( param_handle == get_integerValue_handle() ) set_integerValue( Integer.parseInt(val) );
+		if ( param_handle == get_beginIndex_handle() ) set_beginIndex( Integer.parseInt(val) );
 		else if ( param_handle == get_stringValue_handle() ) set_stringValue( val );
 		else retval = super.setParameterAux( param_handle, val );
 		
@@ -606,7 +606,7 @@ public class ChallengeInteraction extends BaseInteraction {
 		
 			
 		
-		if (  "integerValue".equals( datamemberName )  ) set_integerValue( Integer.parseInt(val) );
+		if (  "beginIndex".equals( datamemberName )  ) set_beginIndex( Integer.parseInt(val) );
 		else if (  "stringValue".equals( datamemberName )  ) set_stringValue( val );	
 		else retval = super.setParameterAux( datamemberName, val );
 		
@@ -618,7 +618,7 @@ public class ChallengeInteraction extends BaseInteraction {
 		
 		
 		
-		if (  "integerValue".equals( datamemberName )  ) set_integerValue( (Integer)val );
+		if (  "beginIndex".equals( datamemberName )  ) set_beginIndex( (Integer)val );
 		else if (  "stringValue".equals( datamemberName )  ) set_stringValue( (String)val );		
 		else retval = super.setParameterAux( datamemberName, val );
 		
@@ -631,7 +631,7 @@ public class ChallengeInteraction extends BaseInteraction {
 	
 		
 		
-			datamembers.add( get_integerValue_handle(), Integer.toString(get_integerValue()).getBytes() );
+			datamembers.add( get_beginIndex_handle(), Integer.toString(get_beginIndex()).getBytes() );
 		
 			datamembers.add( get_stringValue_handle(), get_stringValue().getBytes() );
 		
@@ -642,11 +642,11 @@ public class ChallengeInteraction extends BaseInteraction {
 	
 	public void copyFrom( Object object ) {
 		super.copyFrom( object );
-		if ( object instanceof ChallengeInteraction ) {
-			ChallengeInteraction data = (ChallengeInteraction)object;
+		if ( object instanceof InteractionChallenge ) {
+			InteractionChallenge data = (InteractionChallenge)object;
 			
 			
-				_integerValue = data._integerValue;
+				_beginIndex = data._beginIndex;
 				_stringValue = data._stringValue;
 			
 		}

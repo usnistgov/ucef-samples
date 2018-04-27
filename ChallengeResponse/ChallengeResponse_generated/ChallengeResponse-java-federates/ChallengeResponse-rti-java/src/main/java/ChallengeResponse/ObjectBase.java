@@ -14,18 +14,18 @@ import org.cpswt.utils.CpswtUtils;
 import org.cpswt.hla.*;
 
 /**
-* The BaseObject class implements the BaseObject object in the
+* The ObjectBase class implements the ObjectBase object in the
 * ChallengeResponse simulation.
 */
-public class BaseObject extends ObjectRoot {
+public class ObjectBase extends ObjectRoot {
 
-	private static final Logger logger = LogManager.getLogger(BaseObject.class);
+	private static final Logger logger = LogManager.getLogger(ObjectBase.class);
 
 	/**
-	* Default constructor -- creates an instance of the BaseObject object
+	* Default constructor -- creates an instance of the ObjectBase object
 	* class with default attribute values.
 	*/
-	public BaseObject() { }
+	public ObjectBase() { }
 
 	
 	
@@ -47,7 +47,7 @@ public class BaseObject extends ObjectRoot {
 	private static int _handle;
 
 	/**
-	* Returns the handle (RTI assigned) of the BaseObject object class.
+	* Returns the handle (RTI assigned) of the ObjectBase object class.
 	* Note: As this is a static method, it is NOT polymorphic, and so, if called on
 	* a reference will return the handle of the class pertaining to the reference,\
 	* rather than the handle of the class for the instance referred to by the reference.
@@ -56,27 +56,27 @@ public class BaseObject extends ObjectRoot {
 	public static int get_handle() { return _handle; }
 
 	/**
-	* Returns the fully-qualified (dot-delimited) name of the BaseObject
+	* Returns the fully-qualified (dot-delimited) name of the ObjectBase
 	* object class.
 	* Note: As this is a static method, it is NOT polymorphic, and so, if called on
 	* a reference will return the name of the class pertaining to the reference,\
 	* rather than the name of the class for the instance referred to by the reference.
 	* For the polymorphic version of this method, use {@link #getClassName()}.
 	*/
-	public static String get_class_name() { return "ObjectRoot.BaseObject"; }
+	public static String get_class_name() { return "ObjectRoot.ObjectBase"; }
 
 	/**
 	* Returns the simple name (the last name in the dot-delimited fully-qualified
-	* class name) of the BaseObject object class.
+	* class name) of the ObjectBase object class.
 	*/
-	public static String get_simple_class_name() { return "BaseObject"; }
+	public static String get_simple_class_name() { return "ObjectBase"; }
 
 	private static Set< String > _datamemberNames = new HashSet< String >();
 	private static Set< String > _allDatamemberNames = new HashSet< String >();
 
 	/**
 	* Returns a set containing the names of all of the non-hidden attributes in the
-	* BaseObject object class.
+	* ObjectBase object class.
 	* Note: As this is a static method, it is NOT polymorphic, and so, if called on
 	* a reference will return a set of parameter names pertaining to the reference,\
 	* rather than the parameter names of the class for the instance referred to by
@@ -90,7 +90,7 @@ public class BaseObject extends ObjectRoot {
 
 	/**
 	* Returns a set containing the names of all of the attributes in the
-	* BaseObject object class.
+	* ObjectBase object class.
 	* Note: As this is a static method, it is NOT polymorphic, and so, if called on
 	* a reference will return a set of parameter names pertaining to the reference,\
 	* rather than the parameter names of the class for the instance referred to by
@@ -112,11 +112,11 @@ public class BaseObject extends ObjectRoot {
 	
 
 	static {
-		_classNameSet.add("ObjectRoot.BaseObject");
-		_classNameClassMap.put("ObjectRoot.BaseObject", BaseObject.class);
+		_classNameSet.add("ObjectRoot.ObjectBase");
+		_classNameClassMap.put("ObjectRoot.ObjectBase", ObjectBase.class);
 		
-		_datamemberClassNameSetMap.put("ObjectRoot.BaseObject", _datamemberNames);
-		_allDatamemberClassNameSetMap.put("ObjectRoot.BaseObject", _allDatamemberNames);
+		_datamemberClassNameSetMap.put("ObjectRoot.ObjectBase", _datamemberNames);
+		_allDatamemberClassNameSetMap.put("ObjectRoot.ObjectBase", _allDatamemberNames);
 
 		
 		
@@ -129,19 +129,19 @@ public class BaseObject extends ObjectRoot {
 		_datamemberTypeMap.put("id", "String");
 	
 
-		_classNamePublishAttributeNameMap.put("ObjectRoot.BaseObject", _publishAttributeNameSet);
+		_classNamePublishAttributeNameMap.put("ObjectRoot.ObjectBase", _publishAttributeNameSet);
 		_publishedAttributeHandleSet = _factory.createAttributeHandleSet();
-		_classNamePublishedAttributeMap.put("ObjectRoot.BaseObject", _publishedAttributeHandleSet);
+		_classNamePublishedAttributeMap.put("ObjectRoot.ObjectBase", _publishedAttributeHandleSet);
 
-		_classNameSubscribeAttributeNameMap.put("ObjectRoot.BaseObject", _subscribeAttributeNameSet);
+		_classNameSubscribeAttributeNameMap.put("ObjectRoot.ObjectBase", _subscribeAttributeNameSet);
 		_subscribedAttributeHandleSet = _factory.createAttributeHandleSet();
-		_classNameSubscribedAttributeMap.put("ObjectRoot.BaseObject", _subscribedAttributeHandleSet);
+		_classNameSubscribedAttributeMap.put("ObjectRoot.ObjectBase", _subscribedAttributeHandleSet);
 	
 
 	}
 
 
-	private static String initErrorMessage = "Error:  ObjectRoot.BaseObject:  could not initialize:  ";
+	private static String initErrorMessage = "Error:  ObjectRoot.ObjectBase:  could not initialize:  ";
 	protected static void init(RTIambassador rti) {
 		if (_isInitialized) return;
 		_isInitialized = true;
@@ -151,7 +151,7 @@ public class BaseObject extends ObjectRoot {
 		boolean isNotInitialized = true;
 		while(isNotInitialized) {
 			try {
-				_handle = rti.getObjectClassHandle("ObjectRoot.BaseObject");
+				_handle = rti.getObjectClassHandle("ObjectRoot.ObjectBase");
 				isNotInitialized = false;
 			} catch (FederateNotExecutionMember f) {
 				logger.error("{} Federate Not Execution Member", initErrorMessage);
@@ -167,9 +167,9 @@ public class BaseObject extends ObjectRoot {
 			}
 		}
 
-		_classNameHandleMap.put("ObjectRoot.BaseObject", get_handle());
-		_classHandleNameMap.put(get_handle(), "ObjectRoot.BaseObject");
-		_classHandleSimpleNameMap.put(get_handle(), "BaseObject");
+		_classNameHandleMap.put("ObjectRoot.ObjectBase", get_handle());
+		_classHandleNameMap.put(get_handle(), "ObjectRoot.ObjectBase");
+		_classHandleSimpleNameMap.put(get_handle(), "ObjectBase");
 
 		
 		isNotInitialized = true;
@@ -197,7 +197,7 @@ public class BaseObject extends ObjectRoot {
 		}
 			
 			
-		_datamemberNameHandleMap.put("ObjectRoot.BaseObject,id", get_id_handle());
+		_datamemberNameHandleMap.put("ObjectRoot.ObjectBase,id", get_id_handle());
 			
 			
 		_datamemberHandleNameMap.put(get_id_handle(), "id");
@@ -205,10 +205,10 @@ public class BaseObject extends ObjectRoot {
 	}
 
 	private static boolean _isPublished = false;
-	private static String publishErrorMessage = "Error:  ObjectRoot.BaseObject:  could not publish:  ";
+	private static String publishErrorMessage = "Error:  ObjectRoot.ObjectBase:  could not publish:  ";
 
 	/**
-	* Publishes the BaseObject object class for a federate.
+	* Publishes the ObjectBase object class for a federate.
 	*
 	* @param rti handle to the Local RTI Component
 	*/
@@ -221,7 +221,7 @@ public class BaseObject extends ObjectRoot {
 		_publishedAttributeHandleSet.empty();
 		for(String attributeName : _publishAttributeNameSet) {
 			try {
-				_publishedAttributeHandleSet.add(_datamemberNameHandleMap.get("ObjectRoot.BaseObject," + attributeName));
+				_publishedAttributeHandleSet.add(_datamemberNameHandleMap.get("ObjectRoot.ObjectBase," + attributeName));
 			} catch (Exception e) {
 				logger.error("{} Could not publish \"" + attributeName + "\" attribute.", publishErrorMessage);
 			}
@@ -252,9 +252,9 @@ public class BaseObject extends ObjectRoot {
 		_isPublished = true;
 	}
 
-	private static String unpublishErrorMessage = "Error:  ObjectRoot.BaseObject:  could not unpublish:  ";
+	private static String unpublishErrorMessage = "Error:  ObjectRoot.ObjectBase:  could not unpublish:  ";
 	/**
-	* Unpublishes the BaseObject object class for a federate.
+	* Unpublishes the ObjectBase object class for a federate.
 	*
 	* @param rti handle to the Local RTI Component
 	*/
@@ -291,9 +291,9 @@ public class BaseObject extends ObjectRoot {
 	}
 
 	private static boolean _isSubscribed = false;
-	private static String subscribeErrorMessage = "Error:  ObjectRoot.BaseObject:  could not subscribe:  ";
+	private static String subscribeErrorMessage = "Error:  ObjectRoot.ObjectBase:  could not subscribe:  ";
 	/**
-	* Subscribes a federate to the BaseObject object class.
+	* Subscribes a federate to the ObjectBase object class.
 	*
 	* @param rti handle to the Local RTI Component
 	*/
@@ -305,7 +305,7 @@ public class BaseObject extends ObjectRoot {
 		_subscribedAttributeHandleSet.empty();
 		for(String attributeName : _subscribeAttributeNameSet) {
 			try {
-				_subscribedAttributeHandleSet.add(_datamemberNameHandleMap.get("ObjectRoot.BaseObject," + attributeName));
+				_subscribedAttributeHandleSet.add(_datamemberNameHandleMap.get("ObjectRoot.ObjectBase," + attributeName));
 			} catch (Exception e) {
 				logger.error("{} Could not subscribe to \"" + attributeName + "\" attribute.", subscribeErrorMessage);
 			}
@@ -336,9 +336,9 @@ public class BaseObject extends ObjectRoot {
 		_isSubscribed = true;
 	}
 
-	private static String unsubscribeErrorMessage = "Error:  ObjectRoot.BaseObject:  could not unsubscribe:  ";
+	private static String unsubscribeErrorMessage = "Error:  ObjectRoot.ObjectBase:  could not unsubscribe:  ";
 	/**
-	* Unsubscribes a federate from the BaseObject object class.
+	* Unsubscribes a federate from the ObjectBase object class.
 	*
 	* @param rti handle to the Local RTI Component
 	*/
@@ -376,12 +376,12 @@ public class BaseObject extends ObjectRoot {
 
 	/**
 	* Return true if "handle" is equal to the handle (RTI assigned) of this class
-	* (that is, the BaseObject object class).
+	* (that is, the ObjectBase object class).
 	*
 	* @param handle handle to compare to the value of the handle (RTI assigned) of
-	* this class (the BaseObject object class).
+	* this class (the ObjectBase object class).
 	* @return "true" if "handle" matches the value of the handle of this class
-	* (that is, the BaseObject object class).
+	* (that is, the ObjectBase object class).
 	*/
 	public static boolean match(int handle) { return handle == get_handle(); }
 
@@ -466,7 +466,7 @@ public class BaseObject extends ObjectRoot {
 	
 
 	public String toString() {
-		return "BaseObject("
+		return "ObjectBase("
 			
 			
 			+ "id:" + get_id()
@@ -562,57 +562,57 @@ public class BaseObject extends ObjectRoot {
 	
 
 
-	protected BaseObject( ReflectedAttributes datamemberMap, boolean initFlag ) {
+	protected ObjectBase( ReflectedAttributes datamemberMap, boolean initFlag ) {
 		super( datamemberMap, false );
 		if ( initFlag ) setAttributes( datamemberMap );
 	}
 	
-	protected BaseObject( ReflectedAttributes datamemberMap, LogicalTime logicalTime, boolean initFlag ) {
+	protected ObjectBase( ReflectedAttributes datamemberMap, LogicalTime logicalTime, boolean initFlag ) {
 		super( datamemberMap, logicalTime, false );
 		if ( initFlag ) setAttributes( datamemberMap );
 	}
 
 
 	/**
-	* Creates an instance of the BaseObject object class, using
+	* Creates an instance of the ObjectBase object class, using
 	* "datamemberMap" to initialize its attribute values.
 	* "datamemberMap" is usually acquired as an argument to an RTI federate
 	* callback method, such as "receiveInteraction".
 	*
 	* @param datamemberMap data structure containing initial values for the
-	* attributes of this new BaseObject object class instance
+	* attributes of this new ObjectBase object class instance
 	*/
-	public BaseObject( ReflectedAttributes datamemberMap ) {
+	public ObjectBase( ReflectedAttributes datamemberMap ) {
 		this( datamemberMap, true );
 	}
 	
 	/**
-	* Like {@link #BaseObject( ReflectedAttributes datamemberMap )}, except this
-	* new BaseObject object class instance is given a timestamp of
+	* Like {@link #ObjectBase( ReflectedAttributes datamemberMap )}, except this
+	* new ObjectBase object class instance is given a timestamp of
 	* "logicalTime".
 	*
 	* @param datamemberMap data structure containing initial values for the
-	* attributes of this new BaseObject object class instance
-	* @param logicalTime timestamp for this new BaseObject object class
+	* attributes of this new ObjectBase object class instance
+	* @param logicalTime timestamp for this new ObjectBase object class
 	* instance
 	*/
-	public BaseObject( ReflectedAttributes datamemberMap, LogicalTime logicalTime ) {
+	public ObjectBase( ReflectedAttributes datamemberMap, LogicalTime logicalTime ) {
 		this( datamemberMap, logicalTime, true );
 	}
 
 	/**
-	* Creates a new BaseObject object class instance that is a duplicate
-	* of the instance referred to by BaseObject_var.
+	* Creates a new ObjectBase object class instance that is a duplicate
+	* of the instance referred to by ObjectBase_var.
 	*
-	* @param BaseObject_var BaseObject object class instance of which
-	* this newly created BaseObject object class instance will be a
+	* @param ObjectBase_var ObjectBase object class instance of which
+	* this newly created ObjectBase object class instance will be a
 	* duplicate
 	*/
-	public BaseObject( BaseObject BaseObject_var ) {
-		super( BaseObject_var );
+	public ObjectBase( ObjectBase ObjectBase_var ) {
+		super( ObjectBase_var );
 		
 		
-		set_id( BaseObject_var.get_id() );
+		set_id( ObjectBase_var.get_id() );
 	}
 
 
@@ -693,7 +693,7 @@ public class BaseObject extends ObjectRoot {
 			try {
 				isPublished = _publishedAttributeHandleSet.isMember( get_id_handle() );
 			} catch ( Exception e ) {
-				logger.error("ERROR:  ObjectRoot.BaseObject.createSuppliedAttributes:  could not determine if id is published.");
+				logger.error("ERROR:  ObjectRoot.ObjectBase.createSuppliedAttributes:  could not determine if id is published.");
 				isPublished = false;
 			}
 			if (  isPublished && _id.shouldBeUpdated( force )  ) {
@@ -707,8 +707,8 @@ public class BaseObject extends ObjectRoot {
 	
 	public void copyFrom( Object object ) {
 		super.copyFrom( object );
-		if ( object instanceof BaseObject ) {
-			BaseObject data = (BaseObject)object;
+		if ( object instanceof ObjectBase ) {
+			ObjectBase data = (ObjectBase)object;
 			
 			
 				_id = data._id;

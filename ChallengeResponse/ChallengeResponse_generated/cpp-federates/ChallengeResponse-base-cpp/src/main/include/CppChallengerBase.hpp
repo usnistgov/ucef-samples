@@ -7,10 +7,10 @@
 #include "SubscribedInteractionFilter.hpp"
 
 
-#include "ChallengeInteraction.hpp"
+#include "InteractionChallenge.hpp"
 #include "Response.hpp"
 
-#include "ChallengeObject.hpp"
+#include "ObjectChallenge.hpp"
 #include "C2WLogger.hpp"
 
 #include "FederateConfig.h"
@@ -57,7 +57,7 @@ protected:
         // interaction pubsub
         
         
-        ChallengeInteraction::publish( getRTI() );
+        InteractionChallenge::publish( getRTI() );
           
           
         Response::subscribe( getRTI() );
@@ -67,10 +67,10 @@ protected:
         
         
         
-        ChallengeObject::publish_id();
-        ChallengeObject::publish_integerValue();
-        ChallengeObject::publish_stringValue();  
-        ChallengeObject::publish( getRTI() );  
+        ObjectChallenge::publish_beginIndex();
+        ObjectChallenge::publish_id();
+        ObjectChallenge::publish_stringValue();  
+        ObjectChallenge::publish( getRTI() );  
 
          
           
@@ -89,8 +89,8 @@ public:
 
 	
 	
-	ChallengeInteractionSP create_ChallengeInteraction( void ) {
-	   ChallengeInteractionSP interactionSP = ChallengeInteraction::create();
+	InteractionChallengeSP create_InteractionChallenge( void ) {
+	   InteractionChallengeSP interactionSP = InteractionChallenge::create();
 	   interactionSP->set_sourceFed( getFederateId() );
 	   interactionSP->set_originFed( getFederateId() );
 	   return interactionSP;

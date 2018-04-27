@@ -14,18 +14,18 @@ import org.cpswt.utils.CpswtUtils;
 import org.cpswt.hla.*;
 
 /**
-* The BaseInteraction class implements the BaseInteraction interaction in the
+* The InteractionBase class implements the InteractionBase interaction in the
 * ChallengeResponse simulation.
 */
-public class BaseInteraction extends C2WInteractionRoot {
+public class InteractionBase extends C2WInteractionRoot {
 
-	private static final Logger logger = LogManager.getLogger(BaseInteraction.class);
+	private static final Logger logger = LogManager.getLogger(InteractionBase.class);
 
 	/**
-	* Default constructor -- creates an instance of the BaseInteraction interaction
+	* Default constructor -- creates an instance of the InteractionBase interaction
 	* class with default parameter values.
 	*/
-	public BaseInteraction() { }
+	public InteractionBase() { }
 
 	
 	
@@ -47,7 +47,7 @@ public class BaseInteraction extends C2WInteractionRoot {
 	private static int _handle;
 
 	/**
-	* Returns the handle (RTI assigned) of the BaseInteraction interaction class.
+	* Returns the handle (RTI assigned) of the InteractionBase interaction class.
 	* Note: As this is a static method, it is NOT polymorphic, and so, if called on
 	* a reference will return the handle of the class pertaining to the reference,\
 	* rather than the handle of the class for the instance referred to by the reference.
@@ -56,27 +56,27 @@ public class BaseInteraction extends C2WInteractionRoot {
 	public static int get_handle() { return _handle; }
 
 	/**
-	* Returns the fully-qualified (dot-delimited) name of the BaseInteraction
+	* Returns the fully-qualified (dot-delimited) name of the InteractionBase
 	* interaction class.
 	* Note: As this is a static method, it is NOT polymorphic, and so, if called on
 	* a reference will return the name of the class pertaining to the reference,\
 	* rather than the name of the class for the instance referred to by the reference.
 	* For the polymorphic version of this method, use {@link #getClassName()}.
 	*/
-	public static String get_class_name() { return "InteractionRoot.C2WInteractionRoot.BaseInteraction"; }
+	public static String get_class_name() { return "InteractionRoot.C2WInteractionRoot.InteractionBase"; }
 
 	/**
 	* Returns the simple name (the last name in the dot-delimited fully-qualified
-	* class name) of the BaseInteraction interaction class.
+	* class name) of the InteractionBase interaction class.
 	*/
-	public static String get_simple_class_name() { return "BaseInteraction"; }
+	public static String get_simple_class_name() { return "InteractionBase"; }
 
 	private static Set< String > _datamemberNames = new HashSet< String >();
 	private static Set< String > _allDatamemberNames = new HashSet< String >();
 
 	/**
 	* Returns a set containing the names of all of the non-hidden parameters in the
-	* BaseInteraction interaction class.
+	* InteractionBase interaction class.
 	* Note: As this is a static method, it is NOT polymorphic, and so, if called on
 	* a reference will return a set of parameter names pertaining to the reference,\
 	* rather than the parameter names of the class for the instance referred to by
@@ -90,7 +90,7 @@ public class BaseInteraction extends C2WInteractionRoot {
 
 	/**
 	* Returns a set containing the names of all of the parameters in the
-	* BaseInteraction interaction class.
+	* InteractionBase interaction class.
 	* Note: As this is a static method, it is NOT polymorphic, and so, if called on
 	* a reference will return a set of parameter names pertaining to the reference,\
 	* rather than the parameter names of the class for the instance referred to by
@@ -105,11 +105,11 @@ public class BaseInteraction extends C2WInteractionRoot {
 	
 
 	static {
-		_classNameSet.add("InteractionRoot.C2WInteractionRoot.BaseInteraction");
-		_classNameClassMap.put("InteractionRoot.C2WInteractionRoot.BaseInteraction", BaseInteraction.class);
+		_classNameSet.add("InteractionRoot.C2WInteractionRoot.InteractionBase");
+		_classNameClassMap.put("InteractionRoot.C2WInteractionRoot.InteractionBase", InteractionBase.class);
 		
-		_datamemberClassNameSetMap.put("InteractionRoot.C2WInteractionRoot.BaseInteraction", _datamemberNames);
-		_allDatamemberClassNameSetMap.put("InteractionRoot.C2WInteractionRoot.BaseInteraction", _allDatamemberNames);
+		_datamemberClassNameSetMap.put("InteractionRoot.C2WInteractionRoot.InteractionBase", _datamemberNames);
+		_allDatamemberClassNameSetMap.put("InteractionRoot.C2WInteractionRoot.InteractionBase", _allDatamemberNames);
 
 		
 		
@@ -134,7 +134,7 @@ public class BaseInteraction extends C2WInteractionRoot {
 	}
 
 
-	private static String initErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.BaseInteraction:  could not initialize:  ";
+	private static String initErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.InteractionBase:  could not initialize:  ";
 	protected static void init(RTIambassador rti) {
 		if (_isInitialized) return;
 		_isInitialized = true;
@@ -144,7 +144,7 @@ public class BaseInteraction extends C2WInteractionRoot {
 		boolean isNotInitialized = true;
 		while(isNotInitialized) {
 			try {
-				_handle = rti.getInteractionClassHandle("InteractionRoot.C2WInteractionRoot.BaseInteraction");
+				_handle = rti.getInteractionClassHandle("InteractionRoot.C2WInteractionRoot.InteractionBase");
 				isNotInitialized = false;
 			} catch (FederateNotExecutionMember f) {
 				logger.error("{} Federate Not Execution Member", initErrorMessage);
@@ -160,9 +160,9 @@ public class BaseInteraction extends C2WInteractionRoot {
 			}
 		}
 
-		_classNameHandleMap.put("InteractionRoot.C2WInteractionRoot.BaseInteraction", get_handle());
-		_classHandleNameMap.put(get_handle(), "InteractionRoot.C2WInteractionRoot.BaseInteraction");
-		_classHandleSimpleNameMap.put(get_handle(), "BaseInteraction");
+		_classNameHandleMap.put("InteractionRoot.C2WInteractionRoot.InteractionBase", get_handle());
+		_classHandleNameMap.put(get_handle(), "InteractionRoot.C2WInteractionRoot.InteractionBase");
+		_classHandleSimpleNameMap.put(get_handle(), "InteractionBase");
 
 		
 		isNotInitialized = true;
@@ -190,7 +190,7 @@ public class BaseInteraction extends C2WInteractionRoot {
 		}
 			
 			
-		_datamemberNameHandleMap.put("InteractionRoot.C2WInteractionRoot.BaseInteraction,id", get_id_handle());
+		_datamemberNameHandleMap.put("InteractionRoot.C2WInteractionRoot.InteractionBase,id", get_id_handle());
 			
 			
 		_datamemberHandleNameMap.put(get_id_handle(), "id");
@@ -198,10 +198,10 @@ public class BaseInteraction extends C2WInteractionRoot {
 	}
 
 	private static boolean _isPublished = false;
-	private static String publishErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.BaseInteraction:  could not publish:  ";
+	private static String publishErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.InteractionBase:  could not publish:  ";
 
 	/**
-	* Publishes the BaseInteraction interaction class for a federate.
+	* Publishes the InteractionBase interaction class for a federate.
 	*
 	* @param rti handle to the Local RTI Component
 	*/
@@ -236,9 +236,9 @@ public class BaseInteraction extends C2WInteractionRoot {
 		_isPublished = true;
 	}
 
-	private static String unpublishErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.BaseInteraction:  could not unpublish:  ";
+	private static String unpublishErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.InteractionBase:  could not unpublish:  ";
 	/**
-	* Unpublishes the BaseInteraction interaction class for a federate.
+	* Unpublishes the InteractionBase interaction class for a federate.
 	*
 	* @param rti handle to the Local RTI Component
 	*/
@@ -275,9 +275,9 @@ public class BaseInteraction extends C2WInteractionRoot {
 	}
 
 	private static boolean _isSubscribed = false;
-	private static String subscribeErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.BaseInteraction:  could not subscribe:  ";
+	private static String subscribeErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.InteractionBase:  could not subscribe:  ";
 	/**
-	* Subscribes a federate to the BaseInteraction interaction class.
+	* Subscribes a federate to the InteractionBase interaction class.
 	*
 	* @param rti handle to the Local RTI Component
 	*/
@@ -311,9 +311,9 @@ public class BaseInteraction extends C2WInteractionRoot {
 		_isSubscribed = true;
 	}
 
-	private static String unsubscribeErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.BaseInteraction:  could not unsubscribe:  ";
+	private static String unsubscribeErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.InteractionBase:  could not unsubscribe:  ";
 	/**
-	* Unsubscribes a federate from the BaseInteraction interaction class.
+	* Unsubscribes a federate from the InteractionBase interaction class.
 	*
 	* @param rti handle to the Local RTI Component
 	*/
@@ -351,12 +351,12 @@ public class BaseInteraction extends C2WInteractionRoot {
 
 	/**
 	* Return true if "handle" is equal to the handle (RTI assigned) of this class
-	* (that is, the BaseInteraction interaction class).
+	* (that is, the InteractionBase interaction class).
 	*
 	* @param handle handle to compare to the value of the handle (RTI assigned) of
-	* this class (the BaseInteraction interaction class).
+	* this class (the InteractionBase interaction class).
 	* @return "true" if "handle" matches the value of the handle of this class
-	* (that is, the BaseInteraction interaction class).
+	* (that is, the InteractionBase interaction class).
 	*/
 	public static boolean match(int handle) { return handle == get_handle(); }
 
@@ -431,7 +431,7 @@ public class BaseInteraction extends C2WInteractionRoot {
 	
 
 	public String toString() {
-		return "BaseInteraction("
+		return "InteractionBase("
 			
 			
 			+ "id:" + get_id()
@@ -463,57 +463,57 @@ public class BaseInteraction extends C2WInteractionRoot {
 	
 
 
-	protected BaseInteraction( ReceivedInteraction datamemberMap, boolean initFlag ) {
+	protected InteractionBase( ReceivedInteraction datamemberMap, boolean initFlag ) {
 		super( datamemberMap, false );
 		if ( initFlag ) setParameters( datamemberMap );
 	}
 	
-	protected BaseInteraction( ReceivedInteraction datamemberMap, LogicalTime logicalTime, boolean initFlag ) {
+	protected InteractionBase( ReceivedInteraction datamemberMap, LogicalTime logicalTime, boolean initFlag ) {
 		super( datamemberMap, logicalTime, false );
 		if ( initFlag ) setParameters( datamemberMap );
 	}
 
 
 	/**
-	* Creates an instance of the BaseInteraction interaction class, using
+	* Creates an instance of the InteractionBase interaction class, using
 	* "datamemberMap" to initialize its parameter values.
 	* "datamemberMap" is usually acquired as an argument to an RTI federate
 	* callback method, such as "receiveInteraction".
 	*
 	* @param datamemberMap data structure containing initial values for the
-	* parameters of this new BaseInteraction interaction class instance
+	* parameters of this new InteractionBase interaction class instance
 	*/
-	public BaseInteraction( ReceivedInteraction datamemberMap ) {
+	public InteractionBase( ReceivedInteraction datamemberMap ) {
 		this( datamemberMap, true );
 	}
 	
 	/**
-	* Like {@link #BaseInteraction( ReceivedInteraction datamemberMap )}, except this
-	* new BaseInteraction interaction class instance is given a timestamp of
+	* Like {@link #InteractionBase( ReceivedInteraction datamemberMap )}, except this
+	* new InteractionBase interaction class instance is given a timestamp of
 	* "logicalTime".
 	*
 	* @param datamemberMap data structure containing initial values for the
-	* parameters of this new BaseInteraction interaction class instance
-	* @param logicalTime timestamp for this new BaseInteraction interaction class
+	* parameters of this new InteractionBase interaction class instance
+	* @param logicalTime timestamp for this new InteractionBase interaction class
 	* instance
 	*/
-	public BaseInteraction( ReceivedInteraction datamemberMap, LogicalTime logicalTime ) {
+	public InteractionBase( ReceivedInteraction datamemberMap, LogicalTime logicalTime ) {
 		this( datamemberMap, logicalTime, true );
 	}
 
 	/**
-	* Creates a new BaseInteraction interaction class instance that is a duplicate
-	* of the instance referred to by BaseInteraction_var.
+	* Creates a new InteractionBase interaction class instance that is a duplicate
+	* of the instance referred to by InteractionBase_var.
 	*
-	* @param BaseInteraction_var BaseInteraction interaction class instance of which
-	* this newly created BaseInteraction interaction class instance will be a
+	* @param InteractionBase_var InteractionBase interaction class instance of which
+	* this newly created InteractionBase interaction class instance will be a
 	* duplicate
 	*/
-	public BaseInteraction( BaseInteraction BaseInteraction_var ) {
-		super( BaseInteraction_var );
+	public InteractionBase( InteractionBase InteractionBase_var ) {
+		super( InteractionBase_var );
 		
 		
-		set_id( BaseInteraction_var.get_id() );
+		set_id( InteractionBase_var.get_id() );
 	}
 
 
@@ -599,8 +599,8 @@ public class BaseInteraction extends C2WInteractionRoot {
 	
 	public void copyFrom( Object object ) {
 		super.copyFrom( object );
-		if ( object instanceof BaseInteraction ) {
-			BaseInteraction data = (BaseInteraction)object;
+		if ( object instanceof InteractionBase ) {
+			InteractionBase data = (InteractionBase)object;
 			
 			
 				_id = data._id;

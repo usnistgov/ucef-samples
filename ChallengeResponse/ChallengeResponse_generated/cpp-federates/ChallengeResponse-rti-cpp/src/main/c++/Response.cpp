@@ -12,12 +12,12 @@ void Response::init( RTI::RTIambassador *rti ) {
 	}
 	isInitialized = true;
 
-	ChallengeInteraction::init( rti );
+	InteractionBase::init( rti );
 
 	bool isNotInitialized = true;
 	while( isNotInitialized ) {
 		try {
-			getHandle() = rti->getInteractionClassHandle( "InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction.Response" );
+			getHandle() = rti->getInteractionClassHandle( "InteractionRoot.C2WInteractionRoot.InteractionBase.Response" );
 			isNotInitialized = false;
 		} catch ( RTI::FederateNotExecutionMember & ) {
 			std::cerr << getInitErrorMessage() << "Federate Not Execution Member" << std::endl;
@@ -39,6 +39,7 @@ void Response::init( RTI::RTIambassador *rti ) {
 		try {		
 			
 			
+			get_substring_handle_var() = rti->getParameterHandle( "substring", get_handle() );
 			isNotInitialized = false;
 		} catch ( RTI::FederateNotExecutionMember & ) {
 			std::cerr << getInitErrorMessage() << "Federate Not Execution Member" << std::endl;
@@ -53,6 +54,13 @@ void Response::init( RTI::RTIambassador *rti ) {
 			std::cerr << getInitErrorMessage() << "Exception caught ... retry" << std::endl;
 		}
 	}
+	
+	
+	getDatamemberNameHandleMap().insert(  std::make_pair( "Response,substring", get_substring_handle() )  );
+	
+	getDatamemberHandleNameMap().insert(  std::make_pair( get_substring_handle(), "substring" )  );
+	
+	getDatamemberTypeMap().insert( std::make_pair("substring", "String") );
 	
 
 }
@@ -190,8 +198,10 @@ bool Response::static_init( void ) {
 	
 	
 	
+	getDatamemberNames().push_back( "substring" );
 	
 	
+	getAllDatamemberNames().push_back( "substring" );
 
 
 
@@ -202,10 +212,25 @@ std::ostream &operator<<( std::ostream &os, Response::SP entitySP ) {
 	return os << *entitySP;
 }
 std::ostream &operator<<( std::ostream &os, const Response &entity ) {
-	return os << "Response("  << "actualLogicalGenerationTime:" << entity.get_actualLogicalGenerationTime() << ", " << "federateFilter:" << entity.get_federateFilter() << ", " << "id:" << entity.get_id() << ", " << "integerValue:" << entity.get_integerValue() << ", " << "originFed:" << entity.get_originFed() << ", " << "sourceFed:" << entity.get_sourceFed() << ", " << "stringValue:" << entity.get_stringValue()	<< ")";
+	return os << "Response("  << "actualLogicalGenerationTime:" << entity.get_actualLogicalGenerationTime() << ", " << "federateFilter:" << entity.get_federateFilter() << ", " << "id:" << entity.get_id() << ", " << "originFed:" << entity.get_originFed() << ", " << "sourceFed:" << entity.get_sourceFed() << ", " << "substring:" << entity.get_substring()	<< ")";
 }
 
 
 
 
+
+Response::ParameterHandleValuePairSetSP Response::createDatamemberHandleValuePairSet( RTI::ULong count ) {
+	ParameterHandleValuePairSetSP datamembers = Super::createDatamemberHandleValuePairSet( count + 1 );
+
+	std::string stringConversion;
+		
+
+	
+	
+	stringConversion = static_cast< std::string >(  TypeMedley( get_substring() )  );
+	datamembers->add( get_substring_handle(), stringConversion.c_str(), stringConversion.size() );
+	
+
+	return datamembers;
+}
 

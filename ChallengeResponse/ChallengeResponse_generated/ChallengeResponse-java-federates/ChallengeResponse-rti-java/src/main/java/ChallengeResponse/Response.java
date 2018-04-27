@@ -17,7 +17,7 @@ import org.cpswt.hla.*;
 * The Response class implements the Response interaction in the
 * ChallengeResponse simulation.
 */
-public class Response extends ChallengeInteraction {
+public class Response extends InteractionBase {
 
 	private static final Logger logger = LogManager.getLogger(Response.class);
 
@@ -29,7 +29,16 @@ public class Response extends ChallengeInteraction {
 
 	
 	
+	private static int _substring_handle;
 	
+	
+	/**
+	* Returns the handle (RTI assigned) of the "substring" parameter of
+	* its containing interaction class.
+	*
+	* @return the handle (RTI assigned) of the "substring" parameter
+	*/
+	public static int get_substring_handle() { return _substring_handle; }
 	
 	
 	
@@ -54,7 +63,7 @@ public class Response extends ChallengeInteraction {
 	* rather than the name of the class for the instance referred to by the reference.
 	* For the polymorphic version of this method, use {@link #getClassName()}.
 	*/
-	public static String get_class_name() { return "InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction.Response"; }
+	public static String get_class_name() { return "InteractionRoot.C2WInteractionRoot.InteractionBase.Response"; }
 
 	/**
 	* Returns the simple name (the last name in the dot-delimited fully-qualified
@@ -96,11 +105,11 @@ public class Response extends ChallengeInteraction {
 	
 
 	static {
-		_classNameSet.add("InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction.Response");
-		_classNameClassMap.put("InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction.Response", Response.class);
+		_classNameSet.add("InteractionRoot.C2WInteractionRoot.InteractionBase.Response");
+		_classNameClassMap.put("InteractionRoot.C2WInteractionRoot.InteractionBase.Response", Response.class);
 		
-		_datamemberClassNameSetMap.put("InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction.Response", _datamemberNames);
-		_allDatamemberClassNameSetMap.put("InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction.Response", _allDatamemberNames);
+		_datamemberClassNameSetMap.put("InteractionRoot.C2WInteractionRoot.InteractionBase.Response", _datamemberNames);
+		_allDatamemberClassNameSetMap.put("InteractionRoot.C2WInteractionRoot.InteractionBase.Response", _allDatamemberNames);
 
 		
 		
@@ -109,36 +118,35 @@ public class Response extends ChallengeInteraction {
 		
 		
 		
-		
-		
+		_datamemberNames.add("substring");
 		
 		
 		_allDatamemberNames.add("actualLogicalGenerationTime");
 		_allDatamemberNames.add("federateFilter");
 		_allDatamemberNames.add("id");
-		_allDatamemberNames.add("integerValue");
 		_allDatamemberNames.add("originFed");
 		_allDatamemberNames.add("sourceFed");
-		_allDatamemberNames.add("stringValue");
+		_allDatamemberNames.add("substring");
 		
 		
+		_datamemberTypeMap.put("substring", "String");
 	
 	
 
 	}
 
 
-	private static String initErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction.Response:  could not initialize:  ";
+	private static String initErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.InteractionBase.Response:  could not initialize:  ";
 	protected static void init(RTIambassador rti) {
 		if (_isInitialized) return;
 		_isInitialized = true;
 		
-		ChallengeInteraction.init(rti);
+		InteractionBase.init(rti);
 		
 		boolean isNotInitialized = true;
 		while(isNotInitialized) {
 			try {
-				_handle = rti.getInteractionClassHandle("InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction.Response");
+				_handle = rti.getInteractionClassHandle("InteractionRoot.C2WInteractionRoot.InteractionBase.Response");
 				isNotInitialized = false;
 			} catch (FederateNotExecutionMember f) {
 				logger.error("{} Federate Not Execution Member", initErrorMessage);
@@ -154,15 +162,45 @@ public class Response extends ChallengeInteraction {
 			}
 		}
 
-		_classNameHandleMap.put("InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction.Response", get_handle());
-		_classHandleNameMap.put(get_handle(), "InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction.Response");
+		_classNameHandleMap.put("InteractionRoot.C2WInteractionRoot.InteractionBase.Response", get_handle());
+		_classHandleNameMap.put(get_handle(), "InteractionRoot.C2WInteractionRoot.InteractionBase.Response");
 		_classHandleSimpleNameMap.put(get_handle(), "Response");
 
+		
+		isNotInitialized = true;
+		while(isNotInitialized) {
+			try {
+							
+				_substring_handle = rti.getParameterHandle("substring", get_handle());
+				isNotInitialized = false;
+			} catch (FederateNotExecutionMember f) {
+				logger.error("{} Federate Not Execution Member", initErrorMessage);
+				logger.error(f);
+				return;
+			} catch (InteractionClassNotDefined i) {
+				logger.error("{} Interaction Class Not Defined", initErrorMessage);
+				logger.error(i);
+				return;
+			} catch (NameNotFound n) {
+				logger.error("{} Name Not Found", initErrorMessage);
+				logger.error(n);
+				return;
+			} catch (Exception e) {
+				logger.error(e);
+				CpswtUtils.sleepDefault();
+			}
+		}
+			
+			
+		_datamemberNameHandleMap.put("InteractionRoot.C2WInteractionRoot.InteractionBase.Response,substring", get_substring_handle());
+			
+			
+		_datamemberHandleNameMap.put(get_substring_handle(), "substring");
 		
 	}
 
 	private static boolean _isPublished = false;
-	private static String publishErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction.Response:  could not publish:  ";
+	private static String publishErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.InteractionBase.Response:  could not publish:  ";
 
 	/**
 	* Publishes the Response interaction class for a federate.
@@ -200,7 +238,7 @@ public class Response extends ChallengeInteraction {
 		_isPublished = true;
 	}
 
-	private static String unpublishErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction.Response:  could not unpublish:  ";
+	private static String unpublishErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.InteractionBase.Response:  could not unpublish:  ";
 	/**
 	* Unpublishes the Response interaction class for a federate.
 	*
@@ -239,7 +277,7 @@ public class Response extends ChallengeInteraction {
 	}
 
 	private static boolean _isSubscribed = false;
-	private static String subscribeErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction.Response:  could not subscribe:  ";
+	private static String subscribeErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.InteractionBase.Response:  could not subscribe:  ";
 	/**
 	* Subscribes a federate to the Response interaction class.
 	*
@@ -275,7 +313,7 @@ public class Response extends ChallengeInteraction {
 		_isSubscribed = true;
 	}
 
-	private static String unsubscribeErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.BaseInteraction.ChallengeInteraction.Response:  could not unsubscribe:  ";
+	private static String unsubscribeErrorMessage = "Error:  InteractionRoot.C2WInteractionRoot.InteractionBase.Response:  could not unsubscribe:  ";
 	/**
 	* Unsubscribes a federate from the Response interaction class.
 	*
@@ -398,6 +436,7 @@ public class Response extends ChallengeInteraction {
 		return "Response("
 			
 			
+			+ "substring:" + get_substring()
 			+ ")";
 	}
 	
@@ -405,7 +444,24 @@ public class Response extends ChallengeInteraction {
 
 
 	
+	
+	private String _substring = "";
 
+	
+	
+	/**
+	* Set the value of the "substring" parameter to "value" for this parameter.
+	*
+	* @param value the new value for the "substring" parameter
+	*/
+	public void set_substring( String value ) { _substring = value; }
+	
+	/**
+	* Returns the value of the "substring" parameter of this interaction.
+	*
+	* @return the value of the "substring" parameter
+	*/
+	public String get_substring() { return _substring; }
 	
 
 
@@ -459,8 +515,88 @@ public class Response extends ChallengeInteraction {
 		super( Response_var );
 		
 		
+		set_substring( Response_var.get_substring() );
 	}
 
+
+	/**
+	* Returns the value of the parameter whose name is "datamemberName"
+	* for this interaction.
+	*
+	* @param datamemberName name of parameter whose value is to be
+	* returned
+	* @return value of the parameter whose name is "datamemberName"
+	* for this interaction
+	*/
+	public Object getParameter( String datamemberName ) {
+		
+		
+		
+		if (  "substring".equals( datamemberName )  ) return get_substring();
+		else return super.getParameter( datamemberName );
+	}
+	
+	/**
+	* Returns the value of the parameter whose handle (RTI assigned)
+	* is "datamemberHandle" for this interaction.
+	*
+	* @param datamemberHandle handle (RTI assigned) of parameter whose
+	* value is to be returned
+	* @return value of the parameter whose handle (RTI assigned) is
+	* "datamemberHandle" for this interaction
+	*/
+	public Object getParameter( int datamemberHandle ) {
+		
+				
+		
+		if ( get_substring_handle() == datamemberHandle ) return get_substring();
+		else return super.getParameter( datamemberHandle );
+	}
+	
+	protected boolean setParameterAux( int param_handle, String val ) {
+		boolean retval = true;		
+		
+			
+		
+		if ( param_handle == get_substring_handle() ) set_substring( val );
+		else retval = super.setParameterAux( param_handle, val );
+		
+		return retval;
+	}
+	
+	protected boolean setParameterAux( String datamemberName, String val ) {
+		boolean retval = true;
+		
+			
+		
+		if (  "substring".equals( datamemberName )  ) set_substring( val );	
+		else retval = super.setParameterAux( datamemberName, val );
+		
+		return retval;
+	}
+	
+	protected boolean setParameterAux( String datamemberName, Object val ) {
+		boolean retval = true;
+		
+		
+		
+		if (  "substring".equals( datamemberName )  ) set_substring( (String)val );		
+		else retval = super.setParameterAux( datamemberName, val );
+		
+		return retval;
+	}
+
+	protected SuppliedParameters createSuppliedDatamembers() {
+		SuppliedParameters datamembers = super.createSuppliedDatamembers();
+
+	
+		
+		
+			datamembers.add( get_substring_handle(), get_substring().getBytes() );
+		
+	
+		return datamembers;
+	}
 
 	
 	public void copyFrom( Object object ) {
@@ -469,6 +605,7 @@ public class Response extends ChallengeInteraction {
 			Response data = (Response)object;
 			
 			
+				_substring = data._substring;
 			
 		}
 	}

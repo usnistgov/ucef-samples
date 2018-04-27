@@ -1,23 +1,23 @@
 
 
-#include "ChallengeObject.hpp"
+#include "ObjectBase.hpp"
 
 
 
 
-void ChallengeObject::init( RTI::RTIambassador *rti ) {
+void ObjectBase::init( RTI::RTIambassador *rti ) {
 	static bool isInitialized = false;
 	if ( isInitialized ) {
 		return;
 	}
 	isInitialized = true;
 
-	BaseObject::init( rti );
+	ObjectRoot::init( rti );
 
 	bool isNotInitialized = true;
 	while( isNotInitialized ) {
 		try {
-			getHandle() = rti->getObjectClassHandle( "ObjectRoot.BaseObject.ChallengeObject" );
+			getHandle() = rti->getObjectClassHandle( "ObjectRoot.ObjectBase" );
 			isNotInitialized = false;
 		} catch ( RTI::FederateNotExecutionMember & ) {
 			std::cerr << getInitErrorMessage() << "Federate Not Execution Member" << std::endl;
@@ -30,8 +30,8 @@ void ChallengeObject::init( RTI::RTIambassador *rti ) {
 		}
 	}
 
-	getClassNameHandleMap().insert(  std::make_pair( "ChallengeObject", get_handle() )  );
-	getClassHandleNameMap().insert(  std::make_pair( get_handle(), "ChallengeObject" )  );
+	getClassNameHandleMap().insert(  std::make_pair( "ObjectBase", get_handle() )  );
+	getClassHandleNameMap().insert(  std::make_pair( get_handle(), "ObjectBase" )  );
 
 
 	isNotInitialized = true;
@@ -39,8 +39,7 @@ void ChallengeObject::init( RTI::RTIambassador *rti ) {
 		try {		
 			
 			
-			get_integerValue_handle_var() = rti->getAttributeHandle( "integerValue", get_handle() );
-			get_stringValue_handle_var() = rti->getAttributeHandle( "stringValue", get_handle() );
+			get_id_handle_var() = rti->getAttributeHandle( "id", get_handle() );
 			isNotInitialized = false;
 		} catch ( RTI::FederateNotExecutionMember & ) {
 			std::cerr << getInitErrorMessage() << "Federate Not Execution Member" << std::endl;
@@ -57,23 +56,16 @@ void ChallengeObject::init( RTI::RTIambassador *rti ) {
 	}
 	
 	
-	getDatamemberNameHandleMap().insert(  std::make_pair( "ChallengeObject,integerValue", get_integerValue_handle() )  );
+	getDatamemberNameHandleMap().insert(  std::make_pair( "ObjectBase,id", get_id_handle() )  );
 	
-	getDatamemberHandleNameMap().insert(  std::make_pair( get_integerValue_handle(), "integerValue" )  );
+	getDatamemberHandleNameMap().insert(  std::make_pair( get_id_handle(), "id" )  );
 	
-	getDatamemberTypeMap().insert( std::make_pair("integerValue", "int") );
-	
-	
-	getDatamemberNameHandleMap().insert(  std::make_pair( "ChallengeObject,stringValue", get_stringValue_handle() )  );
-	
-	getDatamemberHandleNameMap().insert(  std::make_pair( get_stringValue_handle(), "stringValue" )  );
-	
-	getDatamemberTypeMap().insert( std::make_pair("stringValue", "String") );
+	getDatamemberTypeMap().insert( std::make_pair("id", "String") );
 	
 
 }
 
-void ChallengeObject::publish( RTI::RTIambassador *rti ) {
+void ObjectBase::publish( RTI::RTIambassador *rti ) {
 	if ( getIsPublished() ) {
 		return;
 	}
@@ -84,7 +76,7 @@ void ChallengeObject::publish( RTI::RTIambassador *rti ) {
 	getPublishedAttributeHandleSet_var().empty();
 	for( StringVector::iterator stsItr = getPublishAttributeNameVector().begin() ; stsItr != getPublishAttributeNameVector().end() ; (void)++stsItr ) {
 		try {
-			getPublishedAttributeHandleSet_var().add(  getDatamemberNameHandleMap().find( "ChallengeObject," + *stsItr )->second  );
+			getPublishedAttributeHandleSet_var().add(  getDatamemberNameHandleMap().find( "ObjectBase," + *stsItr )->second  );
 		} catch ( ... ) {
 			std::cerr << getPublishErrorMessage() << "Could not publish \"" << *stsItr + "\" attribute." << std::endl;
 		}
@@ -110,7 +102,7 @@ void ChallengeObject::publish( RTI::RTIambassador *rti ) {
 	getIsPublished() = true;
 }
 
-void ChallengeObject::unpublish( RTI::RTIambassador *rti ) {
+void ObjectBase::unpublish( RTI::RTIambassador *rti ) {
 	if ( !getIsPublished() ) {
 		return;
 	}
@@ -139,7 +131,7 @@ void ChallengeObject::unpublish( RTI::RTIambassador *rti ) {
 	getIsPublished() = false;
 }
 
-void ChallengeObject::subscribe( RTI::RTIambassador *rti ) {
+void ObjectBase::subscribe( RTI::RTIambassador *rti ) {
 	if ( getIsSubscribed() ) {
 		return;
 	}
@@ -149,7 +141,7 @@ void ChallengeObject::subscribe( RTI::RTIambassador *rti ) {
 	getSubscribedAttributeHandleSet_var().empty();
 	for(  StringVector::iterator sstItr = getSubscribeAttributeNameVector().begin() ; sstItr != getSubscribeAttributeNameVector().end() ; (void)++sstItr  ) {
 		try {
-			getSubscribedAttributeHandleSet_var().add(  getDatamemberNameHandleMap().find( "ChallengeObject," + *sstItr )->second  );
+			getSubscribedAttributeHandleSet_var().add(  getDatamemberNameHandleMap().find( "ObjectBase," + *sstItr )->second  );
 		} catch ( ... ) {
 			std::cerr << getSubscribeErrorMessage() << "Could not subscribe to \"" << *sstItr << "\" attribute." << std::endl;
 		}
@@ -175,7 +167,7 @@ void ChallengeObject::subscribe( RTI::RTIambassador *rti ) {
 	getIsSubscribed() = true;
 }
 	
-void ChallengeObject::unsubscribe( RTI::RTIambassador *rti ) {
+void ObjectBase::unsubscribe( RTI::RTIambassador *rti ) {
 	if ( !getIsSubscribed() ) {
 		return;
 	}
@@ -204,57 +196,55 @@ void ChallengeObject::unsubscribe( RTI::RTIambassador *rti ) {
 	getIsSubscribed() = false;
 }
 
-bool ChallengeObject::static_init( void ) {
+bool ObjectBase::static_init( void ) {
 	static bool isInitialized = false;
 	if ( isInitialized ) {
 		return true;
 	}
 	isInitialized = true;
 	
-	getClassNameSet().insert( "ChallengeObject" );
+	getClassNameSet().insert( "ObjectBase" );
 	
-	getClassNameFactoryMap().insert(  std::make_pair( "ChallengeObject", &ChallengeObject::factory )  );
-	getClassNamePublishMap().insert(   std::make_pair(  "ChallengeObject", (PubsubFunctionPtr)( &ChallengeObject::publish )  )   );
-	getClassNameUnpublishMap().insert(   std::make_pair(  "ChallengeObject", (PubsubFunctionPtr)( &ChallengeObject::unpublish )  )   );
-	getClassNameSubscribeMap().insert(   std::make_pair(  "ChallengeObject", (PubsubFunctionPtr)( &ChallengeObject::subscribe )  )   );
-	getClassNameUnsubscribeMap().insert(   std::make_pair(  "ChallengeObject", (PubsubFunctionPtr)( &ChallengeObject::unsubscribe )  )   );
+	getClassNameFactoryMap().insert(  std::make_pair( "ObjectBase", &ObjectBase::factory )  );
+	getClassNamePublishMap().insert(   std::make_pair(  "ObjectBase", (PubsubFunctionPtr)( &ObjectBase::publish )  )   );
+	getClassNameUnpublishMap().insert(   std::make_pair(  "ObjectBase", (PubsubFunctionPtr)( &ObjectBase::unpublish )  )   );
+	getClassNameSubscribeMap().insert(   std::make_pair(  "ObjectBase", (PubsubFunctionPtr)( &ObjectBase::subscribe )  )   );
+	getClassNameUnsubscribeMap().insert(   std::make_pair(  "ObjectBase", (PubsubFunctionPtr)( &ObjectBase::unsubscribe )  )   );
 
-	getDatamemberClassNameVectorPtrMap().insert(  std::make_pair( "ChallengeObject", &getDatamemberNames() )  );
-	getAllDatamemberClassNameVectorPtrMap().insert(  std::make_pair( "ChallengeObject", &getAllDatamemberNames() )  );
+	getDatamemberClassNameVectorPtrMap().insert(  std::make_pair( "ObjectBase", &getDatamemberNames() )  );
+	getAllDatamemberClassNameVectorPtrMap().insert(  std::make_pair( "ObjectBase", &getAllDatamemberNames() )  );
 	
 	
 	
-	getDatamemberNames().push_back( "integerValue" );
-	getDatamemberNames().push_back( "stringValue" );
+	getDatamemberNames().push_back( "id" );
 	
 	
-	getAllDatamemberNames().push_back( "integerValue" );
-	getAllDatamemberNames().push_back( "stringValue" );
+	getAllDatamemberNames().push_back( "id" );
 
 
-	getClassNamePublishAttributeNameVectorPtrMap().insert(  std::make_pair( "ChallengeObject", &getPublishAttributeNameVector() )  );
-	getClassNameSubscribeAttributeNameVectorPtrMap().insert(  std::make_pair( "ChallengeObject", &getSubscribeAttributeNameVector() )  );
+	getClassNamePublishAttributeNameVectorPtrMap().insert(  std::make_pair( "ObjectBase", &getPublishAttributeNameVector() )  );
+	getClassNameSubscribeAttributeNameVectorPtrMap().insert(  std::make_pair( "ObjectBase", &getSubscribeAttributeNameVector() )  );
 	
-	getClassNamePublishedAttributesPtrMap().insert(  std::make_pair( "ChallengeObject", &getPublishedAttributeHandleSet_var() )  );
-	getClassNameSubscribedAttributesPtrMap().insert( std::make_pair( "ChallengeObject", &getSubscribedAttributeHandleSet_var() )  );
+	getClassNamePublishedAttributesPtrMap().insert(  std::make_pair( "ObjectBase", &getPublishedAttributeHandleSet_var() )  );
+	getClassNameSubscribedAttributesPtrMap().insert( std::make_pair( "ObjectBase", &getSubscribedAttributeHandleSet_var() )  );
 
 
 	return true;
 }
 
-std::ostream &operator<<( std::ostream &os, ChallengeObject::SP entitySP ) {
+std::ostream &operator<<( std::ostream &os, ObjectBase::SP entitySP ) {
 	return os << *entitySP;
 }
-std::ostream &operator<<( std::ostream &os, const ChallengeObject &entity ) {
-	return os << "ChallengeObject("  << "id:" << entity.get_id() << ", " << "integerValue:" << entity.get_integerValue() << ", " << "stringValue:" << entity.get_stringValue()	<< ")";
+std::ostream &operator<<( std::ostream &os, const ObjectBase &entity ) {
+	return os << "ObjectBase("  << "id:" << entity.get_id()	<< ")";
 }
 
 
 
 
 
-ChallengeObject::AttributeHandleValuePairSetSP ChallengeObject::createDatamemberHandleValuePairSet( RTI::ULong count, bool force  ) {
-	AttributeHandleValuePairSetSP datamembers = Super::createDatamemberHandleValuePairSet( count + 2, force );
+ObjectBase::AttributeHandleValuePairSetSP ObjectBase::createDatamemberHandleValuePairSet( RTI::ULong count, bool force  ) {
+	AttributeHandleValuePairSetSP datamembers = Super::createDatamemberHandleValuePairSet( count + 1, force );
 
 	std::string stringConversion;
 		
@@ -263,28 +253,15 @@ ChallengeObject::AttributeHandleValuePairSetSP ChallengeObject::createDatamember
 	
 	
 	try {
-		isPublished = getPublishedAttributeHandleSet_var().isMember( get_integerValue_handle() );
+		isPublished = getPublishedAttributeHandleSet_var().isMember( get_id_handle() );
 	} catch ( ... ) {
-		std::cerr << "ERROR:  ChallengeObject.createSuppliedAttributes:  could not determine if integerValue is published." << std::endl;
+		std::cerr << "ERROR:  ObjectBase.createSuppliedAttributes:  could not determine if id is published." << std::endl;
 		isPublished = false;
 	}
-	if (  isPublished && _integerValue.shouldBeUpdated( force )  ) {
-		stringConversion = static_cast< std::string >(  TypeMedley( get_integerValue() )  );
-		datamembers->add( get_integerValue_handle(), stringConversion.c_str(), stringConversion.size() );
-		_integerValue.setHasBeenUpdated();
-	}
-
-	
-	try {
-		isPublished = getPublishedAttributeHandleSet_var().isMember( get_stringValue_handle() );
-	} catch ( ... ) {
-		std::cerr << "ERROR:  ChallengeObject.createSuppliedAttributes:  could not determine if stringValue is published." << std::endl;
-		isPublished = false;
-	}
-	if (  isPublished && _stringValue.shouldBeUpdated( force )  ) {
-		stringConversion = static_cast< std::string >(  TypeMedley( get_stringValue() )  );
-		datamembers->add( get_stringValue_handle(), stringConversion.c_str(), stringConversion.size() );
-		_stringValue.setHasBeenUpdated();
+	if (  isPublished && _id.shouldBeUpdated( force )  ) {
+		stringConversion = static_cast< std::string >(  TypeMedley( get_id() )  );
+		datamembers->add( get_id_handle(), stringConversion.c_str(), stringConversion.size() );
+		_id.setHasBeenUpdated();
 	}
 
 	

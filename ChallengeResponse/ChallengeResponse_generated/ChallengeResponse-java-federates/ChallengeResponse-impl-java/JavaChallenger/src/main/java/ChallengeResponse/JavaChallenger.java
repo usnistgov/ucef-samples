@@ -1,154 +1,162 @@
 package ChallengeResponse;
 
-import org.cpswt.config.FederateConfig;
 import org.cpswt.config.FederateConfigParser;
 import org.cpswt.hla.InteractionRoot;
 import org.cpswt.hla.base.AdvanceTimeRequest;
-import org.cpswt.utils.CpswtDefaults;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/**
- * The JavaChallenger type of federate for the federation designed in WebGME.
- *
- */
 public class JavaChallenger extends JavaChallengerBase {
+    private final static Logger log = LogManager.getLogger();
+    
+    private final static String VALID_CHARACTERS = "abcdefghijklmnopqrstuvwxyz0123456789";
+    
+    private ObjectChallenge objectChallenge = new ObjectChallenge();
+    
+    private ResponseTracker responseTracker;
+    
+    private boolean exitCondition = false;
+    
+    private double currentTime = 0;
+    
+    private int sequenceNumber = 0;
+    
+    private int challengeLength;
 
-    private final static Logger log = LogManager.getLogger(JavaChallenger.class);
-
-    double currentTime = 0;
-
-    ///////////////////////////////////////////////////////////////////////
-    // TODO Instantiate objects that must be sent every logical time step
-    //
-    // ChallengeObject vChallengeObject = new ChallengeObject();
-    //
-    ///////////////////////////////////////////////////////////////////////
-
-    public JavaChallenger(FederateConfig params) throws Exception {
+    public JavaChallenger(Configuration params) throws Exception {
         super(params);
-
-        ///////////////////////////////////////////////////////////////////////
-        // TODO Must register object instances after super(args)
-        //
-        // vChallengeObject.registerObject(getLRC());
-        //
-        ///////////////////////////////////////////////////////////////////////
+        
+        objectChallenge.registerObject(getLRC());
+        responseTracker = new ResponseTracker(params.numberOfResponders);
+        challengeLength = params.challengeLength;
     }
 
-    private void CheckReceivedSubscriptions(String s) {
-
+    private void checkReceivedSubscriptions() {
         InteractionRoot interaction = null;
         while ((interaction = getNextInteractionNoWait()) != null) {
             if (interaction instanceof Response) {
                 handleInteractionClass((Response) interaction);
+            } else {
+                log.warn("skipped interaction {}", interaction.getClassName());
             }
-            log.info("Interaction received and handled: " + s);
         }
      }
 
     private void execute() throws Exception {
         if(super.isLateJoiner()) {
+            log.info("turning off time regulation (late joiner)");
             currentTime = super.getLBTS() - super.getLookAhead();
             super.disableTimeRegulation();
         }
-
-        /////////////////////////////////////////////
-        // TODO perform basic initialization below //
-        /////////////////////////////////////////////
 
         AdvanceTimeRequest atr = new AdvanceTimeRequest(currentTime);
         putAdvanceTimeRequest(atr);
 
         if(!super.isLateJoiner()) {
+            log.info("waiting on readyToPopulate");
             readyToPopulate();
         }
-
-        ///////////////////////////////////////////////////////////////////////
-        // Call CheckReceivedSubscriptions(<message>) here to receive
-        // subscriptions published before the first time step.
-        ///////////////////////////////////////////////////////////////////////
-
-        ///////////////////////////////////////////////////////////////////////
-        // TODO perform initialization that depends on other federates below //
-        ///////////////////////////////////////////////////////////////////////
-
+        
         if(!super.isLateJoiner()) {
+            log.info("waiting on readyToRun");
             readyToRun();
         }
 
         startAdvanceTimeThread();
-
-        // this is the exit condition of the following while loop
-        // it is used to break the loop so that latejoiner federates can
-        // notify the federation manager that they left the federation
-        boolean exitCondition = false;
-
-        while (true) {
-            currentTime += super.getStepSize();
-
+        log.info("started logical time progression");
+        
+        while (!exitCondition) {
             atr.requestSyncStart();
             enteredTimeGrantedState();
-
-            ////////////////////////////////////////////////////////////////////////////////////////
-            // TODO send interactions that must be sent every logical time step below.
-            // Set the interaction's parameters.
-            //
-            //    ChallengeInteraction vChallengeInteraction = create_ChallengeInteraction();
-            //    vChallengeInteraction.set_integerValue( < YOUR VALUE HERE > );
-            //    vChallengeInteraction.set_stringValue( < YOUR VALUE HERE > );
-            //    vChallengeInteraction.sendInteraction(getLRC(), currentTime);
-            //
-            ////////////////////////////////////////////////////////////////////////////////////////
-
-            ////////////////////////////////////////////////////////////////////////////////////////
-            // TODO objects that must be sent every logical time step
-            //
-            //    vChallengeObject.set_integerValue(<YOUR VALUE HERE >);
-            //    vChallengeObject.set_stringValue(<YOUR VALUE HERE >);
-            //    vChallengeObject.updateAttributeValues(getLRC(), currentTime);
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////
-
-            CheckReceivedSubscriptions("Main Loop");
-
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            // DO NOT MODIFY FILE BEYOND THIS LINE
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            log.debug("t={}", getCurrentTime());
+            
+            sendInteractionChallenge();
+            sendObjectChallenge();
+            
+            checkReceivedSubscriptions();
+            
+            currentTime += super.getStepSize();
             AdvanceTimeRequest newATR = new AdvanceTimeRequest(currentTime);
             putAdvanceTimeRequest(newATR);
             atr.requestSyncEnd();
             atr = newATR;
-
-            if(exitCondition) {
-                break;
-            }
         }
+        responseTracker.checkDelinquent(currentTime); // likely not called
 
         // while loop finished, notify FederationManager about resign
         super.notifyFederationOfResign();
     }
 
     private void handleInteractionClass(Response interaction) {
-        //////////////////////////////////////////////////////////////////////////
-        // TODO implement how to handle reception of the interaction            //
-        //////////////////////////////////////////////////////////////////////////
+        log.trace("received interaction {}", interaction.toString());
+        
+        final String id = interaction.get_id();
+        final String substring = interaction.get_substring();
+        final String responder = interaction.get_originFed();
+        
+        final ResponseInfo response = new ResponseInfo(id, substring, responder, currentTime);
+        log.debug("received response: {}", response.toString());
+        responseTracker.markResponse(response);
+    }
+    
+    private void sendInteractionChallenge() throws Exception {
+        final Challenge challenge = createChallenge();
+        InteractionChallenge interaction = create_InteractionChallenge();
+        interaction.set_id(challenge.getId());
+        interaction.set_stringValue(challenge.getStringValue());
+        interaction.set_beginIndex(challenge.getBeginIndex());
+        interaction.sendInteraction(getLRC(), currentTime + getLookAhead());
+        log.debug("sent interaction: {}", interaction.toString());
+    }
+    
+    private void sendObjectChallenge() {
+        final Challenge challenge = createChallenge();
+        objectChallenge.set_id(challenge.getId());
+        objectChallenge.set_stringValue(challenge.getStringValue());
+        objectChallenge.set_beginIndex(challenge.getBeginIndex());
+        objectChallenge.updateAttributeValues(getLRC(), currentTime + getLookAhead());
+        log.debug("sent object update: {}", objectChallenge.toString());
+    }
+    
+    private Challenge createChallenge() {
+        final String id = getFederateId() + "#" + sequenceNumber;
+        final String stringValue = generateStringValue();
+        final int beginIndex = generateBeginIndex();
+        final double expirationTime = currentTime + 2 * getStepSize();
+        
+        final Challenge challenge = new Challenge(id, stringValue, beginIndex, expirationTime);
+        log.debug("generated challenge: {}", challenge.toString());
+        
+        responseTracker.markChallenge(challenge);
+        sequenceNumber = sequenceNumber + 1;
+        
+        return challenge;
+    }
+    
+    private String generateStringValue() {
+        StringBuffer buffer = new StringBuffer(challengeLength);
+        for (int i = 0; i < challengeLength; i++) {
+            buffer.append(VALID_CHARACTERS.charAt(ThreadLocalRandom.current().nextInt(VALID_CHARACTERS.length())));
+        }
+        return buffer.toString();
+    }
+    
+    private int generateBeginIndex() {
+        return ThreadLocalRandom.current().nextInt(challengeLength-1);
     }
 
     public static void main(String[] args) {
         try {
             FederateConfigParser federateConfigParser = new FederateConfigParser();
-            FederateConfig federateConfig = federateConfigParser.parseArgs(args, FederateConfig.class);
+            Configuration federateConfig = federateConfigParser.parseArgs(args, Configuration.class);
             JavaChallenger federate = new JavaChallenger(federateConfig);
             federate.execute();
-
-            System.exit(0);
+            log.info("Done.");
         } catch (Exception e) {
-            log.error("There was a problem executing the JavaChallenger federate: {}", e.getMessage());
             log.error(e);
-
-            System.exit(1);
         }
     }
 }

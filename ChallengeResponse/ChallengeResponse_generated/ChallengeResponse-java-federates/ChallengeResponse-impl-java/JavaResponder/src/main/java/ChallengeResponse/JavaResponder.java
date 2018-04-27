@@ -6,127 +6,106 @@ import org.cpswt.hla.base.ObjectReflector;
 import org.cpswt.hla.ObjectRoot;
 import org.cpswt.hla.InteractionRoot;
 import org.cpswt.hla.base.AdvanceTimeRequest;
-import org.cpswt.utils.CpswtDefaults;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/**
- * The JavaResponder type of federate for the federation designed in WebGME.
- *
- */
 public class JavaResponder extends JavaResponderBase {
+    private final static Logger log = LogManager.getLogger();
 
-    private final static Logger log = LogManager.getLogger(JavaResponder.class);
-
-    double currentTime = 0;
+    private boolean exitCondition = false;
+    
+    private double currentTime = 0;
 
     public JavaResponder(FederateConfig params) throws Exception {
         super(params);
     }
 
-    private void CheckReceivedSubscriptions(String s) {
-
+    private void checkReceivedSubscriptions() {
         InteractionRoot interaction = null;
         while ((interaction = getNextInteractionNoWait()) != null) {
-            if (interaction instanceof ChallengeInteraction) {
-                handleInteractionClass((ChallengeInteraction) interaction);
+            if (interaction instanceof InteractionChallenge) {
+                handleInteractionClass((InteractionChallenge) interaction);
+            } else {
+                log.warn("skipped interaction {}", interaction.getClassName());
             }
-            log.info("Interaction received and handled: " + s);
         }
  
         ObjectReflector reflector = null;
         while ((reflector = getNextObjectReflectorNoWait()) != null) {
             reflector.reflect();
             ObjectRoot object = reflector.getObjectRoot();
-            if (object instanceof ChallengeObject) {
-                handleObjectClass((ChallengeObject) object);
+            if (object instanceof ObjectChallenge) {
+                handleObjectClass((ObjectChallenge) object);
+            } else {
+                log.warn("skipped object {}", object.getClassName());
             }
-            log.info("Object received and handled: " + s);
         }
     }
 
     private void execute() throws Exception {
         if(super.isLateJoiner()) {
+            log.info("turning off time regulation (late joiner)");
             currentTime = super.getLBTS() - super.getLookAhead();
             super.disableTimeRegulation();
         }
-
-        /////////////////////////////////////////////
-        // TODO perform basic initialization below //
-        /////////////////////////////////////////////
 
         AdvanceTimeRequest atr = new AdvanceTimeRequest(currentTime);
         putAdvanceTimeRequest(atr);
 
         if(!super.isLateJoiner()) {
+            log.info("waiting on readyToPopulate");
             readyToPopulate();
         }
 
-        ///////////////////////////////////////////////////////////////////////
-        // Call CheckReceivedSubscriptions(<message>) here to receive
-        // subscriptions published before the first time step.
-        ///////////////////////////////////////////////////////////////////////
-
-        ///////////////////////////////////////////////////////////////////////
-        // TODO perform initialization that depends on other federates below //
-        ///////////////////////////////////////////////////////////////////////
-
         if(!super.isLateJoiner()) {
+            log.info("waiting on readyToRun");
             readyToRun();
         }
 
         startAdvanceTimeThread();
+        log.info("started logical time progression");
 
-        // this is the exit condition of the following while loop
-        // it is used to break the loop so that latejoiner federates can
-        // notify the federation manager that they left the federation
-        boolean exitCondition = false;
-
-        while (true) {
-            currentTime += super.getStepSize();
-
+        while (!exitCondition) {
             atr.requestSyncStart();
             enteredTimeGrantedState();
+            log.debug("t={}", getCurrentTime());
+            
+            checkReceivedSubscriptions();
 
-            ////////////////////////////////////////////////////////////////////////////////////////
-            // TODO send interactions that must be sent every logical time step below.
-            // Set the interaction's parameters.
-            //
-            //    Response vResponse = create_Response();
-            //    vResponse.sendInteraction(getLRC(), currentTime);
-            //
-            ////////////////////////////////////////////////////////////////////////////////////////
-
-            CheckReceivedSubscriptions("Main Loop");
-
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            // DO NOT MODIFY FILE BEYOND THIS LINE
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            currentTime += super.getStepSize();
             AdvanceTimeRequest newATR = new AdvanceTimeRequest(currentTime);
             putAdvanceTimeRequest(newATR);
             atr.requestSyncEnd();
             atr = newATR;
-
-            if(exitCondition) {
-                break;
-            }
         }
 
         // while loop finished, notify FederationManager about resign
         super.notifyFederationOfResign();
     }
 
-    private void handleInteractionClass(ChallengeInteraction interaction) {
-        //////////////////////////////////////////////////////////////////////////
-        // TODO implement how to handle reception of the interaction            //
-        //////////////////////////////////////////////////////////////////////////
+    private void handleInteractionClass(InteractionChallenge interaction) {
+        log.debug("received interaction: {}", interaction.toString());
+        respond(interaction.get_id(), interaction.get_stringValue(), interaction.get_beginIndex());
     }
 
-    private void handleObjectClass(ChallengeObject object) {
-        //////////////////////////////////////////////////////////////////////////
-        // TODO implement how to handle reception of the object                 //
-        //////////////////////////////////////////////////////////////////////////
+    private void handleObjectClass(ObjectChallenge object) {
+        log.debug("received object reflection: {}", object.toString());
+        respond(object.get_id(), object.get_stringValue(), object.get_beginIndex());
+    }
+    
+    private void respond(String id, String stringValue, int beginIndex) {
+        log.info("on challenge: {} {} {}", id, stringValue, beginIndex);
+        
+        try {
+            Response response = create_Response();
+            response.set_id(id);
+            response.set_substring(stringValue.substring(beginIndex));
+            response.sendInteraction(getLRC(), currentTime + getLookAhead());
+            log.info("sent response {}", response.toString());
+        } catch (Exception e) {
+            log.error("failed to send response", e);
+        }
     }
 
     public static void main(String[] args) {
@@ -135,13 +114,9 @@ public class JavaResponder extends JavaResponderBase {
             FederateConfig federateConfig = federateConfigParser.parseArgs(args, FederateConfig.class);
             JavaResponder federate = new JavaResponder(federateConfig);
             federate.execute();
-
-            System.exit(0);
+            log.info("Done");
         } catch (Exception e) {
-            log.error("There was a problem executing the JavaResponder federate: {}", e.getMessage());
             log.error(e);
-
-            System.exit(1);
         }
     }
 }

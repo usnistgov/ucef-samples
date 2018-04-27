@@ -1,11 +1,11 @@
 
 
-#include "BaseInteraction.hpp"
+#include "InteractionBase.hpp"
 
 
 
 
-void BaseInteraction::init( RTI::RTIambassador *rti ) {
+void InteractionBase::init( RTI::RTIambassador *rti ) {
 	static bool isInitialized = false;
 	if ( isInitialized ) {
 		return;
@@ -17,7 +17,7 @@ void BaseInteraction::init( RTI::RTIambassador *rti ) {
 	bool isNotInitialized = true;
 	while( isNotInitialized ) {
 		try {
-			getHandle() = rti->getInteractionClassHandle( "InteractionRoot.C2WInteractionRoot.BaseInteraction" );
+			getHandle() = rti->getInteractionClassHandle( "InteractionRoot.C2WInteractionRoot.InteractionBase" );
 			isNotInitialized = false;
 		} catch ( RTI::FederateNotExecutionMember & ) {
 			std::cerr << getInitErrorMessage() << "Federate Not Execution Member" << std::endl;
@@ -30,8 +30,8 @@ void BaseInteraction::init( RTI::RTIambassador *rti ) {
 		}
 	}
 
-	getClassNameHandleMap().insert(  std::make_pair( "BaseInteraction", get_handle() )  );
-	getClassHandleNameMap().insert(  std::make_pair( get_handle(), "BaseInteraction" )  );
+	getClassNameHandleMap().insert(  std::make_pair( "InteractionBase", get_handle() )  );
+	getClassHandleNameMap().insert(  std::make_pair( get_handle(), "InteractionBase" )  );
 
 
 	isNotInitialized = true;
@@ -56,7 +56,7 @@ void BaseInteraction::init( RTI::RTIambassador *rti ) {
 	}
 	
 	
-	getDatamemberNameHandleMap().insert(  std::make_pair( "BaseInteraction,id", get_id_handle() )  );
+	getDatamemberNameHandleMap().insert(  std::make_pair( "InteractionBase,id", get_id_handle() )  );
 	
 	getDatamemberHandleNameMap().insert(  std::make_pair( get_id_handle(), "id" )  );
 	
@@ -65,7 +65,7 @@ void BaseInteraction::init( RTI::RTIambassador *rti ) {
 
 }
 
-void BaseInteraction::publish( RTI::RTIambassador *rti ) {
+void InteractionBase::publish( RTI::RTIambassador *rti ) {
 	if ( getIsPublished() ) {
 		return;
 	}
@@ -93,7 +93,7 @@ void BaseInteraction::publish( RTI::RTIambassador *rti ) {
 	getIsPublished() = true;
 }
 
-void BaseInteraction::unpublish( RTI::RTIambassador *rti ) {
+void InteractionBase::unpublish( RTI::RTIambassador *rti ) {
 	if ( !getIsPublished() ) {
 		return;
 	}
@@ -122,7 +122,7 @@ void BaseInteraction::unpublish( RTI::RTIambassador *rti ) {
 	getIsPublished() = false;
 }
 
-void BaseInteraction::subscribe( RTI::RTIambassador *rti ) {
+void InteractionBase::subscribe( RTI::RTIambassador *rti ) {
 	if ( getIsSubscribed() ) {
 		return;
 	}
@@ -149,7 +149,7 @@ void BaseInteraction::subscribe( RTI::RTIambassador *rti ) {
 	getIsSubscribed() = true;
 }
 	
-void BaseInteraction::unsubscribe( RTI::RTIambassador *rti ) {
+void InteractionBase::unsubscribe( RTI::RTIambassador *rti ) {
 	if ( !getIsSubscribed() ) {
 		return;
 	}
@@ -178,23 +178,23 @@ void BaseInteraction::unsubscribe( RTI::RTIambassador *rti ) {
 	getIsSubscribed() = false;
 }
 
-bool BaseInteraction::static_init( void ) {
+bool InteractionBase::static_init( void ) {
 	static bool isInitialized = false;
 	if ( isInitialized ) {
 		return true;
 	}
 	isInitialized = true;
 	
-	getClassNameSet().insert( "BaseInteraction" );
+	getClassNameSet().insert( "InteractionBase" );
 	
-	getClassNameFactoryMap().insert(  std::make_pair( "BaseInteraction", &BaseInteraction::factory )  );
-	getClassNamePublishMap().insert(   std::make_pair(  "BaseInteraction", (PubsubFunctionPtr)( &BaseInteraction::publish )  )   );
-	getClassNameUnpublishMap().insert(   std::make_pair(  "BaseInteraction", (PubsubFunctionPtr)( &BaseInteraction::unpublish )  )   );
-	getClassNameSubscribeMap().insert(   std::make_pair(  "BaseInteraction", (PubsubFunctionPtr)( &BaseInteraction::subscribe )  )   );
-	getClassNameUnsubscribeMap().insert(   std::make_pair(  "BaseInteraction", (PubsubFunctionPtr)( &BaseInteraction::unsubscribe )  )   );
+	getClassNameFactoryMap().insert(  std::make_pair( "InteractionBase", &InteractionBase::factory )  );
+	getClassNamePublishMap().insert(   std::make_pair(  "InteractionBase", (PubsubFunctionPtr)( &InteractionBase::publish )  )   );
+	getClassNameUnpublishMap().insert(   std::make_pair(  "InteractionBase", (PubsubFunctionPtr)( &InteractionBase::unpublish )  )   );
+	getClassNameSubscribeMap().insert(   std::make_pair(  "InteractionBase", (PubsubFunctionPtr)( &InteractionBase::subscribe )  )   );
+	getClassNameUnsubscribeMap().insert(   std::make_pair(  "InteractionBase", (PubsubFunctionPtr)( &InteractionBase::unsubscribe )  )   );
 
-	getDatamemberClassNameVectorPtrMap().insert(  std::make_pair( "BaseInteraction", &getDatamemberNames() )  );
-	getAllDatamemberClassNameVectorPtrMap().insert(  std::make_pair( "BaseInteraction", &getAllDatamemberNames() )  );
+	getDatamemberClassNameVectorPtrMap().insert(  std::make_pair( "InteractionBase", &getDatamemberNames() )  );
+	getAllDatamemberClassNameVectorPtrMap().insert(  std::make_pair( "InteractionBase", &getAllDatamemberNames() )  );
 	
 	
 	
@@ -208,18 +208,18 @@ bool BaseInteraction::static_init( void ) {
 	return true;
 }
 
-std::ostream &operator<<( std::ostream &os, BaseInteraction::SP entitySP ) {
+std::ostream &operator<<( std::ostream &os, InteractionBase::SP entitySP ) {
 	return os << *entitySP;
 }
-std::ostream &operator<<( std::ostream &os, const BaseInteraction &entity ) {
-	return os << "BaseInteraction("  << "actualLogicalGenerationTime:" << entity.get_actualLogicalGenerationTime() << ", " << "federateFilter:" << entity.get_federateFilter() << ", " << "id:" << entity.get_id() << ", " << "originFed:" << entity.get_originFed() << ", " << "sourceFed:" << entity.get_sourceFed()	<< ")";
+std::ostream &operator<<( std::ostream &os, const InteractionBase &entity ) {
+	return os << "InteractionBase("  << "actualLogicalGenerationTime:" << entity.get_actualLogicalGenerationTime() << ", " << "federateFilter:" << entity.get_federateFilter() << ", " << "id:" << entity.get_id() << ", " << "originFed:" << entity.get_originFed() << ", " << "sourceFed:" << entity.get_sourceFed()	<< ")";
 }
 
 
 
 
 
-BaseInteraction::ParameterHandleValuePairSetSP BaseInteraction::createDatamemberHandleValuePairSet( RTI::ULong count ) {
+InteractionBase::ParameterHandleValuePairSetSP InteractionBase::createDatamemberHandleValuePairSet( RTI::ULong count ) {
 	ParameterHandleValuePairSetSP datamembers = Super::createDatamemberHandleValuePairSet( count + 1 );
 
 	std::string stringConversion;

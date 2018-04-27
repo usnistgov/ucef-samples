@@ -12,5 +12,5 @@
   "federationEndTime": 0,
   "realTimeMode": true,
   "fedFile": "fom/ChallengeResponse.fed",
-  "experimentConfig": "conf/experimentConfig.json"
+  "experimentConfig": "conf/allfederates/allfederates.json"
 }

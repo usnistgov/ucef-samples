@@ -1,23 +1,23 @@
 
 
-#include "BaseObject.hpp"
+#include "ObjectChallenge.hpp"
 
 
 
 
-void BaseObject::init( RTI::RTIambassador *rti ) {
+void ObjectChallenge::init( RTI::RTIambassador *rti ) {
 	static bool isInitialized = false;
 	if ( isInitialized ) {
 		return;
 	}
 	isInitialized = true;
 
-	ObjectRoot::init( rti );
+	ObjectBase::init( rti );
 
 	bool isNotInitialized = true;
 	while( isNotInitialized ) {
 		try {
-			getHandle() = rti->getObjectClassHandle( "ObjectRoot.BaseObject" );
+			getHandle() = rti->getObjectClassHandle( "ObjectRoot.ObjectBase.ObjectChallenge" );
 			isNotInitialized = false;
 		} catch ( RTI::FederateNotExecutionMember & ) {
 			std::cerr << getInitErrorMessage() << "Federate Not Execution Member" << std::endl;
@@ -30,8 +30,8 @@ void BaseObject::init( RTI::RTIambassador *rti ) {
 		}
 	}
 
-	getClassNameHandleMap().insert(  std::make_pair( "BaseObject", get_handle() )  );
-	getClassHandleNameMap().insert(  std::make_pair( get_handle(), "BaseObject" )  );
+	getClassNameHandleMap().insert(  std::make_pair( "ObjectChallenge", get_handle() )  );
+	getClassHandleNameMap().insert(  std::make_pair( get_handle(), "ObjectChallenge" )  );
 
 
 	isNotInitialized = true;
@@ -39,7 +39,8 @@ void BaseObject::init( RTI::RTIambassador *rti ) {
 		try {		
 			
 			
-			get_id_handle_var() = rti->getAttributeHandle( "id", get_handle() );
+			get_beginIndex_handle_var() = rti->getAttributeHandle( "beginIndex", get_handle() );
+			get_stringValue_handle_var() = rti->getAttributeHandle( "stringValue", get_handle() );
 			isNotInitialized = false;
 		} catch ( RTI::FederateNotExecutionMember & ) {
 			std::cerr << getInitErrorMessage() << "Federate Not Execution Member" << std::endl;
@@ -56,16 +57,23 @@ void BaseObject::init( RTI::RTIambassador *rti ) {
 	}
 	
 	
-	getDatamemberNameHandleMap().insert(  std::make_pair( "BaseObject,id", get_id_handle() )  );
+	getDatamemberNameHandleMap().insert(  std::make_pair( "ObjectChallenge,beginIndex", get_beginIndex_handle() )  );
 	
-	getDatamemberHandleNameMap().insert(  std::make_pair( get_id_handle(), "id" )  );
+	getDatamemberHandleNameMap().insert(  std::make_pair( get_beginIndex_handle(), "beginIndex" )  );
 	
-	getDatamemberTypeMap().insert( std::make_pair("id", "String") );
+	getDatamemberTypeMap().insert( std::make_pair("beginIndex", "int") );
+	
+	
+	getDatamemberNameHandleMap().insert(  std::make_pair( "ObjectChallenge,stringValue", get_stringValue_handle() )  );
+	
+	getDatamemberHandleNameMap().insert(  std::make_pair( get_stringValue_handle(), "stringValue" )  );
+	
+	getDatamemberTypeMap().insert( std::make_pair("stringValue", "String") );
 	
 
 }
 
-void BaseObject::publish( RTI::RTIambassador *rti ) {
+void ObjectChallenge::publish( RTI::RTIambassador *rti ) {
 	if ( getIsPublished() ) {
 		return;
 	}
@@ -76,7 +84,7 @@ void BaseObject::publish( RTI::RTIambassador *rti ) {
 	getPublishedAttributeHandleSet_var().empty();
 	for( StringVector::iterator stsItr = getPublishAttributeNameVector().begin() ; stsItr != getPublishAttributeNameVector().end() ; (void)++stsItr ) {
 		try {
-			getPublishedAttributeHandleSet_var().add(  getDatamemberNameHandleMap().find( "BaseObject," + *stsItr )->second  );
+			getPublishedAttributeHandleSet_var().add(  getDatamemberNameHandleMap().find( "ObjectChallenge," + *stsItr )->second  );
 		} catch ( ... ) {
 			std::cerr << getPublishErrorMessage() << "Could not publish \"" << *stsItr + "\" attribute." << std::endl;
 		}
@@ -102,7 +110,7 @@ void BaseObject::publish( RTI::RTIambassador *rti ) {
 	getIsPublished() = true;
 }
 
-void BaseObject::unpublish( RTI::RTIambassador *rti ) {
+void ObjectChallenge::unpublish( RTI::RTIambassador *rti ) {
 	if ( !getIsPublished() ) {
 		return;
 	}
@@ -131,7 +139,7 @@ void BaseObject::unpublish( RTI::RTIambassador *rti ) {
 	getIsPublished() = false;
 }
 
-void BaseObject::subscribe( RTI::RTIambassador *rti ) {
+void ObjectChallenge::subscribe( RTI::RTIambassador *rti ) {
 	if ( getIsSubscribed() ) {
 		return;
 	}
@@ -141,7 +149,7 @@ void BaseObject::subscribe( RTI::RTIambassador *rti ) {
 	getSubscribedAttributeHandleSet_var().empty();
 	for(  StringVector::iterator sstItr = getSubscribeAttributeNameVector().begin() ; sstItr != getSubscribeAttributeNameVector().end() ; (void)++sstItr  ) {
 		try {
-			getSubscribedAttributeHandleSet_var().add(  getDatamemberNameHandleMap().find( "BaseObject," + *sstItr )->second  );
+			getSubscribedAttributeHandleSet_var().add(  getDatamemberNameHandleMap().find( "ObjectChallenge," + *sstItr )->second  );
 		} catch ( ... ) {
 			std::cerr << getSubscribeErrorMessage() << "Could not subscribe to \"" << *sstItr << "\" attribute." << std::endl;
 		}
@@ -167,7 +175,7 @@ void BaseObject::subscribe( RTI::RTIambassador *rti ) {
 	getIsSubscribed() = true;
 }
 	
-void BaseObject::unsubscribe( RTI::RTIambassador *rti ) {
+void ObjectChallenge::unsubscribe( RTI::RTIambassador *rti ) {
 	if ( !getIsSubscribed() ) {
 		return;
 	}
@@ -196,55 +204,57 @@ void BaseObject::unsubscribe( RTI::RTIambassador *rti ) {
 	getIsSubscribed() = false;
 }
 
-bool BaseObject::static_init( void ) {
+bool ObjectChallenge::static_init( void ) {
 	static bool isInitialized = false;
 	if ( isInitialized ) {
 		return true;
 	}
 	isInitialized = true;
 	
-	getClassNameSet().insert( "BaseObject" );
+	getClassNameSet().insert( "ObjectChallenge" );
 	
-	getClassNameFactoryMap().insert(  std::make_pair( "BaseObject", &BaseObject::factory )  );
-	getClassNamePublishMap().insert(   std::make_pair(  "BaseObject", (PubsubFunctionPtr)( &BaseObject::publish )  )   );
-	getClassNameUnpublishMap().insert(   std::make_pair(  "BaseObject", (PubsubFunctionPtr)( &BaseObject::unpublish )  )   );
-	getClassNameSubscribeMap().insert(   std::make_pair(  "BaseObject", (PubsubFunctionPtr)( &BaseObject::subscribe )  )   );
-	getClassNameUnsubscribeMap().insert(   std::make_pair(  "BaseObject", (PubsubFunctionPtr)( &BaseObject::unsubscribe )  )   );
+	getClassNameFactoryMap().insert(  std::make_pair( "ObjectChallenge", &ObjectChallenge::factory )  );
+	getClassNamePublishMap().insert(   std::make_pair(  "ObjectChallenge", (PubsubFunctionPtr)( &ObjectChallenge::publish )  )   );
+	getClassNameUnpublishMap().insert(   std::make_pair(  "ObjectChallenge", (PubsubFunctionPtr)( &ObjectChallenge::unpublish )  )   );
+	getClassNameSubscribeMap().insert(   std::make_pair(  "ObjectChallenge", (PubsubFunctionPtr)( &ObjectChallenge::subscribe )  )   );
+	getClassNameUnsubscribeMap().insert(   std::make_pair(  "ObjectChallenge", (PubsubFunctionPtr)( &ObjectChallenge::unsubscribe )  )   );
 
-	getDatamemberClassNameVectorPtrMap().insert(  std::make_pair( "BaseObject", &getDatamemberNames() )  );
-	getAllDatamemberClassNameVectorPtrMap().insert(  std::make_pair( "BaseObject", &getAllDatamemberNames() )  );
+	getDatamemberClassNameVectorPtrMap().insert(  std::make_pair( "ObjectChallenge", &getDatamemberNames() )  );
+	getAllDatamemberClassNameVectorPtrMap().insert(  std::make_pair( "ObjectChallenge", &getAllDatamemberNames() )  );
 	
 	
 	
-	getDatamemberNames().push_back( "id" );
+	getDatamemberNames().push_back( "beginIndex" );
+	getDatamemberNames().push_back( "stringValue" );
 	
 	
-	getAllDatamemberNames().push_back( "id" );
+	getAllDatamemberNames().push_back( "beginIndex" );
+	getAllDatamemberNames().push_back( "stringValue" );
 
 
-	getClassNamePublishAttributeNameVectorPtrMap().insert(  std::make_pair( "BaseObject", &getPublishAttributeNameVector() )  );
-	getClassNameSubscribeAttributeNameVectorPtrMap().insert(  std::make_pair( "BaseObject", &getSubscribeAttributeNameVector() )  );
+	getClassNamePublishAttributeNameVectorPtrMap().insert(  std::make_pair( "ObjectChallenge", &getPublishAttributeNameVector() )  );
+	getClassNameSubscribeAttributeNameVectorPtrMap().insert(  std::make_pair( "ObjectChallenge", &getSubscribeAttributeNameVector() )  );
 	
-	getClassNamePublishedAttributesPtrMap().insert(  std::make_pair( "BaseObject", &getPublishedAttributeHandleSet_var() )  );
-	getClassNameSubscribedAttributesPtrMap().insert( std::make_pair( "BaseObject", &getSubscribedAttributeHandleSet_var() )  );
+	getClassNamePublishedAttributesPtrMap().insert(  std::make_pair( "ObjectChallenge", &getPublishedAttributeHandleSet_var() )  );
+	getClassNameSubscribedAttributesPtrMap().insert( std::make_pair( "ObjectChallenge", &getSubscribedAttributeHandleSet_var() )  );
 
 
 	return true;
 }
 
-std::ostream &operator<<( std::ostream &os, BaseObject::SP entitySP ) {
+std::ostream &operator<<( std::ostream &os, ObjectChallenge::SP entitySP ) {
 	return os << *entitySP;
 }
-std::ostream &operator<<( std::ostream &os, const BaseObject &entity ) {
-	return os << "BaseObject("  << "id:" << entity.get_id()	<< ")";
+std::ostream &operator<<( std::ostream &os, const ObjectChallenge &entity ) {
+	return os << "ObjectChallenge("  << "beginIndex:" << entity.get_beginIndex() << ", " << "id:" << entity.get_id() << ", " << "stringValue:" << entity.get_stringValue()	<< ")";
 }
 
 
 
 
 
-BaseObject::AttributeHandleValuePairSetSP BaseObject::createDatamemberHandleValuePairSet( RTI::ULong count, bool force  ) {
-	AttributeHandleValuePairSetSP datamembers = Super::createDatamemberHandleValuePairSet( count + 1, force );
+ObjectChallenge::AttributeHandleValuePairSetSP ObjectChallenge::createDatamemberHandleValuePairSet( RTI::ULong count, bool force  ) {
+	AttributeHandleValuePairSetSP datamembers = Super::createDatamemberHandleValuePairSet( count + 2, force );
 
 	std::string stringConversion;
 		
@@ -253,15 +263,28 @@ BaseObject::AttributeHandleValuePairSetSP BaseObject::createDatamemberHandleValu
 	
 	
 	try {
-		isPublished = getPublishedAttributeHandleSet_var().isMember( get_id_handle() );
+		isPublished = getPublishedAttributeHandleSet_var().isMember( get_beginIndex_handle() );
 	} catch ( ... ) {
-		std::cerr << "ERROR:  BaseObject.createSuppliedAttributes:  could not determine if id is published." << std::endl;
+		std::cerr << "ERROR:  ObjectChallenge.createSuppliedAttributes:  could not determine if beginIndex is published." << std::endl;
 		isPublished = false;
 	}
-	if (  isPublished && _id.shouldBeUpdated( force )  ) {
-		stringConversion = static_cast< std::string >(  TypeMedley( get_id() )  );
-		datamembers->add( get_id_handle(), stringConversion.c_str(), stringConversion.size() );
-		_id.setHasBeenUpdated();
+	if (  isPublished && _beginIndex.shouldBeUpdated( force )  ) {
+		stringConversion = static_cast< std::string >(  TypeMedley( get_beginIndex() )  );
+		datamembers->add( get_beginIndex_handle(), stringConversion.c_str(), stringConversion.size() );
+		_beginIndex.setHasBeenUpdated();
+	}
+
+	
+	try {
+		isPublished = getPublishedAttributeHandleSet_var().isMember( get_stringValue_handle() );
+	} catch ( ... ) {
+		std::cerr << "ERROR:  ObjectChallenge.createSuppliedAttributes:  could not determine if stringValue is published." << std::endl;
+		isPublished = false;
+	}
+	if (  isPublished && _stringValue.shouldBeUpdated( force )  ) {
+		stringConversion = static_cast< std::string >(  TypeMedley( get_stringValue() )  );
+		datamembers->add( get_stringValue_handle(), stringConversion.c_str(), stringConversion.size() );
+		_stringValue.setHasBeenUpdated();
 	}
 
 	

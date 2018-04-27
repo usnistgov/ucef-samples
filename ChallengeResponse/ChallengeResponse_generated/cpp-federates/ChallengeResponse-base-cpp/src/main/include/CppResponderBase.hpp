@@ -8,9 +8,9 @@
 
 
 #include "Response.hpp"
-#include "ChallengeInteraction.hpp"
+#include "InteractionChallenge.hpp"
 
-#include "ChallengeObject.hpp"
+#include "ObjectChallenge.hpp"
 #include "C2WLogger.hpp"
 
 #include "FederateConfig.h"
@@ -60,8 +60,8 @@ protected:
         Response::publish( getRTI() );
           
           
-        ChallengeInteraction::subscribe( getRTI() );
-		_subscribedInteractionFilter.setFedFilters( ChallengeInteraction::get_handle(), SubscribedInteractionFilter::ORIGIN_FILTER_DISABLED, SubscribedInteractionFilter::SOURCE_FILTER_DISABLED );  
+        InteractionChallenge::subscribe( getRTI() );
+		_subscribedInteractionFilter.setFedFilters( InteractionChallenge::get_handle(), SubscribedInteractionFilter::ORIGIN_FILTER_DISABLED, SubscribedInteractionFilter::SOURCE_FILTER_DISABLED );  
 		
 		// object pubsub
         
@@ -70,10 +70,10 @@ protected:
          
         
         
-        ChallengeObject::subscribe_id();
-        ChallengeObject::subscribe_integerValue();
-        ChallengeObject::subscribe_stringValue(); 
-        ChallengeObject::subscribe( getRTI() );  
+        ObjectChallenge::subscribe_beginIndex();
+        ObjectChallenge::subscribe_id();
+        ObjectChallenge::subscribe_stringValue(); 
+        ObjectChallenge::subscribe( getRTI() );  
    
         
          // enable pubsub log

@@ -36,7 +36,7 @@
             </attribute>
         </objectClass>
         <objectClass>
-            <name>BaseObject</name>
+            <name>ObjectBase</name>
             <sharing>PublishSubscribe</sharing>
             <semantics></semantics>
 
@@ -48,21 +48,21 @@
                 <semantics></semantics>
             </attribute>
         <objectClass>
-            <name>ChallengeObject</name>
+            <name>ObjectChallenge</name>
             <sharing>PublishSubscribe</sharing>
             <semantics></semantics>
 
             <attribute>
-                <name>id</name>
-                <dataType>String</dataType>
+                <name>beginIndex</name>
+                <dataType>int</dataType>
                 <transportation>HLAreliable</transportation>
                 <order>TimeStamp</order>
                 <semantics></semantics>
             </attribute>
 
             <attribute>
-                <name>integerValue</name>
-                <dataType>int</dataType>
+                <name>id</name>
+                <dataType>String</dataType>
                 <transportation>HLAreliable</transportation>
                 <order>TimeStamp</order>
                 <semantics></semantics>
@@ -631,7 +631,7 @@
         </interactionClass>
         </interactionClass>
         <interactionClass>
-            <name>BaseInteraction</name>
+            <name>InteractionBase</name>
             <sharing>PublishSubscribe</sharing>
             <transportation>HLAreliable</transportation>
             <order>TimeStamp</order>
@@ -666,7 +666,7 @@
                 <semantics></semantics>
             </parameter>
         <interactionClass>
-            <name>ChallengeInteraction</name>
+            <name>InteractionChallenge</name>
             <sharing>PublishSubscribe</sharing>
             <transportation>HLAreliable</transportation>
             <order>TimeStamp</order>
@@ -674,6 +674,12 @@
             <parameter> 
                 <name>actualLogicalGenerationTime</name>
                 <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>beginIndex</name>
+                <dataType>int</dataType>
                 <semantics></semantics>
             </parameter>
 
@@ -686,12 +692,6 @@
             <parameter> 
                 <name>id</name>
                 <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-
-            <parameter> 
-                <name>integerValue</name>
-                <dataType>int</dataType>
                 <semantics></semantics>
             </parameter>
 
@@ -712,6 +712,7 @@
                 <dataType>String</dataType>
                 <semantics></semantics>
             </parameter>
+        </interactionClass>
         <interactionClass>
             <name>Response</name>
             <sharing>PublishSubscribe</sharing>
@@ -737,12 +738,6 @@
             </parameter>
 
             <parameter> 
-                <name>integerValue</name>
-                <dataType>int</dataType>
-                <semantics></semantics>
-            </parameter>
-
-            <parameter> 
                 <name>originFed</name>
                 <dataType>String</dataType>
                 <semantics></semantics>
@@ -755,11 +750,10 @@
             </parameter>
 
             <parameter> 
-                <name>stringValue</name>
+                <name>substring</name>
                 <dataType>String</dataType>
                 <semantics></semantics>
             </parameter>
-        </interactionClass>
         </interactionClass>
         </interactionClass>
         </interactionClass>

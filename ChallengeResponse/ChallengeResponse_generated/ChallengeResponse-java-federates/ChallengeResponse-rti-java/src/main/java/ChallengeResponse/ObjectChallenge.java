@@ -14,32 +14,32 @@ import org.cpswt.utils.CpswtUtils;
 import org.cpswt.hla.*;
 
 /**
-* The ChallengeObject class implements the ChallengeObject object in the
+* The ObjectChallenge class implements the ObjectChallenge object in the
 * ChallengeResponse simulation.
 */
-public class ChallengeObject extends BaseObject {
+public class ObjectChallenge extends ObjectBase {
 
-	private static final Logger logger = LogManager.getLogger(ChallengeObject.class);
+	private static final Logger logger = LogManager.getLogger(ObjectChallenge.class);
 
 	/**
-	* Default constructor -- creates an instance of the ChallengeObject object
+	* Default constructor -- creates an instance of the ObjectChallenge object
 	* class with default attribute values.
 	*/
-	public ChallengeObject() { }
+	public ObjectChallenge() { }
 
 	
 	
-	private static int _integerValue_handle;
+	private static int _beginIndex_handle;
 	private static int _stringValue_handle;
 	
 	
 	/**
-	* Returns the handle (RTI assigned) of the "integerValue" attribute of
+	* Returns the handle (RTI assigned) of the "beginIndex" attribute of
 	* its containing object class.
 	*
-	* @return the handle (RTI assigned) of the "integerValue" attribute
+	* @return the handle (RTI assigned) of the "beginIndex" attribute
 	*/
-	public static int get_integerValue_handle() { return _integerValue_handle; }
+	public static int get_beginIndex_handle() { return _beginIndex_handle; }
 	
 	/**
 	* Returns the handle (RTI assigned) of the "stringValue" attribute of
@@ -56,7 +56,7 @@ public class ChallengeObject extends BaseObject {
 	private static int _handle;
 
 	/**
-	* Returns the handle (RTI assigned) of the ChallengeObject object class.
+	* Returns the handle (RTI assigned) of the ObjectChallenge object class.
 	* Note: As this is a static method, it is NOT polymorphic, and so, if called on
 	* a reference will return the handle of the class pertaining to the reference,\
 	* rather than the handle of the class for the instance referred to by the reference.
@@ -65,27 +65,27 @@ public class ChallengeObject extends BaseObject {
 	public static int get_handle() { return _handle; }
 
 	/**
-	* Returns the fully-qualified (dot-delimited) name of the ChallengeObject
+	* Returns the fully-qualified (dot-delimited) name of the ObjectChallenge
 	* object class.
 	* Note: As this is a static method, it is NOT polymorphic, and so, if called on
 	* a reference will return the name of the class pertaining to the reference,\
 	* rather than the name of the class for the instance referred to by the reference.
 	* For the polymorphic version of this method, use {@link #getClassName()}.
 	*/
-	public static String get_class_name() { return "ObjectRoot.BaseObject.ChallengeObject"; }
+	public static String get_class_name() { return "ObjectRoot.ObjectBase.ObjectChallenge"; }
 
 	/**
 	* Returns the simple name (the last name in the dot-delimited fully-qualified
-	* class name) of the ChallengeObject object class.
+	* class name) of the ObjectChallenge object class.
 	*/
-	public static String get_simple_class_name() { return "ChallengeObject"; }
+	public static String get_simple_class_name() { return "ObjectChallenge"; }
 
 	private static Set< String > _datamemberNames = new HashSet< String >();
 	private static Set< String > _allDatamemberNames = new HashSet< String >();
 
 	/**
 	* Returns a set containing the names of all of the non-hidden attributes in the
-	* ChallengeObject object class.
+	* ObjectChallenge object class.
 	* Note: As this is a static method, it is NOT polymorphic, and so, if called on
 	* a reference will return a set of parameter names pertaining to the reference,\
 	* rather than the parameter names of the class for the instance referred to by
@@ -99,7 +99,7 @@ public class ChallengeObject extends BaseObject {
 
 	/**
 	* Returns a set containing the names of all of the attributes in the
-	* ChallengeObject object class.
+	* ObjectChallenge object class.
 	* Note: As this is a static method, it is NOT polymorphic, and so, if called on
 	* a reference will return a set of parameter names pertaining to the reference,\
 	* rather than the parameter names of the class for the instance referred to by
@@ -121,51 +121,51 @@ public class ChallengeObject extends BaseObject {
 	
 
 	static {
-		_classNameSet.add("ObjectRoot.BaseObject.ChallengeObject");
-		_classNameClassMap.put("ObjectRoot.BaseObject.ChallengeObject", ChallengeObject.class);
+		_classNameSet.add("ObjectRoot.ObjectBase.ObjectChallenge");
+		_classNameClassMap.put("ObjectRoot.ObjectBase.ObjectChallenge", ObjectChallenge.class);
 		
-		_datamemberClassNameSetMap.put("ObjectRoot.BaseObject.ChallengeObject", _datamemberNames);
-		_allDatamemberClassNameSetMap.put("ObjectRoot.BaseObject.ChallengeObject", _allDatamemberNames);
+		_datamemberClassNameSetMap.put("ObjectRoot.ObjectBase.ObjectChallenge", _datamemberNames);
+		_allDatamemberClassNameSetMap.put("ObjectRoot.ObjectBase.ObjectChallenge", _allDatamemberNames);
 
 		
 		
+		_datamemberNames.add("beginIndex");
 		
-		_datamemberNames.add("integerValue");
 		_datamemberNames.add("stringValue");
 		
 		
+		_allDatamemberNames.add("beginIndex");
 		_allDatamemberNames.add("id");
-		_allDatamemberNames.add("integerValue");
 		_allDatamemberNames.add("stringValue");
 		
 		
-		_datamemberTypeMap.put("integerValue", "int");
+		_datamemberTypeMap.put("beginIndex", "int");
 		_datamemberTypeMap.put("stringValue", "String");
 	
 
-		_classNamePublishAttributeNameMap.put("ObjectRoot.BaseObject.ChallengeObject", _publishAttributeNameSet);
+		_classNamePublishAttributeNameMap.put("ObjectRoot.ObjectBase.ObjectChallenge", _publishAttributeNameSet);
 		_publishedAttributeHandleSet = _factory.createAttributeHandleSet();
-		_classNamePublishedAttributeMap.put("ObjectRoot.BaseObject.ChallengeObject", _publishedAttributeHandleSet);
+		_classNamePublishedAttributeMap.put("ObjectRoot.ObjectBase.ObjectChallenge", _publishedAttributeHandleSet);
 
-		_classNameSubscribeAttributeNameMap.put("ObjectRoot.BaseObject.ChallengeObject", _subscribeAttributeNameSet);
+		_classNameSubscribeAttributeNameMap.put("ObjectRoot.ObjectBase.ObjectChallenge", _subscribeAttributeNameSet);
 		_subscribedAttributeHandleSet = _factory.createAttributeHandleSet();
-		_classNameSubscribedAttributeMap.put("ObjectRoot.BaseObject.ChallengeObject", _subscribedAttributeHandleSet);
+		_classNameSubscribedAttributeMap.put("ObjectRoot.ObjectBase.ObjectChallenge", _subscribedAttributeHandleSet);
 	
 
 	}
 
 
-	private static String initErrorMessage = "Error:  ObjectRoot.BaseObject.ChallengeObject:  could not initialize:  ";
+	private static String initErrorMessage = "Error:  ObjectRoot.ObjectBase.ObjectChallenge:  could not initialize:  ";
 	protected static void init(RTIambassador rti) {
 		if (_isInitialized) return;
 		_isInitialized = true;
 		
-		BaseObject.init(rti);
+		ObjectBase.init(rti);
 		
 		boolean isNotInitialized = true;
 		while(isNotInitialized) {
 			try {
-				_handle = rti.getObjectClassHandle("ObjectRoot.BaseObject.ChallengeObject");
+				_handle = rti.getObjectClassHandle("ObjectRoot.ObjectBase.ObjectChallenge");
 				isNotInitialized = false;
 			} catch (FederateNotExecutionMember f) {
 				logger.error("{} Federate Not Execution Member", initErrorMessage);
@@ -181,16 +181,16 @@ public class ChallengeObject extends BaseObject {
 			}
 		}
 
-		_classNameHandleMap.put("ObjectRoot.BaseObject.ChallengeObject", get_handle());
-		_classHandleNameMap.put(get_handle(), "ObjectRoot.BaseObject.ChallengeObject");
-		_classHandleSimpleNameMap.put(get_handle(), "ChallengeObject");
+		_classNameHandleMap.put("ObjectRoot.ObjectBase.ObjectChallenge", get_handle());
+		_classHandleNameMap.put(get_handle(), "ObjectRoot.ObjectBase.ObjectChallenge");
+		_classHandleSimpleNameMap.put(get_handle(), "ObjectChallenge");
 
 		
 		isNotInitialized = true;
 		while(isNotInitialized) {
 			try {
 							
-				_integerValue_handle = rti.getAttributeHandle("integerValue", get_handle());			
+				_beginIndex_handle = rti.getAttributeHandle("beginIndex", get_handle());			
 				_stringValue_handle = rti.getAttributeHandle("stringValue", get_handle());
 				isNotInitialized = false;
 			} catch (FederateNotExecutionMember f) {
@@ -212,20 +212,20 @@ public class ChallengeObject extends BaseObject {
 		}
 			
 			
-		_datamemberNameHandleMap.put("ObjectRoot.BaseObject.ChallengeObject,integerValue", get_integerValue_handle());
-		_datamemberNameHandleMap.put("ObjectRoot.BaseObject.ChallengeObject,stringValue", get_stringValue_handle());
+		_datamemberNameHandleMap.put("ObjectRoot.ObjectBase.ObjectChallenge,beginIndex", get_beginIndex_handle());
+		_datamemberNameHandleMap.put("ObjectRoot.ObjectBase.ObjectChallenge,stringValue", get_stringValue_handle());
 			
 			
-		_datamemberHandleNameMap.put(get_integerValue_handle(), "integerValue");
+		_datamemberHandleNameMap.put(get_beginIndex_handle(), "beginIndex");
 		_datamemberHandleNameMap.put(get_stringValue_handle(), "stringValue");
 		
 	}
 
 	private static boolean _isPublished = false;
-	private static String publishErrorMessage = "Error:  ObjectRoot.BaseObject.ChallengeObject:  could not publish:  ";
+	private static String publishErrorMessage = "Error:  ObjectRoot.ObjectBase.ObjectChallenge:  could not publish:  ";
 
 	/**
-	* Publishes the ChallengeObject object class for a federate.
+	* Publishes the ObjectChallenge object class for a federate.
 	*
 	* @param rti handle to the Local RTI Component
 	*/
@@ -238,7 +238,7 @@ public class ChallengeObject extends BaseObject {
 		_publishedAttributeHandleSet.empty();
 		for(String attributeName : _publishAttributeNameSet) {
 			try {
-				_publishedAttributeHandleSet.add(_datamemberNameHandleMap.get("ObjectRoot.BaseObject.ChallengeObject," + attributeName));
+				_publishedAttributeHandleSet.add(_datamemberNameHandleMap.get("ObjectRoot.ObjectBase.ObjectChallenge," + attributeName));
 			} catch (Exception e) {
 				logger.error("{} Could not publish \"" + attributeName + "\" attribute.", publishErrorMessage);
 			}
@@ -269,9 +269,9 @@ public class ChallengeObject extends BaseObject {
 		_isPublished = true;
 	}
 
-	private static String unpublishErrorMessage = "Error:  ObjectRoot.BaseObject.ChallengeObject:  could not unpublish:  ";
+	private static String unpublishErrorMessage = "Error:  ObjectRoot.ObjectBase.ObjectChallenge:  could not unpublish:  ";
 	/**
-	* Unpublishes the ChallengeObject object class for a federate.
+	* Unpublishes the ObjectChallenge object class for a federate.
 	*
 	* @param rti handle to the Local RTI Component
 	*/
@@ -308,9 +308,9 @@ public class ChallengeObject extends BaseObject {
 	}
 
 	private static boolean _isSubscribed = false;
-	private static String subscribeErrorMessage = "Error:  ObjectRoot.BaseObject.ChallengeObject:  could not subscribe:  ";
+	private static String subscribeErrorMessage = "Error:  ObjectRoot.ObjectBase.ObjectChallenge:  could not subscribe:  ";
 	/**
-	* Subscribes a federate to the ChallengeObject object class.
+	* Subscribes a federate to the ObjectChallenge object class.
 	*
 	* @param rti handle to the Local RTI Component
 	*/
@@ -322,7 +322,7 @@ public class ChallengeObject extends BaseObject {
 		_subscribedAttributeHandleSet.empty();
 		for(String attributeName : _subscribeAttributeNameSet) {
 			try {
-				_subscribedAttributeHandleSet.add(_datamemberNameHandleMap.get("ObjectRoot.BaseObject.ChallengeObject," + attributeName));
+				_subscribedAttributeHandleSet.add(_datamemberNameHandleMap.get("ObjectRoot.ObjectBase.ObjectChallenge," + attributeName));
 			} catch (Exception e) {
 				logger.error("{} Could not subscribe to \"" + attributeName + "\" attribute.", subscribeErrorMessage);
 			}
@@ -353,9 +353,9 @@ public class ChallengeObject extends BaseObject {
 		_isSubscribed = true;
 	}
 
-	private static String unsubscribeErrorMessage = "Error:  ObjectRoot.BaseObject.ChallengeObject:  could not unsubscribe:  ";
+	private static String unsubscribeErrorMessage = "Error:  ObjectRoot.ObjectBase.ObjectChallenge:  could not unsubscribe:  ";
 	/**
-	* Unsubscribes a federate from the ChallengeObject object class.
+	* Unsubscribes a federate from the ObjectChallenge object class.
 	*
 	* @param rti handle to the Local RTI Component
 	*/
@@ -393,12 +393,12 @@ public class ChallengeObject extends BaseObject {
 
 	/**
 	* Return true if "handle" is equal to the handle (RTI assigned) of this class
-	* (that is, the ChallengeObject object class).
+	* (that is, the ObjectChallenge object class).
 	*
 	* @param handle handle to compare to the value of the handle (RTI assigned) of
-	* this class (the ChallengeObject object class).
+	* this class (the ObjectChallenge object class).
 	* @return "true" if "handle" matches the value of the handle of this class
-	* (that is, the ChallengeObject object class).
+	* (that is, the ObjectChallenge object class).
 	*/
 	public static boolean match(int handle) { return handle == get_handle(); }
 
@@ -483,10 +483,10 @@ public class ChallengeObject extends BaseObject {
 	
 
 	public String toString() {
-		return "ChallengeObject("
+		return "ObjectChallenge("
 			
 			
-			+ "integerValue:" + get_integerValue()
+			+ "beginIndex:" + get_beginIndex()
 			+ "," + "stringValue:" + get_stringValue()
 			+ ")";
 	}
@@ -494,6 +494,55 @@ public class ChallengeObject extends BaseObject {
 
 
 
+	
+	
+	/**
+	* Publishes the "beginIndex" attribute of the attribute's containing object
+	* class for a federate.
+	* Note:  This method only marks the "beginIndex" attribute for publication.
+	* To actually publish the attribute, the federate must (re)publish its containing
+	* object class.
+	* (using <objectClassName>.publish( RTIambassador rti ) ).
+	*/
+	public static void publish_beginIndex() {
+		_publishAttributeNameSet.add( "beginIndex" );
+	}
+
+	/**
+	* Unpublishes the "beginIndex" attribute of the attribute's containing object
+	* class for a federate.
+	* Note:  This method only marks the "beginIndex" attribute for unpublication.
+	* To actually publish the attribute, the federate must (re)publish its containing
+	* object class.
+	* (using <objectClassName>.publish( RTIambassador rti ) ).
+	*/
+	public static void unpublish_beginIndex() {
+		_publishAttributeNameSet.remove( "beginIndex" );
+	}
+	
+	/**
+	* Subscribes a federate to the "beginIndex" attribute of the attribute's
+	* containing object class.
+	* Note:  This method only marks the "beginIndex" attribute for subscription.
+	* To actually subscribe to the attribute, the federate must (re)subscribe to its
+	* containing object class.
+	* (using <objectClassName>.subscribe( RTIambassador rti ) ).
+	*/
+	public static void subscribe_beginIndex() {
+		_subscribeAttributeNameSet.add( "beginIndex" );
+	}
+
+	/**
+	* Unsubscribes a federate from the "beginIndex" attribute of the attribute's
+	* containing object class.
+	* Note:  This method only marks the "beginIndex" attribute for unsubscription.
+	* To actually unsubscribe to the attribute, the federate must (re)subscribe to its
+	* containing object class.
+	* (using <objectClassName>.subscribe( RTIambassador rti ) ).
+	*/
+	public static void unsubscribe_beginIndex() {
+		_subscribeAttributeNameSet.remove( "beginIndex" );
+	}
 	
 	
 	/**
@@ -542,55 +591,6 @@ public class ChallengeObject extends BaseObject {
 	*/
 	public static void unsubscribe_id() {
 		_subscribeAttributeNameSet.remove( "id" );
-	}
-	
-	
-	/**
-	* Publishes the "integerValue" attribute of the attribute's containing object
-	* class for a federate.
-	* Note:  This method only marks the "integerValue" attribute for publication.
-	* To actually publish the attribute, the federate must (re)publish its containing
-	* object class.
-	* (using <objectClassName>.publish( RTIambassador rti ) ).
-	*/
-	public static void publish_integerValue() {
-		_publishAttributeNameSet.add( "integerValue" );
-	}
-
-	/**
-	* Unpublishes the "integerValue" attribute of the attribute's containing object
-	* class for a federate.
-	* Note:  This method only marks the "integerValue" attribute for unpublication.
-	* To actually publish the attribute, the federate must (re)publish its containing
-	* object class.
-	* (using <objectClassName>.publish( RTIambassador rti ) ).
-	*/
-	public static void unpublish_integerValue() {
-		_publishAttributeNameSet.remove( "integerValue" );
-	}
-	
-	/**
-	* Subscribes a federate to the "integerValue" attribute of the attribute's
-	* containing object class.
-	* Note:  This method only marks the "integerValue" attribute for subscription.
-	* To actually subscribe to the attribute, the federate must (re)subscribe to its
-	* containing object class.
-	* (using <objectClassName>.subscribe( RTIambassador rti ) ).
-	*/
-	public static void subscribe_integerValue() {
-		_subscribeAttributeNameSet.add( "integerValue" );
-	}
-
-	/**
-	* Unsubscribes a federate from the "integerValue" attribute of the attribute's
-	* containing object class.
-	* Note:  This method only marks the "integerValue" attribute for unsubscription.
-	* To actually unsubscribe to the attribute, the federate must (re)subscribe to its
-	* containing object class.
-	* (using <objectClassName>.subscribe( RTIambassador rti ) ).
-	*/
-	public static void unsubscribe_integerValue() {
-		_subscribeAttributeNameSet.remove( "integerValue" );
 	}
 	
 	
@@ -645,35 +645,35 @@ public class ChallengeObject extends BaseObject {
 
 	
 	
-	private Attribute< Integer > _integerValue =
+	private Attribute< Integer > _beginIndex =
  		new Attribute< Integer >(  new Integer( 0 )  );
 	
 	/**
-	* Set the value of the "integerValue" attribute to "value" for this object.
+	* Set the value of the "beginIndex" attribute to "value" for this object.
 	*
-	* @param value the new value for the "integerValue" attribute
+	* @param value the new value for the "beginIndex" attribute
 	*/
-	public void set_integerValue( int value ) {
-		_integerValue.setValue( value );
-		_integerValue.setTime( getTime() );
+	public void set_beginIndex( int value ) {
+		_beginIndex.setValue( value );
+		_beginIndex.setTime( getTime() );
 	}
 	
 	/**
-	* Returns the value of the "integerValue" attribute of this object.
+	* Returns the value of the "beginIndex" attribute of this object.
 	*
-	* @return the value of the "integerValue" attribute
+	* @return the value of the "beginIndex" attribute
 	*/
-	public int get_integerValue() {
-		return _integerValue.getValue();
+	public int get_beginIndex() {
+		return _beginIndex.getValue();
 	}
 	
 	/**
-	* Returns the current timestamp of the "integerValue" attribute of this object.
+	* Returns the current timestamp of the "beginIndex" attribute of this object.
 	* 
-	* @return the current timestamp of the "integerValue" attribute
+	* @return the current timestamp of the "beginIndex" attribute
 	*/
-	public double get_integerValue_time() {
-		return _integerValue.getTime();
+	public double get_beginIndex_time() {
+		return _beginIndex.getTime();
 	}
 	
 	
@@ -710,58 +710,58 @@ public class ChallengeObject extends BaseObject {
 	
 
 
-	protected ChallengeObject( ReflectedAttributes datamemberMap, boolean initFlag ) {
+	protected ObjectChallenge( ReflectedAttributes datamemberMap, boolean initFlag ) {
 		super( datamemberMap, false );
 		if ( initFlag ) setAttributes( datamemberMap );
 	}
 	
-	protected ChallengeObject( ReflectedAttributes datamemberMap, LogicalTime logicalTime, boolean initFlag ) {
+	protected ObjectChallenge( ReflectedAttributes datamemberMap, LogicalTime logicalTime, boolean initFlag ) {
 		super( datamemberMap, logicalTime, false );
 		if ( initFlag ) setAttributes( datamemberMap );
 	}
 
 
 	/**
-	* Creates an instance of the ChallengeObject object class, using
+	* Creates an instance of the ObjectChallenge object class, using
 	* "datamemberMap" to initialize its attribute values.
 	* "datamemberMap" is usually acquired as an argument to an RTI federate
 	* callback method, such as "receiveInteraction".
 	*
 	* @param datamemberMap data structure containing initial values for the
-	* attributes of this new ChallengeObject object class instance
+	* attributes of this new ObjectChallenge object class instance
 	*/
-	public ChallengeObject( ReflectedAttributes datamemberMap ) {
+	public ObjectChallenge( ReflectedAttributes datamemberMap ) {
 		this( datamemberMap, true );
 	}
 	
 	/**
-	* Like {@link #ChallengeObject( ReflectedAttributes datamemberMap )}, except this
-	* new ChallengeObject object class instance is given a timestamp of
+	* Like {@link #ObjectChallenge( ReflectedAttributes datamemberMap )}, except this
+	* new ObjectChallenge object class instance is given a timestamp of
 	* "logicalTime".
 	*
 	* @param datamemberMap data structure containing initial values for the
-	* attributes of this new ChallengeObject object class instance
-	* @param logicalTime timestamp for this new ChallengeObject object class
+	* attributes of this new ObjectChallenge object class instance
+	* @param logicalTime timestamp for this new ObjectChallenge object class
 	* instance
 	*/
-	public ChallengeObject( ReflectedAttributes datamemberMap, LogicalTime logicalTime ) {
+	public ObjectChallenge( ReflectedAttributes datamemberMap, LogicalTime logicalTime ) {
 		this( datamemberMap, logicalTime, true );
 	}
 
 	/**
-	* Creates a new ChallengeObject object class instance that is a duplicate
-	* of the instance referred to by ChallengeObject_var.
+	* Creates a new ObjectChallenge object class instance that is a duplicate
+	* of the instance referred to by ObjectChallenge_var.
 	*
-	* @param ChallengeObject_var ChallengeObject object class instance of which
-	* this newly created ChallengeObject object class instance will be a
+	* @param ObjectChallenge_var ObjectChallenge object class instance of which
+	* this newly created ObjectChallenge object class instance will be a
 	* duplicate
 	*/
-	public ChallengeObject( ChallengeObject ChallengeObject_var ) {
-		super( ChallengeObject_var );
+	public ObjectChallenge( ObjectChallenge ObjectChallenge_var ) {
+		super( ObjectChallenge_var );
 		
 		
-		set_integerValue( ChallengeObject_var.get_integerValue() );
-		set_stringValue( ChallengeObject_var.get_stringValue() );
+		set_beginIndex( ObjectChallenge_var.get_beginIndex() );
+		set_stringValue( ObjectChallenge_var.get_stringValue() );
 	}
 
 
@@ -778,7 +778,7 @@ public class ChallengeObject extends BaseObject {
 		
 		
 		
-		if (  "integerValue".equals( datamemberName )  ) return new Integer(get_integerValue());
+		if (  "beginIndex".equals( datamemberName )  ) return new Integer(get_beginIndex());
 		else if (  "stringValue".equals( datamemberName )  ) return get_stringValue();
 		else return super.getAttribute( datamemberName );
 	}
@@ -796,7 +796,7 @@ public class ChallengeObject extends BaseObject {
 		
 				
 		
-		if ( get_integerValue_handle() == datamemberHandle ) return new Integer(get_integerValue());
+		if ( get_beginIndex_handle() == datamemberHandle ) return new Integer(get_beginIndex());
 		else if ( get_stringValue_handle() == datamemberHandle ) return get_stringValue();
 		else return super.getAttribute( datamemberHandle );
 	}
@@ -806,7 +806,7 @@ public class ChallengeObject extends BaseObject {
 		
 			
 		
-		if ( param_handle == get_integerValue_handle() ) set_integerValue( Integer.parseInt(val) );
+		if ( param_handle == get_beginIndex_handle() ) set_beginIndex( Integer.parseInt(val) );
 		else if ( param_handle == get_stringValue_handle() ) set_stringValue( val );
 		else retval = super.setAttributeAux( param_handle, val );
 		
@@ -818,7 +818,7 @@ public class ChallengeObject extends BaseObject {
 		
 			
 		
-		if (  "integerValue".equals( datamemberName )  ) set_integerValue( Integer.parseInt(val) );
+		if (  "beginIndex".equals( datamemberName )  ) set_beginIndex( Integer.parseInt(val) );
 		else if (  "stringValue".equals( datamemberName )  ) set_stringValue( val );	
 		else retval = super.setAttributeAux( datamemberName, val );
 		
@@ -830,7 +830,7 @@ public class ChallengeObject extends BaseObject {
 		
 		
 		
-		if (  "integerValue".equals( datamemberName )  ) set_integerValue( (Integer)val );
+		if (  "beginIndex".equals( datamemberName )  ) set_beginIndex( (Integer)val );
 		else if (  "stringValue".equals( datamemberName )  ) set_stringValue( (String)val );		
 		else retval = super.setAttributeAux( datamemberName, val );
 		
@@ -845,19 +845,19 @@ public class ChallengeObject extends BaseObject {
 		
 		
 			try {
-				isPublished = _publishedAttributeHandleSet.isMember( get_integerValue_handle() );
+				isPublished = _publishedAttributeHandleSet.isMember( get_beginIndex_handle() );
 			} catch ( Exception e ) {
-				logger.error("ERROR:  ObjectRoot.BaseObject.ChallengeObject.createSuppliedAttributes:  could not determine if integerValue is published.");
+				logger.error("ERROR:  ObjectRoot.ObjectBase.ObjectChallenge.createSuppliedAttributes:  could not determine if beginIndex is published.");
 				isPublished = false;
 			}
-			if (  isPublished && _integerValue.shouldBeUpdated( force )  ) {
-				datamembers.add( get_integerValue_handle(), Integer.toString(get_integerValue()).getBytes() );
-				_integerValue.setHasBeenUpdated();
+			if (  isPublished && _beginIndex.shouldBeUpdated( force )  ) {
+				datamembers.add( get_beginIndex_handle(), Integer.toString(get_beginIndex()).getBytes() );
+				_beginIndex.setHasBeenUpdated();
 			}
 			try {
 				isPublished = _publishedAttributeHandleSet.isMember( get_stringValue_handle() );
 			} catch ( Exception e ) {
-				logger.error("ERROR:  ObjectRoot.BaseObject.ChallengeObject.createSuppliedAttributes:  could not determine if stringValue is published.");
+				logger.error("ERROR:  ObjectRoot.ObjectBase.ObjectChallenge.createSuppliedAttributes:  could not determine if stringValue is published.");
 				isPublished = false;
 			}
 			if (  isPublished && _stringValue.shouldBeUpdated( force )  ) {
@@ -871,11 +871,11 @@ public class ChallengeObject extends BaseObject {
 	
 	public void copyFrom( Object object ) {
 		super.copyFrom( object );
-		if ( object instanceof ChallengeObject ) {
-			ChallengeObject data = (ChallengeObject)object;
+		if ( object instanceof ObjectChallenge ) {
+			ObjectChallenge data = (ObjectChallenge)object;
 			
 			
-				_integerValue = data._integerValue;
+				_beginIndex = data._beginIndex;
 				_stringValue = data._stringValue;
 			
 		}

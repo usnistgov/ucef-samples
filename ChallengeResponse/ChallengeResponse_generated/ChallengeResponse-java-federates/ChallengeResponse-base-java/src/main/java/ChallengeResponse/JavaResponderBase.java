@@ -32,19 +32,19 @@ public class JavaResponderBase extends SynchronizedFederate {
         
         Response.publish(getLRC());
         
-        ChallengeInteraction.subscribe(getLRC());
+        InteractionChallenge.subscribe(getLRC());
         _subscribedInteractionFilter.setFedFilters( 
-			ChallengeInteraction.get_handle(), 
+			InteractionChallenge.get_handle(), 
 			SubscribedInteractionFilter.OriginFedFilter.ORIGIN_FILTER_DISABLED, 
 			SubscribedInteractionFilter.SourceFedFilter.SOURCE_FILTER_DISABLED 
 		);		
 		// object pubsub
                 
         	
-        ChallengeObject.subscribe_id();
-        ChallengeObject.subscribe_integerValue();
-        ChallengeObject.subscribe_stringValue();
-        ChallengeObject.subscribe(getLRC());
+        ObjectChallenge.subscribe_beginIndex();
+        ObjectChallenge.subscribe_id();
+        ObjectChallenge.subscribe_stringValue();
+        ObjectChallenge.subscribe(getLRC());
         	}
         
 	
