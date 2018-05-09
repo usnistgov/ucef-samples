@@ -29,6 +29,9 @@ public class JavaChallenger extends JavaChallengerBase {
     public JavaChallenger(Configuration params) throws Exception {
         super(params);
         
+        if (params.challengeLength < 2) {
+            throw new IllegalArgumentException("params.challengeLength must be at least 2");
+        }
         objectChallenge.registerObject(getLRC());
         responseTracker = new ResponseTracker(params.numberOfResponders);
         challengeLength = params.challengeLength;
@@ -102,7 +105,7 @@ public class JavaChallenger extends JavaChallengerBase {
         responseTracker.markResponse(response);
     }
     
-    private void sendInteractionChallenge() throws Exception {
+    private void sendInteractionChallenge() {
         final Challenge challenge = createChallenge();
         InteractionChallenge interaction = create_InteractionChallenge();
         interaction.set_id(challenge.getId());

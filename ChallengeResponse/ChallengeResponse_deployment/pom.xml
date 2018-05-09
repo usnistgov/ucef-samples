@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>gov.nist.hla.samples</groupId>
-	<artifactId>ChallengeResponse-exec</artifactId>
+	<artifactId>ChallengeResponse_exec</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -23,6 +23,12 @@
 		
 		<dependency><!-- The depenency for the user written code-->
 			<groupId>gov.nist.hla.samples</groupId>
+			<artifactId>JavaBaseReceiver</artifactId>
+			<version>0.1.0-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency><!-- The depenency for the user written code-->
+			<groupId>gov.nist.hla.samples</groupId>
 			<artifactId>JavaChallenger</artifactId>
 			<version>0.1.0-SNAPSHOT</version>
 		</dependency>
@@ -33,9 +39,6 @@
 			<version>0.1.0-SNAPSHOT</version>
 		</dependency>
 		
-		
-		
-		
 		<dependency><!-- The depenency for the generated code-->
 			<groupId>gov.nist.hla.samples</groupId>
 			<artifactId>ChallengeResponse-base-cpp</artifactId>
@@ -43,21 +46,28 @@
 			<type>nar</type>
 		</dependency>
 		
+	<!--	
+		<dependency><!- The depenency for the user written code->
+			<groupId>gov.nist.hla.samples</groupId>
+			<artifactId>ChallengeResponse-CppBaseReceiver-cpp</artifactId>
+			<version>0.1.0-SNAPSHOT</version>
+			<type>nar</type>
+		</dependency>
 		
-		<dependency><!-- The depenency for the user written code-->
+		<dependency><!- The depenency for the user written code->
 			<groupId>gov.nist.hla.samples</groupId>
 			<artifactId>ChallengeResponse-CppChallenger-cpp</artifactId>
 			<version>0.1.0-SNAPSHOT</version>
 			<type>nar</type>
 		</dependency>
 		
-		<dependency><!-- The depenency for the user written code-->
+		<dependency><!- The depenency for the user written code->
 			<groupId>gov.nist.hla.samples</groupId>
 			<artifactId>ChallengeResponse-CppResponder-cpp</artifactId>
 			<version>0.1.0-SNAPSHOT</version>
 			<type>nar</type>
 		</dependency>
-		
+		-->
 		
 		<dependency>
 	        <groupId>junit</groupId>
@@ -189,10 +199,13 @@
                             <tasks>
                                 <echo message="Creating folder for the execution..." />
                                 
+                                <mkdir dir="${project.basedir}/target/CppBaseReceiver" />
                                 <mkdir dir="${project.basedir}/target/CppChallenger" />
                                 <mkdir dir="${project.basedir}/target/CppResponder" />
+                                <mkdir dir="${project.basedir}/target/GatewayBaseReceiver" />
                                 <mkdir dir="${project.basedir}/target/GatewayChallenger" />
                                 <mkdir dir="${project.basedir}/target/GatewayResponder" />
+                                <mkdir dir="${project.basedir}/target/JavaBaseReceiver" />
                                 <mkdir dir="${project.basedir}/target/JavaChallenger" />
                                 <mkdir dir="${project.basedir}/target/JavaResponder" />
                         	</tasks>
@@ -248,6 +261,13 @@
 	
 	<profiles>
         <profile>
+            <id>CppBaseReceiver</id>
+            <properties>
+                <federate.name>CppBaseReceiver</federate.name>
+                <federate.configFile>conf/cppbasereceiver.json</federate.configFile>
+            </properties>
+        </profile>
+        <profile>
             <id>CppChallenger</id>
             <properties>
                 <federate.name>CppChallenger</federate.name>
@@ -262,6 +282,13 @@
             </properties>
         </profile>
         <profile>
+            <id>GatewayBaseReceiver</id>
+            <properties>
+                <federate.name>GatewayBaseReceiver</federate.name>
+                <federate.configFile>conf/gatewaybasereceiver.json</federate.configFile>
+            </properties>
+        </profile>
+        <profile>
             <id>GatewayChallenger</id>
             <properties>
                 <federate.name>GatewayChallenger</federate.name>
@@ -273,6 +300,13 @@
             <properties>
                 <federate.name>GatewayResponder</federate.name>
                 <federate.configFile>conf/gatewayresponder.json</federate.configFile>
+            </properties>
+        </profile>
+        <profile>
+            <id>JavaBaseReceiver</id>
+            <properties>
+                <federate.name>JavaBaseReceiver</federate.name>
+                <federate.configFile>conf/javabasereceiver.json</federate.configFile>
             </properties>
         </profile>
         <profile>

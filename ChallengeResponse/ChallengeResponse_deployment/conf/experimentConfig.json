@@ -1,13 +1,20 @@
 {
   "federateTypesAllowed": [
+    "CppBaseReceiver",
     "CppChallenger",
     "CppResponder",
+    "GatewayBaseReceiver",
     "GatewayChallenger",
     "GatewayResponder",
+    "JavaBaseReceiver",
     "JavaChallenger",
     "JavaResponder"
   ],
   "expectedFederates": [
+    {
+      "federateType": "CppBaseReceiver",
+      "count": 1
+    },
     {
       "federateType": "CppChallenger",
       "count": 1
@@ -17,11 +24,19 @@
       "count": 1
     },
     {
+      "federateType": "GatewayBaseReceiver",
+      "count": 1
+    },
+    {
       "federateType": "GatewayChallenger",
       "count": 1
     },
     {
       "federateType": "GatewayResponder",
+      "count": 1
+    },
+    {
+      "federateType": "JavaBaseReceiver",
       "count": 1
     },
     {
@@ -35,6 +50,10 @@
   ],
   "lateJoinerFederates": [
     {
+      "federateType": "CppBaseReceiver",
+      "count": 0
+    },
+    {
       "federateType": "CppChallenger",
       "count": 0
     },
@@ -43,11 +62,19 @@
       "count": 0
     },
     {
+      "federateType": "GatewayBaseReceiver",
+      "count": 0
+    },
+    {
       "federateType": "GatewayChallenger",
       "count": 0
     },
     {
       "federateType": "GatewayResponder",
+      "count": 0
+    },
+    {
+      "federateType": "JavaBaseReceiver",
       "count": 0
     },
     {

@@ -18,6 +18,9 @@ public class ResponseTracker {
     private final int numberOfResponders;
     
     public ResponseTracker(int numberOfResponders) {
+        if (numberOfResponders < 1) {
+            throw new IllegalArgumentException("numberOfResponders must be positive nonzero");
+        }
         this.numberOfResponders = numberOfResponders;
     }
     

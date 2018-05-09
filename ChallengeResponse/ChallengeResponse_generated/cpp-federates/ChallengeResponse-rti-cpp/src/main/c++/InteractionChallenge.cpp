@@ -5,7 +5,7 @@
 
 
 
-void InteractionChallenge::init( RTI::RTIambassador *rti ) {
+void InteractionChallenge::init( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	static bool isInitialized = false;
 	if ( isInitialized ) {
 		return;
@@ -57,23 +57,15 @@ void InteractionChallenge::init( RTI::RTIambassador *rti ) {
 	}
 	
 	
-	getDatamemberNameHandleMap().insert(  std::make_pair( "InteractionChallenge,beginIndex", get_beginIndex_handle() )  );
-	
-	getDatamemberHandleNameMap().insert(  std::make_pair( get_beginIndex_handle(), "beginIndex" )  );
-	
 	getDatamemberTypeMap().insert( std::make_pair("beginIndex", "int") );
 	
-	
-	getDatamemberNameHandleMap().insert(  std::make_pair( "InteractionChallenge,stringValue", get_stringValue_handle() )  );
-	
-	getDatamemberHandleNameMap().insert(  std::make_pair( get_stringValue_handle(), "stringValue" )  );
 	
 	getDatamemberTypeMap().insert( std::make_pair("stringValue", "String") );
 	
 
 }
 
-void InteractionChallenge::publish( RTI::RTIambassador *rti ) {
+void InteractionChallenge::publish( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( getIsPublished() ) {
 		return;
 	}
@@ -101,7 +93,7 @@ void InteractionChallenge::publish( RTI::RTIambassador *rti ) {
 	getIsPublished() = true;
 }
 
-void InteractionChallenge::unpublish( RTI::RTIambassador *rti ) {
+void InteractionChallenge::unpublish( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( !getIsPublished() ) {
 		return;
 	}
@@ -130,7 +122,7 @@ void InteractionChallenge::unpublish( RTI::RTIambassador *rti ) {
 	getIsPublished() = false;
 }
 
-void InteractionChallenge::subscribe( RTI::RTIambassador *rti ) {
+void InteractionChallenge::subscribe( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( getIsSubscribed() ) {
 		return;
 	}
@@ -157,7 +149,7 @@ void InteractionChallenge::subscribe( RTI::RTIambassador *rti ) {
 	getIsSubscribed() = true;
 }
 	
-void InteractionChallenge::unsubscribe( RTI::RTIambassador *rti ) {
+void InteractionChallenge::unsubscribe( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( !getIsSubscribed() ) {
 		return;
 	}

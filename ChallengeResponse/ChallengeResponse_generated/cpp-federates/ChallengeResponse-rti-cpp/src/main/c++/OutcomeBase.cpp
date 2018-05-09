@@ -5,7 +5,7 @@
 
 
 
-void OutcomeBase::init( RTI::RTIambassador *rti ) {
+void OutcomeBase::init( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	static bool isInitialized = false;
 	if ( isInitialized ) {
 		return;
@@ -57,7 +57,7 @@ void OutcomeBase::init( RTI::RTIambassador *rti ) {
 
 }
 
-void OutcomeBase::publish( RTI::RTIambassador *rti ) {
+void OutcomeBase::publish( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( getIsPublished() ) {
 		return;
 	}
@@ -85,7 +85,7 @@ void OutcomeBase::publish( RTI::RTIambassador *rti ) {
 	getIsPublished() = true;
 }
 
-void OutcomeBase::unpublish( RTI::RTIambassador *rti ) {
+void OutcomeBase::unpublish( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( !getIsPublished() ) {
 		return;
 	}
@@ -114,7 +114,7 @@ void OutcomeBase::unpublish( RTI::RTIambassador *rti ) {
 	getIsPublished() = false;
 }
 
-void OutcomeBase::subscribe( RTI::RTIambassador *rti ) {
+void OutcomeBase::subscribe( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( getIsSubscribed() ) {
 		return;
 	}
@@ -141,7 +141,7 @@ void OutcomeBase::subscribe( RTI::RTIambassador *rti ) {
 	getIsSubscribed() = true;
 }
 	
-void OutcomeBase::unsubscribe( RTI::RTIambassador *rti ) {
+void OutcomeBase::unsubscribe( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( !getIsSubscribed() ) {
 		return;
 	}

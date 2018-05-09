@@ -1,8 +1,5 @@
 {
   "federateTypesAllowed": [
-    "CppBaseReceiver",
-    "CppChallenger",
-    "CppResponder",
     "GatewayBaseReceiver",
     "GatewayChallenger",
     "GatewayResponder",
@@ -11,18 +8,6 @@
     "JavaResponder"
   ],
   "expectedFederates": [
-    {
-      "federateType": "CppBaseReceiver",
-      "count": 1
-    },
-    {
-      "federateType": "CppChallenger",
-      "count": 1
-    },
-    {
-      "federateType": "CppResponder",
-      "count": 1
-    },
     {
       "federateType": "GatewayBaseReceiver",
       "count": 1
@@ -50,6 +35,6 @@
   ],
   "lateJoinerFederates": [],
   "coaDefinition": "conf/NewcoaConfig.json",
-  "coaSelection": "conf/allfederates/coaSelection_allfederates.json",
+  "coaSelection": "conf/javafederates/coaSelection_javafederates.json",
   "terminateOnCOAFinish": false
 }

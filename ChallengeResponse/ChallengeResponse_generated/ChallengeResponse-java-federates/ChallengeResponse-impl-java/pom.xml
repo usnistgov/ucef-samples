@@ -11,6 +11,8 @@
     <packaging>pom</packaging>
     <modules>
         
+        <module>JavaBaseReceiver</module>
+        
         <module>JavaChallenger</module>
         
         <module>JavaResponder</module>

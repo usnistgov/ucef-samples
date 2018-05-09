@@ -5,7 +5,7 @@
 
 
 
-void Response::init( RTI::RTIambassador *rti ) {
+void Response::init( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	static bool isInitialized = false;
 	if ( isInitialized ) {
 		return;
@@ -56,16 +56,12 @@ void Response::init( RTI::RTIambassador *rti ) {
 	}
 	
 	
-	getDatamemberNameHandleMap().insert(  std::make_pair( "Response,substring", get_substring_handle() )  );
-	
-	getDatamemberHandleNameMap().insert(  std::make_pair( get_substring_handle(), "substring" )  );
-	
 	getDatamemberTypeMap().insert( std::make_pair("substring", "String") );
 	
 
 }
 
-void Response::publish( RTI::RTIambassador *rti ) {
+void Response::publish( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( getIsPublished() ) {
 		return;
 	}
@@ -93,7 +89,7 @@ void Response::publish( RTI::RTIambassador *rti ) {
 	getIsPublished() = true;
 }
 
-void Response::unpublish( RTI::RTIambassador *rti ) {
+void Response::unpublish( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( !getIsPublished() ) {
 		return;
 	}
@@ -122,7 +118,7 @@ void Response::unpublish( RTI::RTIambassador *rti ) {
 	getIsPublished() = false;
 }
 
-void Response::subscribe( RTI::RTIambassador *rti ) {
+void Response::subscribe( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( getIsSubscribed() ) {
 		return;
 	}
@@ -149,7 +145,7 @@ void Response::subscribe( RTI::RTIambassador *rti ) {
 	getIsSubscribed() = true;
 }
 	
-void Response::unsubscribe( RTI::RTIambassador *rti ) {
+void Response::unsubscribe( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( !getIsSubscribed() ) {
 		return;
 	}

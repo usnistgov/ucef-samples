@@ -146,7 +146,7 @@ private:
 	}
 
 protected:
-	static void init( RTI::RTIambassador *rti );
+	static void init( boost::shared_ptr< RTI::RTIambassador > rti );
 	
 private:
 	static bool &getIsPublished( void ) {
@@ -160,7 +160,7 @@ private:
 	}
 	
 public:
-	static void publish( RTI::RTIambassador *rti );
+	static void publish( boost::shared_ptr< RTI::RTIambassador > rti );
 	
 private:
 	static std::string &getUnpublishErrorMessage( void ) {
@@ -169,7 +169,7 @@ private:
 	}
 
 public:
-	static void unpublish( RTI::RTIambassador *rti );
+	static void unpublish( boost::shared_ptr< RTI::RTIambassador > rti );
 
 private:
 	static bool &getIsSubscribed( void ) {
@@ -182,7 +182,7 @@ private:
 	}
 
 public:
-	static void subscribe( RTI::RTIambassador *rti );
+	static void subscribe( boost::shared_ptr< RTI::RTIambassador > rti );
 		
 private:
 	static std::string getUnsubscribeErrorMessage( void ) {
@@ -191,7 +191,7 @@ private:
 	}
 	
 public:
-	static void unsubscribe( RTI::RTIambassador *rti );
+	static void unsubscribe( boost::shared_ptr< RTI::RTIambassador > rti );
 	
 	static bool static_init( void );
 	
@@ -202,8 +202,8 @@ public:
 	virtual StringVector getAttributeNames( void ) const { return get_attribute_names(); }
 	virtual StringVector getAllAttributeNames( void ) const { return get_all_attribute_names(); }
 
-	virtual void publishObject( RTI::RTIambassador *rti ) { publish( rti ); }
-	virtual void subscribeObject( RTI::RTIambassador *rti ) { subscribe( rti ); }
+	virtual void publishObject( boost::shared_ptr< RTI::RTIambassador > rti ) { publish( rti ); }
+	virtual void subscribeObject( boost::shared_ptr< RTI::RTIambassador > rti ) { subscribe( rti ); }
 
 	virtual ObjectRoot::SP clone( void ) {
 		return ObjectRoot::SP(  new ObjectBase( *this )  );

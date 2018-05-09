@@ -5,7 +5,7 @@
 
 
 
-void ObjectChallenge::init( RTI::RTIambassador *rti ) {
+void ObjectChallenge::init( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	static bool isInitialized = false;
 	if ( isInitialized ) {
 		return;
@@ -57,23 +57,15 @@ void ObjectChallenge::init( RTI::RTIambassador *rti ) {
 	}
 	
 	
-	getDatamemberNameHandleMap().insert(  std::make_pair( "ObjectChallenge,beginIndex", get_beginIndex_handle() )  );
-	
-	getDatamemberHandleNameMap().insert(  std::make_pair( get_beginIndex_handle(), "beginIndex" )  );
-	
 	getDatamemberTypeMap().insert( std::make_pair("beginIndex", "int") );
 	
-	
-	getDatamemberNameHandleMap().insert(  std::make_pair( "ObjectChallenge,stringValue", get_stringValue_handle() )  );
-	
-	getDatamemberHandleNameMap().insert(  std::make_pair( get_stringValue_handle(), "stringValue" )  );
 	
 	getDatamemberTypeMap().insert( std::make_pair("stringValue", "String") );
 	
 
 }
 
-void ObjectChallenge::publish( RTI::RTIambassador *rti ) {
+void ObjectChallenge::publish( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( getIsPublished() ) {
 		return;
 	}
@@ -84,7 +76,8 @@ void ObjectChallenge::publish( RTI::RTIambassador *rti ) {
 	getPublishedAttributeHandleSet_var().empty();
 	for( StringVector::iterator stsItr = getPublishAttributeNameVector().begin() ; stsItr != getPublishAttributeNameVector().end() ; (void)++stsItr ) {
 		try {
-			getPublishedAttributeHandleSet_var().add(  getDatamemberNameHandleMap().find( "ObjectChallenge," + *stsItr )->second  );
+			RTI::AttributeHandle attributeHandle = rti->getAttributeHandle( stsItr->c_str(), get_handle() );
+			getPublishedAttributeHandleSet_var().add( attributeHandle );
 		} catch ( ... ) {
 			std::cerr << getPublishErrorMessage() << "Could not publish \"" << *stsItr + "\" attribute." << std::endl;
 		}
@@ -110,7 +103,7 @@ void ObjectChallenge::publish( RTI::RTIambassador *rti ) {
 	getIsPublished() = true;
 }
 
-void ObjectChallenge::unpublish( RTI::RTIambassador *rti ) {
+void ObjectChallenge::unpublish( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( !getIsPublished() ) {
 		return;
 	}
@@ -139,7 +132,7 @@ void ObjectChallenge::unpublish( RTI::RTIambassador *rti ) {
 	getIsPublished() = false;
 }
 
-void ObjectChallenge::subscribe( RTI::RTIambassador *rti ) {
+void ObjectChallenge::subscribe( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( getIsSubscribed() ) {
 		return;
 	}
@@ -149,7 +142,8 @@ void ObjectChallenge::subscribe( RTI::RTIambassador *rti ) {
 	getSubscribedAttributeHandleSet_var().empty();
 	for(  StringVector::iterator sstItr = getSubscribeAttributeNameVector().begin() ; sstItr != getSubscribeAttributeNameVector().end() ; (void)++sstItr  ) {
 		try {
-			getSubscribedAttributeHandleSet_var().add(  getDatamemberNameHandleMap().find( "ObjectChallenge," + *sstItr )->second  );
+			RTI::AttributeHandle attributeHandle = rti->getAttributeHandle( sstItr->c_str(), get_handle() );
+			getSubscribedAttributeHandleSet_var().add( attributeHandle );
 		} catch ( ... ) {
 			std::cerr << getSubscribeErrorMessage() << "Could not subscribe to \"" << *sstItr << "\" attribute." << std::endl;
 		}
@@ -175,7 +169,7 @@ void ObjectChallenge::subscribe( RTI::RTIambassador *rti ) {
 	getIsSubscribed() = true;
 }
 	
-void ObjectChallenge::unsubscribe( RTI::RTIambassador *rti ) {
+void ObjectChallenge::unsubscribe( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( !getIsSubscribed() ) {
 		return;
 	}

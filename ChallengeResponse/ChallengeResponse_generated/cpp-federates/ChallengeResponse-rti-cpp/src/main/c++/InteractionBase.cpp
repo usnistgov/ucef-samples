@@ -5,7 +5,7 @@
 
 
 
-void InteractionBase::init( RTI::RTIambassador *rti ) {
+void InteractionBase::init( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	static bool isInitialized = false;
 	if ( isInitialized ) {
 		return;
@@ -56,16 +56,12 @@ void InteractionBase::init( RTI::RTIambassador *rti ) {
 	}
 	
 	
-	getDatamemberNameHandleMap().insert(  std::make_pair( "InteractionBase,id", get_id_handle() )  );
-	
-	getDatamemberHandleNameMap().insert(  std::make_pair( get_id_handle(), "id" )  );
-	
 	getDatamemberTypeMap().insert( std::make_pair("id", "String") );
 	
 
 }
 
-void InteractionBase::publish( RTI::RTIambassador *rti ) {
+void InteractionBase::publish( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( getIsPublished() ) {
 		return;
 	}
@@ -93,7 +89,7 @@ void InteractionBase::publish( RTI::RTIambassador *rti ) {
 	getIsPublished() = true;
 }
 
-void InteractionBase::unpublish( RTI::RTIambassador *rti ) {
+void InteractionBase::unpublish( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( !getIsPublished() ) {
 		return;
 	}
@@ -122,7 +118,7 @@ void InteractionBase::unpublish( RTI::RTIambassador *rti ) {
 	getIsPublished() = false;
 }
 
-void InteractionBase::subscribe( RTI::RTIambassador *rti ) {
+void InteractionBase::subscribe( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( getIsSubscribed() ) {
 		return;
 	}
@@ -149,7 +145,7 @@ void InteractionBase::subscribe( RTI::RTIambassador *rti ) {
 	getIsSubscribed() = true;
 }
 	
-void InteractionBase::unsubscribe( RTI::RTIambassador *rti ) {
+void InteractionBase::unsubscribe( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( !getIsSubscribed() ) {
 		return;
 	}

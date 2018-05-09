@@ -132,7 +132,7 @@ private:
 	}
 
 protected:
-	static void init( RTI::RTIambassador *rti );
+	static void init( boost::shared_ptr< RTI::RTIambassador > rti );
 	
 private:
 	static bool &getIsPublished( void ) {
@@ -146,7 +146,7 @@ private:
 	}
 	
 public:
-	static void publish( RTI::RTIambassador *rti );
+	static void publish( boost::shared_ptr< RTI::RTIambassador > rti );
 	
 private:
 	static std::string &getUnpublishErrorMessage( void ) {
@@ -155,7 +155,7 @@ private:
 	}
 
 public:
-	static void unpublish( RTI::RTIambassador *rti );
+	static void unpublish( boost::shared_ptr< RTI::RTIambassador > rti );
 
 private:
 	static bool &getIsSubscribed( void ) {
@@ -168,7 +168,7 @@ private:
 	}
 
 public:
-	static void subscribe( RTI::RTIambassador *rti );
+	static void subscribe( boost::shared_ptr< RTI::RTIambassador > rti );
 		
 private:
 	static std::string getUnsubscribeErrorMessage( void ) {
@@ -177,7 +177,7 @@ private:
 	}
 	
 public:
-	static void unsubscribe( RTI::RTIambassador *rti );
+	static void unsubscribe( boost::shared_ptr< RTI::RTIambassador > rti );
 	
 	static bool static_init( void );
 	
@@ -188,8 +188,8 @@ public:
 	virtual StringVector getParameterNames( void ) const { return get_parameter_names(); }
 	virtual StringVector getAllParameterNames( void ) const { return get_all_parameter_names(); }
 
-	virtual void publishInteraction( RTI::RTIambassador *rti ) { publish( rti ); }
-	virtual void subscribeInteraction( RTI::RTIambassador *rti ) { subscribe( rti ); }
+	virtual void publishInteraction( boost::shared_ptr< RTI::RTIambassador > rti ) { publish( rti ); }
+	virtual void subscribeInteraction( boost::shared_ptr< RTI::RTIambassador > rti ) { subscribe( rti ); }
 
 	virtual InteractionRoot::SP clone( void ) {
 		return InteractionRoot::SP(  new InteractionChallenge( *this )  );

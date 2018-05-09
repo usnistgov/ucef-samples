@@ -5,7 +5,7 @@
 
 
 
-void ObjectBase::init( RTI::RTIambassador *rti ) {
+void ObjectBase::init( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	static bool isInitialized = false;
 	if ( isInitialized ) {
 		return;
@@ -56,16 +56,12 @@ void ObjectBase::init( RTI::RTIambassador *rti ) {
 	}
 	
 	
-	getDatamemberNameHandleMap().insert(  std::make_pair( "ObjectBase,id", get_id_handle() )  );
-	
-	getDatamemberHandleNameMap().insert(  std::make_pair( get_id_handle(), "id" )  );
-	
 	getDatamemberTypeMap().insert( std::make_pair("id", "String") );
 	
 
 }
 
-void ObjectBase::publish( RTI::RTIambassador *rti ) {
+void ObjectBase::publish( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( getIsPublished() ) {
 		return;
 	}
@@ -76,7 +72,8 @@ void ObjectBase::publish( RTI::RTIambassador *rti ) {
 	getPublishedAttributeHandleSet_var().empty();
 	for( StringVector::iterator stsItr = getPublishAttributeNameVector().begin() ; stsItr != getPublishAttributeNameVector().end() ; (void)++stsItr ) {
 		try {
-			getPublishedAttributeHandleSet_var().add(  getDatamemberNameHandleMap().find( "ObjectBase," + *stsItr )->second  );
+			RTI::AttributeHandle attributeHandle = rti->getAttributeHandle( stsItr->c_str(), get_handle() );
+			getPublishedAttributeHandleSet_var().add( attributeHandle );
 		} catch ( ... ) {
 			std::cerr << getPublishErrorMessage() << "Could not publish \"" << *stsItr + "\" attribute." << std::endl;
 		}
@@ -102,7 +99,7 @@ void ObjectBase::publish( RTI::RTIambassador *rti ) {
 	getIsPublished() = true;
 }
 
-void ObjectBase::unpublish( RTI::RTIambassador *rti ) {
+void ObjectBase::unpublish( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( !getIsPublished() ) {
 		return;
 	}
@@ -131,7 +128,7 @@ void ObjectBase::unpublish( RTI::RTIambassador *rti ) {
 	getIsPublished() = false;
 }
 
-void ObjectBase::subscribe( RTI::RTIambassador *rti ) {
+void ObjectBase::subscribe( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( getIsSubscribed() ) {
 		return;
 	}
@@ -141,7 +138,8 @@ void ObjectBase::subscribe( RTI::RTIambassador *rti ) {
 	getSubscribedAttributeHandleSet_var().empty();
 	for(  StringVector::iterator sstItr = getSubscribeAttributeNameVector().begin() ; sstItr != getSubscribeAttributeNameVector().end() ; (void)++sstItr  ) {
 		try {
-			getSubscribedAttributeHandleSet_var().add(  getDatamemberNameHandleMap().find( "ObjectBase," + *sstItr )->second  );
+			RTI::AttributeHandle attributeHandle = rti->getAttributeHandle( sstItr->c_str(), get_handle() );
+			getSubscribedAttributeHandleSet_var().add( attributeHandle );
 		} catch ( ... ) {
 			std::cerr << getSubscribeErrorMessage() << "Could not subscribe to \"" << *sstItr << "\" attribute." << std::endl;
 		}
@@ -167,7 +165,7 @@ void ObjectBase::subscribe( RTI::RTIambassador *rti ) {
 	getIsSubscribed() = true;
 }
 	
-void ObjectBase::unsubscribe( RTI::RTIambassador *rti ) {
+void ObjectBase::unsubscribe( boost::shared_ptr< RTI::RTIambassador > rti ) {
 	if ( !getIsSubscribed() ) {
 		return;
 	}
