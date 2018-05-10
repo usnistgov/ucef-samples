@@ -101,6 +101,10 @@ cp -r $root_directory/GatewayResponder/conf/ .
 xterm -fg cyan -bg black -l -lf $logs_directory/gateway-responder-${timestamp}.log -T "Gateway Responder" -geometry 140x40+400+150 -e "java -Dlog4j.configurationFile=conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar gateway-responder-0.0.1-SNAPSHOT.jar conf/GatewayResponder.json" &
 waitUntilJoined GatewayResponder 1
 
+cd $root_directory/GatewayBaseReceiver/target
+cp -r $root_directory/GatewayBaseReceiver/conf/ .
+xterm -fg cyan -bg black -l -lf $logs_directory/gateway-base-receiver-${timestamp}.log -T "Gateway Base Receiver" -geometry 140x40+480+180 -e "java -Dlog4j.configurationFile=conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar gateway-base-receiver-0.0.1-SNAPSHOT.jar conf/GatewayBaseReceiver.json" &
+
 # terminate the simulation
 read -n 1 -r -s -p "Press any key to terminate the federation execution..."
 printf "\n"
