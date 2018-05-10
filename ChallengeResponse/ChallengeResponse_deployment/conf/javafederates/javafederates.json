@@ -10,11 +10,11 @@
   "expectedFederates": [
     {
       "federateType": "GatewayBaseReceiver",
-      "count": 1
+      "count": 0
     },
     {
       "federateType": "GatewayChallenger",
-      "count": 1
+      "count": 0
     },
     {
       "federateType": "GatewayResponder",
