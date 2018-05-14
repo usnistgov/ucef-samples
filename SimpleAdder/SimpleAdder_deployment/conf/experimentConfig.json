@@ -1,0 +1,35 @@
+{
+  "federateTypesAllowed": [
+    "Adder",
+    "InputSource",
+    "Reporter"
+  ],
+  "expectedFederates": [
+    {
+      "federateType": "Adder",
+      "count": 1
+    },
+    {
+      "federateType": "InputSource",
+      "count": 1
+    },
+    {
+      "federateType": "Reporter",
+      "count": 1
+    }
+  ],
+  "lateJoinerFederates": [
+    {
+      "federateType": "Adder",
+      "count": 0
+    },
+    {
+      "federateType": "InputSource",
+      "count": 0
+    },
+    {
+      "federateType": "Reporter",
+      "count": 0
+    }
+  ]
+}
