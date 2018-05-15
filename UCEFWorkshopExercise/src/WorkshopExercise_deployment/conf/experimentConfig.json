@@ -1,0 +1,44 @@
+{
+  "federateTypesAllowed": [
+    "House",
+    "Metronome",
+    "Utility",
+    "Weather"
+  ],
+  "expectedFederates": [
+    {
+      "federateType": "House",
+      "count": 1
+    },
+    {
+      "federateType": "Metronome",
+      "count": 1
+    },
+    {
+      "federateType": "Utility",
+      "count": 1
+    },
+    {
+      "federateType": "Weather",
+      "count": 1
+    }
+  ],
+  "lateJoinerFederates": [
+    {
+      "federateType": "House",
+      "count": 0
+    },
+    {
+      "federateType": "Metronome",
+      "count": 0
+    },
+    {
+      "federateType": "Utility",
+      "count": 0
+    },
+    {
+      "federateType": "Weather",
+      "count": 0
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "federateTypesAllowed": [
+    "House",
+    "Metronome",
+    "Utility",
+    "Weather"
+  ],
+  "expectedFederates": [
+    {
+      "federateType": "House",
+      "count": 2
+    },
+    {
+      "federateType": "Metronome",
+      "count": 1
+    },
+    {
+      "federateType": "Utility",
+      "count": 1
+    },
+    {
+      "federateType": "Weather",
+      "count": 1
+    }
+  ],
+  "lateJoinerFederates": [],
+  "coaDefinition": "conf/NewcoaConfig.json",
+  "coaSelection": "conf/2house/coaSelection_2house.json",
+  "terminateOnCOAFinish": false
+}
