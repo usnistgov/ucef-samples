@@ -9,7 +9,7 @@ timestamp=`date +"%F_%T"`
 
 # set to true to skip the wait period between launching federates
 #   WARNING - will break logical time sychronization between federates
-skip_wait_until_join=true
+skip_wait_until_join=false
 
 function getNumberJoined {
     if (( $# != 1 ))
@@ -55,6 +55,8 @@ function waitUntilJoined {
 }
 
 # script starts here
+echo Using timestamp $timestamp
+
 if [ "$skip_wait_until_join" = true ] ; then
     echo !!! WARNING !!! skipped waitUntilJoined - expect issues with logical time progression
 fi
@@ -85,25 +87,30 @@ curl -o /dev/null -s -X POST http://$fedmgr_host:$fedmgr_port/fedmgr --data '{"a
 
 # run the other federates
 cd $root_directory/ChallengeResponse_deployment
-xterm -fg green -bg black -l -lf $logs_directory/java-challenger-${timestamp}.log -T "Java Challenger" -geometry 140x40+160+60 -e "mvn exec:java -P ExecJava,JavaChallenger" &
+xterm -fg yellow -bg black -l -lf $logs_directory/java-challenger-${timestamp}.log -T "Java Challenger" -geometry 140x40+160+60 -e "mvn exec:java -P ExecJava,JavaChallenger" &
 waitUntilJoined JavaChallenger 1
 
-cd $root_directory/ChallengeResponse_deployment
-xterm -fg green -bg black -l -lf $logs_directory/java-responder-${timestamp}.log -T "Java Responder" -geometry 140x40+240+90 -e "mvn exec:java -P ExecJava,JavaResponder" &
-waitUntilJoined JavaResponder 1
+cd $root_directory/GatewayChallenger/target
+cp -r $root_directory/GatewayChallenger/conf/ .
+xterm -fg yellow -bg black -l -lf $logs_directory/gateway-challenger-${timestamp}.log -T "Gateway Challenger" -geometry 140x40+240+90 -e "java -Dlog4j.configurationFile=conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar gateway-challenger-0.0.1-SNAPSHOT.jar conf/GatewayChallenger.json" &
+waitUntilJoined GatewayChallenger 1
 
 cd $root_directory/ChallengeResponse_deployment
-xterm -fg green -bg black -l -lf $logs_directory/java-base-receiver-${timestamp}.log -T "Java Base Receiver" -geometry 140x40+320+120 -e "mvn exec:java -P ExecJava,JavaBaseReceiver" &
-waitUntilJoined JavaBaseReceiver 1
+xterm -fg green -bg black -l -lf $logs_directory/java-responder-${timestamp}.log -T "Java Responder" -geometry 140x40+320+120 -e "mvn exec:java -P ExecJava,JavaResponder" &
+waitUntilJoined JavaResponder 1
 
 cd $root_directory/GatewayResponder/target
 cp -r $root_directory/GatewayResponder/conf/ .
-xterm -fg cyan -bg black -l -lf $logs_directory/gateway-responder-${timestamp}.log -T "Gateway Responder" -geometry 140x40+400+150 -e "java -Dlog4j.configurationFile=conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar gateway-responder-0.0.1-SNAPSHOT.jar conf/GatewayResponder.json" &
+xterm -fg green -bg black -l -lf $logs_directory/gateway-responder-${timestamp}.log -T "Gateway Responder" -geometry 140x40+400+150 -e "java -Dlog4j.configurationFile=conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar gateway-responder-0.0.1-SNAPSHOT.jar conf/GatewayResponder.json" &
 waitUntilJoined GatewayResponder 1
+
+cd $root_directory/ChallengeResponse_deployment
+xterm -fg cyan -bg black -l -lf $logs_directory/java-base-receiver-${timestamp}.log -T "Java Base Receiver" -geometry 140x40+480+180 -e "mvn exec:java -P ExecJava,JavaBaseReceiver" &
+waitUntilJoined JavaBaseReceiver 1
 
 cd $root_directory/GatewayBaseReceiver/target
 cp -r $root_directory/GatewayBaseReceiver/conf/ .
-xterm -fg cyan -bg black -l -lf $logs_directory/gateway-base-receiver-${timestamp}.log -T "Gateway Base Receiver" -geometry 140x40+480+180 -e "java -Dlog4j.configurationFile=conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar gateway-base-receiver-0.0.1-SNAPSHOT.jar conf/GatewayBaseReceiver.json" &
+xterm -fg cyan -bg black -l -lf $logs_directory/gateway-base-receiver-${timestamp}.log -T "Gateway Base Receiver" -geometry 140x40+560+210 -e "java -Dlog4j.configurationFile=conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar gateway-base-receiver-0.0.1-SNAPSHOT.jar conf/GatewayBaseReceiver.json" &
 
 # terminate the simulation
 read -n 1 -r -s -p "Press any key to terminate the federation execution..."
@@ -117,4 +124,9 @@ while $(curl -o /dev/null -s -f -X GET http://$fedmgr_host:$fedmgr_port/fedmgr);
     sleep 5
 done
 printf "\n"
+
+echo Listing the runtime errors...
+cd $root_directory
+grep -rn "ERROR" logs/*$timestamp.log
+echo Done.
 

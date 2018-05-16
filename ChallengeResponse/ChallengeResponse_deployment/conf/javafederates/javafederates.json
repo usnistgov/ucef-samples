@@ -14,7 +14,7 @@
     },
     {
       "federateType": "GatewayChallenger",
-      "count": 0
+      "count": 1
     },
     {
       "federateType": "GatewayResponder",

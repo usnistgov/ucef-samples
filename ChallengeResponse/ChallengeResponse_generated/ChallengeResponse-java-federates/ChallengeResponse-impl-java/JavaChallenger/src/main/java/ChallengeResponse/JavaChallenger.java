@@ -100,9 +100,11 @@ public class JavaChallenger extends JavaChallengerBase {
         final String substring = interaction.get_substring();
         final String responder = interaction.get_originFed();
         
-        final ResponseInfo response = new ResponseInfo(id, substring, responder, currentTime);
-        log.debug("received response: {}", response.toString());
-        responseTracker.markResponse(response);
+        if (id.startsWith(getFederateId())) {
+            final ResponseInfo response = new ResponseInfo(id, substring, responder, currentTime);
+            log.debug("received response: {}", response.toString());
+            responseTracker.markResponse(response);
+        }
     }
     
     private void sendInteractionChallenge() {

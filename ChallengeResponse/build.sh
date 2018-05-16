@@ -7,6 +7,9 @@ mvn clean install
 cd $rootdir/ChallengeResponse_deployment
 mvn clean install
 
+cd $rootdir/GatewayChallenger
+mvn clean install
+
 cd $rootdir/GatewayResponder
 mvn clean install
 
