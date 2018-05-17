@@ -127,6 +127,6 @@ printf "\n"
 
 echo Listing the runtime errors...
 cd $root_directory
-grep -rn "ERROR" logs/*$timestamp.log
+grep --color=always -rn "ERROR" logs/*$timestamp.log
 echo Done.
 
