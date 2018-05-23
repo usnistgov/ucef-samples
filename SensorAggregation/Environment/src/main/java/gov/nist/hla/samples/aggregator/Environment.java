@@ -104,6 +104,10 @@ public class Environment implements GatewayCallback {
         updateTemperatureClusters();
     }
     
+    public void prepareToResign() {
+        log.trace("prepareToResign");
+    }
+    
     public void terminate() {
         log.trace("terminate");
     }

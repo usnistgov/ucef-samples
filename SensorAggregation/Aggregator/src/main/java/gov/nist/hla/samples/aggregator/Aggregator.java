@@ -160,6 +160,10 @@ public class Aggregator implements GatewayCallback {
         }
     }
     
+    public void prepareToResign() {
+        log.trace("prepareToResign");
+    }
+    
     public void terminate() {
         log.trace("terminate");
     }

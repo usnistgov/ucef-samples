@@ -89,6 +89,10 @@ public class Reporter implements GatewayCallback {
     public void doTimeStep(Double timeStep) {
         log.trace("doTimeStep " + timeStep);
     }
+    
+    public void prepareToResign() {
+        log.trace("prepareToResign");
+    }
 
     public void terminate() {
         log.trace("terminate");
