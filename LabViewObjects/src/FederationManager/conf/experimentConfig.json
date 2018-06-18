@@ -1,0 +1,25 @@
+{
+  "federateTypesAllowed": [
+    "Controller",
+    "Damper",
+    "Thermostat"
+  ],
+  "expectedFederates": [
+    {
+      "federateType": "Controller",
+      "count": 1
+    },
+    {
+      "federateType": "Damper",
+      "count": 2
+    },
+    {
+      "federateType": "Thermostat",
+      "count": 2
+    }
+  ],
+  "lateJoinerFederates": [],
+  "coaDefinition": "conf/coaDefinition.json",
+  "coaSelection": "conf/coaSelection.json",
+  "terminateOnCOAFinish": false
+}
