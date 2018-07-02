@@ -1,0 +1,11 @@
+{
+  "federateRTIInitWaitTimeMs": 200,
+  "federateType": "Thermostat",
+  "federationId": "LabViewObjects",
+  "isLateJoiner": false,
+  "lookAhead": 0.1,
+  "stepSize": 1.0,
+  "zone": 2,
+  "occupiedSetPoint": 22.5,
+  "unoccupiedSetPoint": 26.0
+}

@@ -1,0 +1,9 @@
+{
+  "federateRTIInitWaitTimeMs": 200,
+  "federateType": "Damper",
+  "federationId": "LabViewObjects",
+  "isLateJoiner": false,
+  "lookAhead": 0.1,
+  "stepSize": 1.0,
+  "zone": 1
+}
