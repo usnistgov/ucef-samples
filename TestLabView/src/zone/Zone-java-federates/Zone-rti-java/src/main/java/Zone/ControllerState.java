@@ -30,6 +30,7 @@ public class ControllerState extends ObjectRoot {
 	
 	
 	private static int _DamperPostionPct_handle;
+	private static int _ZoneName_handle;
 	
 	
 	/**
@@ -39,6 +40,14 @@ public class ControllerState extends ObjectRoot {
 	* @return the handle (RTI assigned) of the "DamperPostionPct" attribute
 	*/
 	public static int get_DamperPostionPct_handle() { return _DamperPostionPct_handle; }
+	
+	/**
+	* Returns the handle (RTI assigned) of the "ZoneName" attribute of
+	* its containing object class.
+	*
+	* @return the handle (RTI assigned) of the "ZoneName" attribute
+	*/
+	public static int get_ZoneName_handle() { return _ZoneName_handle; }
 	
 	
 	
@@ -121,12 +130,15 @@ public class ControllerState extends ObjectRoot {
 		
 		
 		_datamemberNames.add("DamperPostionPct");
+		_datamemberNames.add("ZoneName");
 		
 		
 		_allDatamemberNames.add("DamperPostionPct");
+		_allDatamemberNames.add("ZoneName");
 		
 		
 		_datamemberTypeMap.put("DamperPostionPct", "int");
+		_datamemberTypeMap.put("ZoneName", "String");
 	
 
 		_classNamePublishAttributeNameMap.put("ObjectRoot.ControllerState", _publishAttributeNameSet);
@@ -176,7 +188,8 @@ public class ControllerState extends ObjectRoot {
 		while(isNotInitialized) {
 			try {
 							
-				_DamperPostionPct_handle = rti.getAttributeHandle("DamperPostionPct", get_handle());
+				_DamperPostionPct_handle = rti.getAttributeHandle("DamperPostionPct", get_handle());			
+				_ZoneName_handle = rti.getAttributeHandle("ZoneName", get_handle());
 				isNotInitialized = false;
 			} catch (FederateNotExecutionMember f) {
 				logger.error("{} Federate Not Execution Member", initErrorMessage);
@@ -198,9 +211,11 @@ public class ControllerState extends ObjectRoot {
 			
 			
 		_datamemberNameHandleMap.put("ObjectRoot.ControllerState,DamperPostionPct", get_DamperPostionPct_handle());
+		_datamemberNameHandleMap.put("ObjectRoot.ControllerState,ZoneName", get_ZoneName_handle());
 			
 			
 		_datamemberHandleNameMap.put(get_DamperPostionPct_handle(), "DamperPostionPct");
+		_datamemberHandleNameMap.put(get_ZoneName_handle(), "ZoneName");
 		
 	}
 
@@ -470,6 +485,7 @@ public class ControllerState extends ObjectRoot {
 			
 			
 			+ "DamperPostionPct:" + get_DamperPostionPct()
+			+ "," + "ZoneName:" + get_ZoneName()
 			+ ")";
 	}
 	
@@ -526,6 +542,55 @@ public class ControllerState extends ObjectRoot {
 		_subscribeAttributeNameSet.remove( "DamperPostionPct" );
 	}
 	
+	
+	/**
+	* Publishes the "ZoneName" attribute of the attribute's containing object
+	* class for a federate.
+	* Note:  This method only marks the "ZoneName" attribute for publication.
+	* To actually publish the attribute, the federate must (re)publish its containing
+	* object class.
+	* (using <objectClassName>.publish( RTIambassador rti ) ).
+	*/
+	public static void publish_ZoneName() {
+		_publishAttributeNameSet.add( "ZoneName" );
+	}
+
+	/**
+	* Unpublishes the "ZoneName" attribute of the attribute's containing object
+	* class for a federate.
+	* Note:  This method only marks the "ZoneName" attribute for unpublication.
+	* To actually publish the attribute, the federate must (re)publish its containing
+	* object class.
+	* (using <objectClassName>.publish( RTIambassador rti ) ).
+	*/
+	public static void unpublish_ZoneName() {
+		_publishAttributeNameSet.remove( "ZoneName" );
+	}
+	
+	/**
+	* Subscribes a federate to the "ZoneName" attribute of the attribute's
+	* containing object class.
+	* Note:  This method only marks the "ZoneName" attribute for subscription.
+	* To actually subscribe to the attribute, the federate must (re)subscribe to its
+	* containing object class.
+	* (using <objectClassName>.subscribe( RTIambassador rti ) ).
+	*/
+	public static void subscribe_ZoneName() {
+		_subscribeAttributeNameSet.add( "ZoneName" );
+	}
+
+	/**
+	* Unsubscribes a federate from the "ZoneName" attribute of the attribute's
+	* containing object class.
+	* Note:  This method only marks the "ZoneName" attribute for unsubscription.
+	* To actually unsubscribe to the attribute, the federate must (re)subscribe to its
+	* containing object class.
+	* (using <objectClassName>.subscribe( RTIambassador rti ) ).
+	*/
+	public static void unsubscribe_ZoneName() {
+		_subscribeAttributeNameSet.remove( "ZoneName" );
+	}
+	
 
 	
 	
@@ -558,6 +623,38 @@ public class ControllerState extends ObjectRoot {
 	*/
 	public double get_DamperPostionPct_time() {
 		return _DamperPostionPct.getTime();
+	}
+	
+	
+	private Attribute< String > _ZoneName =
+ 		new Attribute< String >(  new String( "" )  );
+	
+	/**
+	* Set the value of the "ZoneName" attribute to "value" for this object.
+	*
+	* @param value the new value for the "ZoneName" attribute
+	*/
+	public void set_ZoneName( String value ) {
+		_ZoneName.setValue( value );
+		_ZoneName.setTime( getTime() );
+	}
+	
+	/**
+	* Returns the value of the "ZoneName" attribute of this object.
+	*
+	* @return the value of the "ZoneName" attribute
+	*/
+	public String get_ZoneName() {
+		return _ZoneName.getValue();
+	}
+	
+	/**
+	* Returns the current timestamp of the "ZoneName" attribute of this object.
+	* 
+	* @return the current timestamp of the "ZoneName" attribute
+	*/
+	public double get_ZoneName_time() {
+		return _ZoneName.getTime();
 	}
 	
 
@@ -613,6 +710,7 @@ public class ControllerState extends ObjectRoot {
 		
 		
 		set_DamperPostionPct( ControllerState_var.get_DamperPostionPct() );
+		set_ZoneName( ControllerState_var.get_ZoneName() );
 	}
 
 
@@ -630,6 +728,7 @@ public class ControllerState extends ObjectRoot {
 		
 		
 		if (  "DamperPostionPct".equals( datamemberName )  ) return new Integer(get_DamperPostionPct());
+		else if (  "ZoneName".equals( datamemberName )  ) return get_ZoneName();
 		else return super.getAttribute( datamemberName );
 	}
 	
@@ -647,6 +746,7 @@ public class ControllerState extends ObjectRoot {
 				
 		
 		if ( get_DamperPostionPct_handle() == datamemberHandle ) return new Integer(get_DamperPostionPct());
+		else if ( get_ZoneName_handle() == datamemberHandle ) return get_ZoneName();
 		else return super.getAttribute( datamemberHandle );
 	}
 	
@@ -656,6 +756,7 @@ public class ControllerState extends ObjectRoot {
 			
 		
 		if ( param_handle == get_DamperPostionPct_handle() ) set_DamperPostionPct( Integer.parseInt(val) );
+		else if ( param_handle == get_ZoneName_handle() ) set_ZoneName( val );
 		else retval = super.setAttributeAux( param_handle, val );
 		
 		return retval;
@@ -666,7 +767,8 @@ public class ControllerState extends ObjectRoot {
 		
 			
 		
-		if (  "DamperPostionPct".equals( datamemberName )  ) set_DamperPostionPct( Integer.parseInt(val) );	
+		if (  "DamperPostionPct".equals( datamemberName )  ) set_DamperPostionPct( Integer.parseInt(val) );
+		else if (  "ZoneName".equals( datamemberName )  ) set_ZoneName( val );	
 		else retval = super.setAttributeAux( datamemberName, val );
 		
 		return retval;
@@ -677,7 +779,8 @@ public class ControllerState extends ObjectRoot {
 		
 		
 		
-		if (  "DamperPostionPct".equals( datamemberName )  ) set_DamperPostionPct( (Integer)val );		
+		if (  "DamperPostionPct".equals( datamemberName )  ) set_DamperPostionPct( (Integer)val );
+		else if (  "ZoneName".equals( datamemberName )  ) set_ZoneName( (String)val );		
 		else retval = super.setAttributeAux( datamemberName, val );
 		
 		return retval;
@@ -700,6 +803,16 @@ public class ControllerState extends ObjectRoot {
 				datamembers.add( get_DamperPostionPct_handle(), Integer.toString(get_DamperPostionPct()).getBytes() );
 				_DamperPostionPct.setHasBeenUpdated();
 			}
+			try {
+				isPublished = _publishedAttributeHandleSet.isMember( get_ZoneName_handle() );
+			} catch ( Exception e ) {
+				logger.error("ERROR:  ObjectRoot.ControllerState.createSuppliedAttributes:  could not determine if ZoneName is published.");
+				isPublished = false;
+			}
+			if (  isPublished && _ZoneName.shouldBeUpdated( force )  ) {
+				datamembers.add( get_ZoneName_handle(), get_ZoneName().getBytes() );
+				_ZoneName.setHasBeenUpdated();
+			}
 	
 		return datamembers;
 	}
@@ -712,6 +825,7 @@ public class ControllerState extends ObjectRoot {
 			
 			
 				_DamperPostionPct = data._DamperPostionPct;
+				_ZoneName = data._ZoneName;
 			
 		}
 	}

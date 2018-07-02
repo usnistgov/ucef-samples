@@ -54,10 +54,12 @@ public class ZoneBase extends SynchronizedFederate {
                 
         	
         ControllerState.subscribe_DamperPostionPct();
+        ControllerState.subscribe_ZoneName();
         ControllerState.subscribe(getLRC());
         
         	
         Setpoint.subscribe_Occupied();
+        Setpoint.subscribe_ZoneName();
         Setpoint.subscribe_ZoneTempSP();
         Setpoint.subscribe(getLRC());
         	}

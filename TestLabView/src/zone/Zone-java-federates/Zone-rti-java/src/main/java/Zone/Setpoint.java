@@ -30,6 +30,7 @@ public class Setpoint extends ObjectRoot {
 	
 	
 	private static int _Occupied_handle;
+	private static int _ZoneName_handle;
 	private static int _ZoneTempSP_handle;
 	
 	
@@ -40,6 +41,14 @@ public class Setpoint extends ObjectRoot {
 	* @return the handle (RTI assigned) of the "Occupied" attribute
 	*/
 	public static int get_Occupied_handle() { return _Occupied_handle; }
+	
+	/**
+	* Returns the handle (RTI assigned) of the "ZoneName" attribute of
+	* its containing object class.
+	*
+	* @return the handle (RTI assigned) of the "ZoneName" attribute
+	*/
+	public static int get_ZoneName_handle() { return _ZoneName_handle; }
 	
 	/**
 	* Returns the handle (RTI assigned) of the "ZoneTempSP" attribute of
@@ -130,14 +139,17 @@ public class Setpoint extends ObjectRoot {
 		
 		
 		_datamemberNames.add("Occupied");
+		_datamemberNames.add("ZoneName");
 		_datamemberNames.add("ZoneTempSP");
 		
 		
 		_allDatamemberNames.add("Occupied");
+		_allDatamemberNames.add("ZoneName");
 		_allDatamemberNames.add("ZoneTempSP");
 		
 		
 		_datamemberTypeMap.put("Occupied", "boolean");
+		_datamemberTypeMap.put("ZoneName", "String");
 		_datamemberTypeMap.put("ZoneTempSP", "double");
 	
 
@@ -189,6 +201,7 @@ public class Setpoint extends ObjectRoot {
 			try {
 							
 				_Occupied_handle = rti.getAttributeHandle("Occupied", get_handle());			
+				_ZoneName_handle = rti.getAttributeHandle("ZoneName", get_handle());			
 				_ZoneTempSP_handle = rti.getAttributeHandle("ZoneTempSP", get_handle());
 				isNotInitialized = false;
 			} catch (FederateNotExecutionMember f) {
@@ -211,10 +224,12 @@ public class Setpoint extends ObjectRoot {
 			
 			
 		_datamemberNameHandleMap.put("ObjectRoot.Setpoint,Occupied", get_Occupied_handle());
+		_datamemberNameHandleMap.put("ObjectRoot.Setpoint,ZoneName", get_ZoneName_handle());
 		_datamemberNameHandleMap.put("ObjectRoot.Setpoint,ZoneTempSP", get_ZoneTempSP_handle());
 			
 			
 		_datamemberHandleNameMap.put(get_Occupied_handle(), "Occupied");
+		_datamemberHandleNameMap.put(get_ZoneName_handle(), "ZoneName");
 		_datamemberHandleNameMap.put(get_ZoneTempSP_handle(), "ZoneTempSP");
 		
 	}
@@ -485,6 +500,7 @@ public class Setpoint extends ObjectRoot {
 			
 			
 			+ "Occupied:" + get_Occupied()
+			+ "," + "ZoneName:" + get_ZoneName()
 			+ "," + "ZoneTempSP:" + get_ZoneTempSP()
 			+ ")";
 	}
@@ -540,6 +556,55 @@ public class Setpoint extends ObjectRoot {
 	*/
 	public static void unsubscribe_Occupied() {
 		_subscribeAttributeNameSet.remove( "Occupied" );
+	}
+	
+	
+	/**
+	* Publishes the "ZoneName" attribute of the attribute's containing object
+	* class for a federate.
+	* Note:  This method only marks the "ZoneName" attribute for publication.
+	* To actually publish the attribute, the federate must (re)publish its containing
+	* object class.
+	* (using <objectClassName>.publish( RTIambassador rti ) ).
+	*/
+	public static void publish_ZoneName() {
+		_publishAttributeNameSet.add( "ZoneName" );
+	}
+
+	/**
+	* Unpublishes the "ZoneName" attribute of the attribute's containing object
+	* class for a federate.
+	* Note:  This method only marks the "ZoneName" attribute for unpublication.
+	* To actually publish the attribute, the federate must (re)publish its containing
+	* object class.
+	* (using <objectClassName>.publish( RTIambassador rti ) ).
+	*/
+	public static void unpublish_ZoneName() {
+		_publishAttributeNameSet.remove( "ZoneName" );
+	}
+	
+	/**
+	* Subscribes a federate to the "ZoneName" attribute of the attribute's
+	* containing object class.
+	* Note:  This method only marks the "ZoneName" attribute for subscription.
+	* To actually subscribe to the attribute, the federate must (re)subscribe to its
+	* containing object class.
+	* (using <objectClassName>.subscribe( RTIambassador rti ) ).
+	*/
+	public static void subscribe_ZoneName() {
+		_subscribeAttributeNameSet.add( "ZoneName" );
+	}
+
+	/**
+	* Unsubscribes a federate from the "ZoneName" attribute of the attribute's
+	* containing object class.
+	* Note:  This method only marks the "ZoneName" attribute for unsubscription.
+	* To actually unsubscribe to the attribute, the federate must (re)subscribe to its
+	* containing object class.
+	* (using <objectClassName>.subscribe( RTIambassador rti ) ).
+	*/
+	public static void unsubscribe_ZoneName() {
+		_subscribeAttributeNameSet.remove( "ZoneName" );
 	}
 	
 	
@@ -623,6 +688,38 @@ public class Setpoint extends ObjectRoot {
 	*/
 	public double get_Occupied_time() {
 		return _Occupied.getTime();
+	}
+	
+	
+	private Attribute< String > _ZoneName =
+ 		new Attribute< String >(  new String( "" )  );
+	
+	/**
+	* Set the value of the "ZoneName" attribute to "value" for this object.
+	*
+	* @param value the new value for the "ZoneName" attribute
+	*/
+	public void set_ZoneName( String value ) {
+		_ZoneName.setValue( value );
+		_ZoneName.setTime( getTime() );
+	}
+	
+	/**
+	* Returns the value of the "ZoneName" attribute of this object.
+	*
+	* @return the value of the "ZoneName" attribute
+	*/
+	public String get_ZoneName() {
+		return _ZoneName.getValue();
+	}
+	
+	/**
+	* Returns the current timestamp of the "ZoneName" attribute of this object.
+	* 
+	* @return the current timestamp of the "ZoneName" attribute
+	*/
+	public double get_ZoneName_time() {
+		return _ZoneName.getTime();
 	}
 	
 	
@@ -710,6 +807,7 @@ public class Setpoint extends ObjectRoot {
 		
 		
 		set_Occupied( Setpoint_var.get_Occupied() );
+		set_ZoneName( Setpoint_var.get_ZoneName() );
 		set_ZoneTempSP( Setpoint_var.get_ZoneTempSP() );
 	}
 
@@ -728,6 +826,7 @@ public class Setpoint extends ObjectRoot {
 		
 		
 		if (  "Occupied".equals( datamemberName )  ) return new Boolean(get_Occupied());
+		else if (  "ZoneName".equals( datamemberName )  ) return get_ZoneName();
 		else if (  "ZoneTempSP".equals( datamemberName )  ) return new Double(get_ZoneTempSP());
 		else return super.getAttribute( datamemberName );
 	}
@@ -746,6 +845,7 @@ public class Setpoint extends ObjectRoot {
 				
 		
 		if ( get_Occupied_handle() == datamemberHandle ) return new Boolean(get_Occupied());
+		else if ( get_ZoneName_handle() == datamemberHandle ) return get_ZoneName();
 		else if ( get_ZoneTempSP_handle() == datamemberHandle ) return new Double(get_ZoneTempSP());
 		else return super.getAttribute( datamemberHandle );
 	}
@@ -756,6 +856,7 @@ public class Setpoint extends ObjectRoot {
 			
 		
 		if ( param_handle == get_Occupied_handle() ) set_Occupied( Boolean.parseBoolean(val) );
+		else if ( param_handle == get_ZoneName_handle() ) set_ZoneName( val );
 		else if ( param_handle == get_ZoneTempSP_handle() ) set_ZoneTempSP( Double.parseDouble(val) );
 		else retval = super.setAttributeAux( param_handle, val );
 		
@@ -768,6 +869,7 @@ public class Setpoint extends ObjectRoot {
 			
 		
 		if (  "Occupied".equals( datamemberName )  ) set_Occupied( Boolean.parseBoolean(val) );
+		else if (  "ZoneName".equals( datamemberName )  ) set_ZoneName( val );
 		else if (  "ZoneTempSP".equals( datamemberName )  ) set_ZoneTempSP( Double.parseDouble(val) );	
 		else retval = super.setAttributeAux( datamemberName, val );
 		
@@ -780,6 +882,7 @@ public class Setpoint extends ObjectRoot {
 		
 		
 		if (  "Occupied".equals( datamemberName )  ) set_Occupied( (Boolean)val );
+		else if (  "ZoneName".equals( datamemberName )  ) set_ZoneName( (String)val );
 		else if (  "ZoneTempSP".equals( datamemberName )  ) set_ZoneTempSP( (Double)val );		
 		else retval = super.setAttributeAux( datamemberName, val );
 		
@@ -804,6 +907,16 @@ public class Setpoint extends ObjectRoot {
 				_Occupied.setHasBeenUpdated();
 			}
 			try {
+				isPublished = _publishedAttributeHandleSet.isMember( get_ZoneName_handle() );
+			} catch ( Exception e ) {
+				logger.error("ERROR:  ObjectRoot.Setpoint.createSuppliedAttributes:  could not determine if ZoneName is published.");
+				isPublished = false;
+			}
+			if (  isPublished && _ZoneName.shouldBeUpdated( force )  ) {
+				datamembers.add( get_ZoneName_handle(), get_ZoneName().getBytes() );
+				_ZoneName.setHasBeenUpdated();
+			}
+			try {
 				isPublished = _publishedAttributeHandleSet.isMember( get_ZoneTempSP_handle() );
 			} catch ( Exception e ) {
 				logger.error("ERROR:  ObjectRoot.Setpoint.createSuppliedAttributes:  could not determine if ZoneTempSP is published.");
@@ -825,6 +938,7 @@ public class Setpoint extends ObjectRoot {
 			
 			
 				_Occupied = data._Occupied;
+				_ZoneName = data._ZoneName;
 				_ZoneTempSP = data._ZoneTempSP;
 			
 		}

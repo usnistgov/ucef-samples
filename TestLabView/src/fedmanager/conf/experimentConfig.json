@@ -18,18 +18,17 @@
     {
       "federateType": "Weather",
       "count": 1
-    }
-  ],
-  "lateJoinerFederates": [
+    },
     {
       "federateType": "Controller",
-      "count": 1
+      "count": 2
     },
     {
       "federateType": "Zone",
-      "count": 1
+      "count": 2
     }
   ],
+  "lateJoinerFederates": [],
   "coaDefinition" : "conf/coadefinition.json", 
   "coaSelection": "conf/coaselection.json",
   "terminateOnCOAFinish" : false

@@ -1,0 +1,13 @@
+{
+  "federateRTIInitWaitTimeMs": 200,
+  "federateType": "Controller",
+  "federationId": "FedManager",
+  "isLateJoiner": false,
+  "lookAhead": 0.1,
+  "stepSize": 1.0,
+  "kp": 1.0,
+  "kd": 0.0,
+  "ki": 0.0,
+  "hyst": 1.0,
+  "zonename": "Zone1"
+}
