@@ -1,0 +1,16 @@
+{
+  "federateRTIInitWaitTimeMs": 200,
+  "federateType": "Zone",
+  "federationId": "FedManager",
+  "isLateJoiner": false,
+  "lookAhead": 0.1,
+  "stepSize": 1.0,
+  "uae": 172.0,
+  "tau": 374400.0,
+  "houseeffectivearea": 6.84,
+  "sghc": 0.89,
+  "hpbasepower": 1571.0,
+  "solarconversionconstant": 0.194,
+  "solarpaneleffectivearea": 52.16,
+  "zonename": "Zone1"
+}

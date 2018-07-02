@@ -50,9 +50,11 @@
   (attribute FederateHost reliable timestamp)
   (attribute FederateType reliable timestamp) )
 (class ControllerState
-  (attribute DamperPostionPct reliable timestamp) )
+  (attribute DamperPostionPct reliable timestamp)
+  (attribute ZoneName reliable timestamp) )
 (class Setpoint
   (attribute Occupied reliable timestamp)
+  (attribute ZoneName reliable timestamp)
   (attribute ZoneTempSP reliable timestamp) )
 (class SystemState
   (attribute TotalPower reliable timestamp) )

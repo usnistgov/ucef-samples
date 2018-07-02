@@ -35,10 +35,12 @@ public class ControllerBase extends SynchronizedFederate {
         
         	
         ControllerState.publish_DamperPostionPct();
+        ControllerState.publish_ZoneName();
         ControllerState.publish(getLRC());
                 
         	
         Setpoint.subscribe_Occupied();
+        Setpoint.subscribe_ZoneName();
         Setpoint.subscribe_ZoneTempSP();
         Setpoint.subscribe(getLRC());
         

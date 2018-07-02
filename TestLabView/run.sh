@@ -73,7 +73,7 @@ fi
 # run the federation manager
 cd $root_directory/src/fedmanager
 cp $root_directory/conf/RTI.rid ./RTI.rid
-xterm -fg white -bg black -l -lf $logs_directory/federation-manager-${timestamp}.log -T "Federation Manager" -geometry 140x40+0+0 \
+xterm -fg white -bg black -l -lf $logs_directory/federation-manager-${timestamp}.log -T "Federation Manager" -geometry 140x40+100+100 \
     -e "export CPSWT_ROOT=`pwd` && mvn exec:java -P FederationManagerExecJava" &
 
 printf "Waiting for the federation manager to come online.."
@@ -89,32 +89,40 @@ curl -o /dev/null -s -X POST http://$fedmgr_host:$fedmgr_port/fedmgr --data '{"a
 cd $root_directory/src/weather/WeatherProject-java-federates/WeatherProject-impl-java/Weather/target
 cp $root_directory/conf/tmy3.csv ./tmy3.csv
 cp $root_directory/conf/RTI.rid ./RTI.rid
-xterm -fg red -bg black -l -lf $logs_directory/weather-${timestamp}.log -T "Weather" -geometry 140x40+180+60 \
+xterm -fg red -bg black -l -lf $logs_directory/weather-${timestamp}.log -T "Weather" -geometry 140x40+150+150 \
     -e "java -Dlog4j.configurationFile=$root_directory/conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar Weather-0.1.0-SNAPSHOT.jar -configFile=conf/WeatherConfig.json" &
 waitUntilJoined Weather 1
 
 cd $root_directory/src/metronome/MetronomeProject-java-federates/MetronomeProject-impl-java/Metronome/target
 cp $root_directory/conf/RTI.rid ./RTI.rid
-xterm -fg magenta -bg black -l -lf $logs_directory/metronome-${timestamp}.log -T "Metronome" -geometry 140x40+360+120 \
+xterm -fg magenta -bg black -l -lf $logs_directory/metronome-${timestamp}.log -T "Metronome" -geometry 140x40+200+200 \
     -e "java -Dlog4j.configurationFile=$root_directory/conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar Metronome-0.1.0-SNAPSHOT.jar -configFile=conf/MetronomeConfig.json" &
 waitUntilJoined Metronome 1
 
 cd $root_directory/src/zone/Zone-java-federates/Zone-impl-java/Zone/target
 cp $root_directory/conf/RTI.rid ./RTI.rid
-xterm -fg cyan -bg black -l -lf $logs_directory/zone1-${timestamp}.log -T "Zone 1" -geometry 140x40+540+180 \
-    -e "java -Dlog4j.configurationFile=$root_directory/conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar Zone-0.1.0-SNAPSHOT.jar -configFile=conf/ZoneConfig.json -name=Zone1" &
+cp -r ../conf/ .
+xterm -fg cyan -bg black -l -lf $logs_directory/zone1-${timestamp}.log -T "Zone 1" -geometry 140x40+250+250 \
+    -e "java -Dlog4j.configurationFile=$root_directory/conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar Zone-0.1.0-SNAPSHOT.jar -configFile=conf/ZoneConfig1.json -name=Zone1" &
 waitUntilJoined Zone 1
+xterm -fg cyan -bg black -l -lf $logs_directory/zone2-${timestamp}.log -T "Zone 2" -geometry 140x40+300+300 \
+    -e "java -Dlog4j.configurationFile=$root_directory/conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar Zone-0.1.0-SNAPSHOT.jar -configFile=conf/ZoneConfig2.json -name=Zone2" &
+waitUntilJoined Zone 2
 
 cd $root_directory/src/controller/Controller-java-federates/Controller-impl-java/Controller/target
 cp $root_directory/conf/RTI.rid ./RTI.rid
-xterm -fg green -bg black -l -lf $logs_directory/controller1-${timestamp}.log -T "Controller 1" -geometry 140x40+720+240 \
-    -e "java -Dlog4j.configurationFile=$root_directory/conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar Controller-0.1.0-SNAPSHOT.jar -configFile=conf/ControllerConfig.json -name=Controller1" &
+cp -r ../conf/ .
+xterm -fg green -bg black -l -lf $logs_directory/controller1-${timestamp}.log -T "Controller 1" -geometry 140x40+350+350 \
+    -e "java -Dlog4j.configurationFile=$root_directory/conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar Controller-0.1.0-SNAPSHOT.jar -configFile=conf/ControllerConfig1.json -name=Controller1" &
 waitUntilJoined Controller 1
+xterm -fg green -bg black -l -lf $logs_directory/controller2-${timestamp}.log -T "Controller 2" -geometry 140x40+400+400 \
+    -e "java -Dlog4j.configurationFile=$root_directory/conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar Controller-0.1.0-SNAPSHOT.jar -configFile=conf/ControllerConfig2.json -name=Controller2" &
+waitUntilJoined Controller 2
 
 cd $root_directory/src/labview/target
 cp $root_directory/conf/RTI.rid ./RTI.rid
 cp -r $root_directory/src/labview/conf/ .
-xterm -fg yellow -bg black -l -lf $logs_directory/labview-${timestamp}.log -T "LabVIEW" -geometry 140x40+900+300 \
+xterm -fg yellow -bg black -l -lf $logs_directory/labview-${timestamp}.log -T "LabVIEW" -geometry 140x40+450+450 \
     -e "java -Dlog4j.configurationFile=$root_directory/conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar TestLabView-0.1.0-SNAPSHOT.jar conf/LabVIEW.json" &
 
 # terminate the simulation
