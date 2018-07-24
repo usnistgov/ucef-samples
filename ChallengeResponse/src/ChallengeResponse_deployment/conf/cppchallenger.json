@@ -1,0 +1,10 @@
+{
+  "federateRTIInitWaitTimeMs": 200,
+  "federateType": "CppChallenger",
+  "federationId": "ChallengeResponse",
+  "isLateJoiner": false,
+  "lookAhead": "0.2",
+  "stepSize": "1.0",
+  "numberOfResponders": 2,
+  "challengeLength": 32
+}

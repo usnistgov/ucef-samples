@@ -73,7 +73,7 @@ if [ ! -d $logs_directory ]; then
 fi
 
 # run the federation manager
-cd $root_directory/ChallengeResponse_deployment
+cd $root_directory/src/ChallengeResponse_deployment
 xterm -fg white -bg black -l -lf $logs_directory/federation-manager-${timestamp}.log -T "Federation Manager" -geometry 140x40+0+0 -e "export CPSWT_ROOT=`pwd` && mvn exec:java -P FederationManagerExecJava" &
 
 printf "Waiting for the federation manager to come online.."
@@ -86,31 +86,31 @@ printf "\n"
 curl -o /dev/null -s -X POST http://$fedmgr_host:$fedmgr_port/fedmgr --data '{"action": "START"}' -H "Content-Type: application/json"
 
 # run the other federates
-cd $root_directory/ChallengeResponse_deployment
+cd $root_directory/src/ChallengeResponse_deployment
 xterm -fg yellow -bg black -l -lf $logs_directory/java-challenger-${timestamp}.log -T "Java Challenger" -geometry 140x40+160+60 -e "mvn exec:java -P ExecJava,JavaChallenger" &
 waitUntilJoined JavaChallenger 1
 
-cd $root_directory/GatewayChallenger/target
-cp -r $root_directory/GatewayChallenger/conf/ .
+cd $root_directory/src/GatewayChallenger/target
+cp -r $root_directory/src/GatewayChallenger/conf/ .
 xterm -fg yellow -bg black -l -lf $logs_directory/gateway-challenger-${timestamp}.log -T "Gateway Challenger" -geometry 140x40+240+90 -e "java -Dlog4j.configurationFile=conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar gateway-challenger-0.0.1-SNAPSHOT.jar conf/GatewayChallenger.json" &
 waitUntilJoined GatewayChallenger 1
 
-cd $root_directory/ChallengeResponse_deployment
+cd $root_directory/src/ChallengeResponse_deployment
 xterm -fg green -bg black -l -lf $logs_directory/java-responder-${timestamp}.log -T "Java Responder" -geometry 140x40+320+120 -e "mvn exec:java -P ExecJava,JavaResponder" &
 waitUntilJoined JavaResponder 1
 
-cd $root_directory/GatewayResponder/target
-cp -r $root_directory/GatewayResponder/conf/ .
+cd $root_directory/src/GatewayResponder/target
+cp -r $root_directory/src/GatewayResponder/conf/ .
 xterm -fg green -bg black -l -lf $logs_directory/gateway-responder-${timestamp}.log -T "Gateway Responder" -geometry 140x40+400+150 -e "java -Dlog4j.configurationFile=conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar gateway-responder-0.0.1-SNAPSHOT.jar conf/GatewayResponder.json" &
 waitUntilJoined GatewayResponder 1
 
-cd $root_directory/ChallengeResponse_deployment
-xterm -fg cyan -bg black -l -lf $logs_directory/java-base-receiver-${timestamp}.log -T "Java Base Receiver" -geometry 140x40+480+180 -e "mvn exec:java -P ExecJava,JavaBaseReceiver" &
-waitUntilJoined JavaBaseReceiver 1
+cd $root_directory/src/ChallengeResponse_deployment
+xterm -fg cyan -bg black -l -lf $logs_directory/java-parent-receiver-${timestamp}.log -T "Java Parent Receiver" -geometry 140x40+480+180 -e "mvn exec:java -P ExecJava,JavaParentReceiver" &
+waitUntilJoined JavaParentReceiver 1
 
-cd $root_directory/GatewayBaseReceiver/target
-cp -r $root_directory/GatewayBaseReceiver/conf/ .
-xterm -fg cyan -bg black -l -lf $logs_directory/gateway-base-receiver-${timestamp}.log -T "Gateway Base Receiver" -geometry 140x40+560+210 -e "java -Dlog4j.configurationFile=conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar gateway-base-receiver-0.0.1-SNAPSHOT.jar conf/GatewayBaseReceiver.json" &
+cd $root_directory/src/GatewayParentReceiver/target
+cp -r $root_directory/src/GatewayParentReceiver/conf/ .
+xterm -fg cyan -bg black -l -lf $logs_directory/gateway-parent-receiver-${timestamp}.log -T "Gateway Parent Receiver" -geometry 140x40+560+210 -e "java -Dlog4j.configurationFile=conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar gateway-parent-receiver-0.0.1-SNAPSHOT.jar conf/GatewayParentReceiver.json" &
 
 # terminate the simulation
 read -n 1 -r -s -p "Press any key to terminate the federation execution..."

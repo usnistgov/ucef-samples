@@ -1,18 +1,18 @@
 #!/bin/bash
 rootdir=`pwd`
 
-cd $rootdir/ChallengeResponse_generated
+cd $rootdir/src/ChallengeResponse_generated
 mvn clean install
 
-cd $rootdir/ChallengeResponse_deployment
+cd $rootdir/src/ChallengeResponse_deployment
 mvn clean install
 
-cd $rootdir/GatewayChallenger
+cd $rootdir/src/GatewayChallenger
 mvn clean install
 
-cd $rootdir/GatewayResponder
+cd $rootdir/src/GatewayResponder
 mvn clean install
 
-cd $rootdir/GatewayBaseReceiver
+cd $rootdir/src/GatewayParentReceiver
 mvn clean install
 
