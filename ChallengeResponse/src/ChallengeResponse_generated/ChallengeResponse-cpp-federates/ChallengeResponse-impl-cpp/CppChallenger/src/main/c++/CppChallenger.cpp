@@ -1,8 +1,9 @@
 #include "CppChallenger.hpp"
 
 void CppChallenger::initialize( void ) {
+    m_randomGenerator.seed(time(NULL));
     m_currentTime = 0;
-    
+
     if (this->get_IsLateJoiner()) {
         m_currentTime = getLBTS() - getLookAhead();
         disableTimeRegulation();
@@ -43,6 +44,9 @@ void CppChallenger::checkReceivedSubscriptions() {
 void CppChallenger::execute( void ) {
     checkReceivedSubscriptions();
 
+    std::cout << "random index:  " << generateBeginIndex() << std::endl;
+    std::cout << "random string: " << generateStringValue() << std::endl;
+
     // TODO update registered object instances
 
     // vChallengeObject.set_beginIndex(YOUR_VALUE_HERE);
@@ -69,6 +73,24 @@ void CppChallenger::execute( void ) {
 
 void CppChallenger::handleInteractionClass(boost::shared_ptr<Response> interaction) {
     // TODO implement how to handle received interaction
+}
+
+std::string CppChallenger::generateStringValue() {
+    // VALID_CHARACTERS ends with NULL which, fun enough, is not a valid character
+    static const char VALID_CHARACTERS[] = "abcdefghijklmnopqrstuvwxyz0123456789";
+    boost::random::uniform_int_distribution<> distribution(0, sizeof(VALID_CHARACTERS)-2);
+
+    std::string buffer(m_challengeLength, NULL);
+    for (int i = 0; i < m_challengeLength; i++) {
+        buffer[i] = VALID_CHARACTERS[distribution(m_randomGenerator)];
+    }
+    return buffer;
+}
+
+int CppChallenger::generateBeginIndex() {
+    // the challenge must contain at least 1 character, so beginIndex cannot be the last index
+    boost::random::uniform_int_distribution<> distribution(0, m_challengeLength-2);
+    return distribution(m_randomGenerator);
 }
 
 int main(int argc, char *argv[]) {

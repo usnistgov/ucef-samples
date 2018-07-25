@@ -5,10 +5,22 @@
 #include "FederateConfigParser.h"
 #include "FederateConfig.h"
 
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/uniform_int_distribution.hpp>
+
+#include <ctime>
 
 class CppChallenger : public CppChallengerBase {
     private:
+        // these should be moved to a JSON file after cpswt-cpp supports custom configuration files
+        static const int NUMBER_OF_RESPONDERS = 3;
+        static const int CHALLENGE_LENGTH = 32;
+
+        boost::random::mt19937 m_randomGenerator;
+
         double m_currentTime;
+
+        int m_challengeLength = CHALLENGE_LENGTH;
 
         // TODO declare all the published object instances
         // ChallengeObject vChallengeObject;
@@ -18,6 +30,10 @@ class CppChallenger : public CppChallengerBase {
         void handleInteractionClass(boost::shared_ptr<Response> interaction);
 
         void checkReceivedSubscriptions();
+
+        std::string generateStringValue();
+
+        int generateBeginIndex();
 
     public:
         typedef CppChallengerBase Super;
