@@ -45,18 +45,9 @@ void CppResponder::checkReceivedSubscriptions() {
 }
 
 void CppResponder::execute( void ) {
+    std::cout << "t=" << m_currentTime << std::endl;
+
     checkReceivedSubscriptions();
-
-    // TODO send interactions
-
-    // ResponseSP vResponse = create_Response();
-    // vResponse->set_actualLogicalGenerationTime(YOUR_VALUE_HERE);
-    // vResponse->set_challengeId(YOUR_VALUE_HERE);
-    // vResponse->set_federateFilter(YOUR_VALUE_HERE);
-    // vResponse->set_originFed(YOUR_VALUE_HERE);
-    // vResponse->set_sourceFed(YOUR_VALUE_HERE);
-    // vResponse->set_substring(YOUR_VALUE_HERE);
-    // vResponse->sendInteraction(getRTI(), m_currentTime + getLookAhead());
     
     m_currentTime += 1;
     CppResponderATRCallback advanceTimeRequest(*this);
@@ -64,11 +55,19 @@ void CppResponder::execute( void ) {
 }
 
 void CppResponder::handleObjectClass(boost::shared_ptr<ChallengeObject> object) {
-    // TODO implement how to handle received object update
+    respond(object->get_challengeId(), object->get_stringValue(), object->get_beginIndex());
 }
 
 void CppResponder::handleInteractionClass(boost::shared_ptr<ChallengeInteraction> interaction) {
-    // TODO implement how to handle received interaction
+    respond(interaction->get_challengeId(), interaction->get_stringValue(), interaction->get_beginIndex());
+}
+
+void CppResponder::respond(const std::string &id, const std::string &stringValue, int beginIndex) {
+    ResponseSP vResponse = create_Response();
+    vResponse->set_challengeId(id);
+    vResponse->set_substring(stringValue.substr(beginIndex));
+    vResponse->sendInteraction(getRTI(), m_currentTime + getLookAhead());
+    std::cout << "sent response " << vResponse << std::endl;
 }
 
 int main(int argc, char *argv[]) {

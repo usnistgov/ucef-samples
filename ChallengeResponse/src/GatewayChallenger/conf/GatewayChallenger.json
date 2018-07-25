@@ -8,6 +8,6 @@
     "stepSize": 1.0,
     "lookAhead": 0.1,
     "challengeLength": 32,
-    "numberOfResponders": 2
+    "numberOfResponders": 3
 }
 

@@ -16,6 +16,8 @@ class CppResponder : public CppResponderBase {
 
         void checkReceivedSubscriptions();
 
+        void respond(const std::string &id, const std::string &stringValue, int beginIndex);
+
     public:
         typedef CppResponderBase Super;
 

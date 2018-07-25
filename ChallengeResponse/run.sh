@@ -96,21 +96,29 @@ xterm -fg yellow -bg black -l -lf $logs_directory/gateway-challenger-${timestamp
 waitUntilJoined GatewayChallenger 1
 
 cd $root_directory/src/ChallengeResponse_deployment
-xterm -fg green -bg black -l -lf $logs_directory/java-responder-${timestamp}.log -T "Java Responder" -geometry 140x40+320+120 -e "mvn exec:java -P ExecJava,JavaResponder" &
+xterm -fg green -bg black -l -lf $logs_directory/cpp-responder-${timestamp}.log -T "C++ Responder" -geometry 140x40+320+120 -e "mvn exec:exec -P CppFed,CppResponder" &
+waitUntilJoined CppResponder 1
+
+cd $root_directory/src/ChallengeResponse_deployment
+xterm -fg green -bg black -l -lf $logs_directory/java-responder-${timestamp}.log -T "Java Responder" -geometry 140x40+400+150 -e "mvn exec:java -P ExecJava,JavaResponder" &
 waitUntilJoined JavaResponder 1
 
 cd $root_directory/src/GatewayResponder/target
 cp -r $root_directory/src/GatewayResponder/conf/ .
-xterm -fg green -bg black -l -lf $logs_directory/gateway-responder-${timestamp}.log -T "Gateway Responder" -geometry 140x40+400+150 -e "java -Dlog4j.configurationFile=conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar gateway-responder-0.0.1-SNAPSHOT.jar conf/GatewayResponder.json" &
+xterm -fg green -bg black -l -lf $logs_directory/gateway-responder-${timestamp}.log -T "Gateway Responder" -geometry 140x40+480+180 -e "java -Dlog4j.configurationFile=conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar gateway-responder-0.0.1-SNAPSHOT.jar conf/GatewayResponder.json" &
 waitUntilJoined GatewayResponder 1
 
 cd $root_directory/src/ChallengeResponse_deployment
-xterm -fg cyan -bg black -l -lf $logs_directory/java-parent-receiver-${timestamp}.log -T "Java Parent Receiver" -geometry 140x40+480+180 -e "mvn exec:java -P ExecJava,JavaParentReceiver" &
+xterm -fg cyan -bg black -l -lf $logs_directory/cpp-parent-receiver-${timestamp}.log -T "C++ Parent Receiver" -geometry 140x40+560+210 -e "mvn exec:exec -P CppFed,CppParentReceiver" &
+waitUntilJoined CppParentReceiver 1
+
+cd $root_directory/src/ChallengeResponse_deployment
+xterm -fg cyan -bg black -l -lf $logs_directory/java-parent-receiver-${timestamp}.log -T "Java Parent Receiver" -geometry 140x40+640+240 -e "mvn exec:java -P ExecJava,JavaParentReceiver" &
 waitUntilJoined JavaParentReceiver 1
 
 cd $root_directory/src/GatewayParentReceiver/target
 cp -r $root_directory/src/GatewayParentReceiver/conf/ .
-xterm -fg cyan -bg black -l -lf $logs_directory/gateway-parent-receiver-${timestamp}.log -T "Gateway Parent Receiver" -geometry 140x40+560+210 -e "java -Dlog4j.configurationFile=conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar gateway-parent-receiver-0.0.1-SNAPSHOT.jar conf/GatewayParentReceiver.json" &
+xterm -fg cyan -bg black -l -lf $logs_directory/gateway-parent-receiver-${timestamp}.log -T "Gateway Parent Receiver" -geometry 140x40+720+270 -e "java -Dlog4j.configurationFile=conf/log4j2.xml -Djava.net.preferIPv4Stack=true -jar gateway-parent-receiver-0.0.1-SNAPSHOT.jar conf/GatewayParentReceiver.json" &
 
 # terminate the simulation
 read -n 1 -r -s -p "Press any key to terminate the federation execution..."

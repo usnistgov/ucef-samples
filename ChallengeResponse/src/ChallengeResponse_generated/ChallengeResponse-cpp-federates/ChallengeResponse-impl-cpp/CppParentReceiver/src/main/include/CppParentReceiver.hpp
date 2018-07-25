@@ -5,10 +5,13 @@
 #include "FederateConfigParser.h"
 #include "FederateConfig.h"
 
+#include <set>
 
 class CppParentReceiver : public CppParentReceiverBase {
     private:
         double m_currentTime;
+
+        std::set<std::string> m_knownId;
 
         void handleObjectClass(boost::shared_ptr<ParentObject> object);
 
@@ -17,6 +20,8 @@ class CppParentReceiver : public CppParentReceiverBase {
         void handleInteractionClass(boost::shared_ptr<ParentInteraction> interaction);
 
         void checkReceivedSubscriptions();
+
+        void addId(const std::string &id);
 
     public:
         typedef CppParentReceiverBase Super;

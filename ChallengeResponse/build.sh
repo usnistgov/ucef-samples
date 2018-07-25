@@ -6,6 +6,7 @@ mvn clean install
 
 cd $rootdir/src/ChallengeResponse_deployment
 mvn clean install
+mvn package -P CppFed
 
 cd $rootdir/src/GatewayChallenger
 mvn clean install

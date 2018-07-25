@@ -51,6 +51,8 @@ void CppParentReceiver::checkReceivedSubscriptions() {
 }
 
 void CppParentReceiver::execute( void ) {
+    std::cout << "t=" << m_currentTime << std::endl;
+
     checkReceivedSubscriptions();
     
     m_currentTime += 1;
@@ -59,15 +61,27 @@ void CppParentReceiver::execute( void ) {
 }
 
 void CppParentReceiver::handleObjectClass(boost::shared_ptr<ParentObject> object) {
-    // TODO implement how to handle received object update
+    addId(object->get_challengeId());
 }
 
 void CppParentReceiver::handleInteractionClass(boost::shared_ptr<Response> interaction) {
-    // TODO implement how to handle received interaction
+    const std::string &id = interaction->get_challengeId();
+
+    if (m_knownId.count(id) == 0) {
+        std::cerr << "ERROR: unknown id " << id << std::endl;
+    }
 }
 
 void CppParentReceiver::handleInteractionClass(boost::shared_ptr<ParentInteraction> interaction) {
-    // TODO implement how to handle received interaction
+    addId(interaction->get_challengeId());
+}
+
+void CppParentReceiver::addId(const std::string &id) {
+    if (m_knownId.count(id) == 0) {
+        m_knownId.insert(id);
+    } else {
+        std::cerr << "ERROR: duplicate id " << id << std::endl;
+    }
 }
 
 int main(int argc, char *argv[]) {

@@ -7,4 +7,5 @@ target/
 .settings/
 
 dependency-reduced-pom.xml
+ChallengeResponse.log
 
