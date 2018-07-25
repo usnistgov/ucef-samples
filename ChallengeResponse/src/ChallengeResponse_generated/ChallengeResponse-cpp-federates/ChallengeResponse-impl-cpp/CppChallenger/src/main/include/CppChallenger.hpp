@@ -5,10 +5,22 @@
 #include "FederateConfigParser.h"
 #include "FederateConfig.h"
 
+#include <boost/lexical_cast.hpp>
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int_distribution.hpp>
 
 #include <ctime>
+#include <map>
+#include <set>
+
+struct Challenge {
+    std::string id;
+    std::string stringValue;
+    int beginIndex;
+    double expirationTime;
+    std::string correctResponse;
+    std::set<std::string> responders;
+};
 
 class CppChallenger : public CppChallengerBase {
     private:
@@ -18,12 +30,17 @@ class CppChallenger : public CppChallengerBase {
 
         boost::random::mt19937 m_randomGenerator;
 
+        std::map< std::string, Challenge > m_challenges;
+
+        std::set<std::string> m_challengesNotExpired;
+
+        ChallengeObject m_challengeObject;
+
         double m_currentTime;
 
-        int m_challengeLength = CHALLENGE_LENGTH;
+        int m_challengeLength;
 
-        // TODO declare all the published object instances
-        // ChallengeObject vChallengeObject;
+        int m_sequenceNumber;
 
         void initObjectInstances();
 
@@ -34,6 +51,14 @@ class CppChallenger : public CppChallengerBase {
         std::string generateStringValue();
 
         int generateBeginIndex();
+
+        Challenge createChallenge();
+
+        void sendChallengeInteraction();
+
+        void sendChallengeObject();
+
+        void handleExpiredChallenges();
 
     public:
         typedef CppChallengerBase Super;
