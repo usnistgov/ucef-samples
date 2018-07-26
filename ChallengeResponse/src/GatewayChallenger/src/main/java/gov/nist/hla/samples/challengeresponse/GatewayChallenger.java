@@ -79,6 +79,7 @@ public class GatewayChallenger implements GatewayCallback {
         log.info("t={}", timeStep);
         sendChallengeInteraction();
         sendChallengeObject();
+        responseTracker.checkDelinquent(gateway.getLogicalTime());
     }
 
     @Override

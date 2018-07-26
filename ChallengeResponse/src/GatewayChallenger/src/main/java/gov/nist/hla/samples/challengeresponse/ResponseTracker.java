@@ -14,7 +14,9 @@ public class ResponseTracker {
     private Map<String, Challenge> challenges = new HashMap<String, Challenge>();
     
     private Map<Challenge, Set<String>> responses = new HashMap<Challenge, Set<String>>();
-    
+
+    private Set<String> challengesNotExpired = new HashSet<String>();
+
     private final int numberOfResponders;
     
     public ResponseTracker(int numberOfResponders) {
@@ -29,6 +31,7 @@ public class ResponseTracker {
             throw new RuntimeException("duplicate challenge with id=" + challenge.getId());
         }
         challenges.put(challenge.getId(), challenge);
+        challengesNotExpired.add(challenge.getId());
         responses.put(challenge, new HashSet<String>());
         log.trace("stored {}", challenge.toString());
     }
@@ -64,13 +67,20 @@ public class ResponseTracker {
         }
     }
     
-    public void checkDelinquent(double endTime) {
-        for (Map.Entry<Challenge, Set<String>> entry : responses.entrySet()) {
-            final Challenge challenge = entry.getKey();
-            final Set<String> responderSet = entry.getValue();
-            if (responderSet.size() < numberOfResponders && challenge.getExpirationTime() < endTime) {
-                log.error("fewer responses to {} than expected: {}", challenge.toString(), responderSet.toString());
+    public void checkDelinquent(double currentTime) {
+        Set<String> expiredChallenges = new HashSet<String>();
+
+        for (String challengeId : challengesNotExpired) {
+            final Challenge challenge = challenges.get(challengeId);
+
+            if (challenge.getExpirationTime() <= currentTime) {
+                expiredChallenges.add(challengeId);
+                if (responses.get(challenge).size() < numberOfResponders) {
+                    log.error("fewer responses to {} than expected: {}", challenge.toString(), responses.get(challenge).toString());
+                }
             }
         }
+
+        challengesNotExpired.removeAll(expiredChallenges);
     }
 }

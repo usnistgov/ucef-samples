@@ -88,6 +88,7 @@ public class JavaChallenger extends JavaChallengerBase {
             sendChallengeObject();
 
             checkReceivedSubscriptions();
+            responseTracker.checkDelinquent(currentTime);
 
             currentTime += super.getStepSize();
             AdvanceTimeRequest newATR = new AdvanceTimeRequest(currentTime);
