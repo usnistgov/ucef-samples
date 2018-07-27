@@ -1,4 +1,0 @@
-portico.jgroups.tcp.bindAddress=SITE_LOCAL
-portico.jgroups.tcp.bindPort=1031
-portico.jgroups.tcp.initialHosts=172.31.2.49[12001]
-

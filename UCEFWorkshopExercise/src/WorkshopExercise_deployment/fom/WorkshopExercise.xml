@@ -1,0 +1,1219 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<objectModel xsi:schemaLocation="http://standards.ieee.org/IEEE1516-2010 http://standards.ieee.org/downloads/1516/1516.2-2010/IEEE1516-DIF-2010.xsd" xmlns="http://standards.ieee.org/IEEE1516-2010" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelIdentification />
+    <objects>
+        <objectClass>
+            <name>ObjectRoot</name>
+            <sharing>Neither</sharing>
+            <semantics></semantics>
+        <objectClass>
+            <name>FederateObject</name>
+            <sharing>PublishSubscribe</sharing>
+            <semantics></semantics>
+
+            <attribute>
+                <name>FederateHandle</name>
+                <dataType>int</dataType>
+                <transportation>HLAreliable</transportation>
+                <order>TimeStamp</order>
+                <semantics></semantics>
+            </attribute>
+
+            <attribute>
+                <name>FederateHost</name>
+                <dataType>String</dataType>
+                <transportation>HLAreliable</transportation>
+                <order>TimeStamp</order>
+                <semantics></semantics>
+            </attribute>
+
+            <attribute>
+                <name>FederateType</name>
+                <dataType>String</dataType>
+                <transportation>HLAreliable</transportation>
+                <order>TimeStamp</order>
+                <semantics></semantics>
+            </attribute>
+        </objectClass>
+        </objectClass>
+    </objects>
+    <interactions>
+        <interactionClass>
+            <name>InteractionRoot</name>
+            <sharing>Neither</sharing>
+            <transportation>HLAreliable</transportation>
+            <order>TimeStamp</order>
+        <interactionClass>
+            <name>C2WInteractionRoot</name>
+            <sharing>Neither</sharing>
+            <transportation>HLAreliable</transportation>
+            <order>TimeStamp</order>
+
+            <parameter> 
+                <name>actualLogicalGenerationTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>federateFilter</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>originFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>sourceFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+        <interactionClass>
+            <name>ActionBase</name>
+            <sharing>PublishSubscribe</sharing>
+            <transportation>HLAreliable</transportation>
+            <order>TimeStamp</order>
+
+            <parameter> 
+                <name>actualLogicalGenerationTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>federateFilter</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>originFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>sourceFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+        </interactionClass>
+        <interactionClass>
+            <name>FederateJoinInteraction</name>
+            <sharing>PublishSubscribe</sharing>
+            <transportation>HLAreliable</transportation>
+            <order>TimeStamp</order>
+
+            <parameter> 
+                <name>FederateId</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>FederateType</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>IsLateJoiner</name>
+                <dataType>boolean</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>actualLogicalGenerationTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>federateFilter</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>originFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>sourceFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+        </interactionClass>
+        <interactionClass>
+            <name>FederateResignInteraction</name>
+            <sharing>PublishSubscribe</sharing>
+            <transportation>HLAreliable</transportation>
+            <order>TimeStamp</order>
+
+            <parameter> 
+                <name>FederateId</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>FederateType</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>IsLateJoiner</name>
+                <dataType>boolean</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>actualLogicalGenerationTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>federateFilter</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>originFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>sourceFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+        </interactionClass>
+        <interactionClass>
+            <name>OutcomeBase</name>
+            <sharing>PublishSubscribe</sharing>
+            <transportation>HLAreliable</transportation>
+            <order>TimeStamp</order>
+
+            <parameter> 
+                <name>actualLogicalGenerationTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>federateFilter</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>originFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>sourceFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+        </interactionClass>
+        <interactionClass>
+            <name>SimLog</name>
+            <sharing>PublishSubscribe</sharing>
+            <transportation>HLAreliable</transportation>
+            <order>TimeStamp</order>
+
+            <parameter> 
+                <name>Comment</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>FedName</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>Time</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>actualLogicalGenerationTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>federateFilter</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>originFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>sourceFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+        <interactionClass>
+            <name>HighPrio</name>
+            <sharing>PublishSubscribe</sharing>
+            <transportation>HLAreliable</transportation>
+            <order>TimeStamp</order>
+
+            <parameter> 
+                <name>Comment</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>FedName</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>Time</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>actualLogicalGenerationTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>federateFilter</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>originFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>sourceFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+        </interactionClass>
+        <interactionClass>
+            <name>LowPrio</name>
+            <sharing>PublishSubscribe</sharing>
+            <transportation>HLAreliable</transportation>
+            <order>TimeStamp</order>
+
+            <parameter> 
+                <name>Comment</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>FedName</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>Time</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>actualLogicalGenerationTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>federateFilter</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>originFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>sourceFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+        </interactionClass>
+        <interactionClass>
+            <name>MediumPrio</name>
+            <sharing>PublishSubscribe</sharing>
+            <transportation>HLAreliable</transportation>
+            <order>TimeStamp</order>
+
+            <parameter> 
+                <name>Comment</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>FedName</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>Time</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>actualLogicalGenerationTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>federateFilter</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>originFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>sourceFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+        </interactionClass>
+        <interactionClass>
+            <name>VeryLowPrio</name>
+            <sharing>PublishSubscribe</sharing>
+            <transportation>HLAreliable</transportation>
+            <order>TimeStamp</order>
+
+            <parameter> 
+                <name>Comment</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>FedName</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>Time</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>actualLogicalGenerationTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>federateFilter</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>originFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>sourceFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+        </interactionClass>
+        </interactionClass>
+        <interactionClass>
+            <name>SimulationControl</name>
+            <sharing>PublishSubscribe</sharing>
+            <transportation>HLAreliable</transportation>
+            <order>TimeStamp</order>
+
+            <parameter> 
+                <name>actualLogicalGenerationTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>federateFilter</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>originFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>sourceFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+        <interactionClass>
+            <name>SimEnd</name>
+            <sharing>PublishSubscribe</sharing>
+            <transportation>HLAreliable</transportation>
+            <order>TimeStamp</order>
+
+            <parameter> 
+                <name>actualLogicalGenerationTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>federateFilter</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>originFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>sourceFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+        </interactionClass>
+        <interactionClass>
+            <name>SimPause</name>
+            <sharing>PublishSubscribe</sharing>
+            <transportation>HLAreliable</transportation>
+            <order>TimeStamp</order>
+
+            <parameter> 
+                <name>actualLogicalGenerationTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>federateFilter</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>originFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>sourceFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+        </interactionClass>
+        <interactionClass>
+            <name>SimResume</name>
+            <sharing>PublishSubscribe</sharing>
+            <transportation>HLAreliable</transportation>
+            <order>TimeStamp</order>
+
+            <parameter> 
+                <name>actualLogicalGenerationTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>federateFilter</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>originFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>sourceFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+        </interactionClass>
+        </interactionClass>
+        <interactionClass>
+            <name>Quote</name>
+            <sharing>PublishSubscribe</sharing>
+            <transportation>HLAreliable</transportation>
+            <order>TimeStamp</order>
+
+            <parameter> 
+                <name>actualLogicalGenerationTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>federateFilter</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>originFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>sourceFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>tenderComponent_PriceCurve_price</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+        </interactionClass>
+        <interactionClass>
+            <name>ResourcePhysicalState</name>
+            <sharing>PublishSubscribe</sharing>
+            <transportation>HLAreliable</transportation>
+            <order>TimeStamp</order>
+
+            <parameter> 
+                <name>actualLogicalGenerationTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>federateFilter</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>originFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>power</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>sourceFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+        </interactionClass>
+        <interactionClass>
+            <name>SimTime</name>
+            <sharing>PublishSubscribe</sharing>
+            <transportation>HLAreliable</transportation>
+            <order>TimeStamp</order>
+
+            <parameter> 
+                <name>actualLogicalGenerationTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>federateFilter</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>ignoreTil</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>originFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>secondsPerLogicalTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>sourceFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>startTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>stopTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+        </interactionClass>
+        <interactionClass>
+            <name>TMYWeather</name>
+            <sharing>PublishSubscribe</sharing>
+            <transportation>HLAreliable</transportation>
+            <order>TimeStamp</order>
+
+            <parameter> 
+                <name>actualLogicalGenerationTime</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>aerosolOpticalDepth</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>aerosolOpticalDepthSource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>aerosolOpticalDepthUncertainty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>albedo</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>albedoSource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>albedoUncertainty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>ceilingHeight</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>ceilingHeightSource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>ceilingHeightUncertainty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>date</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>dewPointTemperature</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>dewPointTemperatureSource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>dewPointTemperatureUncertainty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>diffuseHorizontalIlluminance</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>diffuseHorizontalIlluminanceSource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>diffuseHorizontalIlluminanceUncertainty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>diffuseHorizontalIrradiancSource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>diffuseHorizontalIrradiancUncertainty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>diffuseHorizontalIrradiance</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>directNormalIlluminance</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>directNormalIlluminanceSource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>directNormalIlluminanceUncertainty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>directNormalIrradiance</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>directNormalIrradianceSource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>directNormalIrradianceUncertainty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>dryBulbTemperature</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>dryBulbTemperatureSource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>dryBulbTemperatureUncertainty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>elevation</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>extraTerrestrialRadiation</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>extraTerrestrialRadiationNormal</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>federateFilter</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>globalHorizontalIlluminance</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>globalHorizontalIlluminanceSource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>globalHorizontalIlluminanceUncertainty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>globalHorizontalIrradiance</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>globalHorizontalIrradianceSource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>globalHorizontalIrradianceUncertainty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>horizontalVisibility</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>horizontalVisibilitySource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>horizontalVisibilityUncertainty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>latitude</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>liquidPrecipitationDepth</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>liquidPrecipitationDepthSource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>liquidPrecipitationDepthUncertainty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>liquidPrecipitationQuantity</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>longitude</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>opaqueSkyCover</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>opaqueSkyCoverSource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>opaqueSkyCoverUncertainty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>originFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>precipitableWater</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>precipitableWaterSource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>precipitableWaterUncertainty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>presentWeather</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>presentWeatherSource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>presentWeatherUncertainty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>pressure</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>pressureSource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>pressureUncertainty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>relativeHumidity</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>relativeHumiditySource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>relativeHumidityUncertainty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>sourceFed</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>stationIDCode</name>
+                <dataType>int</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>stationName</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>stationState</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>time</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>timeZone</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>totalSkyCover</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>totalSkyCoverSource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>totalSkyCoverUncertainty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>windDirection</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>windDirectionSource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>windDirectionUncertainty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>windSpeed</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>windSpeedSource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>windSpeedUncertainty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>zenithLuminance</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>zenithLuminanceSource</name>
+                <dataType>String</dataType>
+                <semantics></semantics>
+            </parameter>
+
+            <parameter> 
+                <name>zenithLuminanceUncertianty</name>
+                <dataType>double</dataType>
+                <semantics></semantics>
+            </parameter>
+        </interactionClass>
+        </interactionClass>
+        </interactionClass>
+    </interactions>
+    <dimensions />
+</objectModel>
