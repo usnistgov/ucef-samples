@@ -1,12 +1,12 @@
 #!/bin/bash
 rootdir=`pwd`
 
-cd $rootdir/Environment
+cd $rootdir/src/Environment
 mvn clean install
 
-cd $rootdir/Aggregator
+cd $rootdir/src/Aggregator
 mvn clean install
 
-cd $rootdir/Reporter
+cd $rootdir/src/Reporter
 mvn clean install
 
