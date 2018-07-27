@@ -1,0 +1,50 @@
+{
+  "federateTypesAllowed": [
+    "BankOfAmerica",
+    "BasicMapper",
+    "ComplexMapper",
+    "DataConversionMapper",
+    "DirectMapper",
+    "ICICIBank",
+    "OmnetFederate",
+    "SocieteGenerale"
+  ],
+  "expectedFederates": [
+    {
+      "federateType": "BankOfAmerica",
+      "count": 1
+    },
+    {
+      "federateType": "BasicMapper",
+      "count": 1
+    },
+    {
+      "federateType": "ComplexMapper",
+      "count": 1
+    },
+    {
+      "federateType": "DataConversionMapper",
+      "count": 1
+    },
+    {
+      "federateType": "DirectMapper",
+      "count": 1
+    },
+    {
+      "federateType": "ICICIBank",
+      "count": 1
+    },
+    {
+      "federateType": "OmnetFederate",
+      "count": 1
+    },
+    {
+      "federateType": "SocieteGenerale",
+      "count": 1
+    }
+  ],
+  "lateJoinerFederates": [],
+  "coaDefinition": "conf/NewcoaConfig.json",
+  "coaSelection": "conf/ex1/coaSelection_ex1.json",
+  "terminateOnCOAFinish": false
+}

@@ -1,0 +1,80 @@
+{
+  "federateTypesAllowed": [
+    "BankOfAmerica",
+    "ICICIBank",
+    "SocieteGenerale",
+    "BasicMapper",
+    "ComplexMapper",
+    "DataConversionMapper",
+    "DirectMapper",
+    "OmnetFederate"
+  ],
+  "expectedFederates": [
+    {
+      "federateType": "BankOfAmerica",
+      "count": 1
+    },
+    {
+      "federateType": "ICICIBank",
+      "count": 1
+    },
+    {
+      "federateType": "SocieteGenerale",
+      "count": 1
+    },
+    {
+      "federateType": "BasicMapper",
+      "count": 1
+    },
+    {
+      "federateType": "ComplexMapper",
+      "count": 1
+    },
+    {
+      "federateType": "DataConversionMapper",
+      "count": 1
+    },
+    {
+      "federateType": "DirectMapper",
+      "count": 1
+    },
+    {
+      "federateType": "OmnetFederate",
+      "count": 1
+    }
+  ],
+  "lateJoinerFederates": [
+    {
+      "federateType": "BankOfAmerica",
+      "count": 0
+    },
+    {
+      "federateType": "ICICIBank",
+      "count": 0
+    },
+    {
+      "federateType": "SocieteGenerale",
+      "count": 0
+    },
+    {
+      "federateType": "BasicMapper",
+      "count": 0
+    },
+    {
+      "federateType": "ComplexMapper",
+      "count": 0
+    },
+    {
+      "federateType": "DataConversionMapper",
+      "count": 0
+    },
+    {
+      "federateType": "DirectMapper",
+      "count": 0
+    },
+    {
+      "federateType": "OmnetFederate",
+      "count": 0
+    }
+  ]
+}
