@@ -1,0 +1,19 @@
+{
+  "federateRTIInitWaitTimeMs": 200,
+  "federateType": "House",
+  "federationId": "WorkshopExercise",
+  "isLateJoiner": false,
+  "lookAhead": 0.1,
+  "stepSize": 1.0,
+  "solarconversionconstant": 0.194,
+  "uae": 172.0,
+  "tau": 374400.0,
+  "houseeffectivearea": 6.84,
+  "sghc": 0.89,
+  "hpbasepower": 1571.0,
+  "tsp": 20.0,
+  "del": 0.5,
+  "plugload": 1200,
+  "solarpaneleffectivearea": 52.16
+}
+
