@@ -76,6 +76,7 @@
                         </defines>
                         <systemIncludePaths>
                           <systemIncludePath>${build.BOOST_INC_DIR}</systemIncludePath>
+                          <systemIncludePath>${build.BOOST_NETWORK_INC_DIR}</systemIncludePath>
                           <systemIncludePath>${build.RTI_INC_DIR}</systemIncludePath>
                         </systemIncludePaths>
                     </cpp>
@@ -145,6 +146,7 @@
               <build.RTI_INC_DIR>${env.RTI_HOME}/include/hla13</build.RTI_INC_DIR>
               <build.BOOST_INC_DIR>${env.BOOST_INC_DIR}</build.BOOST_INC_DIR>
               <build.BOOST_LIB_DIR>${env.BOOST_LIB_DIR}</build.BOOST_LIB_DIR>
+              <build.BOOST_NETWORK_INC_DIR>${env.BOOST_NETWORK_INC_DIR}</build.BOOST_NETWORK_INC_DIR>
               <build.MYSQL_LIB_DIR>${env.MYSQL_LIB_DIR}</build.MYSQL_LIB_DIR>
             </properties>
             <build>
@@ -178,6 +180,7 @@
               <build.RTI_INC_DIR>${env.RTI_HOME}/include/hla13</build.RTI_INC_DIR>
               <build.BOOST_INC_DIR>/usr/include/boost</build.BOOST_INC_DIR>
               <build.BOOST_LIB_DIR>/usr/lib/x86_64-linux-gnu</build.BOOST_LIB_DIR>
+              <build.BOOST_NETWORK_INC_DIR>${env.BOOST_NETWORK_INC_DIR}</build.BOOST_NETWORK_INC_DIR>
               <build.MYSQL_LIB_DIR>/usr/lib/</build.MYSQL_LIB_DIR>
             </properties>
             <build>
