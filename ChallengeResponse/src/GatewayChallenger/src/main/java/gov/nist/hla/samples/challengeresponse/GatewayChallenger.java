@@ -127,6 +127,11 @@ public class GatewayChallenger implements GatewayCallback {
     }
 
     @Override
+    public void prepareToResign() {
+        // do nothing
+    }
+
+    @Override
     public void terminate() {
         responseTracker.checkDelinquent(gateway.getLogicalTime());
     }

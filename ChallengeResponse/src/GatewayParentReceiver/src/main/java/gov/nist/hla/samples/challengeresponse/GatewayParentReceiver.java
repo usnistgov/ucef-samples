@@ -90,6 +90,11 @@ public class GatewayParentReceiver implements GatewayCallback {
     }
 
     @Override
+    public void prepareToResign() {
+        // do nothing
+    }
+
+    @Override
     public void terminate() {
         // do nothing
     }
