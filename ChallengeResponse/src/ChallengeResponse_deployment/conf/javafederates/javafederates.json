@@ -1,0 +1,41 @@
+{
+  "federateTypesAllowed": [
+    "GatewayParentReceiver",
+    "GatewayChallenger",
+    "GatewayResponder",
+    "JavaParentReceiver",
+    "JavaChallenger",
+    "JavaResponder"
+  ],
+  "expectedFederates": [
+    {
+      "federateType": "GatewayParentReceiver",
+      "count": 1
+    },
+    {
+      "federateType": "GatewayChallenger",
+      "count": 1
+    },
+    {
+      "federateType": "GatewayResponder",
+      "count": 1
+    },
+    {
+      "federateType": "JavaParentReceiver",
+      "count": 1
+    },
+    {
+      "federateType": "JavaChallenger",
+      "count": 1
+    },
+    {
+      "federateType": "JavaResponder",
+      "count": 1
+    }
+  ],
+  "lateJoinerFederates": [],
+  "coaDefinition": "conf/NewcoaConfig.json",
+  "coaSelection": "conf/javafederates/coaSelection_javafederates.json",
+  "terminateOnCOAFinish": false
+}
+
