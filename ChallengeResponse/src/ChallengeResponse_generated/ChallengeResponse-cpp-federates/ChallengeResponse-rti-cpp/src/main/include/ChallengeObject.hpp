@@ -58,6 +58,8 @@
 #include "ParentObject.hpp"
 #include "C2WException.hpp"
 
+#include <boost/unordered_set.hpp>
+
 class ChallengeObject : public ParentObject {
 public:
 	typedef ParentObject Super;
@@ -76,6 +78,8 @@ public:
 	static SP create( void ) { return SP( new ChallengeObject ); }
 
 private:
+	static boost::unordered_set< std::string > m_publishedAttributeNames;
+
 	static int &get_beginIndex_handle_var( void ) {
 		static int beginIndex_handle;
 		return beginIndex_handle;
@@ -227,10 +231,12 @@ public:
 public:
 	static void publish_beginIndex( void ) {
 		getPublishAttributeNameVector().push_back( "beginIndex" );
+		m_publishedAttributeNames.emplace( "beginIndex" );
 	}
 
 	static void unpublish_beginIndex( void ) {
 		getPublishAttributeNameVector().erase( std::remove( getPublishAttributeNameVector().begin(), getPublishAttributeNameVector().end(), "beginIndex" ), getPublishAttributeNameVector().end() );
+		m_publishedAttributeNames.erase( "beginIndex" );
 	}
 
 	static void subscribe_beginIndex( void ) {
@@ -243,10 +249,12 @@ public:
 
 	static void publish_challengeId( void ) {
 		getPublishAttributeNameVector().push_back( "challengeId" );
+		m_publishedAttributeNames.emplace( "challengeId" );
 	}
 
 	static void unpublish_challengeId( void ) {
 		getPublishAttributeNameVector().erase( std::remove( getPublishAttributeNameVector().begin(), getPublishAttributeNameVector().end(), "challengeId" ), getPublishAttributeNameVector().end() );
+		m_publishedAttributeNames.erase( "challengeId" );
 	}
 
 	static void subscribe_challengeId( void ) {
@@ -259,10 +267,12 @@ public:
 
 	static void publish_stringValue( void ) {
 		getPublishAttributeNameVector().push_back( "stringValue" );
+		m_publishedAttributeNames.emplace( "stringValue" );
 	}
 
 	static void unpublish_stringValue( void ) {
 		getPublishAttributeNameVector().erase( std::remove( getPublishAttributeNameVector().begin(), getPublishAttributeNameVector().end(), "stringValue" ), getPublishAttributeNameVector().end() );
+		m_publishedAttributeNames.erase( "stringValue" );
 	}
 
 	static void subscribe_stringValue( void ) {

@@ -239,28 +239,24 @@ std::ostream &operator<<( std::ostream &os, const ChallengeObject &entity ) {
 
 ChallengeObject::AttributeHandleValuePairSetSP ChallengeObject::createDatamemberHandleValuePairSet( bool force ) {
 	AttributeHandleValuePairSetSP datamembers = AttributeHandleValuePairSetSP(RTI::AttributeSetFactory::create(3));
-
-	// searching the published attribute name vector is a very inefficient solution
-	// however, strings are more reliable than integer handles when dealing with inherited attributes
-	const StringVector &publishedNames = getPublishAttributeNameVector();
 	std::string stringConversion;
 	bool isPublished;
 
-	isPublished = (std::find(publishedNames.begin(), publishedNames.end(), "beginIndex") != publishedNames.end());
+	isPublished = (m_publishedAttributeNames.find("beginIndex") != m_publishedAttributeNames.end());
 	if (  isPublished && _beginIndex.shouldBeUpdated( force )  ) {
 		stringConversion = static_cast< std::string >(  TypeMedley( get_beginIndex() )  );
 		datamembers->add( get_beginIndex_handle(), stringConversion.c_str(), stringConversion.size() );
 		_beginIndex.setHasBeenUpdated();
 	}
 
-	isPublished = (std::find(publishedNames.begin(), publishedNames.end(), "challengeId") != publishedNames.end());
+	isPublished = (m_publishedAttributeNames.find("challengeId") != m_publishedAttributeNames.end());
 	if (  isPublished && _challengeId.shouldBeUpdated( force )  ) {
 		stringConversion = static_cast< std::string >(  TypeMedley( get_challengeId() )  );
 		datamembers->add( get_challengeId_handle(), stringConversion.c_str(), stringConversion.size() );
 		_challengeId.setHasBeenUpdated();
 	}
 
-	isPublished = (std::find(publishedNames.begin(), publishedNames.end(), "stringValue") != publishedNames.end());
+	isPublished = (m_publishedAttributeNames.find("stringValue") != m_publishedAttributeNames.end());
 	if (  isPublished && _stringValue.shouldBeUpdated( force )  ) {
 		stringConversion = static_cast< std::string >(  TypeMedley( get_stringValue() )  );
 		datamembers->add( get_stringValue_handle(), stringConversion.c_str(), stringConversion.size() );
@@ -269,3 +265,5 @@ ChallengeObject::AttributeHandleValuePairSetSP ChallengeObject::createDatamember
 
 	return datamembers;
 }
+
+boost::unordered_set< std::string > ChallengeObject::m_publishedAttributeNames;

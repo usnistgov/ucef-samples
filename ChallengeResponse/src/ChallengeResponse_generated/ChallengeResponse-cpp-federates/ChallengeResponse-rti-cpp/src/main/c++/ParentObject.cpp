@@ -224,14 +224,10 @@ std::ostream &operator<<( std::ostream &os, const ParentObject &entity ) {
 
 ParentObject::AttributeHandleValuePairSetSP ParentObject::createDatamemberHandleValuePairSet( bool force ) {
 	AttributeHandleValuePairSetSP datamembers = AttributeHandleValuePairSetSP(RTI::AttributeSetFactory::create(1));
-
-	// searching the published attribute name vector is a very inefficient solution
-	// however, strings are more reliable than integer handles when dealing with inherited attributes
-	const StringVector &publishedNames = getPublishAttributeNameVector();
 	std::string stringConversion;
 	bool isPublished;
 
-	isPublished = (std::find(publishedNames.begin(), publishedNames.end(), "challengeId") != publishedNames.end());
+	isPublished = (m_publishedAttributeNames.find("challengeId") != m_publishedAttributeNames.end());
 	if (  isPublished && _challengeId.shouldBeUpdated( force )  ) {
 		stringConversion = static_cast< std::string >(  TypeMedley( get_challengeId() )  );
 		datamembers->add( get_challengeId_handle(), stringConversion.c_str(), stringConversion.size() );
@@ -240,3 +236,5 @@ ParentObject::AttributeHandleValuePairSetSP ParentObject::createDatamemberHandle
 
 	return datamembers;
 }
+
+boost::unordered_set< std::string > ParentObject::m_publishedAttributeNames;
