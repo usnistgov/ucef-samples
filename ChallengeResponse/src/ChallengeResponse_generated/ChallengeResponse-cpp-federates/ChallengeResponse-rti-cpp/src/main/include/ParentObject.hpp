@@ -58,6 +58,8 @@
 #include "ObjectRoot.hpp"
 #include "C2WException.hpp"
 
+#include <boost/unordered_set.hpp>
+
 class ParentObject : public ObjectRoot {
 public:
 	typedef ObjectRoot Super;
@@ -76,6 +78,8 @@ public:
 	static SP create( void ) { return SP( new ParentObject ); }
 
 private:
+	static boost::unordered_set< std::string > m_publishedAttributeNames;
+
 	static int &get_challengeId_handle_var( void ) {
 		static int challengeId_handle;
 		return challengeId_handle;
@@ -211,10 +215,12 @@ public:
 public:
 	static void publish_challengeId( void ) {
 		getPublishAttributeNameVector().push_back( "challengeId" );
+		m_publishedAttributeNames.emplace( "challengeId" );
 	}
 
 	static void unpublish_challengeId( void ) {
 		getPublishAttributeNameVector().erase( std::remove( getPublishAttributeNameVector().begin(), getPublishAttributeNameVector().end(), "challengeId" ), getPublishAttributeNameVector().end() );
+		m_publishedAttributeNames.erase( "challengeId" );
 	}
 
 	static void subscribe_challengeId( void ) {
