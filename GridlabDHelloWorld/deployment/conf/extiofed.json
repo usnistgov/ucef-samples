@@ -1,8 +1,0 @@
-{
-  "federateRTIInitWaitTimeMs": 200,
-  "federateType": "ExtIOFed",
-  "federationId": "GridlabDHelloWorld",
-  "isLateJoiner": false,
-  "lookAhead": "0.2",
-  "stepSize": "1.0"
-}
