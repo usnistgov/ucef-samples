@@ -21,8 +21,6 @@ public class JavaParentReceiver extends JavaParentReceiverBase {
     private final static Logger log = LogManager.getLogger();
 
     private double currentTime = 0;
-    
-    private boolean exitCondition = false;
 
     private Set<String> knownId = new HashSet<String>();
 
@@ -89,15 +87,15 @@ public class JavaParentReceiver extends JavaParentReceiverBase {
 
             checkReceivedSubscriptions();
 
-            currentTime += super.getStepSize();
-            AdvanceTimeRequest newATR = new AdvanceTimeRequest(currentTime);
-            putAdvanceTimeRequest(newATR);
-            atr.requestSyncEnd();
-            atr = newATR;
+            if (!exitCondition) {
+                currentTime += super.getStepSize();
+                AdvanceTimeRequest newATR = new AdvanceTimeRequest(currentTime);
+                putAdvanceTimeRequest(newATR);
+                atr.requestSyncEnd();
+                atr = newATR;
+            }
         }
-
-        // while loop finished, notify FederationManager about resign
-        super.notifyFederationOfResign();
+        exitGracefully();
     }
 
     private void handleInteractionClass(Response interaction) {
@@ -136,8 +134,10 @@ public class JavaParentReceiver extends JavaParentReceiverBase {
             JavaParentReceiver federate = new JavaParentReceiver(federateConfig);
             federate.execute();
             log.info("Done.");
+            System.exit(0);
         } catch (Exception e) {
             log.error(e);
+            System.exit(1);
         }
     }
 }

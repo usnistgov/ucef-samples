@@ -18,8 +18,6 @@ public class JavaResponder extends JavaResponderBase {
     private final static Logger log = LogManager.getLogger();
 
     private double currentTime = 0;
-    
-    private boolean exitCondition = false;
 
     public JavaResponder(FederateConfig params) throws Exception {
         super(params);
@@ -81,15 +79,15 @@ public class JavaResponder extends JavaResponderBase {
 
             checkReceivedSubscriptions();
 
-            currentTime += super.getStepSize();
-            AdvanceTimeRequest newATR = new AdvanceTimeRequest(currentTime);
-            putAdvanceTimeRequest(newATR);
-            atr.requestSyncEnd();
-            atr = newATR;
+            if (!exitCondition) {
+                currentTime += super.getStepSize();
+                AdvanceTimeRequest newATR = new AdvanceTimeRequest(currentTime);
+                putAdvanceTimeRequest(newATR);
+                atr.requestSyncEnd();
+                atr = newATR;
+            }
         }
-
-        // while loop finished, notify FederationManager about resign
-        super.notifyFederationOfResign();
+        exitGracefully();
     }
 
     private void handleInteractionClass(ChallengeInteraction interaction) {
@@ -123,8 +121,10 @@ public class JavaResponder extends JavaResponderBase {
             JavaResponder federate = new JavaResponder(federateConfig);
             federate.execute();
             log.info("Done.");
+            System.exit(0);
         } catch (Exception e) {
             log.error(e);
+            System.exit(1);
         }
     }
 }

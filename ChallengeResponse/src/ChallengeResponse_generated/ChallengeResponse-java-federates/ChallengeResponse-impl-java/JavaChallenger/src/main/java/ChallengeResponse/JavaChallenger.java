@@ -24,8 +24,6 @@ public class JavaChallenger extends JavaChallengerBase {
     private ResponseTracker responseTracker;
 
     private double currentTime = 0;
-    
-    private boolean exitCondition = false;
 
     private int sequenceNumber = 0;
 
@@ -90,16 +88,17 @@ public class JavaChallenger extends JavaChallengerBase {
             checkReceivedSubscriptions();
             responseTracker.checkDelinquent(currentTime);
 
-            currentTime += super.getStepSize();
-            AdvanceTimeRequest newATR = new AdvanceTimeRequest(currentTime);
-            putAdvanceTimeRequest(newATR);
-            atr.requestSyncEnd();
-            atr = newATR;
+            if (!exitCondition) {
+                currentTime += super.getStepSize();
+                AdvanceTimeRequest newATR = new AdvanceTimeRequest(currentTime);
+                putAdvanceTimeRequest(newATR);
+                atr.requestSyncEnd();
+                atr = newATR;
+            }
         }
         responseTracker.checkDelinquent(currentTime); // likely not called
 
-        // while loop finished, notify FederationManager about resign
-        super.notifyFederationOfResign();
+        exitGracefully();
     }
 
     private void handleInteractionClass(Response interaction) {
@@ -169,8 +168,10 @@ public class JavaChallenger extends JavaChallengerBase {
             JavaChallenger federate = new JavaChallenger(federateConfig);
             federate.execute();
             log.info("Done.");
+            System.exit(0);
         } catch (Exception e) {
             log.error(e);
+            System.exit(1);
         }
     }
 }
