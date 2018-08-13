@@ -1,0 +1,9 @@
+{
+  "federateRTIInitWaitTimeMs": 200,
+  "federateType": "TestFederate",
+  "federationId": "GLDExample",
+  "isLateJoiner": false,
+  "lookAhead": "0.2",
+  "stepSize": "1.0",
+  "useCelsius": true
+}
