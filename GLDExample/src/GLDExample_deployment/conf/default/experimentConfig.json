@@ -1,0 +1,26 @@
+{
+  "federateTypesAllowed": [
+    "GLDFederate",
+    "TestFederate"
+  ],
+  "expectedFederates": [
+    {
+      "federateType": "GLDFederate",
+      "count": 1
+    },
+    {
+      "federateType": "TestFederate",
+      "count": 1
+    }
+  ],
+  "lateJoinerFederates": [
+    {
+      "federateType": "GLDFederate",
+      "count": 0
+    },
+    {
+      "federateType": "TestFederate",
+      "count": 0
+    }
+  ]
+}
