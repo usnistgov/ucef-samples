@@ -79,7 +79,7 @@ public class GatewayResponder implements GatewayCallback {
     public void receiveObject(Double timeStep, String className, String instanceName, Map<String, String> attributes) {
         if (className.equals(OBJECT_CHALLENGE)) {
             log.debug("received {}:{} as {} @ t={}", className, instanceName, attributes, timeStep);
-            processChallenge(attributes);
+            processChallenge(gateway.getObjectState(instanceName));
         } else {
             ObjectClassType object = gateway.getObjectModel().getObject(className);
             if (!gateway.getObjectModel().isCoreObject(object)) {
