@@ -1,0 +1,8 @@
+./input/fedManager
+./output/fedManager
+./input/JavaFederate_Adder_0
+./output/JavaFederate_Adder_0
+./input/JavaFederate_InputSource_0
+./output/JavaFederate_InputSource_0
+./input/JavaFederate_Reporter_0
+./output/JavaFederate_Reporter_0

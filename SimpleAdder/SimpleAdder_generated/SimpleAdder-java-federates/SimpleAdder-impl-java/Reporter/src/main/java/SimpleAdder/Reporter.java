@@ -13,28 +13,30 @@ import org.apache.logging.log4j.Logger;
  * demonstrates how to receive an interaction: see {@link #handleInteractionClass(AdderOutput)}.
  */
 public class Reporter extends ReporterBase {
+    private final static Logger log = LogManager.getLogger();
 
-    private final static Logger log = LogManager.getLogger(Reporter.class);
-
-    double currentTime = 0;
+    private double currentTime = 0;
 
     public Reporter(FederateConfig params) throws Exception {
         super(params);
     }
 
-    private void CheckReceivedSubscriptions(String s) {
+    private void checkReceivedSubscriptions() {
 
         InteractionRoot interaction = null;
         while ((interaction = getNextInteractionNoWait()) != null) {
             if (interaction instanceof AdderOutput) {
                 handleInteractionClass((AdderOutput) interaction);
             }
-            log.info("Interaction received and handled: " + s);
+            else {
+                log.debug("unhandled interaction: {}", interaction.getClassName());
+            }
         }
      }
 
     private void execute() throws Exception {
         if(super.isLateJoiner()) {
+            log.info("turning off time regulation (late joiner)");
             currentTime = super.getLBTS() - super.getLookAhead();
             super.disableTimeRegulation();
         }
@@ -43,44 +45,38 @@ public class Reporter extends ReporterBase {
         putAdvanceTimeRequest(atr);
 
         if(!super.isLateJoiner()) {
+            log.info("waiting on readyToPopulate...");
             readyToPopulate();
+            log.info("...synchronized on readyToPopulate");
         }
 
         if(!super.isLateJoiner()) {
+            log.info("waiting on readyToRun...");
             readyToRun();
+            log.info("...synchronized on readyToRun");
         }
 
         startAdvanceTimeThread();
+        log.info("started logical time progression");
 
-        // this is the exit condition of the following while loop
-        // it is used to break the loop so that latejoiner federates can
-        // notify the federation manager that they left the federation
-        boolean exitCondition = false;
-
-        while (true) {
-            currentTime += super.getStepSize();
-
+        while (!exitCondition) {
             atr.requestSyncStart();
             enteredTimeGrantedState();
 
             log.info("t={}", this.getCurrentTime());
-            CheckReceivedSubscriptions("Main Loop");
+            checkReceivedSubscriptions();
 
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            // DO NOT MODIFY FILE BEYOND THIS LINE
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            AdvanceTimeRequest newATR = new AdvanceTimeRequest(currentTime);
-            putAdvanceTimeRequest(newATR);
-            atr.requestSyncEnd();
-            atr = newATR;
-
-            if(exitCondition) {
-                break;
+            if (!exitCondition) {
+                currentTime += super.getStepSize();
+                AdvanceTimeRequest newATR = new AdvanceTimeRequest(currentTime);
+                putAdvanceTimeRequest(newATR);
+                atr.requestSyncEnd();
+                atr = newATR;
             }
         }
 
-        // while loop finished, notify FederationManager about resign
-        super.notifyFederationOfResign();
+        // call exitGracefully to shut down federate
+        exitGracefully();
     }
 
     private void handleInteractionClass(AdderOutput interaction) {
@@ -95,12 +91,10 @@ public class Reporter extends ReporterBase {
             FederateConfig federateConfig = federateConfigParser.parseArgs(args, FederateConfig.class);
             Reporter federate = new Reporter(federateConfig);
             federate.execute();
-
+            log.info("Done.");
             System.exit(0);
         } catch (Exception e) {
-            log.error("There was a problem executing the Reporter federate: {}", e.getMessage());
             log.error(e);
-
             System.exit(1);
         }
     }

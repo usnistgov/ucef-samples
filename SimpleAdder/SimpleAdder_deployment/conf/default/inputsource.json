@@ -4,7 +4,5 @@
   "federationId": "SimpleAdder",
   "isLateJoiner": false,
   "lookAhead": "0.2",
-  "stepSize": "1.0",
-  "numberOfInputs": 2,
-  "maxValue": 10
+  "stepSize": "1.0"
 }

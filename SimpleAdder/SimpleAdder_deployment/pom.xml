@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>gov.nist.hla.adder</groupId>
+	<groupId>gov.nist.hla.samples</groupId>
 	<artifactId>SimpleAdder_exec</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
@@ -9,6 +9,7 @@
 	<properties>
 		<federation.name>SimpleAdder</federation.name>
 		<federation.version>0.1.0-SNAPSHOT</federation.version>
+		<experiment.name>experiment1</experiment.name>
 		<cpswt.version>0.6.0-SNAPSHOT</cpswt.version>
 		<nar.version>3.3.0</nar.version>
 	</properties>
@@ -16,25 +17,25 @@
 	<dependencies>
 		
 		<dependency><!-- The depenency for the generated code-->
-			<groupId>gov.nist.hla.adder</groupId>
+			<groupId>gov.nist.hla.samples</groupId>
 			<artifactId>SimpleAdder-base-java</artifactId>
 			<version>0.1.0-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency><!-- The depenency for the user written code-->
-			<groupId>gov.nist.hla.adder</groupId>
+			<groupId>gov.nist.hla.samples</groupId>
 			<artifactId>Adder</artifactId>
 			<version>0.1.0-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency><!-- The depenency for the user written code-->
-			<groupId>gov.nist.hla.adder</groupId>
+			<groupId>gov.nist.hla.samples</groupId>
 			<artifactId>InputSource</artifactId>
 			<version>0.1.0-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency><!-- The depenency for the user written code-->
-			<groupId>gov.nist.hla.adder</groupId>
+			<groupId>gov.nist.hla.samples</groupId>
 			<artifactId>Reporter</artifactId>
 			<version>0.1.0-SNAPSHOT</version>
 		</dependency>
@@ -65,125 +66,127 @@
 		    	</includes>
 		    </resource>
 		</resources>
-		<plugins>
- 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>2.4.3</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-						<configuration>
-							<filters>
-								<filter>
-									<artifact>*:*</artifact>
-									<excludes>
-										<exclude>META-INF/*.SF</exclude>
-										<exclude>META-INF/*.DSA</exclude>
-										<exclude>META-INF/*.RSA</exclude>
-									</excludes>
-								</filter>
-							</filters>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-		      <groupId>org.apache.maven.plugins</groupId>
-		      <artifactId>maven-surefire-plugin</artifactId>
-		      <version>2.19.1</version>
-		      <configuration>
-		        <forkMode>once</forkMode>
-		        <argLine>-Djava.library.path=${project.basedir}/target/nar/processid-${cpswt.version}-amd64-Linux-gpp-jni/lib/amd64-Linux-gpp/jni/</argLine>
-		      </configuration>
-		    </plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.10</version>
-				<executions>
-					<execution>
-						<id>copy-dependencies</id>
-						<phase>package</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/lib</outputDirectory>
-							<overWriteReleases>false</overWriteReleases>
-							<overWriteSnapshots>false</overWriteSnapshots>
-							<overWriteIfNewer>true</overWriteIfNewer>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-		        <groupId>com.github.maven-nar</groupId>
-		        <artifactId>nar-maven-plugin</artifactId>
-		        <version>${nar.version}</version>
-		        <extensions>true</extensions>
-		        <executions>
-					<execution>
-						<id>nar-download</id>
-						<goals>
-							<goal>nar-download</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>nar-unpack</id>
-						<goals>
-							<goal>nar-unpack</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>nar-test-unpack</id>
-						<goals>
-							<goal>nar-test-unpack</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>nar-integration-test</id>
-						<goals>
-							<goal>nar-integration-test</goal>
-						</goals>
-					</execution>
-				</executions>
-      		</plugin>
-      		<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.5.1</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
-			<plugin>
-            	<groupId>org.apache.maven.plugins</groupId>
-            	<artifactId>maven-antrun-plugin</artifactId>
-            	<version>1.7</version>
-                <executions>
-                    <execution>
-                        <phase>process-resources</phase>
-                        <configuration>
-                            <tasks>
-                                <echo message="Creating folder for the execution..." />
-                                
-                                <mkdir dir="${project.basedir}/target/Adder" />
-                                <mkdir dir="${project.basedir}/target/InputSource" />
-                                <mkdir dir="${project.basedir}/target/Reporter" />
-                        	</tasks>
-                    	</configuration>
-	                    <goals>
-	                        <goal>run</goal>
-	                    </goals>
-                	</execution>
-            	</executions>
-            </plugin>
-		</plugins>
+		<pluginManagement>
+			<plugins>
+	 			<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-shade-plugin</artifactId>
+					<version>2.4.3</version>
+					<executions>
+						<execution>
+							<phase>package</phase>
+							<goals>
+								<goal>shade</goal>
+							</goals>
+							<configuration>
+								<filters>
+									<filter>
+										<artifact>*:*</artifact>
+										<excludes>
+											<exclude>META-INF/*.SF</exclude>
+											<exclude>META-INF/*.DSA</exclude>
+											<exclude>META-INF/*.RSA</exclude>
+										</excludes>
+									</filter>
+								</filters>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+				  <groupId>org.apache.maven.plugins</groupId>
+				  <artifactId>maven-surefire-plugin</artifactId>
+				  <version>2.19.1</version>
+				  <configuration>
+				    <forkMode>once</forkMode>
+				    <argLine>-Djava.library.path=${project.basedir}/target/nar/processid-${cpswt.version}-amd64-Linux-gpp-jni/lib/amd64-Linux-gpp/jni/</argLine>
+				  </configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>2.10</version>
+					<executions>
+						<execution>
+							<id>copy-dependencies</id>
+							<phase>package</phase>
+							<goals>
+								<goal>copy-dependencies</goal>
+							</goals>
+							<configuration>
+								<outputDirectory>${project.build.directory}/lib</outputDirectory>
+								<overWriteReleases>false</overWriteReleases>
+								<overWriteSnapshots>false</overWriteSnapshots>
+								<overWriteIfNewer>true</overWriteIfNewer>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+				    <groupId>com.github.maven-nar</groupId>
+				    <artifactId>nar-maven-plugin</artifactId>
+				    <version>${nar.version}</version>
+				    <extensions>true</extensions>
+				    <executions>
+						<execution>
+							<id>nar-download</id>
+							<goals>
+								<goal>nar-download</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>nar-unpack</id>
+							<goals>
+								<goal>nar-unpack</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>nar-test-unpack</id>
+							<goals>
+								<goal>nar-test-unpack</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>nar-integration-test</id>
+							<goals>
+								<goal>nar-integration-test</goal>
+							</goals>
+						</execution>
+					</executions>
+		  		</plugin>
+		  		<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.5.1</version>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+					</configuration>
+				</plugin>
+				<plugin>
+		        	<groupId>org.apache.maven.plugins</groupId>
+		        	<artifactId>maven-antrun-plugin</artifactId>
+		        	<version>1.7</version>
+		            <executions>
+		                <execution>
+		                    <phase>process-resources</phase>
+		                    <configuration>
+		                        <tasks>
+		                            <echo message="Creating folder for the execution..." />
+		                            
+		                            <mkdir dir="${project.basedir}/target/Adder" />
+		                            <mkdir dir="${project.basedir}/target/InputSource" />
+		                            <mkdir dir="${project.basedir}/target/Reporter" />
+		                    	</tasks>
+		                	</configuration>
+			                <goals>
+			                    <goal>run</goal>
+			                </goals>
+		            	</execution>
+		        	</executions>
+		        </plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 	
@@ -231,21 +234,21 @@
             <id>Adder</id>
             <properties>
                 <federate.name>Adder</federate.name>
-                <federate.configFile>conf/adder.json</federate.configFile>
+                <federate.configFile>adder.json</federate.configFile>
             </properties>
         </profile>
         <profile>
             <id>InputSource</id>
             <properties>
                 <federate.name>InputSource</federate.name>
-                <federate.configFile>conf/inputsource.json</federate.configFile>
+                <federate.configFile>inputsource.json</federate.configFile>
             </properties>
         </profile>
         <profile>
             <id>Reporter</id>
             <properties>
                 <federate.name>Reporter</federate.name>
-                <federate.configFile>conf/reporter.json</federate.configFile>
+                <federate.configFile>reporter.json</federate.configFile>
             </properties>
         </profile>
 		<profile>
@@ -322,7 +325,7 @@
                             <mainClass>SimpleAdder.${federate.name}</mainClass>
 							<arguments>
                                 <argument>-configFile</argument>
-                                <argument>${federate.configFile}</argument>
+                                <argument>conf/${experiment.name}/${federate.configFile}</argument>
 					    	</arguments>
 						</configuration>
 					</plugin>
@@ -389,7 +392,7 @@
               				<executable>./SimpleAdder-${federate.name}-cpp</executable>
 							<arguments>
 								 <argument>--configFile</argument>
-                                <argument>${project.basedir}/${federate.configFile}</argument>
+                                <argument>${project.basedir}/conf/${experiment.name}/${federate.configFile}</argument>
 					    	</arguments>
 					    	<environmentVariables>
 			                    <EXEDIR>${project.basedir}/target/${federate.name}</EXEDIR>

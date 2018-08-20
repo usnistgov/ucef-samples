@@ -18,11 +18,10 @@ import org.apache.logging.log4j.Logger;
  * See {@link #handleObjectClass(Operand)} for how to receive an object reflection.
  */
 public class Adder extends AdderBase {
+    private final static Logger log = LogManager.getLogger();
 
-    private final static Logger log = LogManager.getLogger(Adder.class);
+    private double currentTime = 0;
 
-    double currentTime = 0;
-    
     /**
      * The sum of the operands received in the current logical time step.
      */
@@ -32,7 +31,7 @@ public class Adder extends AdderBase {
         super(params);
     }
 
-    private void CheckReceivedSubscriptions(String s) {
+    private void checkReceivedSubscriptions() {
 
         ObjectReflector reflector = null;
         while ((reflector = getNextObjectReflectorNoWait()) != null) {
@@ -41,12 +40,15 @@ public class Adder extends AdderBase {
             if (object instanceof Operand) {
                 handleObjectClass((Operand) object);
             }
-            log.info("Object received and handled: " + s);
+            else {
+                log.debug("unhandled object reflection: {}", object.getClassName());
+            }
         }
     }
 
     private void execute() throws Exception {
         if(super.isLateJoiner()) {
+            log.info("turning off time regulation (late joiner)");
             currentTime = super.getLBTS() - super.getLookAhead();
             super.disableTimeRegulation();
         }
@@ -55,46 +57,40 @@ public class Adder extends AdderBase {
         putAdvanceTimeRequest(atr);
 
         if(!super.isLateJoiner()) {
+            log.info("waiting on readyToPopulate...");
             readyToPopulate();
+            log.info("...synchronized on readyToPopulate");
         }
 
         if(!super.isLateJoiner()) {
+            log.info("waiting on readyToRun...");
             readyToRun();
+            log.info("...synchronized on readyToRun");
         }
 
         startAdvanceTimeThread();
+        log.info("started logical time progression");
 
-        // this is the exit condition of the following while loop
-        // it is used to break the loop so that latejoiner federates can
-        // notify the federation manager that they left the federation
-        boolean exitCondition = false;
-
-        while (true) {
-            currentTime += super.getStepSize();
-
+        while (!exitCondition) {
             atr.requestSyncStart();
             enteredTimeGrantedState();
-            
+
             log.info("t={}", this.getCurrentTime());
             sum = 0; // reset the sum before we check for received operands (next line)
-            CheckReceivedSubscriptions("Main Loop");
+            checkReceivedSubscriptions();
             sendAdderOutput();
 
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            // DO NOT MODIFY FILE BEYOND THIS LINE
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            AdvanceTimeRequest newATR = new AdvanceTimeRequest(currentTime);
-            putAdvanceTimeRequest(newATR);
-            atr.requestSyncEnd();
-            atr = newATR;
-
-            if(exitCondition) {
-                break;
+            if (!exitCondition) {
+                currentTime += super.getStepSize();
+                AdvanceTimeRequest newATR = new AdvanceTimeRequest(currentTime);
+                putAdvanceTimeRequest(newATR);
+                atr.requestSyncEnd();
+                atr = newATR;
             }
         }
 
-        // while loop finished, notify FederationManager about resign
-        super.notifyFederationOfResign();
+        // call exitGracefully to shut down federate
+        exitGracefully();
     }
 
     /**
@@ -112,7 +108,7 @@ public class Adder extends AdderBase {
         sum += object.get_value();
         log.info("\treceived operand: {}", object.get_value());
     }
-    
+
     /**
      * This method publishes the computed sum to the rest of the federation.
      * 
@@ -126,8 +122,8 @@ public class Adder extends AdderBase {
         AdderOutput output = create_AdderOutput();
         // 2. Set the interaction parameters using the WebGME generated methods set_<ParameterName>
         output.set_sum(sum);
-        // 3. Publish the interaction to HLA for the next logical time step (currentTime has already been incremented)
-        output.sendInteraction(getLRC(), currentTime);
+        // 3. Publish the interaction to HLA for the next logical time step (currentTime has already passed)
+        output.sendInteraction(getLRC(), currentTime + this.getLookAhead());
     }
 
     public static void main(String[] args) {
@@ -136,12 +132,10 @@ public class Adder extends AdderBase {
             FederateConfig federateConfig = federateConfigParser.parseArgs(args, FederateConfig.class);
             Adder federate = new Adder(federateConfig);
             federate.execute();
-
+            log.info("Done.");
             System.exit(0);
         } catch (Exception e) {
-            log.error("There was a problem executing the Adder federate: {}", e.getMessage());
             log.error(e);
-
             System.exit(1);
         }
     }
