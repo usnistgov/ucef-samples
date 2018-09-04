@@ -1,385 +1,336 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<objectModel xsi:schemaLocation="http://standards.ieee.org/IEEE1516-2010 http://standards.ieee.org/downloads/1516/1516.2-2010/IEEE1516-DIF-2010.xsd" xmlns="http://standards.ieee.org/IEEE1516-2010" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <modelIdentification />
-    <objects>
-        <objectClass>
-            <name>ObjectRoot</name>
-            <sharing>Neither</sharing>
-            <semantics></semantics>
-        <objectClass>
-            <name>FederateObject</name>
-            <sharing>PublishSubscribe</sharing>
-            <semantics></semantics>
-            <attribute>
-                <name>FederateHandle</name>
-                <dataType>int</dataType>
-                <updateType>NA</updateType>
-                <ownership>NoTransfer</ownership>
-                <sharing>PublishSubscribe</sharing>
-                <dimensions></dimensions>
-                <transportation>HLAreliable</transportation>
-                <order>TimeStamp</order>
-                <semantics></semantics>
-            </attribute>
-            <attribute>
-                <name>FederateHost</name>
-                <dataType>String</dataType>
-                <updateType>NA</updateType>
-                <ownership>NoTransfer</ownership>
-                <sharing>PublishSubscribe</sharing>
-                <dimensions></dimensions>
-                <transportation>HLAreliable</transportation>
-                <order>TimeStamp</order>
-                <semantics></semantics>
-            </attribute>
-            <attribute>
-                <name>FederateType</name>
-                <dataType>String</dataType>
-                <updateType>NA</updateType>
-                <ownership>NoTransfer</ownership>
-                <sharing>PublishSubscribe</sharing>
-                <dimensions></dimensions>
-                <transportation>HLAreliable</transportation>
-                <order>TimeStamp</order>
-                <semantics></semantics>
-            </attribute>
-        </objectClass>
-        <objectClass>
-            <name>GLDObject</name>
-            <sharing>PublishSubscribe</sharing>
-            <semantics></semantics>
-            <attribute>
-                <name>name</name>
-                <dataType>String</dataType>
-                <updateType>NA</updateType>
-                <ownership>NoTransfer</ownership>
-                <sharing>PublishSubscribe</sharing>
-                <dimensions></dimensions>
-                <transportation>HLAreliable</transportation>
-                <order>TimeStamp</order>
-                <semantics></semantics>
-            </attribute>
-        <objectClass>
-            <name>CoolingControlObject</name>
-            <sharing>PublishSubscribe</sharing>
-            <semantics></semantics>
-            <attribute>
-                <name>cooling_setpoint</name>
-                <dataType>double</dataType>
-                <updateType>NA</updateType>
-                <ownership>NoTransfer</ownership>
-                <sharing>PublishSubscribe</sharing>
-                <dimensions></dimensions>
-                <transportation>HLAreliable</transportation>
-                <order>TimeStamp</order>
-                <semantics></semantics>
-            </attribute>
-        </objectClass>
-        <objectClass>
-            <name>HouseObject</name>
-            <sharing>PublishSubscribe</sharing>
-            <semantics></semantics>
-            <attribute>
-                <name>air_temperature</name>
-                <dataType>double</dataType>
-                <updateType>NA</updateType>
-                <ownership>NoTransfer</ownership>
-                <sharing>PublishSubscribe</sharing>
-                <dimensions></dimensions>
-                <transportation>HLAreliable</transportation>
-                <order>TimeStamp</order>
-                <semantics></semantics>
-            </attribute>
-            <attribute>
-                <name>compressor_count</name>
-                <dataType>int</dataType>
-                <updateType>NA</updateType>
-                <ownership>NoTransfer</ownership>
-                <sharing>PublishSubscribe</sharing>
-                <dimensions></dimensions>
-                <transportation>HLAreliable</transportation>
-                <order>TimeStamp</order>
-                <semantics></semantics>
-            </attribute>
-            <attribute>
-                <name>compressor_on</name>
-                <dataType>boolean</dataType>
-                <updateType>NA</updateType>
-                <ownership>NoTransfer</ownership>
-                <sharing>PublishSubscribe</sharing>
-                <dimensions></dimensions>
-                <transportation>HLAreliable</transportation>
-                <order>TimeStamp</order>
-                <semantics></semantics>
-            </attribute>
-        </objectClass>
-        </objectClass>
-        </objectClass>
-    </objects>
-    <interactions>
+<objectModel
+  xsi:schemaLocation="http://standards.ieee.org/IEEE1516-2010
+    http://standards.ieee.org/downloads/1516/1516.2-2010/IEEE1516-DIF-2010.xsd"
+  xmlns="http://standards.ieee.org/IEEE1516-2010" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelIdentification/>
+  <objects>
+    <objectClass>
+      <name>ObjectRoot</name>
+      <sharing>Neither</sharing>
+      <semantics></semantics>      <objectClass>
+        <name>FederateObject</name>
+        <sharing>PublishSubscribe</sharing>
+        <semantics></semantics>        <attribute>
+          <name>FederateHandle</name>
+          <dataType>int</dataType>
+          <updateType>NA</updateType>
+          <ownership>NoTransfer</ownership>
+          <sharing>PublishSubscribe</sharing>
+          <dimensions></dimensions>
+          <transportation>HLAreliable</transportation>
+          <order>TimeStamp</order>
+          <semantics></semantics>
+        </attribute>        <attribute>
+          <name>FederateHost</name>
+          <dataType>String</dataType>
+          <updateType>NA</updateType>
+          <ownership>NoTransfer</ownership>
+          <sharing>PublishSubscribe</sharing>
+          <dimensions></dimensions>
+          <transportation>HLAreliable</transportation>
+          <order>TimeStamp</order>
+          <semantics></semantics>
+        </attribute>        <attribute>
+          <name>FederateType</name>
+          <dataType>String</dataType>
+          <updateType>NA</updateType>
+          <ownership>NoTransfer</ownership>
+          <sharing>PublishSubscribe</sharing>
+          <dimensions></dimensions>
+          <transportation>HLAreliable</transportation>
+          <order>TimeStamp</order>
+          <semantics></semantics>
+        </attribute>      </objectClass>
+      <objectClass>
+        <name>CoolingSetPointObject</name>
+        <sharing>PublishSubscribe</sharing>
+        <semantics></semantics>        <attribute>
+          <name>cooling_setpoint</name>
+          <dataType>double</dataType>
+          <updateType>NA</updateType>
+          <ownership>NoTransfer</ownership>
+          <sharing>PublishSubscribe</sharing>
+          <dimensions></dimensions>
+          <transportation>HLAreliable</transportation>
+          <order>TimeStamp</order>
+          <semantics></semantics>
+        </attribute>        <attribute>
+          <name>name</name>
+          <dataType>String</dataType>
+          <updateType>NA</updateType>
+          <ownership>NoTransfer</ownership>
+          <sharing>PublishSubscribe</sharing>
+          <dimensions></dimensions>
+          <transportation>HLAreliable</transportation>
+          <order>TimeStamp</order>
+          <semantics></semantics>
+        </attribute>      </objectClass>
+      <objectClass>
+        <name>HouseObject</name>
+        <sharing>PublishSubscribe</sharing>
+        <semantics></semantics>        <attribute>
+          <name>compressor_count</name>
+          <dataType>int</dataType>
+          <updateType>NA</updateType>
+          <ownership>NoTransfer</ownership>
+          <sharing>PublishSubscribe</sharing>
+          <dimensions></dimensions>
+          <transportation>HLAreliable</transportation>
+          <order>TimeStamp</order>
+          <semantics></semantics>
+        </attribute>        <attribute>
+          <name>compressor_on</name>
+          <dataType>boolean</dataType>
+          <updateType>NA</updateType>
+          <ownership>NoTransfer</ownership>
+          <sharing>PublishSubscribe</sharing>
+          <dimensions></dimensions>
+          <transportation>HLAreliable</transportation>
+          <order>TimeStamp</order>
+          <semantics></semantics>
+        </attribute>        <attribute>
+          <name>name</name>
+          <dataType>String</dataType>
+          <updateType>NA</updateType>
+          <ownership>NoTransfer</ownership>
+          <sharing>PublishSubscribe</sharing>
+          <dimensions></dimensions>
+          <transportation>HLAreliable</transportation>
+          <order>TimeStamp</order>
+          <semantics></semantics>
+        </attribute>        <attribute>
+          <name>temperature</name>
+          <dataType>double</dataType>
+          <updateType>NA</updateType>
+          <ownership>NoTransfer</ownership>
+          <sharing>PublishSubscribe</sharing>
+          <dimensions></dimensions>
+          <transportation>HLAreliable</transportation>
+          <order>TimeStamp</order>
+          <semantics></semantics>
+        </attribute>      </objectClass>
+    </objectClass>
+  </objects>
+  <interactions>
+    <interactionClass>
+      <name>InteractionRoot</name>
+      <sharing>Neither</sharing>
+      <transportation>HLAreliable</transportation>
+      <order>TimeStamp</order>
+      <interactionClass>
+        <name>C2WInteractionRoot</name>
+        <sharing>Neither</sharing>
+        <transportation>HLAreliable</transportation>
+        <order>TimeStamp</order>        <parameter> 
+          <name>actualLogicalGenerationTime</name>
+          <dataType>double</dataType>
+          <semantics></semantics>
+        </parameter>        <parameter> 
+          <name>federateFilter</name>
+          <dataType>String</dataType>
+          <semantics></semantics>
+        </parameter>        <parameter> 
+          <name>originFed</name>
+          <dataType>String</dataType>
+          <semantics></semantics>
+        </parameter>        <parameter> 
+          <name>sourceFed</name>
+          <dataType>String</dataType>
+          <semantics></semantics>
+        </parameter>
         <interactionClass>
-            <name>InteractionRoot</name>
-            <sharing>Neither</sharing>
-            <transportation>HLAreliable</transportation>
-            <order>TimeStamp</order>
-            <semantics></semantics>
-        <interactionClass>
-            <name>C2WInteractionRoot</name>
-            <sharing>Neither</sharing>
-            <transportation>HLAreliable</transportation>
-            <order>TimeStamp</order>
-            <semantics></semantics>
-            <parameter> 
-                <name>actualLogicalGenerationTime</name>
-                <dataType>double</dataType>
-                <semantics></semantics>
-            </parameter>
-            <parameter> 
-                <name>federateFilter</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-            <parameter> 
-                <name>originFed</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-            <parameter> 
-                <name>sourceFed</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-        <interactionClass>
-            <name>ActionBase</name>
-            <sharing>PublishSubscribe</sharing>
-            <transportation>HLAreliable</transportation>
-            <order>TimeStamp</order>
-            <semantics></semantics>
+          <name>ActionBase</name>
+          <sharing>PublishSubscribe</sharing>
+          <transportation>HLAreliable</transportation>
+          <order>TimeStamp</order>
         </interactionClass>
         <interactionClass>
-            <name>FederateJoinInteraction</name>
-            <sharing>PublishSubscribe</sharing>
-            <transportation>HLAreliable</transportation>
-            <order>TimeStamp</order>
+          <name>FederateJoinInteraction</name>
+          <sharing>PublishSubscribe</sharing>
+          <transportation>HLAreliable</transportation>
+          <order>TimeStamp</order>          <parameter> 
+            <name>FederateId</name>
+            <dataType>String</dataType>
             <semantics></semantics>
-            <parameter> 
-                <name>FederateId</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-            <parameter> 
-                <name>FederateType</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-            <parameter> 
-                <name>IsLateJoiner</name>
-                <dataType>boolean</dataType>
-                <semantics></semantics>
-            </parameter>
+          </parameter>          <parameter> 
+            <name>FederateType</name>
+            <dataType>String</dataType>
+            <semantics></semantics>
+          </parameter>          <parameter> 
+            <name>IsLateJoiner</name>
+            <dataType>boolean</dataType>
+            <semantics></semantics>
+          </parameter>
         </interactionClass>
         <interactionClass>
-            <name>FederateResignInteraction</name>
-            <sharing>PublishSubscribe</sharing>
-            <transportation>HLAreliable</transportation>
-            <order>TimeStamp</order>
+          <name>FederateResignInteraction</name>
+          <sharing>PublishSubscribe</sharing>
+          <transportation>HLAreliable</transportation>
+          <order>TimeStamp</order>          <parameter> 
+            <name>FederateId</name>
+            <dataType>String</dataType>
             <semantics></semantics>
-            <parameter> 
-                <name>FederateId</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-            <parameter> 
-                <name>FederateType</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-            <parameter> 
-                <name>IsLateJoiner</name>
-                <dataType>boolean</dataType>
-                <semantics></semantics>
-            </parameter>
+          </parameter>          <parameter> 
+            <name>FederateType</name>
+            <dataType>String</dataType>
+            <semantics></semantics>
+          </parameter>          <parameter> 
+            <name>IsLateJoiner</name>
+            <dataType>boolean</dataType>
+            <semantics></semantics>
+          </parameter>
         </interactionClass>
         <interactionClass>
-            <name>OutcomeBase</name>
-            <sharing>PublishSubscribe</sharing>
-            <transportation>HLAreliable</transportation>
-            <order>TimeStamp</order>
-            <semantics></semantics>
+          <name>OutcomeBase</name>
+          <sharing>PublishSubscribe</sharing>
+          <transportation>HLAreliable</transportation>
+          <order>TimeStamp</order>
         </interactionClass>
         <interactionClass>
-            <name>SimLog</name>
-            <sharing>PublishSubscribe</sharing>
-            <transportation>HLAreliable</transportation>
-            <order>TimeStamp</order>
+          <name>SimLog</name>
+          <sharing>PublishSubscribe</sharing>
+          <transportation>HLAreliable</transportation>
+          <order>TimeStamp</order>          <parameter> 
+            <name>Comment</name>
+            <dataType>String</dataType>
             <semantics></semantics>
-            <parameter> 
-                <name>Comment</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-            <parameter> 
-                <name>FedName</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-            <parameter> 
-                <name>Time</name>
-                <dataType>double</dataType>
-                <semantics></semantics>
-            </parameter>
-        <interactionClass>
+          </parameter>          <parameter> 
+            <name>FedName</name>
+            <dataType>String</dataType>
+            <semantics></semantics>
+          </parameter>          <parameter> 
+            <name>Time</name>
+            <dataType>double</dataType>
+            <semantics></semantics>
+          </parameter>
+          <interactionClass>
             <name>HighPrio</name>
             <sharing>PublishSubscribe</sharing>
             <transportation>HLAreliable</transportation>
             <order>TimeStamp</order>
-            <semantics></semantics>
-        </interactionClass>
-        <interactionClass>
+          </interactionClass>
+          <interactionClass>
             <name>LowPrio</name>
             <sharing>PublishSubscribe</sharing>
             <transportation>HLAreliable</transportation>
             <order>TimeStamp</order>
-            <semantics></semantics>
-        </interactionClass>
-        <interactionClass>
+          </interactionClass>
+          <interactionClass>
             <name>MediumPrio</name>
             <sharing>PublishSubscribe</sharing>
             <transportation>HLAreliable</transportation>
             <order>TimeStamp</order>
-            <semantics></semantics>
-        </interactionClass>
-        <interactionClass>
+          </interactionClass>
+          <interactionClass>
             <name>VeryLowPrio</name>
             <sharing>PublishSubscribe</sharing>
             <transportation>HLAreliable</transportation>
             <order>TimeStamp</order>
-            <semantics></semantics>
-        </interactionClass>
+          </interactionClass>
         </interactionClass>
         <interactionClass>
-            <name>SimulationControl</name>
-            <sharing>PublishSubscribe</sharing>
-            <transportation>HLAreliable</transportation>
-            <order>TimeStamp</order>
-            <semantics></semantics>
-        <interactionClass>
+          <name>SimulationControl</name>
+          <sharing>PublishSubscribe</sharing>
+          <transportation>HLAreliable</transportation>
+          <order>TimeStamp</order>
+          <interactionClass>
             <name>SimEnd</name>
             <sharing>PublishSubscribe</sharing>
             <transportation>HLAreliable</transportation>
             <order>TimeStamp</order>
-            <semantics></semantics>
-        </interactionClass>
-        <interactionClass>
+          </interactionClass>
+          <interactionClass>
             <name>SimPause</name>
             <sharing>PublishSubscribe</sharing>
             <transportation>HLAreliable</transportation>
             <order>TimeStamp</order>
-            <semantics></semantics>
-        </interactionClass>
-        <interactionClass>
+          </interactionClass>
+          <interactionClass>
             <name>SimResume</name>
             <sharing>PublishSubscribe</sharing>
             <transportation>HLAreliable</transportation>
             <order>TimeStamp</order>
-            <semantics></semantics>
-        </interactionClass>
-        <interactionClass>
+          </interactionClass>
+          <interactionClass>
             <name>SimTime</name>
             <sharing>PublishSubscribe</sharing>
             <transportation>HLAreliable</transportation>
-            <order>TimeStamp</order>
-            <semantics></semantics>
-            <parameter> 
-                <name>timeScale</name>
-                <dataType>double</dataType>
-                <semantics></semantics>
+            <order>Receive</order>            <parameter> 
+              <name>timeScale</name>
+              <dataType>double</dataType>
+              <semantics></semantics>
+            </parameter>            <parameter> 
+              <name>timeZone</name>
+              <dataType>String</dataType>
+              <semantics></semantics>
+            </parameter>            <parameter> 
+              <name>unixTimeStart</name>
+              <dataType>long</dataType>
+              <semantics></semantics>
+            </parameter>            <parameter> 
+              <name>unixTimeStop</name>
+              <dataType>long</dataType>
+              <semantics></semantics>
             </parameter>
-            <parameter> 
-                <name>timeZone</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-            <parameter> 
-                <name>unixTimeStart</name>
-                <dataType>long</dataType>
-                <semantics></semantics>
-            </parameter>
-            <parameter> 
-                <name>unixTimeStop</name>
-                <dataType>long</dataType>
-                <semantics></semantics>
-            </parameter>
-        </interactionClass>
+          </interactionClass>
         </interactionClass>
         <interactionClass>
-            <name>GLDClock</name>
-            <sharing>PublishSubscribe</sharing>
-            <transportation>HLAreliable</transportation>
-            <order>TimeStamp</order>
+          <name>CoolingSetPoint</name>
+          <sharing>PublishSubscribe</sharing>
+          <transportation>HLAreliable</transportation>
+          <order>TimeStamp</order>          <parameter> 
+            <name>cooling_setpoint</name>
+            <dataType>double</dataType>
             <semantics></semantics>
-            <parameter> 
-                <name>timeStamp</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-            <parameter> 
-                <name>unixTime</name>
-                <dataType>long</dataType>
-                <semantics></semantics>
-            </parameter>
+          </parameter>          <parameter> 
+            <name>name</name>
+            <dataType>String</dataType>
+            <semantics></semantics>
+          </parameter>
         </interactionClass>
         <interactionClass>
-            <name>GLDInteraction</name>
-            <sharing>PublishSubscribe</sharing>
-            <transportation>HLAreliable</transportation>
-            <order>TimeStamp</order>
+          <name>GLDClock</name>
+          <sharing>PublishSubscribe</sharing>
+          <transportation>HLAreliable</transportation>
+          <order>TimeStamp</order>          <parameter> 
+            <name>timeStamp</name>
+            <dataType>String</dataType>
             <semantics></semantics>
-            <parameter> 
-                <name>name</name>
-                <dataType>String</dataType>
-                <semantics></semantics>
-            </parameter>
-        <interactionClass>
-            <name>CoolingControl</name>
-            <sharing>PublishSubscribe</sharing>
-            <transportation>HLAreliable</transportation>
-            <order>TimeStamp</order>
+          </parameter>          <parameter> 
+            <name>unixTime</name>
+            <dataType>long</dataType>
             <semantics></semantics>
-            <parameter> 
-                <name>cooling_setpoint</name>
-                <dataType>double</dataType>
-                <semantics></semantics>
-            </parameter>
+          </parameter>
         </interactionClass>
         <interactionClass>
-            <name>House</name>
-            <sharing>PublishSubscribe</sharing>
-            <transportation>HLAreliable</transportation>
-            <order>TimeStamp</order>
+          <name>House</name>
+          <sharing>PublishSubscribe</sharing>
+          <transportation>HLAreliable</transportation>
+          <order>TimeStamp</order>          <parameter> 
+            <name>compressor_count</name>
+            <dataType>int</dataType>
             <semantics></semantics>
-            <parameter> 
-                <name>air_temperature</name>
-                <dataType>double</dataType>
-                <semantics></semantics>
-            </parameter>
-            <parameter> 
-                <name>compressor_count</name>
-                <dataType>int</dataType>
-                <semantics></semantics>
-            </parameter>
-            <parameter> 
-                <name>compressor_on</name>
-                <dataType>boolean</dataType>
-                <semantics></semantics>
-            </parameter>
+          </parameter>          <parameter> 
+            <name>compressor_on</name>
+            <dataType>boolean</dataType>
+            <semantics></semantics>
+          </parameter>          <parameter> 
+            <name>name</name>
+            <dataType>String</dataType>
+            <semantics></semantics>
+          </parameter>          <parameter> 
+            <name>temperature</name>
+            <dataType>double</dataType>
+            <semantics></semantics>
+          </parameter>
         </interactionClass>
-        </interactionClass>
-        </interactionClass>
-        </interactionClass>
-    </interactions>
-    <dimensions />
-    <transportations />
-    <switches />
-    <dataTypes />
+      </interactionClass>
+    </interactionClass>
+  </interactions>
+  <dimensions/>
+  <transportations/>
+  <switches/>
+  <dataTypes/>
 </objectModel>

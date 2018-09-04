@@ -10,6 +10,12 @@
    <artifactId>GLDExample-impl-java</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>TestFederate</module>
+        
+        <module>HouseSchedule</module>
+        
+        <module>Reporter</module>
+        
+        <module>SimulationTime</module>
+        
     </modules>
 </project>

@@ -1,6 +1,0 @@
-./input/fedManager
-./output/fedManager
-./input/JavaFederate_GLDFederate_0
-./output/JavaFederate_GLDFederate_0
-./input/JavaFederate_TestFederate_0
-./output/JavaFederate_TestFederate_0

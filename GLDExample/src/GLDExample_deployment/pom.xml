@@ -24,9 +24,24 @@
 		
 		<dependency><!-- The depenency for the user written code-->
 			<groupId>gov.nist.hla.samples</groupId>
-			<artifactId>TestFederate</artifactId>
+			<artifactId>HouseSchedule</artifactId>
 			<version>0.1.0-SNAPSHOT</version>
 		</dependency>
+		
+		<dependency><!-- The depenency for the user written code-->
+			<groupId>gov.nist.hla.samples</groupId>
+			<artifactId>Reporter</artifactId>
+			<version>0.1.0-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency><!-- The depenency for the user written code-->
+			<groupId>gov.nist.hla.samples</groupId>
+			<artifactId>SimulationTime</artifactId>
+			<version>0.1.0-SNAPSHOT</version>
+		</dependency>
+		
+		
+		
 		
 		<dependency>
 	        <groupId>junit</groupId>
@@ -158,7 +173,11 @@
 		                    <configuration>
 		                        <tasks>
 		                            <echo message="Creating folder for the execution..." />
-		                            <mkdir dir="${project.basedir}/target/TestFederate" />
+		                            
+		                            <mkdir dir="${project.basedir}/target/GridLabD" />
+		                            <mkdir dir="${project.basedir}/target/HouseSchedule" />
+		                            <mkdir dir="${project.basedir}/target/Reporter" />
+		                            <mkdir dir="${project.basedir}/target/SimulationTime" />
 		                    	</tasks>
 		                	</configuration>
 			                <goals>
@@ -213,10 +232,31 @@
 	
 	<profiles>
         <profile>
-            <id>TestFederate</id>
+            <id>GridLabD</id>
             <properties>
-                <federate.name>TestFederate</federate.name>
-                <federate.configFile>testfederate.json</federate.configFile>
+                <federate.name>GridLabD</federate.name>
+                <federate.configFile>gridlabd.json</federate.configFile>
+            </properties>
+        </profile>
+        <profile>
+            <id>HouseSchedule</id>
+            <properties>
+                <federate.name>HouseSchedule</federate.name>
+                <federate.configFile>houseschedule.json</federate.configFile>
+            </properties>
+        </profile>
+        <profile>
+            <id>Reporter</id>
+            <properties>
+                <federate.name>Reporter</federate.name>
+                <federate.configFile>reporter.json</federate.configFile>
+            </properties>
+        </profile>
+        <profile>
+            <id>SimulationTime</id>
+            <properties>
+                <federate.name>SimulationTime</federate.name>
+                <federate.configFile>simulationtime.json</federate.configFile>
             </properties>
         </profile>
 		<profile>
