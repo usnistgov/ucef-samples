@@ -9,30 +9,21 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * The HouseSchedule type of federate for the federation designed in WebGME.
- *
+ * A federate that controls the cooling set point for 3 GridLAB-D houses based on a simple schedule.
  */
 public class HouseSchedule extends HouseScheduleBase {
     private final static Logger log = LogManager.getLogger();
 
     private double currentTime = 0;
 
-    ///////////////////////////////////////////////////////////////////////
-    // TODO Instantiate objects that must be sent every logical time step
-    //
-    // CoolingSetPointObject vCoolingSetPointObject = new CoolingSetPointObject();
-    //
-    ///////////////////////////////////////////////////////////////////////
+    private boolean isWorkSchedule = false;
+
+    private CoolingSetPointObject house2 = null;
+
+    private CoolingSetPointObject house3 = null;
 
     public HouseSchedule(FederateConfig params) throws Exception {
         super(params);
-
-        ///////////////////////////////////////////////////////////////////////
-        // TODO Must register object instances after super(args)
-        //
-        // vCoolingSetPointObject.registerObject(getLRC());
-        //
-        ///////////////////////////////////////////////////////////////////////
     }
 
     private void checkReceivedSubscriptions() {
@@ -55,10 +46,6 @@ public class HouseSchedule extends HouseScheduleBase {
             super.disableTimeRegulation();
         }
 
-        /////////////////////////////////////////////
-        // TODO perform basic initialization below //
-        /////////////////////////////////////////////
-
         AdvanceTimeRequest atr = new AdvanceTimeRequest(currentTime);
         putAdvanceTimeRequest(atr);
 
@@ -68,9 +55,7 @@ public class HouseSchedule extends HouseScheduleBase {
             log.info("...synchronized on readyToPopulate");
         }
 
-        ///////////////////////////////////////////////////////////////////////
-        // TODO perform initialization that depends on other federates below //
-        ///////////////////////////////////////////////////////////////////////
+        initializeCoolingSetPoints();
 
         if(!super.isLateJoiner()) {
             log.info("waiting on readyToRun...");
@@ -84,37 +69,10 @@ public class HouseSchedule extends HouseScheduleBase {
         while (!exitCondition) {
             atr.requestSyncStart();
             enteredTimeGrantedState();
-
-            ////////////////////////////////////////////////////////////////////////////////////////
-            // TODO send interactions that must be sent every logical time step below.
-            // Set the interaction's parameters.
-            //
-            //    CoolingSetPoint vCoolingSetPoint = create_CoolingSetPoint();
-            //    vCoolingSetPoint.set_actualLogicalGenerationTime( < YOUR VALUE HERE > );
-            //    vCoolingSetPoint.set_cooling_setpoint( < YOUR VALUE HERE > );
-            //    vCoolingSetPoint.set_federateFilter( < YOUR VALUE HERE > );
-            //    vCoolingSetPoint.set_name( < YOUR VALUE HERE > );
-            //    vCoolingSetPoint.set_originFed( < YOUR VALUE HERE > );
-            //    vCoolingSetPoint.set_sourceFed( < YOUR VALUE HERE > );
-            //    vCoolingSetPoint.sendInteraction(getLRC(), currentTime + getLookAhead());
-            //
-            ////////////////////////////////////////////////////////////////////////////////////////
-
-            ////////////////////////////////////////////////////////////////////////////////////////
-            // TODO objects that must be sent every logical time step
-            //
-            //    vCoolingSetPointObject.set_cooling_setpoint(<YOUR VALUE HERE >);
-            //    vCoolingSetPointObject.set_name(<YOUR VALUE HERE >);
-            //    vCoolingSetPointObject.updateAttributeValues(getLRC(), currentTime + getLookAhead());
-            //
-            //////////////////////////////////////////////////////////////////////////////////////////
-
+            
+            log.info("t={}", getLRC().queryFederateTime());
             checkReceivedSubscriptions();
-
-            ////////////////////////////////////////////////////////////////////////////////////////
-            // TODO break here if ready to resign and break out of while loop
-            ////////////////////////////////////////////////////////////////////////////////////////
-
+            updateCoolingSetPoints();
 
             if (!exitCondition) {
                 currentTime += super.getStepSize();
@@ -127,16 +85,93 @@ public class HouseSchedule extends HouseScheduleBase {
 
         // call exitGracefully to shut down federate
         exitGracefully();
-
-        ////////////////////////////////////////////////////////////////////////////////////////
-        // TODO Perform whatever cleanups needed before exiting the app
-        ////////////////////////////////////////////////////////////////////////////////////////
     }
 
+    private void initializeCoolingSetPoints() {
+        CoolingSetPoint house1 = create_CoolingSetPoint();
+        house1.set_name("house1");
+        house1.set_cooling_setpoint(getCoolingSetPoint1());
+        house1.sendInteraction(getLRC());
+        log.debug("sent {}", house1.toString());
+
+        house2 = new CoolingSetPointObject();
+        house2.registerObject(getLRC());
+        house2.set_name("house2");
+        house2.set_cooling_setpoint(getCoolingSetPoint2());
+        house2.updateAttributeValues(getLRC());
+        log.debug("created {}", house2.toString());
+
+        house3 = new CoolingSetPointObject();
+        house3.registerObject(getLRC());
+        house3.set_name("house3");
+        house3.set_cooling_setpoint(getCoolingSetPoint3());
+        house3.updateAttributeValues(getLRC());
+        log.debug("created {}", house3.toString());
+    }
+    
+    private void updateCoolingSetPoints() {
+        double cooling_setpoint1 = getCoolingSetPoint1();
+        double cooling_setpoint2 = getCoolingSetPoint2();
+        double cooling_setpoint3 = getCoolingSetPoint3();
+
+        CoolingSetPoint house1 = create_CoolingSetPoint();
+        house1.set_name("house1");
+        house1.set_cooling_setpoint(cooling_setpoint1);
+        house1.sendInteraction(getLRC(), currentTime + getLookAhead());
+        log.info("set house1.cooling_setpoint={}", cooling_setpoint1);
+
+        house2.set_cooling_setpoint(cooling_setpoint2);
+        house2.updateAttributeValues(getLRC(), currentTime + getLookAhead());
+        log.info("set house2.cooling_setpoint={}", cooling_setpoint2);
+
+        house3.set_cooling_setpoint(cooling_setpoint3);
+        house3.updateAttributeValues(getLRC(), currentTime + getLookAhead());
+        log.info("set house3.cooling_setpoint={}", cooling_setpoint3);
+    }
+    
+    private double getCoolingSetPoint1() {
+        return isWorkSchedule ? 75 : 69;
+    }
+
+    private double getCoolingSetPoint2() {
+        return isWorkSchedule ? 77 : 73;
+    }
+
+    private double getCoolingSetPoint3() {
+        return 71;
+    }
+    
     private void handleInteractionClass(GLDClock interaction) {
-        //////////////////////////////////////////////////////////////////////////
-        // TODO implement how to handle reception of the interaction            //
-        //////////////////////////////////////////////////////////////////////////
+        final String gldTimeStamp = interaction.get_timeStamp();
+        log.debug("received GridLAB-D time stamp as {}", gldTimeStamp);
+        handleTimeStamp(gldTimeStamp);
+    }
+
+    private void handleTimeStamp(String gldTimeStamp) {
+        boolean isWorkHours = isDuringWorkHours(gldTimeStamp);
+
+        // check if it's time to toggle isWorkSchedule
+        if (isWorkHours && !isWorkSchedule) {
+            log.info("turning on work schedule at {}", gldTimeStamp);
+            isWorkSchedule = true;
+        } else if (!isWorkHours && isWorkSchedule) {
+            log.info("turning off work schedule at {}", gldTimeStamp);
+            isWorkSchedule = false;
+        }
+    }
+
+    private boolean isDuringWorkHours(String gldTimeStamp) {
+        int hourValue = Integer.parseInt(getHour(gldTimeStamp));
+        return hourValue >= 8 && hourValue < 17;
+    }
+
+    private String getHour(String gldTimeStamp) {
+        // timestamp format is 'YYYY-MM-DD hh:mm:ss ZZZ'
+        int hourStartIndex = gldTimeStamp.indexOf(' ') + 1;
+        int hourEndIndex   = gldTimeStamp.indexOf(':');
+        String hourString  = gldTimeStamp.substring(hourStartIndex, hourEndIndex);
+        log.trace("extracted hour={} from {}", hourString, gldTimeStamp);
+        return hourString;
     }
 
     public static void main(String[] args) {
