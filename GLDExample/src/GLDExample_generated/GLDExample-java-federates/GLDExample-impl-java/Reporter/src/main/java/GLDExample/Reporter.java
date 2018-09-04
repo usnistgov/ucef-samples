@@ -11,8 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * The Reporter type of federate for the federation designed in WebGME.
- *
+ * A federate that monitors the current state of the GridLAB-D simulation.
  */
 public class Reporter extends ReporterBase {
     private final static Logger log = LogManager.getLogger();
@@ -58,10 +57,6 @@ public class Reporter extends ReporterBase {
             super.disableTimeRegulation();
         }
 
-        /////////////////////////////////////////////
-        // TODO perform basic initialization below //
-        /////////////////////////////////////////////
-
         AdvanceTimeRequest atr = new AdvanceTimeRequest(currentTime);
         putAdvanceTimeRequest(atr);
 
@@ -70,10 +65,6 @@ public class Reporter extends ReporterBase {
             readyToPopulate();
             log.info("...synchronized on readyToPopulate");
         }
-
-        ///////////////////////////////////////////////////////////////////////
-        // TODO perform initialization that depends on other federates below //
-        ///////////////////////////////////////////////////////////////////////
 
         if(!super.isLateJoiner()) {
             log.info("waiting on readyToRun...");
@@ -88,13 +79,9 @@ public class Reporter extends ReporterBase {
             atr.requestSyncStart();
             enteredTimeGrantedState();
 
+            log.info("t={}", getLRC().queryFederateTime());
             checkReceivedSubscriptions();
-
-            ////////////////////////////////////////////////////////////////////////////////////////
-            // TODO break here if ready to resign and break out of while loop
-            ////////////////////////////////////////////////////////////////////////////////////////
-
-
+            
             if (!exitCondition) {
                 currentTime += super.getStepSize();
                 AdvanceTimeRequest newATR = new AdvanceTimeRequest(currentTime);
@@ -106,28 +93,24 @@ public class Reporter extends ReporterBase {
 
         // call exitGracefully to shut down federate
         exitGracefully();
-
-        ////////////////////////////////////////////////////////////////////////////////////////
-        // TODO Perform whatever cleanups needed before exiting the app
-        ////////////////////////////////////////////////////////////////////////////////////////
     }
 
     private void handleInteractionClass(GLDClock interaction) {
-        //////////////////////////////////////////////////////////////////////////
-        // TODO implement how to handle reception of the interaction            //
-        //////////////////////////////////////////////////////////////////////////
+        log.info("current GridLAB-D time is {}", interaction.get_timeStamp());
     }
 
     private void handleInteractionClass(House interaction) {
-        //////////////////////////////////////////////////////////////////////////
-        // TODO implement how to handle reception of the interaction            //
-        //////////////////////////////////////////////////////////////////////////
+        final String name = interaction.get_name();
+        final double temperature = interaction.get_temperature();
+        final int compressorCount = interaction.get_compressor_count();
+        log.info("{} temperature={} count={}", name, temperature, compressorCount);
     }
 
     private void handleObjectClass(HouseObject object) {
-        //////////////////////////////////////////////////////////////////////////
-        // TODO implement how to handle reception of the object                 //
-        //////////////////////////////////////////////////////////////////////////
+        final String name = object.get_name();
+        final double temperature = object.get_temperature();
+        final int compressorCount = object.get_compressor_count();
+        log.info("{} temperature={} count={}", name, temperature, compressorCount);
     }
 
     public static void main(String[] args) {
