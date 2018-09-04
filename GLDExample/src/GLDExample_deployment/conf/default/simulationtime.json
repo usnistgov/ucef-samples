@@ -4,5 +4,9 @@
   "federationId": "GLDExample",
   "isLateJoiner": false,
   "lookAhead": "0.2",
-  "stepSize": "1.0"
+  "stepSize": "1.0",
+  "unixTimeStart": 1243915200,
+  "unixTimeStop": 1244001600,
+  "timeScale": 900.0,
+  "timeZone": "US/MD/Baltimore"
 }
