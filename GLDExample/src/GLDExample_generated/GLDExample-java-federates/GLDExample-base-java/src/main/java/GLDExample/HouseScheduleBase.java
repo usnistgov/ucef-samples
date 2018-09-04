@@ -28,6 +28,7 @@ public class HouseScheduleBase extends SynchronizedFederate {
 
 		enableTimeConstrained();
 
+		enableTimeRegulation(getLookAhead());
 		enableAsynchronousDelivery();
         // interaction pubsub
         
