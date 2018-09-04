@@ -7,6 +7,6 @@
     "isLateJoiner": false,
     "stepSize": 1.0,
     "lookAhead": 0.2,
-    "workingDirectory": ".",
-    "modelFilePath": "model.glm"
+    "workingDirectory": "model",
+    "modelFilePath": "hla_example_federate.glm"
 }
