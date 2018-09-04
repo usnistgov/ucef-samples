@@ -21,32 +21,30 @@ import hla.rti.ReceivedInteraction;
 import org.cpswt.hla.*;
 
 /**
-* Implements InteractionRoot.C2WInteractionRoot.House
+* Implements InteractionRoot.C2WInteractionRoot.CoolingSetPoint
 */
-public class House extends C2WInteractionRoot {
+public class CoolingSetPoint extends C2WInteractionRoot {
 
     private static final Logger logger = LogManager.getLogger();
 
     /**
-    * Creates an instance of the House interaction class with default parameter values.
+    * Creates an instance of the CoolingSetPoint interaction class with default parameter values.
     */
-    public House() {}
+    public CoolingSetPoint() {}
 
     private static int _actualLogicalGenerationTime_handle;
-    private static int _compressor_count_handle;
-    private static int _compressor_on_handle;
+    private static int _cooling_setpoint_handle;
     private static int _federateFilter_handle;
     private static int _name_handle;
     private static int _originFed_handle;
     private static int _sourceFed_handle;
-    private static int _temperature_handle;
 
     private static boolean _isInitialized = false;
 
     private static int _handle;
 
     /**
-    * Returns the handle (RTI assigned) of the House interaction class.
+    * Returns the handle (RTI assigned) of the CoolingSetPoint interaction class.
     * Note: As this is a static method, it is NOT polymorphic, and so, if called on
     * a reference will return the handle of the class pertaining to the reference,
     * rather than the handle of the class for the instance referred to by the reference.
@@ -59,7 +57,7 @@ public class House extends C2WInteractionRoot {
     }
 
     /**
-    * Returns the fully-qualified (dot-delimited) name of the House interaction class.
+    * Returns the fully-qualified (dot-delimited) name of the CoolingSetPoint interaction class.
     * Note: As this is a static method, it is NOT polymorphic, and so, if called on
     * a reference will return the name of the class pertaining to the reference,
     * rather than the name of the class for the instance referred to by the reference.
@@ -68,17 +66,17 @@ public class House extends C2WInteractionRoot {
     * @return the fully-qualified HLA class path for this interaction class
     */
     public static String get_class_name() {
-        return "InteractionRoot.C2WInteractionRoot.House";
+        return "InteractionRoot.C2WInteractionRoot.CoolingSetPoint";
     }
 
     /**
     * Returns the simple name (the last name in the dot-delimited fully-qualified
-    * class name) of the House interaction class.
+    * class name) of the CoolingSetPoint interaction class.
     *
     * @return the name of this interaction class
     */
     public static String get_simple_class_name() {
-        return "House";
+        return "CoolingSetPoint";
     }
 
     private static Set< String > _datamemberNames = new HashSet< String >();
@@ -86,7 +84,7 @@ public class House extends C2WInteractionRoot {
 
     /**
     * Returns a set containing the names of all of the non-hidden parameters in the
-    * House interaction class.
+    * CoolingSetPoint interaction class.
     * Note: As this is a static method, it is NOT polymorphic, and so, if called on
     * a reference will return a set of parameter names pertaining to the reference,
     * rather than the parameter names of the class for the instance referred to by
@@ -101,7 +99,7 @@ public class House extends C2WInteractionRoot {
 
     /**
     * Returns a set containing the names of all of the parameters in the
-    * House interaction class.
+    * CoolingSetPoint interaction class.
     * Note: As this is a static method, it is NOT polymorphic, and so, if called on
     * a reference will return a set of parameter names pertaining to the reference,
     * rather than the parameter names of the class for the instance referred to by
@@ -115,30 +113,24 @@ public class House extends C2WInteractionRoot {
     }
 
     static {
-        _classNameSet.add("InteractionRoot.C2WInteractionRoot.House");
-        _classNameClassMap.put("InteractionRoot.C2WInteractionRoot.House", House.class);
+        _classNameSet.add("InteractionRoot.C2WInteractionRoot.CoolingSetPoint");
+        _classNameClassMap.put("InteractionRoot.C2WInteractionRoot.CoolingSetPoint", CoolingSetPoint.class);
 
-        _datamemberClassNameSetMap.put("InteractionRoot.C2WInteractionRoot.House", _datamemberNames);
-        _allDatamemberClassNameSetMap.put("InteractionRoot.C2WInteractionRoot.House", _allDatamemberNames);
+        _datamemberClassNameSetMap.put("InteractionRoot.C2WInteractionRoot.CoolingSetPoint", _datamemberNames);
+        _allDatamemberClassNameSetMap.put("InteractionRoot.C2WInteractionRoot.CoolingSetPoint", _allDatamemberNames);
 
-        _datamemberNames.add("compressor_count");
-        _datamemberNames.add("compressor_on");
+        _datamemberNames.add("cooling_setpoint");
         _datamemberNames.add("name");
-        _datamemberNames.add("temperature");
 
-        _datamemberTypeMap.put("compressor_count", "int");
-        _datamemberTypeMap.put("compressor_on", "boolean");
+        _datamemberTypeMap.put("cooling_setpoint", "double");
         _datamemberTypeMap.put("name", "String");
-        _datamemberTypeMap.put("temperature", "double");
 
         _allDatamemberNames.add("actualLogicalGenerationTime");
-        _allDatamemberNames.add("compressor_count");
-        _allDatamemberNames.add("compressor_on");
+        _allDatamemberNames.add("cooling_setpoint");
         _allDatamemberNames.add("federateFilter");
         _allDatamemberNames.add("name");
         _allDatamemberNames.add("originFed");
         _allDatamemberNames.add("sourceFed");
-        _allDatamemberNames.add("temperature");
     }
 
     protected static void init(RTIambassador rti) {
@@ -150,7 +142,7 @@ public class House extends C2WInteractionRoot {
         boolean isNotInitialized = true;
         while(isNotInitialized) {
             try {
-                _handle = rti.getInteractionClassHandle("InteractionRoot.C2WInteractionRoot.House");
+                _handle = rti.getInteractionClassHandle("InteractionRoot.C2WInteractionRoot.CoolingSetPoint");
                 isNotInitialized = false;
             } catch (FederateNotExecutionMember e) {
                 logger.error("could not initialize: Federate Not Execution Member", e);
@@ -164,21 +156,19 @@ public class House extends C2WInteractionRoot {
             }
         }
 
-        _classNameHandleMap.put("InteractionRoot.C2WInteractionRoot.House", get_handle());
-        _classHandleNameMap.put(get_handle(), "InteractionRoot.C2WInteractionRoot.House");
-        _classHandleSimpleNameMap.put(get_handle(), "House");
+        _classNameHandleMap.put("InteractionRoot.C2WInteractionRoot.CoolingSetPoint", get_handle());
+        _classHandleNameMap.put(get_handle(), "InteractionRoot.C2WInteractionRoot.CoolingSetPoint");
+        _classHandleSimpleNameMap.put(get_handle(), "CoolingSetPoint");
 
         isNotInitialized = true;
         while(isNotInitialized) {
             try {
                 _actualLogicalGenerationTime_handle = rti.getParameterHandle("actualLogicalGenerationTime", get_handle());
-                _compressor_count_handle = rti.getParameterHandle("compressor_count", get_handle());
-                _compressor_on_handle = rti.getParameterHandle("compressor_on", get_handle());
+                _cooling_setpoint_handle = rti.getParameterHandle("cooling_setpoint", get_handle());
                 _federateFilter_handle = rti.getParameterHandle("federateFilter", get_handle());
                 _name_handle = rti.getParameterHandle("name", get_handle());
                 _originFed_handle = rti.getParameterHandle("originFed", get_handle());
                 _sourceFed_handle = rti.getParameterHandle("sourceFed", get_handle());
-                _temperature_handle = rti.getParameterHandle("temperature", get_handle());
                 isNotInitialized = false;
             } catch (FederateNotExecutionMember e) {
                 logger.error("could not initialize: Federate Not Execution Member", e);
@@ -195,29 +185,25 @@ public class House extends C2WInteractionRoot {
             }
         }
 
-        _datamemberNameHandleMap.put("InteractionRoot.C2WInteractionRoot.House.actualLogicalGenerationTime", _actualLogicalGenerationTime_handle);
-        _datamemberNameHandleMap.put("InteractionRoot.C2WInteractionRoot.House.compressor_count", _compressor_count_handle);
-        _datamemberNameHandleMap.put("InteractionRoot.C2WInteractionRoot.House.compressor_on", _compressor_on_handle);
-        _datamemberNameHandleMap.put("InteractionRoot.C2WInteractionRoot.House.federateFilter", _federateFilter_handle);
-        _datamemberNameHandleMap.put("InteractionRoot.C2WInteractionRoot.House.name", _name_handle);
-        _datamemberNameHandleMap.put("InteractionRoot.C2WInteractionRoot.House.originFed", _originFed_handle);
-        _datamemberNameHandleMap.put("InteractionRoot.C2WInteractionRoot.House.sourceFed", _sourceFed_handle);
-        _datamemberNameHandleMap.put("InteractionRoot.C2WInteractionRoot.House.temperature", _temperature_handle);
+        _datamemberNameHandleMap.put("InteractionRoot.C2WInteractionRoot.CoolingSetPoint.actualLogicalGenerationTime", _actualLogicalGenerationTime_handle);
+        _datamemberNameHandleMap.put("InteractionRoot.C2WInteractionRoot.CoolingSetPoint.cooling_setpoint", _cooling_setpoint_handle);
+        _datamemberNameHandleMap.put("InteractionRoot.C2WInteractionRoot.CoolingSetPoint.federateFilter", _federateFilter_handle);
+        _datamemberNameHandleMap.put("InteractionRoot.C2WInteractionRoot.CoolingSetPoint.name", _name_handle);
+        _datamemberNameHandleMap.put("InteractionRoot.C2WInteractionRoot.CoolingSetPoint.originFed", _originFed_handle);
+        _datamemberNameHandleMap.put("InteractionRoot.C2WInteractionRoot.CoolingSetPoint.sourceFed", _sourceFed_handle);
 
         _datamemberHandleNameMap.put(_actualLogicalGenerationTime_handle, "actualLogicalGenerationTime");
-        _datamemberHandleNameMap.put(_compressor_count_handle, "compressor_count");
-        _datamemberHandleNameMap.put(_compressor_on_handle, "compressor_on");
+        _datamemberHandleNameMap.put(_cooling_setpoint_handle, "cooling_setpoint");
         _datamemberHandleNameMap.put(_federateFilter_handle, "federateFilter");
         _datamemberHandleNameMap.put(_name_handle, "name");
         _datamemberHandleNameMap.put(_originFed_handle, "originFed");
         _datamemberHandleNameMap.put(_sourceFed_handle, "sourceFed");
-        _datamemberHandleNameMap.put(_temperature_handle, "temperature");
     }
 
     private static boolean _isPublished = false;
 
     /**
-    * Publishes the House interaction class for a federate.
+    * Publishes the CoolingSetPoint interaction class for a federate.
     *
     * @param rti handle to the Local RTI Component
     */
@@ -250,7 +236,7 @@ public class House extends C2WInteractionRoot {
     }
 
     /**
-    * Unpublishes the House interaction class for a federate.
+    * Unpublishes the CoolingSetPoint interaction class for a federate.
     *
     * @param rti handle to the Local RTI Component
     */
@@ -288,7 +274,7 @@ public class House extends C2WInteractionRoot {
     private static boolean _isSubscribed = false;
 
     /**
-    * Subscribes a federate to the House interaction class.
+    * Subscribes a federate to the CoolingSetPoint interaction class.
     *
     * @param rti handle to the Local RTI Component
     */
@@ -321,7 +307,7 @@ public class House extends C2WInteractionRoot {
     }
 
     /**
-    * Unsubscribes a federate from the House interaction class.
+    * Unsubscribes a federate from the CoolingSetPoint interaction class.
     *
     * @param rti handle to the Local RTI Component
     */
@@ -358,12 +344,12 @@ public class House extends C2WInteractionRoot {
 
     /**
     * Return true if "handle" is equal to the handle (RTI assigned) of this class
-    * (that is, the House interaction class).
+    * (that is, the CoolingSetPoint interaction class).
     *
     * @param handle handle to compare to the value of the handle (RTI assigned) of
-    * this class (the House interaction class).
+    * this class (the CoolingSetPoint interaction class).
     * @return "true" if "handle" matches the value of the handle of this class
-    * (that is, the House interaction class).
+    * (that is, the CoolingSetPoint interaction class).
     */
     public static boolean match(int handle) {
         return handle == get_handle();
@@ -422,13 +408,11 @@ public class House extends C2WInteractionRoot {
     @Override
     public String getParameterName(int datamemberHandle) {
         if (datamemberHandle == _actualLogicalGenerationTime_handle) return "actualLogicalGenerationTime";
-        else if (datamemberHandle == _compressor_count_handle) return "compressor_count";
-        else if (datamemberHandle == _compressor_on_handle) return "compressor_on";
+        else if (datamemberHandle == _cooling_setpoint_handle) return "cooling_setpoint";
         else if (datamemberHandle == _federateFilter_handle) return "federateFilter";
         else if (datamemberHandle == _name_handle) return "name";
         else if (datamemberHandle == _originFed_handle) return "originFed";
         else if (datamemberHandle == _sourceFed_handle) return "sourceFed";
-        else if (datamemberHandle == _temperature_handle) return "temperature";
         else return super.getParameterName(datamemberHandle);
     }
 
@@ -472,54 +456,33 @@ public class House extends C2WInteractionRoot {
     public String toString() {
         return getClass().getName() + "("
                 + "actualLogicalGenerationTime:" + get_actualLogicalGenerationTime()
-                + "," + "compressor_count:" + get_compressor_count()
-                + "," + "compressor_on:" + get_compressor_on()
+                + "," + "cooling_setpoint:" + get_cooling_setpoint()
                 + "," + "federateFilter:" + get_federateFilter()
                 + "," + "name:" + get_name()
                 + "," + "originFed:" + get_originFed()
                 + "," + "sourceFed:" + get_sourceFed()
-                + "," + "temperature:" + get_temperature()
                 + ")";
     }
 
-    private int _compressor_count = 0;
-    private boolean _compressor_on = false;
+    private double _cooling_setpoint = 0;
     private String _name = "";
-    private double _temperature = 0;
 
     /**
-    * Set the value of the "compressor_count" parameter to "value" for this parameter.
+    * Set the value of the "cooling_setpoint" parameter to "value" for this parameter.
     *
-    * @param value the new value for the "compressor_count" parameter
+    * @param value the new value for the "cooling_setpoint" parameter
     */
-    public void set_compressor_count( int value ) {
-        _compressor_count = value;
+    public void set_cooling_setpoint( double value ) {
+        _cooling_setpoint = value;
     }
 
     /**
-    * Returns the value of the "compressor_count" parameter of this interaction.
+    * Returns the value of the "cooling_setpoint" parameter of this interaction.
     *
-    * @return the value of the "compressor_count" parameter
+    * @return the value of the "cooling_setpoint" parameter
     */
-    public int get_compressor_count() {
-        return _compressor_count;
-    }
-    /**
-    * Set the value of the "compressor_on" parameter to "value" for this parameter.
-    *
-    * @param value the new value for the "compressor_on" parameter
-    */
-    public void set_compressor_on( boolean value ) {
-        _compressor_on = value;
-    }
-
-    /**
-    * Returns the value of the "compressor_on" parameter of this interaction.
-    *
-    * @return the value of the "compressor_on" parameter
-    */
-    public boolean get_compressor_on() {
-        return _compressor_on;
+    public double get_cooling_setpoint() {
+        return _cooling_setpoint;
     }
     /**
     * Set the value of the "name" parameter to "value" for this parameter.
@@ -538,76 +501,57 @@ public class House extends C2WInteractionRoot {
     public String get_name() {
         return _name;
     }
-    /**
-    * Set the value of the "temperature" parameter to "value" for this parameter.
-    *
-    * @param value the new value for the "temperature" parameter
-    */
-    public void set_temperature( double value ) {
-        _temperature = value;
-    }
 
-    /**
-    * Returns the value of the "temperature" parameter of this interaction.
-    *
-    * @return the value of the "temperature" parameter
-    */
-    public double get_temperature() {
-        return _temperature;
-    }
-
-    protected House( ReceivedInteraction datamemberMap, boolean initFlag ) {
+    protected CoolingSetPoint( ReceivedInteraction datamemberMap, boolean initFlag ) {
         super( datamemberMap, false );
         if ( initFlag ) setParameters( datamemberMap );
     }
 
-    protected House( ReceivedInteraction datamemberMap, LogicalTime logicalTime, boolean initFlag ) {
+    protected CoolingSetPoint( ReceivedInteraction datamemberMap, LogicalTime logicalTime, boolean initFlag ) {
         super( datamemberMap, logicalTime, false );
         if ( initFlag ) setParameters( datamemberMap );
     }
 
     /**
-    * Creates an instance of the House interaction class, using
+    * Creates an instance of the CoolingSetPoint interaction class, using
     * "datamemberMap" to initialize its parameter values.
     * "datamemberMap" is usually acquired as an argument to an RTI federate
     * callback method, such as "receiveInteraction".
     *
     * @param datamemberMap data structure containing initial values for the
-    * parameters of this new House interaction class instance
+    * parameters of this new CoolingSetPoint interaction class instance
     */
-    public House( ReceivedInteraction datamemberMap ) {
+    public CoolingSetPoint( ReceivedInteraction datamemberMap ) {
         this( datamemberMap, true );
     }
 
     /**
-    * Like {@link #House( ReceivedInteraction datamemberMap )}, except this
-    * new House interaction class instance is given a timestamp of
+    * Like {@link #CoolingSetPoint( ReceivedInteraction datamemberMap )}, except this
+    * new CoolingSetPoint interaction class instance is given a timestamp of
     * "logicalTime".
     *
     * @param datamemberMap data structure containing initial values for the
-    * parameters of this new House interaction class instance
-    * @param logicalTime timestamp for this new House interaction class
+    * parameters of this new CoolingSetPoint interaction class instance
+    * @param logicalTime timestamp for this new CoolingSetPoint interaction class
     * instance
     */
-    public House( ReceivedInteraction datamemberMap, LogicalTime logicalTime ) {
+    public CoolingSetPoint( ReceivedInteraction datamemberMap, LogicalTime logicalTime ) {
         this( datamemberMap, logicalTime, true );
     }
 
     /**
-    * Creates a new House interaction class instance that is a duplicate
-    * of the instance referred to by House_var.
+    * Creates a new CoolingSetPoint interaction class instance that is a duplicate
+    * of the instance referred to by CoolingSetPoint_var.
     *
-    * @param House_var House interaction class instance of which
-    * this newly created House interaction class instance will be a
+    * @param CoolingSetPoint_var CoolingSetPoint interaction class instance of which
+    * this newly created CoolingSetPoint interaction class instance will be a
     * duplicate
     */
-    public House( House House_var ) {
-        super( House_var );
+    public CoolingSetPoint( CoolingSetPoint CoolingSetPoint_var ) {
+        super( CoolingSetPoint_var );
 
-        set_compressor_count( House_var.get_compressor_count() );
-        set_compressor_on( House_var.get_compressor_on() );
-        set_name( House_var.get_name() );
-        set_temperature( House_var.get_temperature() );
+        set_cooling_setpoint( CoolingSetPoint_var.get_cooling_setpoint() );
+        set_name( CoolingSetPoint_var.get_name() );
     }
 
     /**
@@ -620,19 +564,15 @@ public class House extends C2WInteractionRoot {
     * for this interaction
     */
     public Object getParameter( String datamemberName ) {
-        if ( "compressor_count".equals(datamemberName) ) return new Integer(get_compressor_count());
-        else if ( "compressor_on".equals(datamemberName) ) return new Boolean(get_compressor_on());
+        if ( "cooling_setpoint".equals(datamemberName) ) return new Double(get_cooling_setpoint());
         else if ( "name".equals(datamemberName) ) return get_name();
-        else if ( "temperature".equals(datamemberName) ) return new Double(get_temperature());
         else return super.getParameter( datamemberName );
     }
 
     protected boolean setParameterAux( String datamemberName, String val ) {
         boolean retval = true;
-        if ( "compressor_count".equals( datamemberName) ) set_compressor_count( Integer.parseInt(val) );
-        else if ( "compressor_on".equals( datamemberName) ) set_compressor_on( Boolean.parseBoolean(val) );
+        if ( "cooling_setpoint".equals( datamemberName) ) set_cooling_setpoint( Double.parseDouble(val) );
         else if ( "name".equals( datamemberName) ) set_name( val );
-        else if ( "temperature".equals( datamemberName) ) set_temperature( Double.parseDouble(val) );
         else retval = super.setParameterAux( datamemberName, val );
 
         return retval;
@@ -640,10 +580,8 @@ public class House extends C2WInteractionRoot {
 
     protected boolean setParameterAux( String datamemberName, Object val ) {
         boolean retval = true;
-        if ( "compressor_count".equals( datamemberName) ) set_compressor_count( (Integer)val );
-        else if ( "compressor_on".equals( datamemberName) ) set_compressor_on( (Boolean)val );
+        if ( "cooling_setpoint".equals( datamemberName) ) set_cooling_setpoint( (Double)val );
         else if ( "name".equals( datamemberName) ) set_name( (String)val );
-        else if ( "temperature".equals( datamemberName) ) set_temperature( (Double)val );
         else retval = super.setParameterAux( datamemberName, val );
 
         return retval;
@@ -651,12 +589,10 @@ public class House extends C2WInteractionRoot {
 
     public void copyFrom( Object object ) {
         super.copyFrom( object );
-        if ( object instanceof House ) {
-            House data = (House)object;
-            _compressor_count = data._compressor_count;
-            _compressor_on = data._compressor_on;
+        if ( object instanceof CoolingSetPoint ) {
+            CoolingSetPoint data = (CoolingSetPoint)object;
+            _cooling_setpoint = data._cooling_setpoint;
             _name = data._name;
-            _temperature = data._temperature;
         }
     }
 }

@@ -48,16 +48,15 @@
         (attribute FederateHost reliable timestamp)
         (attribute FederateType reliable timestamp)
       )
-      (class GLDObject
-        (attribute name reliable timestamp)
-      (class CoolingControlObject
+      (class CoolingSetPointObject
         (attribute cooling_setpoint reliable timestamp)
+        (attribute name reliable timestamp)
       )
       (class HouseObject
-        (attribute air_temperature reliable timestamp)
         (attribute compressor_count reliable timestamp)
         (attribute compressor_on reliable timestamp)
-      )
+        (attribute name reliable timestamp)
+        (attribute temperature reliable timestamp)
       )
     ) 
   )
@@ -306,27 +305,26 @@
       )
       (class SimResume reliable timestamp
       )
-      (class SimTime reliable timestamp
+      (class SimTime reliable receive
         (parameter timeScale)
         (parameter timeZone)
         (parameter unixTimeStart)
         (parameter unixTimeStop)
       )
       )
+      (class CoolingSetPoint reliable timestamp
+        (parameter cooling_setpoint)
+        (parameter name)
+      )
       (class GLDClock reliable timestamp
         (parameter timeStamp)
         (parameter unixTime)
       )
-      (class GLDInteraction reliable timestamp
-        (parameter name)
-      (class CoolingControl reliable timestamp
-        (parameter cooling_setpoint)
-      )
       (class House reliable timestamp
-        (parameter air_temperature)
         (parameter compressor_count)
         (parameter compressor_on)
-      )
+        (parameter name)
+        (parameter temperature)
       )
       )
     )

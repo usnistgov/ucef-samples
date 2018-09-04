@@ -1,25 +1,43 @@
 {
   "federateTypesAllowed": [
-    "GLDFederate",
-    "TestFederate"
+    "GridLabD",
+    "HouseSchedule",
+    "Reporter",
+    "SimulationTime"
   ],
   "expectedFederates": [
     {
-      "federateType": "GLDFederate",
+      "federateType": "GridLabD",
       "count": 1
     },
     {
-      "federateType": "TestFederate",
+      "federateType": "HouseSchedule",
+      "count": 1
+    },
+    {
+      "federateType": "Reporter",
+      "count": 1
+    },
+    {
+      "federateType": "SimulationTime",
       "count": 1
     }
   ],
   "lateJoinerFederates": [
     {
-      "federateType": "GLDFederate",
+      "federateType": "GridLabD",
       "count": 0
     },
     {
-      "federateType": "TestFederate",
+      "federateType": "HouseSchedule",
+      "count": 0
+    },
+    {
+      "federateType": "Reporter",
+      "count": 0
+    },
+    {
+      "federateType": "SimulationTime",
       "count": 0
     }
   ]

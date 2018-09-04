@@ -71,12 +71,20 @@ printf "\n"
 curl -o /dev/null -s -X POST http://$fedmgr_host:$fedmgr_port/fedmgr --data '{"action": "START"}' -H "Content-Type: application/json"
 
 # run the other federates
-cd $root_directory/src/GLDFederate
-xterm -fg green -bg black -l -lf $logs_directory/gridlab-d-${timestamp}.log -T "GridLAB-D" -geometry 140x40+180+60 -e "java -Djava.net.preferIPv4Stack=true -Dlog4j.configurationFile=conf/log4j2.xml -jar gridlabd-federate-0.1.0-SNAPSHOT.jar conf/GridLAB-D.json" &
-waitUntilJoined GLDFederate 1
+cd $root_directory/src/GLDExample_deployment
+xterm -fg red -bg black -l -lf $logs_directory/simulation-time-${timestamp}.log -T "Simulation Time" -geometry 140x40+180+60 -e "mvn exec:java -P ExecJava,SimulationTime" &
+waitUntilJoined SimulationTime 1
 
 cd $root_directory/src/GLDExample_deployment
-xterm -fg cyan -bg black -l -lf $logs_directory/test-federate-${timestamp}.log -T "TestFederate" -geometry 140x40+360+120 -e "mvn -Dexperiment.name=experiment1 exec:java -P ExecJava,TestFederate" &
+xterm -fg yellow -bg black -l -lf $logs_directory/house-schedule-${timestamp}.log -T "House Schedule" -geometry 140x40+360+120 -e "mvn exec:java -P ExecJava,HouseSchedule" &
+waitUntilJoined HouseSchedule 1
+
+cd $root_directory/src/GLDExample_generated/GridLabD
+xterm -fg green -bg black -l -lf $logs_directory/gridlabd-${timestamp}.log -T "GridLAB-D" -geometry 140x40+540+180 -e "sh run.sh" &
+waitUntilJoined GridLabD 1
+
+cd $root_directory/src/GLDExample_deployment
+xterm -fg cyan -bg black -l -lf $logs_directory/reporter-${timestamp}.log -T "Reporter" -geometry 140x40+720+240 -e "mvn exec:java -P ExecJava,Reporter" &
 
 # terminate the simulation
 read -n 1 -r -s -p "Press any key to terminate the federation execution..."

@@ -12,5 +12,5 @@
   "federationEndTime": 0,
   "realTimeMode": false,
   "fedFile": "fom/GLDExample.fed",
-  "experimentConfig": "conf/experiment1/experiment1.json"
+  "experimentConfig": "conf/default/experimentConfig.json"
 }

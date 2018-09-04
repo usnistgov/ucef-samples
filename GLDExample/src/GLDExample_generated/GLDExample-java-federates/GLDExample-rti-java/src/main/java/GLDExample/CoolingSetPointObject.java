@@ -23,28 +23,26 @@ import hla.rti.SuppliedAttributes;
 import org.cpswt.hla.*;
 
 /**
-* Implements ObjectRoot.HouseObject
+* Implements ObjectRoot.CoolingSetPointObject
 */
-public class HouseObject extends ObjectRoot {
+public class CoolingSetPointObject extends ObjectRoot {
 
     private static final Logger logger = LogManager.getLogger();
 
     /**
-    * Creates an instance of the HouseObject object class with default attribute values.
+    * Creates an instance of the CoolingSetPointObject object class with default attribute values.
     */
-    public HouseObject() {}
+    public CoolingSetPointObject() {}
 
-    private static int _compressor_count_handle;
-    private static int _compressor_on_handle;
+    private static int _cooling_setpoint_handle;
     private static int _name_handle;
-    private static int _temperature_handle;
 
     private static boolean _isInitialized = false;
 
     private static int _handle;
 
     /**
-    * Returns the handle (RTI assigned) of the HouseObject object class.
+    * Returns the handle (RTI assigned) of the CoolingSetPointObject object class.
     * Note: As this is a static method, it is NOT polymorphic, and so, if called on
     * a reference will return the handle of the class pertaining to the reference,
     * rather than the handle of the class for the instance referred to by the reference.
@@ -57,7 +55,7 @@ public class HouseObject extends ObjectRoot {
     }
 
     /**
-    * Returns the fully-qualified (dot-delimited) name of the HouseObject object class.
+    * Returns the fully-qualified (dot-delimited) name of the CoolingSetPointObject object class.
     * Note: As this is a static method, it is NOT polymorphic, and so, if called on
     * a reference will return the name of the class pertaining to the reference,
     * rather than the name of the class for the instance referred to by the reference.
@@ -66,17 +64,17 @@ public class HouseObject extends ObjectRoot {
     * @return the fully-qualified HLA class path for this object class
     */
     public static String get_class_name() {
-        return "ObjectRoot.HouseObject";
+        return "ObjectRoot.CoolingSetPointObject";
     }
 
     /**
     * Returns the simple name (the last name in the dot-delimited fully-qualified
-    * class name) of the HouseObject object class.
+    * class name) of the CoolingSetPointObject object class.
     *
     * @return the name of this object class
     */
     public static String get_simple_class_name() {
-        return "HouseObject";
+        return "CoolingSetPointObject";
     }
 
     private static Set< String > _datamemberNames = new HashSet< String >();
@@ -84,7 +82,7 @@ public class HouseObject extends ObjectRoot {
 
     /**
     * Returns a set containing the names of all of the non-hidden attributes in the
-    * HouseObject object class.
+    * CoolingSetPointObject object class.
     * Note: As this is a static method, it is NOT polymorphic, and so, if called on
     * a reference will return a set of parameter names pertaining to the reference,
     * rather than the parameter names of the class for the instance referred to by
@@ -99,7 +97,7 @@ public class HouseObject extends ObjectRoot {
 
     /**
     * Returns a set containing the names of all of the attributes in the
-    * HouseObject object class.
+    * CoolingSetPointObject object class.
     * Note: As this is a static method, it is NOT polymorphic, and so, if called on
     * a reference will return a set of parameter names pertaining to the reference,
     * rather than the parameter names of the class for the instance referred to by
@@ -116,29 +114,23 @@ public class HouseObject extends ObjectRoot {
     private static Set< String > _subscribeAttributeNameSet = new HashSet< String >();
 
     static {
-        _classNameSet.add("ObjectRoot.HouseObject");
-        _classNameClassMap.put("ObjectRoot.HouseObject", HouseObject.class);
+        _classNameSet.add("ObjectRoot.CoolingSetPointObject");
+        _classNameClassMap.put("ObjectRoot.CoolingSetPointObject", CoolingSetPointObject.class);
 
-        _datamemberClassNameSetMap.put("ObjectRoot.HouseObject", _datamemberNames);
-        _allDatamemberClassNameSetMap.put("ObjectRoot.HouseObject", _allDatamemberNames);
+        _datamemberClassNameSetMap.put("ObjectRoot.CoolingSetPointObject", _datamemberNames);
+        _allDatamemberClassNameSetMap.put("ObjectRoot.CoolingSetPointObject", _allDatamemberNames);
 
-        _datamemberNames.add("compressor_count");
-        _datamemberNames.add("compressor_on");
+        _datamemberNames.add("cooling_setpoint");
         _datamemberNames.add("name");
-        _datamemberNames.add("temperature");
 
-        _datamemberTypeMap.put("compressor_count", "int");
-        _datamemberTypeMap.put("compressor_on", "boolean");
+        _datamemberTypeMap.put("cooling_setpoint", "double");
         _datamemberTypeMap.put("name", "String");
-        _datamemberTypeMap.put("temperature", "double");
 
-        _allDatamemberNames.add("compressor_count");
-        _allDatamemberNames.add("compressor_on");
+        _allDatamemberNames.add("cooling_setpoint");
         _allDatamemberNames.add("name");
-        _allDatamemberNames.add("temperature");
 
-        _classNamePublishAttributeNameMap.put("ObjectRoot.HouseObject", _publishAttributeNameSet);
-        _classNameSubscribeAttributeNameMap.put("ObjectRoot.HouseObject", _subscribeAttributeNameSet);
+        _classNamePublishAttributeNameMap.put("ObjectRoot.CoolingSetPointObject", _publishAttributeNameSet);
+        _classNameSubscribeAttributeNameMap.put("ObjectRoot.CoolingSetPointObject", _subscribeAttributeNameSet);
     }
 
     protected static void init(RTIambassador rti) {
@@ -150,7 +142,7 @@ public class HouseObject extends ObjectRoot {
         boolean isNotInitialized = true;
         while(isNotInitialized) {
             try {
-                _handle = rti.getObjectClassHandle("ObjectRoot.HouseObject");
+                _handle = rti.getObjectClassHandle("ObjectRoot.CoolingSetPointObject");
                 isNotInitialized = false;
             } catch (FederateNotExecutionMember e) {
                 logger.error("could not initialize: Federate Not Execution Member", e);
@@ -164,17 +156,15 @@ public class HouseObject extends ObjectRoot {
             }
         }
 
-        _classNameHandleMap.put("ObjectRoot.HouseObject", get_handle());
-        _classHandleNameMap.put(get_handle(), "ObjectRoot.HouseObject");
-        _classHandleSimpleNameMap.put(get_handle(), "HouseObject");
+        _classNameHandleMap.put("ObjectRoot.CoolingSetPointObject", get_handle());
+        _classHandleNameMap.put(get_handle(), "ObjectRoot.CoolingSetPointObject");
+        _classHandleSimpleNameMap.put(get_handle(), "CoolingSetPointObject");
 
         isNotInitialized = true;
         while(isNotInitialized) {
             try {
-                _compressor_count_handle = rti.getAttributeHandle("compressor_count", get_handle());
-                _compressor_on_handle = rti.getAttributeHandle("compressor_on", get_handle());
+                _cooling_setpoint_handle = rti.getAttributeHandle("cooling_setpoint", get_handle());
                 _name_handle = rti.getAttributeHandle("name", get_handle());
-                _temperature_handle = rti.getAttributeHandle("temperature", get_handle());
                 isNotInitialized = false;
             } catch (FederateNotExecutionMember e) {
                 logger.error("could not initialize: Federate Not Execution Member", e);
@@ -191,21 +181,17 @@ public class HouseObject extends ObjectRoot {
             }
         }
 
-        _datamemberNameHandleMap.put("ObjectRoot.HouseObject.compressor_count", _compressor_count_handle);
-        _datamemberNameHandleMap.put("ObjectRoot.HouseObject.compressor_on", _compressor_on_handle);
-        _datamemberNameHandleMap.put("ObjectRoot.HouseObject.name", _name_handle);
-        _datamemberNameHandleMap.put("ObjectRoot.HouseObject.temperature", _temperature_handle);
+        _datamemberNameHandleMap.put("ObjectRoot.CoolingSetPointObject.cooling_setpoint", _cooling_setpoint_handle);
+        _datamemberNameHandleMap.put("ObjectRoot.CoolingSetPointObject.name", _name_handle);
 
-        _datamemberHandleNameMap.put(_compressor_count_handle, "compressor_count");
-        _datamemberHandleNameMap.put(_compressor_on_handle, "compressor_on");
+        _datamemberHandleNameMap.put(_cooling_setpoint_handle, "cooling_setpoint");
         _datamemberHandleNameMap.put(_name_handle, "name");
-        _datamemberHandleNameMap.put(_temperature_handle, "temperature");
     }
 
     private static boolean _isPublished = false;
 
     /**
-    * Publishes the HouseObject object class for a federate.
+    * Publishes the CoolingSetPointObject object class for a federate.
     *
     * @param rti handle to the Local RTI Component
     */
@@ -217,7 +203,7 @@ public class HouseObject extends ObjectRoot {
         AttributeHandleSet publishedAttributeHandleSet = _factory.createAttributeHandleSet();
         for(String attributeName : _publishAttributeNameSet) {
             try {
-                publishedAttributeHandleSet.add(_datamemberNameHandleMap.get("ObjectRoot.HouseObject." + attributeName));
+                publishedAttributeHandleSet.add(_datamemberNameHandleMap.get("ObjectRoot.CoolingSetPointObject." + attributeName));
                 logger.trace("publish {}:{}", get_class_name(), attributeName);
             } catch (Exception e) {
                 logger.error("could not publish \"" + attributeName + "\" attribute.", e);
@@ -248,7 +234,7 @@ public class HouseObject extends ObjectRoot {
     }
 
     /**
-    * Unpublishes the HouseObject object class for a federate.
+    * Unpublishes the CoolingSetPointObject object class for a federate.
     *
     * @param rti handle to the Local RTI Component
     */
@@ -286,7 +272,7 @@ public class HouseObject extends ObjectRoot {
     private static boolean _isSubscribed = false;
 
     /**
-    * Subscribes a federate to the HouseObject object class.
+    * Subscribes a federate to the CoolingSetPointObject object class.
     *
     * @param rti handle to the Local RTI Component
     */
@@ -298,7 +284,7 @@ public class HouseObject extends ObjectRoot {
         AttributeHandleSet subscribedAttributeHandleSet = _factory.createAttributeHandleSet();
         for(String attributeName : _subscribeAttributeNameSet) {
             try {
-                subscribedAttributeHandleSet.add(_datamemberNameHandleMap.get("ObjectRoot.HouseObject." + attributeName));
+                subscribedAttributeHandleSet.add(_datamemberNameHandleMap.get("ObjectRoot.CoolingSetPointObject." + attributeName));
                 logger.trace("subscribe {}:{}", get_class_name(), attributeName);
             } catch (Exception e) {
                 logger.error("could not subscribe to \"" + attributeName + "\" attribute.", e);
@@ -329,7 +315,7 @@ public class HouseObject extends ObjectRoot {
     }
 
     /**
-    * Unsubscribes a federate from the HouseObject object class.
+    * Unsubscribes a federate from the CoolingSetPointObject object class.
     *
     * @param rti handle to the Local RTI Component
     */
@@ -366,12 +352,12 @@ public class HouseObject extends ObjectRoot {
 
     /**
     * Return true if "handle" is equal to the handle (RTI assigned) of this class
-    * (that is, the HouseObject object class).
+    * (that is, the CoolingSetPointObject object class).
     *
     * @param handle handle to compare to the value of the handle (RTI assigned) of
-    * this class (the HouseObject object class).
+    * this class (the CoolingSetPointObject object class).
     * @return "true" if "handle" matches the value of the handle of this class
-    * (that is, the HouseObject object class).
+    * (that is, the CoolingSetPointObject object class).
     */
     public static boolean match(int handle) {
         return handle == get_handle();
@@ -429,10 +415,8 @@ public class HouseObject extends ObjectRoot {
 
     @Override
     public String getAttributeName(int datamemberHandle) {
-        if (datamemberHandle == _compressor_count_handle) return "compressor_count";
-        else if (datamemberHandle == _compressor_on_handle) return "compressor_on";
+        if (datamemberHandle == _cooling_setpoint_handle) return "cooling_setpoint";
         else if (datamemberHandle == _name_handle) return "name";
-        else if (datamemberHandle == _temperature_handle) return "temperature";
         else return super.getAttributeName(datamemberHandle);
     }
 
@@ -475,108 +459,58 @@ public class HouseObject extends ObjectRoot {
     @Override
     public String toString() {
         return getClass().getName() + "("
-                + "compressor_count:" + get_compressor_count()
-                + "," + "compressor_on:" + get_compressor_on()
+                + "cooling_setpoint:" + get_cooling_setpoint()
                 + "," + "name:" + get_name()
-                + "," + "temperature:" + get_temperature()
                 + ")";
     }
 
 
     /**
-    * Publishes the "compressor_count" attribute of the attribute's containing object
+    * Publishes the "cooling_setpoint" attribute of the attribute's containing object
     * class for a federate.
-    * Note:  This method only marks the "compressor_count" attribute for publication.
+    * Note:  This method only marks the "cooling_setpoint" attribute for publication.
     * To actually publish the attribute, the federate must (re)publish its containing
     * object class.
     * (using &lt;objectClassName&gt;.publish( RTIambassador rti ) ).
     */
-    public static void publish_compressor_count() {
-        _publishAttributeNameSet.add( "compressor_count" );
+    public static void publish_cooling_setpoint() {
+        _publishAttributeNameSet.add( "cooling_setpoint" );
     }
 
     /**
-    * Unpublishes the "compressor_count" attribute of the attribute's containing object
+    * Unpublishes the "cooling_setpoint" attribute of the attribute's containing object
     * class for a federate.
-    * Note:  This method only marks the "compressor_count" attribute for unpublication.
+    * Note:  This method only marks the "cooling_setpoint" attribute for unpublication.
     * To actually publish the attribute, the federate must (re)publish its containing
     * object class.
     * (using &lt;objectClassName&gt;.publish( RTIambassador rti ) ).
     */
-    public static void unpublish_compressor_count() {
-        _publishAttributeNameSet.remove( "compressor_count" );
+    public static void unpublish_cooling_setpoint() {
+        _publishAttributeNameSet.remove( "cooling_setpoint" );
     }
 
     /**
-    * Subscribes a federate to the "compressor_count" attribute of the attribute's
+    * Subscribes a federate to the "cooling_setpoint" attribute of the attribute's
     * containing object class.
-    * Note:  This method only marks the "compressor_count" attribute for subscription.
+    * Note:  This method only marks the "cooling_setpoint" attribute for subscription.
     * To actually subscribe to the attribute, the federate must (re)subscribe to its
     * containing object class.
     * (using &lt;objectClassName&gt;.subscribe( RTIambassador rti ) ).
     */
-    public static void subscribe_compressor_count() {
-        _subscribeAttributeNameSet.add( "compressor_count" );
+    public static void subscribe_cooling_setpoint() {
+        _subscribeAttributeNameSet.add( "cooling_setpoint" );
     }
 
     /**
-    * Unsubscribes a federate from the "compressor_count" attribute of the attribute's
+    * Unsubscribes a federate from the "cooling_setpoint" attribute of the attribute's
     * containing object class.
-    * Note:  This method only marks the "compressor_count" attribute for unsubscription.
+    * Note:  This method only marks the "cooling_setpoint" attribute for unsubscription.
     * To actually unsubscribe to the attribute, the federate must (re)subscribe to its
     * containing object class.
     * (using &lt;objectClassName&gt;.subscribe( RTIambassador rti ) ).
     */
-    public static void unsubscribe_compressor_count() {
-        _subscribeAttributeNameSet.remove( "compressor_count" );
-    }
-
-    /**
-    * Publishes the "compressor_on" attribute of the attribute's containing object
-    * class for a federate.
-    * Note:  This method only marks the "compressor_on" attribute for publication.
-    * To actually publish the attribute, the federate must (re)publish its containing
-    * object class.
-    * (using &lt;objectClassName&gt;.publish( RTIambassador rti ) ).
-    */
-    public static void publish_compressor_on() {
-        _publishAttributeNameSet.add( "compressor_on" );
-    }
-
-    /**
-    * Unpublishes the "compressor_on" attribute of the attribute's containing object
-    * class for a federate.
-    * Note:  This method only marks the "compressor_on" attribute for unpublication.
-    * To actually publish the attribute, the federate must (re)publish its containing
-    * object class.
-    * (using &lt;objectClassName&gt;.publish( RTIambassador rti ) ).
-    */
-    public static void unpublish_compressor_on() {
-        _publishAttributeNameSet.remove( "compressor_on" );
-    }
-
-    /**
-    * Subscribes a federate to the "compressor_on" attribute of the attribute's
-    * containing object class.
-    * Note:  This method only marks the "compressor_on" attribute for subscription.
-    * To actually subscribe to the attribute, the federate must (re)subscribe to its
-    * containing object class.
-    * (using &lt;objectClassName&gt;.subscribe( RTIambassador rti ) ).
-    */
-    public static void subscribe_compressor_on() {
-        _subscribeAttributeNameSet.add( "compressor_on" );
-    }
-
-    /**
-    * Unsubscribes a federate from the "compressor_on" attribute of the attribute's
-    * containing object class.
-    * Note:  This method only marks the "compressor_on" attribute for unsubscription.
-    * To actually unsubscribe to the attribute, the federate must (re)subscribe to its
-    * containing object class.
-    * (using &lt;objectClassName&gt;.subscribe( RTIambassador rti ) ).
-    */
-    public static void unsubscribe_compressor_on() {
-        _subscribeAttributeNameSet.remove( "compressor_on" );
+    public static void unsubscribe_cooling_setpoint() {
+        _subscribeAttributeNameSet.remove( "cooling_setpoint" );
     }
 
     /**
@@ -627,114 +561,35 @@ public class HouseObject extends ObjectRoot {
         _subscribeAttributeNameSet.remove( "name" );
     }
 
-    /**
-    * Publishes the "temperature" attribute of the attribute's containing object
-    * class for a federate.
-    * Note:  This method only marks the "temperature" attribute for publication.
-    * To actually publish the attribute, the federate must (re)publish its containing
-    * object class.
-    * (using &lt;objectClassName&gt;.publish( RTIambassador rti ) ).
-    */
-    public static void publish_temperature() {
-        _publishAttributeNameSet.add( "temperature" );
-    }
+    protected Attribute< Double > _cooling_setpoint =
+            new Attribute< Double >(  new Double( 0 )  );
 
     /**
-    * Unpublishes the "temperature" attribute of the attribute's containing object
-    * class for a federate.
-    * Note:  This method only marks the "temperature" attribute for unpublication.
-    * To actually publish the attribute, the federate must (re)publish its containing
-    * object class.
-    * (using &lt;objectClassName&gt;.publish( RTIambassador rti ) ).
-    */
-    public static void unpublish_temperature() {
-        _publishAttributeNameSet.remove( "temperature" );
-    }
-
-    /**
-    * Subscribes a federate to the "temperature" attribute of the attribute's
-    * containing object class.
-    * Note:  This method only marks the "temperature" attribute for subscription.
-    * To actually subscribe to the attribute, the federate must (re)subscribe to its
-    * containing object class.
-    * (using &lt;objectClassName&gt;.subscribe( RTIambassador rti ) ).
-    */
-    public static void subscribe_temperature() {
-        _subscribeAttributeNameSet.add( "temperature" );
-    }
-
-    /**
-    * Unsubscribes a federate from the "temperature" attribute of the attribute's
-    * containing object class.
-    * Note:  This method only marks the "temperature" attribute for unsubscription.
-    * To actually unsubscribe to the attribute, the federate must (re)subscribe to its
-    * containing object class.
-    * (using &lt;objectClassName&gt;.subscribe( RTIambassador rti ) ).
-    */
-    public static void unsubscribe_temperature() {
-        _subscribeAttributeNameSet.remove( "temperature" );
-    }
-
-    protected Attribute< Integer > _compressor_count =
-            new Attribute< Integer >(  new Integer( 0 )  );
-
-    /**
-    * Set the value of the "compressor_count" attribute to "value" for this object.
+    * Set the value of the "cooling_setpoint" attribute to "value" for this object.
     *
-    * @param value the new value for the "compressor_count" attribute
+    * @param value the new value for the "cooling_setpoint" attribute
     */
-    public void set_compressor_count( int value ) {
-        _compressor_count.setValue( value );
-        _compressor_count.setTime( getTime() );
+    public void set_cooling_setpoint( double value ) {
+        _cooling_setpoint.setValue( value );
+        _cooling_setpoint.setTime( getTime() );
     }
 
     /**
-    * Returns the value of the "compressor_count" attribute of this object.
+    * Returns the value of the "cooling_setpoint" attribute of this object.
     *
-    * @return the value of the "compressor_count" attribute
+    * @return the value of the "cooling_setpoint" attribute
     */
-    public int get_compressor_count() {
-        return _compressor_count.getValue();
+    public double get_cooling_setpoint() {
+        return _cooling_setpoint.getValue();
     }
 
     /**
-    * Returns the current timestamp of the "compressor_count" attribute of this object.
+    * Returns the current timestamp of the "cooling_setpoint" attribute of this object.
     *
-    * @return the current timestamp of the "compressor_count" attribute
+    * @return the current timestamp of the "cooling_setpoint" attribute
     */
-    public double get_compressor_count_time() {
-        return _compressor_count.getTime();
-    }
-
-    protected Attribute< Boolean > _compressor_on =
-            new Attribute< Boolean >(  new Boolean( false )  );
-
-    /**
-    * Set the value of the "compressor_on" attribute to "value" for this object.
-    *
-    * @param value the new value for the "compressor_on" attribute
-    */
-    public void set_compressor_on( boolean value ) {
-        _compressor_on.setValue( value );
-        _compressor_on.setTime( getTime() );
-    }
-
-    /**
-    * Returns the value of the "compressor_on" attribute of this object.
-    *
-    * @return the value of the "compressor_on" attribute
-    */
-    public boolean get_compressor_on() {
-        return _compressor_on.getValue();
-    }
-
-    /**
-    * Returns the current timestamp of the "compressor_on" attribute of this object.
-    *
-    * @return the current timestamp of the "compressor_on" attribute
-    */
-    public double get_compressor_on_time() {
-        return _compressor_on.getTime();
+    public double get_cooling_setpoint_time() {
+        return _cooling_setpoint.getTime();
     }
 
     protected Attribute< String > _name =
@@ -768,89 +623,56 @@ public class HouseObject extends ObjectRoot {
         return _name.getTime();
     }
 
-    protected Attribute< Double > _temperature =
-            new Attribute< Double >(  new Double( 0 )  );
-
-    /**
-    * Set the value of the "temperature" attribute to "value" for this object.
-    *
-    * @param value the new value for the "temperature" attribute
-    */
-    public void set_temperature( double value ) {
-        _temperature.setValue( value );
-        _temperature.setTime( getTime() );
-    }
-
-    /**
-    * Returns the value of the "temperature" attribute of this object.
-    *
-    * @return the value of the "temperature" attribute
-    */
-    public double get_temperature() {
-        return _temperature.getValue();
-    }
-
-    /**
-    * Returns the current timestamp of the "temperature" attribute of this object.
-    *
-    * @return the current timestamp of the "temperature" attribute
-    */
-    public double get_temperature_time() {
-        return _temperature.getTime();
-    }
-
-    protected HouseObject( ReflectedAttributes datamemberMap, boolean initFlag ) {
+    protected CoolingSetPointObject( ReflectedAttributes datamemberMap, boolean initFlag ) {
         super( datamemberMap, false );
         if ( initFlag ) setAttributes( datamemberMap );
     }
 
-    protected HouseObject( ReflectedAttributes datamemberMap, LogicalTime logicalTime, boolean initFlag ) {
+    protected CoolingSetPointObject( ReflectedAttributes datamemberMap, LogicalTime logicalTime, boolean initFlag ) {
         super( datamemberMap, logicalTime, false );
         if ( initFlag ) setAttributes( datamemberMap );
     }
 
     /**
-    * Creates an instance of the HouseObject object class, using
+    * Creates an instance of the CoolingSetPointObject object class, using
     * "datamemberMap" to initialize its attribute values.
     * "datamemberMap" is usually acquired as an argument to an RTI federate
     * callback method, such as "receiveInteraction".
     *
     * @param datamemberMap data structure containing initial values for the
-    * attributes of this new HouseObject object class instance
+    * attributes of this new CoolingSetPointObject object class instance
     */
-    public HouseObject( ReflectedAttributes datamemberMap ) {
+    public CoolingSetPointObject( ReflectedAttributes datamemberMap ) {
         this( datamemberMap, true );
     }
 
     /**
-    * Like {@link #HouseObject( ReflectedAttributes datamemberMap )}, except this
-    * new HouseObject object class instance is given a timestamp of
+    * Like {@link #CoolingSetPointObject( ReflectedAttributes datamemberMap )}, except this
+    * new CoolingSetPointObject object class instance is given a timestamp of
     * "logicalTime".
     *
     * @param datamemberMap data structure containing initial values for the
-    * attributes of this new HouseObject object class instance
-    * @param logicalTime timestamp for this new HouseObject object class
+    * attributes of this new CoolingSetPointObject object class instance
+    * @param logicalTime timestamp for this new CoolingSetPointObject object class
     * instance
     */
-    public HouseObject( ReflectedAttributes datamemberMap, LogicalTime logicalTime ) {
+    public CoolingSetPointObject( ReflectedAttributes datamemberMap, LogicalTime logicalTime ) {
         this( datamemberMap, logicalTime, true );
     }
 
     /**
-    * Creates a new HouseObject object class instance that is a duplicate
-    * of the instance referred to by HouseObject_var.
+    * Creates a new CoolingSetPointObject object class instance that is a duplicate
+    * of the instance referred to by CoolingSetPointObject_var.
     *
-    * @param HouseObject_var HouseObject object class instance of which
-    * this newly created HouseObject object class instance will be a
+    * @param CoolingSetPointObject_var CoolingSetPointObject object class instance of which
+    * this newly created CoolingSetPointObject object class instance will be a
     * duplicate
     */
-    public HouseObject( HouseObject HouseObject_var ) {
-        super( HouseObject_var );
+    public CoolingSetPointObject( CoolingSetPointObject CoolingSetPointObject_var ) {
+        super( CoolingSetPointObject_var );
 
-        set_compressor_count( HouseObject_var.get_compressor_count() );
-        set_compressor_on( HouseObject_var.get_compressor_on() );
-        set_name( HouseObject_var.get_name() );
-        set_temperature( HouseObject_var.get_temperature() );
+        set_cooling_setpoint( CoolingSetPointObject_var.get_cooling_setpoint() );
+        set_name( CoolingSetPointObject_var.get_name() );
     }
 
     /**
@@ -863,19 +685,15 @@ public class HouseObject extends ObjectRoot {
     * for this object
     */
     public Object getAttribute( String datamemberName ) {
-        if ( "compressor_count".equals(datamemberName) ) return new Integer(get_compressor_count());
-        else if ( "compressor_on".equals(datamemberName) ) return new Boolean(get_compressor_on());
+        if ( "cooling_setpoint".equals(datamemberName) ) return new Double(get_cooling_setpoint());
         else if ( "name".equals(datamemberName) ) return get_name();
-        else if ( "temperature".equals(datamemberName) ) return new Double(get_temperature());
         else return super.getAttribute( datamemberName );
     }
 
     protected boolean setAttributeAux( String datamemberName, String val ) {
         boolean retval = true;
-        if ( "compressor_count".equals( datamemberName) ) set_compressor_count( Integer.parseInt(val) );
-        else if ( "compressor_on".equals( datamemberName) ) set_compressor_on( Boolean.parseBoolean(val) );
+        if ( "cooling_setpoint".equals( datamemberName) ) set_cooling_setpoint( Double.parseDouble(val) );
         else if ( "name".equals( datamemberName) ) set_name( val );
-        else if ( "temperature".equals( datamemberName) ) set_temperature( Double.parseDouble(val) );
         else retval = super.setAttributeAux( datamemberName, val );
 
         return retval;
@@ -883,10 +701,8 @@ public class HouseObject extends ObjectRoot {
 
     protected boolean setAttributeAux( String datamemberName, Object val ) {
         boolean retval = true;
-        if ( "compressor_count".equals( datamemberName) ) set_compressor_count( (Integer)val );
-        else if ( "compressor_on".equals( datamemberName) ) set_compressor_on( (Boolean)val );
+        if ( "cooling_setpoint".equals( datamemberName) ) set_cooling_setpoint( (Double)val );
         else if ( "name".equals( datamemberName) ) set_name( (String)val );
-        else if ( "temperature".equals( datamemberName) ) set_temperature( (Double)val );
         else retval = super.setAttributeAux( datamemberName, val );
 
         return retval;
@@ -896,14 +712,9 @@ public class HouseObject extends ObjectRoot {
     protected SuppliedAttributes createSuppliedDatamembers(boolean force) {
         SuppliedAttributes datamembers = _factory.createSuppliedAttributes();
  
-        if (_publishAttributeNameSet.contains("compressor_count") && _compressor_count.shouldBeUpdated(force)) {
-            datamembers.add( getAttributeHandle("compressor_count"), getAttribute("compressor_count").toString().getBytes() );
-            _compressor_count.setHasBeenUpdated();
-        }
-
-        if (_publishAttributeNameSet.contains("compressor_on") && _compressor_on.shouldBeUpdated(force)) {
-            datamembers.add( getAttributeHandle("compressor_on"), getAttribute("compressor_on").toString().getBytes() );
-            _compressor_on.setHasBeenUpdated();
+        if (_publishAttributeNameSet.contains("cooling_setpoint") && _cooling_setpoint.shouldBeUpdated(force)) {
+            datamembers.add( getAttributeHandle("cooling_setpoint"), getAttribute("cooling_setpoint").toString().getBytes() );
+            _cooling_setpoint.setHasBeenUpdated();
         }
 
         if (_publishAttributeNameSet.contains("name") && _name.shouldBeUpdated(force)) {
@@ -911,22 +722,15 @@ public class HouseObject extends ObjectRoot {
             _name.setHasBeenUpdated();
         }
 
-        if (_publishAttributeNameSet.contains("temperature") && _temperature.shouldBeUpdated(force)) {
-            datamembers.add( getAttributeHandle("temperature"), getAttribute("temperature").toString().getBytes() );
-            _temperature.setHasBeenUpdated();
-        }
-
         return datamembers;
     }
 
     public void copyFrom( Object object ) {
         super.copyFrom( object );
-        if ( object instanceof HouseObject ) {
-            HouseObject data = (HouseObject)object;
-            _compressor_count = data._compressor_count;
-            _compressor_on = data._compressor_on;
+        if ( object instanceof CoolingSetPointObject ) {
+            CoolingSetPointObject data = (CoolingSetPointObject)object;
+            _cooling_setpoint = data._cooling_setpoint;
             _name = data._name;
-            _temperature = data._temperature;
         }
     }
 }
