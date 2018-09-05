@@ -1,0 +1,39 @@
+{
+  "federateTypesAllowed": [
+    "Aggregator",
+    "Environment",
+    "Reporter"
+  ],
+  "expectedFederates": [
+    {
+      "federateType": "Aggregator",
+      "count": 1
+    },
+    {
+      "federateType": "Environment",
+      "count": 1
+    },
+    {
+      "federateType": "Reporter",
+      "count": 1
+    }
+  ],
+  "lateJoinerFederates": [
+    {
+      "federateType": "Aggregator",
+      "count": 0
+    },
+    {
+      "federateType": "Environment",
+      "count": 0
+    },
+    {
+      "federateType": "Reporter",
+      "count": 0
+    }
+  ],
+  "pauseTimes": [],
+  "coaDefinition": "conf/coaConfig.json",
+  "coaSelection": "conf/coaSelection.json",
+  "terminateOnCOAFinish": false
+}

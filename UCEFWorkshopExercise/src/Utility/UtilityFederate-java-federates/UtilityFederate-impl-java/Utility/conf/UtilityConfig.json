@@ -1,0 +1,13 @@
+{
+  "federateRTIInitWaitTimeMs": 200,
+  "federateType": "Utility",
+  "federationId": "WorkshopExercise",
+  "isLateJoiner": false,
+  "lookAhead": 0.1,
+  "stepSize": 1.0,
+  "maxHouses": 50,
+  "pricebulk": 0.07,
+  "pricesolar": 0.0,
+  "pricefixed": 0.04,
+  "solarpowerperdirectsolar": 1000.0
+}

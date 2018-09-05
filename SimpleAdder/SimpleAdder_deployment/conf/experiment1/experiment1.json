@@ -1,0 +1,25 @@
+{
+  "federateTypesAllowed": [
+    "Adder",
+    "InputSource",
+    "Reporter"
+  ],
+  "expectedFederates": [
+    {
+      "federateType": "Adder",
+      "count": 1
+    },
+    {
+      "federateType": "InputSource",
+      "count": 1
+    },
+    {
+      "federateType": "Reporter",
+      "count": 1
+    }
+  ],
+  "lateJoinerFederates": [],
+  "coaDefinition": "conf/NewcoaConfig.json",
+  "coaSelection": "conf/experiment1/coaSelection_experiment1.json",
+  "terminateOnCOAFinish": false
+}

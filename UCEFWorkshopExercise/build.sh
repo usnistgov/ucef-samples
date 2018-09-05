@@ -1,27 +1,21 @@
-
+#!/bin/bash
 DIR=`pwd`
  
-cd $DIR/src/fedmanager
-./build.sh
+cd $DIR/src/Metronome
+mvn clean install
 
-cd $DIR/src/metronome/MetronomeProject_generated
-./build.sh
-cd $DIR/src/metronome/MetronomeProject_deployment
-./build.sh
+cd $DIR/src/Weather
+mvn clean install
 
-cd $DIR/src/house/HouseProject_generated
-./build.sh
-cd $DIR/src/house/HouseProject_deployment
-./build.sh
+cd $DIR/src/Utility
+mvn clean install
 
-cd $DIR/src/weather/WeatherProject_generated
-./build.sh
-cd $DIR/src/weather/WeatherProject_deployment
-./build.sh
+cd $DIR/src/House
+mvn clean install
 
-cd $DIR/src/utility/UtilityProject_generated
-./build.sh
-cd $DIR/src/utility/UtilityProject_deployment
-./build.sh
+cd $DIR/src/WorkshopExercise_generated
+mvn clean install
 
+cd $DIR/src/WorkshopExercise_deployment
+mvn clean install
 
