@@ -24,6 +24,59 @@
             <name>ObjectRoot</name>
             <sharing>Neither</sharing>
             <objectClass>
+                <name>ControllerState</name>
+                <sharing>Subscribe</sharing>
+                <attribute>
+                    <name>DamperPostionPct</name>
+                    <dataType>int</dataType>
+                    <updateType>NA</updateType>
+                    <ownership>NoTransfer</ownership>
+                    <sharing>Subscribe</sharing>
+                    <transportation>HLAreliable</transportation>
+                    <order>TimeStamp</order>
+                </attribute>
+                <attribute>
+                    <name>ZoneName</name>
+                    <dataType>String</dataType>
+                    <updateType>NA</updateType>
+                    <ownership>NoTransfer</ownership>
+                    <sharing>Subscribe</sharing>
+                    <transportation>HLAreliable</transportation>
+                    <order>TimeStamp</order>
+                </attribute>
+            </objectClass>
+            <objectClass>
+                <name>Setpoint</name>
+                <sharing>Publish</sharing>
+                <attribute>
+                    <name>Occupied</name>
+                    <dataType>boolean</dataType>
+                    <updateType>NA</updateType>
+                    <ownership>NoTransfer</ownership>
+                    <sharing>Publish</sharing>
+                    <transportation>HLAreliable</transportation>
+                    <order>TimeStamp</order>
+                </attribute>
+                <attribute>
+                    <name>ZoneName</name>
+                    <dataType>String</dataType>
+                    <updateType>NA</updateType>
+                    <ownership>NoTransfer</ownership>
+                    <sharing>Publish</sharing>
+                    <transportation>HLAreliable</transportation>
+                    <order>TimeStamp</order>
+                </attribute>
+                <attribute>
+                    <name>ZoneTempSP</name>
+                    <dataType>double</dataType>
+                    <updateType>NA</updateType>
+                    <ownership>NoTransfer</ownership>
+                    <sharing>Publish</sharing>
+                    <transportation>HLAreliable</transportation>
+                    <order>TimeStamp</order>
+                </attribute>
+            </objectClass>
+            <objectClass>
                 <name>SystemState</name>
                 <sharing>Publish</sharing>
                 <attribute>
