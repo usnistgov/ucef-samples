@@ -1,0 +1,159 @@
+{
+  "__OBJECTS__": {
+    "92d65d32-bf66-4ee9-8959-6baca0b76619": {
+      "attributes": {
+        "name": "Controller",
+        "TimeRegulating": "true",
+        "TimeConstrained": "true",
+        "Step": "1.0",
+        "Meld": "false",
+        "Lookahead": "0.2",
+        "InstantiationScript": "",
+        "GeneratorClass": "",
+        "FederateType": "1",
+        "EnableROAsynchronousDelivery": "true"
+      },
+      "__FEDERATE_BASE__": "JavaFederate",
+      "federates": [],
+      "__FEDERATE_TYPE__": "directly deployable",
+      "parameters": [],
+      "inputs": [],
+      "outputs": [],
+      "objectinputs": [
+        {
+          "GUID": "956b7085-3dec-4e2a-a6f9-d0555326b137"
+        },
+        {
+          "GUID": "1a25c770-b88e-4de3-b14d-2ed16ce47ba1"
+        }
+      ],
+      "objectoutputs": [
+        {
+          "GUID": "15a68fa0-4b00-404c-9a87-9c1f05088c1a"
+        }
+      ],
+      "RegistryInfo": "",
+      "documentation": "No documentation exists yet.",
+      "repository": "No repository exists yet.",
+      "GUID": "92d65d32-bf66-4ee9-8959-6baca0b76619"
+    },
+    "bc3de37a-a2d2-4477-9061-7016e6e79a44": {
+      "attributes": {
+        "name": "ObjectRoot",
+        "LogLevel": "NORMAL",
+        "EnableLogging": "false"
+      },
+      "__OBJECT_BASE__": {
+        "GUID": "01f9fa60-1bd3-4c2e-a7e6-6bca44c79fbc"
+      },
+      "parameters": [],
+      "GUID": "bc3de37a-a2d2-4477-9061-7016e6e79a44"
+    },
+    "15a68fa0-4b00-404c-9a87-9c1f05088c1a": {
+      "attributes": {
+        "name": "ControllerState",
+        "LogLevel": "NORMAL",
+        "EnableLogging": "false"
+      },
+      "__OBJECT_BASE__": {
+        "GUID": "bc3de37a-a2d2-4477-9061-7016e6e79a44"
+      },
+      "parameters": [
+        {
+          "name": "DamperPostionPct",
+          "ParameterType": "int",
+          "Hidden": "false"
+        },
+        {
+          "name": "ZoneName",
+          "ParameterType": "String",
+          "Hidden": "false"
+        }
+      ],
+      "GUID": "15a68fa0-4b00-404c-9a87-9c1f05088c1a"
+    },
+    "956b7085-3dec-4e2a-a6f9-d0555326b137": {
+      "attributes": {
+        "name": "Setpoint",
+        "LogLevel": "NORMAL",
+        "EnableLogging": "false"
+      },
+      "__OBJECT_BASE__": {
+        "GUID": "bc3de37a-a2d2-4477-9061-7016e6e79a44"
+      },
+      "parameters": [
+        {
+          "name": "ZoneName",
+          "ParameterType": "String",
+          "Hidden": "false"
+        },
+        {
+          "name": "ZoneTempSP",
+          "ParameterType": "double",
+          "Hidden": "false"
+        },
+        {
+          "name": "Occupied",
+          "ParameterType": "boolean",
+          "Hidden": "false"
+        }
+      ],
+      "GUID": "956b7085-3dec-4e2a-a6f9-d0555326b137"
+    },
+    "1a25c770-b88e-4de3-b14d-2ed16ce47ba1": {
+      "attributes": {
+        "name": "ZoneState",
+        "LogLevel": "NORMAL",
+        "EnableLogging": "false"
+      },
+      "__OBJECT_BASE__": {
+        "GUID": "bc3de37a-a2d2-4477-9061-7016e6e79a44"
+      },
+      "parameters": [
+        {
+          "name": "PowerTotal",
+          "ParameterType": "double",
+          "Hidden": "false"
+        },
+        {
+          "name": "CoolingOverride",
+          "ParameterType": "boolean",
+          "Hidden": "false"
+        },
+        {
+          "name": "IATemperature",
+          "ParameterType": "double",
+          "Hidden": "false"
+        },
+        {
+          "name": "ZoneName",
+          "ParameterType": "String",
+          "Hidden": "false"
+        }
+      ],
+      "GUID": "1a25c770-b88e-4de3-b14d-2ed16ce47ba1"
+    }
+  },
+  "__ROOT_OBJECT__": {
+    "GUID": "92d65d32-bf66-4ee9-8959-6baca0b76619",
+    "name": "Controller",
+    "version": "0.0.1",
+    "description": ""
+  },
+  "Federates": {
+    "92d65d32-bf66-4ee9-8959-6baca0b76619": ""
+  },
+  "COAs": {},
+  "Experiments": {},
+  "Interactions": {},
+  "Objects": {
+    "bc3de37a-a2d2-4477-9061-7016e6e79a44": "",
+    "15a68fa0-4b00-404c-9a87-9c1f05088c1a": "",
+    "956b7085-3dec-4e2a-a6f9-d0555326b137": "",
+    "1a25c770-b88e-4de3-b14d-2ed16ce47ba1": ""
+  },
+  "ObjectAttribute": {},
+  "Repositories": [],
+  "Builds": [],
+  "Executions": []
+}

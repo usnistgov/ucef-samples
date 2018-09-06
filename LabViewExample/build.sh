@@ -1,18 +1,21 @@
 #!/bin/bash
 DIR=`pwd`
 
-cd $DIR/src/metronome
-mvn clean install -U
+cd $DIR/src/MetronomeProject_generated
+mvn clean install
 
-cd $DIR/src/weather
-mvn clean install -U
+cd $DIR/src/WeatherProject_generated
+mvn clean install
 
-cd $DIR/src/controller
-mvn clean install -U
+cd $DIR/src/ControllerProject_generated
+mvn clean install
 
-cd $DIR/src/zone
-mvn clean install -U
+cd $DIR/src/ZoneProject_generated
+mvn clean install
 
-cd $DIR/src/labview
-mvn clean install -U
+cd $DIR/src/LabViewProject_generated
+mvn clean install
+
+cd $DIR/src/LabViewExample_deployment
+mvn clean install
 
