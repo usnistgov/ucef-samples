@@ -13,7 +13,7 @@ function getNumberJoined {
         echo bad syntax: getNumberJoined federateType
         exit 1
     fi
-    federateList=$(curl -s X GET http://$fedmgr_host:$fedmgr_port/federates -H "Content-Type: application/json")
+    federateList=$(curl -s -X GET http://$fedmgr_host:$fedmgr_port/federates -H "Content-Type: application/json")
     # JSON Query:
     #   .[] = process all values in the input object
     #   select(...) = exclude entries for resigned federates (resignTime defined) and federates that are not the desired TYPE

@@ -9,6 +9,7 @@
 	<properties>
 		<federation.name>ChallengeResponse</federation.name>
 		<federation.version>0.1.0-SNAPSHOT</federation.version>
+		<experiment.name>default</experiment.name>
 		<cpswt.version>0.6.0-SNAPSHOT</cpswt.version>
 		<nar.version>3.3.0</nar.version>
 	</properties>
@@ -95,131 +96,130 @@
 		    	</includes>
 		    </resource>
 		</resources>
-		<plugins>
- 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>2.4.3</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-						<configuration>
-							<filters>
-								<filter>
-									<artifact>*:*</artifact>
-									<excludes>
-										<exclude>META-INF/*.SF</exclude>
-										<exclude>META-INF/*.DSA</exclude>
-										<exclude>META-INF/*.RSA</exclude>
-									</excludes>
-								</filter>
-							</filters>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-		      <groupId>org.apache.maven.plugins</groupId>
-		      <artifactId>maven-surefire-plugin</artifactId>
-		      <version>2.19.1</version>
-		      <configuration>
-		        <forkMode>once</forkMode>
-		        <argLine>-Djava.library.path=${project.basedir}/target/nar/processid-${cpswt.version}-amd64-Linux-gpp-jni/lib/amd64-Linux-gpp/jni/</argLine>
-		      </configuration>
-		    </plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.10</version>
-				<executions>
-					<execution>
-						<id>copy-dependencies</id>
-						<phase>package</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/lib</outputDirectory>
-							<overWriteReleases>false</overWriteReleases>
-							<overWriteSnapshots>false</overWriteSnapshots>
-							<overWriteIfNewer>true</overWriteIfNewer>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-		        <groupId>com.github.maven-nar</groupId>
-		        <artifactId>nar-maven-plugin</artifactId>
-		        <version>${nar.version}</version>
-		        <extensions>true</extensions>
-		        <executions>
-					<execution>
-						<id>nar-download</id>
-						<goals>
-							<goal>nar-download</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>nar-unpack</id>
-						<goals>
-							<goal>nar-unpack</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>nar-test-unpack</id>
-						<goals>
-							<goal>nar-test-unpack</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>nar-integration-test</id>
-						<goals>
-							<goal>nar-integration-test</goal>
-						</goals>
-					</execution>
-				</executions>
-      		</plugin>
-      		<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.5.1</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
-			<plugin>
-            	<groupId>org.apache.maven.plugins</groupId>
-            	<artifactId>maven-antrun-plugin</artifactId>
-            	<version>1.7</version>
-                <executions>
-                    <execution>
-                        <phase>process-resources</phase>
-                        <configuration>
-                            <tasks>
-                                <echo message="Creating folder for the execution..." />
-                                
-                                <mkdir dir="${project.basedir}/target/CppChallenger" />
-                                <mkdir dir="${project.basedir}/target/CppParentReceiver" />
-                                <mkdir dir="${project.basedir}/target/CppResponder" />
-                                <mkdir dir="${project.basedir}/target/GatewayChallenger" />
-                                <mkdir dir="${project.basedir}/target/GatewayParentReceiver" />
-                                <mkdir dir="${project.basedir}/target/GatewayResponder" />
-                                <mkdir dir="${project.basedir}/target/JavaChallenger" />
-                                <mkdir dir="${project.basedir}/target/JavaParentReceiver" />
-                                <mkdir dir="${project.basedir}/target/JavaResponder" />
-                        	</tasks>
-                    	</configuration>
-	                    <goals>
-	                        <goal>run</goal>
-	                    </goals>
-                	</execution>
-            	</executions>
-            </plugin>
-		</plugins>
+		<pluginManagement>
+			<plugins>
+	 			<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-shade-plugin</artifactId>
+					<version>2.4.3</version>
+					<executions>
+						<execution>
+							<phase>package</phase>
+							<goals>
+								<goal>shade</goal>
+							</goals>
+							<configuration>
+								<filters>
+									<filter>
+										<artifact>*:*</artifact>
+										<excludes>
+											<exclude>META-INF/*.SF</exclude>
+											<exclude>META-INF/*.DSA</exclude>
+											<exclude>META-INF/*.RSA</exclude>
+										</excludes>
+									</filter>
+								</filters>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+				  <groupId>org.apache.maven.plugins</groupId>
+				  <artifactId>maven-surefire-plugin</artifactId>
+				  <version>2.19.1</version>
+				  <configuration>
+				    <forkMode>once</forkMode>
+				    <argLine>-Djava.library.path=${project.basedir}/target/nar/processid-${cpswt.version}-amd64-Linux-gpp-jni/lib/amd64-Linux-gpp/jni/</argLine>
+				  </configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>2.10</version>
+					<executions>
+						<execution>
+							<id>copy-dependencies</id>
+							<phase>package</phase>
+							<goals>
+								<goal>copy-dependencies</goal>
+							</goals>
+							<configuration>
+								<outputDirectory>${project.build.directory}/lib</outputDirectory>
+								<overWriteReleases>false</overWriteReleases>
+								<overWriteSnapshots>false</overWriteSnapshots>
+								<overWriteIfNewer>true</overWriteIfNewer>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+				    <groupId>com.github.maven-nar</groupId>
+				    <artifactId>nar-maven-plugin</artifactId>
+				    <version>${nar.version}</version>
+				    <extensions>true</extensions>
+				    <executions>
+						<execution>
+							<id>nar-download</id>
+							<goals>
+								<goal>nar-download</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>nar-unpack</id>
+							<goals>
+								<goal>nar-unpack</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>nar-test-unpack</id>
+							<goals>
+								<goal>nar-test-unpack</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>nar-integration-test</id>
+							<goals>
+								<goal>nar-integration-test</goal>
+							</goals>
+						</execution>
+					</executions>
+		  		</plugin>
+		  		<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.5.1</version>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+					</configuration>
+				</plugin>
+				<plugin>
+		        	<groupId>org.apache.maven.plugins</groupId>
+		        	<artifactId>maven-antrun-plugin</artifactId>
+		        	<version>1.7</version>
+		            <executions>
+		                <execution>
+		                    <phase>process-resources</phase>
+		                    <configuration>
+		                        <tasks>
+		                            <echo message="Creating folder for the execution..." />
+		                            
+		                            <mkdir dir="${project.basedir}/target/CppChallenger" />
+		                            <mkdir dir="${project.basedir}/target/CppParentReceiver" />
+		                            <mkdir dir="${project.basedir}/target/CppResponder" />
+		                            <mkdir dir="${project.basedir}/target/JavaChallenger" />
+		                            <mkdir dir="${project.basedir}/target/JavaParentReceiver" />
+		                            <mkdir dir="${project.basedir}/target/JavaResponder" />
+		                    	</tasks>
+		                	</configuration>
+			                <goals>
+			                    <goal>run</goal>
+			                </goals>
+		            	</execution>
+		        	</executions>
+		        </plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 	
@@ -267,63 +267,42 @@
             <id>CppChallenger</id>
             <properties>
                 <federate.name>CppChallenger</federate.name>
-                <federate.configFile>conf/cppchallenger.json</federate.configFile>
+                <federate.configFile>cppchallenger.json</federate.configFile>
             </properties>
         </profile>
         <profile>
             <id>CppParentReceiver</id>
             <properties>
                 <federate.name>CppParentReceiver</federate.name>
-                <federate.configFile>conf/cppparentreceiver.json</federate.configFile>
+                <federate.configFile>cppparentreceiver.json</federate.configFile>
             </properties>
         </profile>
         <profile>
             <id>CppResponder</id>
             <properties>
                 <federate.name>CppResponder</federate.name>
-                <federate.configFile>conf/cppresponder.json</federate.configFile>
-            </properties>
-        </profile>
-        <profile>
-            <id>GatewayChallenger</id>
-            <properties>
-                <federate.name>GatewayChallenger</federate.name>
-                <federate.configFile>conf/gatewaychallenger.json</federate.configFile>
-            </properties>
-        </profile>
-        <profile>
-            <id>GatewayParentReceiver</id>
-            <properties>
-                <federate.name>GatewayParentReceiver</federate.name>
-                <federate.configFile>conf/gatewayparentreceiver.json</federate.configFile>
-            </properties>
-        </profile>
-        <profile>
-            <id>GatewayResponder</id>
-            <properties>
-                <federate.name>GatewayResponder</federate.name>
-                <federate.configFile>conf/gatewayresponder.json</federate.configFile>
+                <federate.configFile>cppresponder.json</federate.configFile>
             </properties>
         </profile>
         <profile>
             <id>JavaChallenger</id>
             <properties>
                 <federate.name>JavaChallenger</federate.name>
-                <federate.configFile>conf/javachallenger.json</federate.configFile>
+                <federate.configFile>javachallenger.json</federate.configFile>
             </properties>
         </profile>
         <profile>
             <id>JavaParentReceiver</id>
             <properties>
                 <federate.name>JavaParentReceiver</federate.name>
-                <federate.configFile>conf/javaparentreceiver.json</federate.configFile>
+                <federate.configFile>javaparentreceiver.json</federate.configFile>
             </properties>
         </profile>
         <profile>
             <id>JavaResponder</id>
             <properties>
                 <federate.name>JavaResponder</federate.name>
-                <federate.configFile>conf/javaresponder.json</federate.configFile>
+                <federate.configFile>javaresponder.json</federate.configFile>
             </properties>
         </profile>
 		<profile>
@@ -400,7 +379,7 @@
                             <mainClass>ChallengeResponse.${federate.name}</mainClass>
 							<arguments>
                                 <argument>-configFile</argument>
-                                <argument>${federate.configFile}</argument>
+                                <argument>conf/${experiment.name}/${federate.configFile}</argument>
 					    	</arguments>
 						</configuration>
 					</plugin>
@@ -467,7 +446,7 @@
               				<executable>./ChallengeResponse-${federate.name}-cpp</executable>
 							<arguments>
 								 <argument>--configFile</argument>
-                                <argument>${project.basedir}/${federate.configFile}</argument>
+                                <argument>${project.basedir}/conf/${experiment.name}/${federate.configFile}</argument>
 					    	</arguments>
 					    	<environmentVariables>
 			                    <EXEDIR>${project.basedir}/target/${federate.name}</EXEDIR>

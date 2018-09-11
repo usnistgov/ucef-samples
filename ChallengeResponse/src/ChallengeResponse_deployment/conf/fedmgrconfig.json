@@ -10,7 +10,7 @@
   "controlEndpoint": "/fedmgr",
   "federatesEndpoint": "/federates",
   "federationEndTime": 0,
-  "realTimeMode": true,
+  "realTimeMode": false,
   "fedFile": "fom/ChallengeResponse.fed",
-  "experimentConfig": "conf/allfederates/allfederates.json"
+  "experimentConfig": "conf/default/experimentConfig.json"
 }

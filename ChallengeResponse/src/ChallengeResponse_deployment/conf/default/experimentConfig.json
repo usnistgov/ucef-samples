@@ -1,0 +1,89 @@
+{
+  "federateTypesAllowed": [
+    "CppChallenger",
+    "CppParentReceiver",
+    "CppResponder",
+    "GatewayChallenger",
+    "GatewayParentReceiver",
+    "GatewayResponder",
+    "JavaChallenger",
+    "JavaParentReceiver",
+    "JavaResponder"
+  ],
+  "expectedFederates": [
+    {
+      "federateType": "CppChallenger",
+      "count": 1
+    },
+    {
+      "federateType": "CppParentReceiver",
+      "count": 1
+    },
+    {
+      "federateType": "CppResponder",
+      "count": 1
+    },
+    {
+      "federateType": "GatewayChallenger",
+      "count": 1
+    },
+    {
+      "federateType": "GatewayParentReceiver",
+      "count": 1
+    },
+    {
+      "federateType": "GatewayResponder",
+      "count": 1
+    },
+    {
+      "federateType": "JavaChallenger",
+      "count": 1
+    },
+    {
+      "federateType": "JavaParentReceiver",
+      "count": 1
+    },
+    {
+      "federateType": "JavaResponder",
+      "count": 1
+    }
+  ],
+  "lateJoinerFederates": [
+    {
+      "federateType": "CppChallenger",
+      "count": 0
+    },
+    {
+      "federateType": "CppParentReceiver",
+      "count": 0
+    },
+    {
+      "federateType": "CppResponder",
+      "count": 0
+    },
+    {
+      "federateType": "GatewayChallenger",
+      "count": 0
+    },
+    {
+      "federateType": "GatewayParentReceiver",
+      "count": 0
+    },
+    {
+      "federateType": "GatewayResponder",
+      "count": 0
+    },
+    {
+      "federateType": "JavaChallenger",
+      "count": 0
+    },
+    {
+      "federateType": "JavaParentReceiver",
+      "count": 0
+    },
+    {
+      "federateType": "JavaResponder",
+      "count": 0
+    }
+  ]
+}
