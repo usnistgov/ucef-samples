@@ -12,5 +12,5 @@
   "federationEndTime": 0,
   "realTimeMode": true,
   "fedFile": "fom/SimpleAdder.fed",
-  "experimentConfig": "conf/experiment1/experiment1.json"
+  "experimentConfig": "conf/default/experimentConfig.json"
 }

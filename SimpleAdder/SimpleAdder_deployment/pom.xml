@@ -9,7 +9,7 @@
 	<properties>
 		<federation.name>SimpleAdder</federation.name>
 		<federation.version>0.1.0-SNAPSHOT</federation.version>
-		<experiment.name>experiment1</experiment.name>
+		<experiment.name>default</experiment.name>
 		<cpswt.version>0.6.0-SNAPSHOT</cpswt.version>
 		<nar.version>3.3.0</nar.version>
 	</properties>
