@@ -4,7 +4,6 @@ import org.cpswt.config.FederateConfig;
 import org.cpswt.config.FederateConfigParser;
 import org.cpswt.hla.InteractionRoot;
 import org.cpswt.hla.base.AdvanceTimeRequest;
-import org.cpswt.utils.CpswtDefaults;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,34 +13,36 @@ import org.apache.logging.log4j.Logger;
  *
  */
 public class Utility extends UtilityBase {
+    private final static Logger log = LogManager.getLogger();
 
-    private final static Logger log = LogManager.getLogger(Utility.class);
-
-    double currentTime = 0;
+    private double currentTime = 0;
 
     public Utility(FederateConfig params) throws Exception {
         super(params);
     }
 
-    private void CheckReceivedSubscriptions(String s) {
+    private void checkReceivedSubscriptions() {
 
         InteractionRoot interaction = null;
         while ((interaction = getNextInteractionNoWait()) != null) {
-            if (interaction instanceof TMYWeather) {
+            if (interaction instanceof ResourcePhysicalState) {
+                handleInteractionClass((ResourcePhysicalState) interaction);
+            }
+            else if (interaction instanceof TMYWeather) {
                 handleInteractionClass((TMYWeather) interaction);
             }
             else if (interaction instanceof SimTime) {
                 handleInteractionClass((SimTime) interaction);
             }
-            else if (interaction instanceof ResourcePhysicalState) {
-                handleInteractionClass((ResourcePhysicalState) interaction);
+            else {
+                log.debug("unhandled interaction: {}", interaction.getClassName());
             }
-            log.info("Interaction received and handled: " + s);
         }
      }
 
     private void execute() throws Exception {
         if(super.isLateJoiner()) {
+            log.info("turning off time regulation (late joiner)");
             currentTime = super.getLBTS() - super.getLookAhead();
             super.disableTimeRegulation();
         }
@@ -54,32 +55,25 @@ public class Utility extends UtilityBase {
         putAdvanceTimeRequest(atr);
 
         if(!super.isLateJoiner()) {
+            log.info("waiting on readyToPopulate...");
             readyToPopulate();
+            log.info("...synchronized on readyToPopulate");
         }
-
-        ///////////////////////////////////////////////////////////////////////
-        // Call CheckReceivedSubscriptions(<message>) here to receive
-        // subscriptions published before the first time step.
-        ///////////////////////////////////////////////////////////////////////
 
         ///////////////////////////////////////////////////////////////////////
         // TODO perform initialization that depends on other federates below //
         ///////////////////////////////////////////////////////////////////////
 
         if(!super.isLateJoiner()) {
+            log.info("waiting on readyToRun...");
             readyToRun();
+            log.info("...synchronized on readyToRun");
         }
 
         startAdvanceTimeThread();
+        log.info("started logical time progression");
 
-        // this is the exit condition of the following while loop
-        // it is used to break the loop so that latejoiner federates can
-        // notify the federation manager that they left the federation
-        boolean exitCondition = false;
-
-        while (true) {
-            currentTime += super.getStepSize();
-
+        while (!exitCondition) {
             atr.requestSyncStart();
             enteredTimeGrantedState();
 
@@ -88,28 +82,43 @@ public class Utility extends UtilityBase {
             // Set the interaction's parameters.
             //
             //    Quote vQuote = create_Quote();
+            //    vQuote.set_actualLogicalGenerationTime( < YOUR VALUE HERE > );
+            //    vQuote.set_federateFilter( < YOUR VALUE HERE > );
+            //    vQuote.set_originFed( < YOUR VALUE HERE > );
+            //    vQuote.set_sourceFed( < YOUR VALUE HERE > );
             //    vQuote.set_tenderComponent_PriceCurve_price( < YOUR VALUE HERE > );
-            //    vQuote.sendInteraction(getLRC(), currentTime);
+            //    vQuote.sendInteraction(getLRC(), currentTime + getLookAhead());
             //
             ////////////////////////////////////////////////////////////////////////////////////////
 
-            CheckReceivedSubscriptions("Main Loop");
+            checkReceivedSubscriptions();
 
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            // DO NOT MODIFY FILE BEYOND THIS LINE
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            AdvanceTimeRequest newATR = new AdvanceTimeRequest(currentTime);
-            putAdvanceTimeRequest(newATR);
-            atr.requestSyncEnd();
-            atr = newATR;
+            ////////////////////////////////////////////////////////////////////////////////////////
+            // TODO break here if ready to resign and break out of while loop
+            ////////////////////////////////////////////////////////////////////////////////////////
 
-            if(exitCondition) {
-                break;
+
+            if (!exitCondition) {
+                currentTime += super.getStepSize();
+                AdvanceTimeRequest newATR = new AdvanceTimeRequest(currentTime);
+                putAdvanceTimeRequest(newATR);
+                atr.requestSyncEnd();
+                atr = newATR;
             }
         }
 
-        // while loop finished, notify FederationManager about resign
-        super.notifyFederationOfResign();
+        // call exitGracefully to shut down federate
+        exitGracefully();
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        // TODO Perform whatever cleanups needed before exiting the app
+        ////////////////////////////////////////////////////////////////////////////////////////
+    }
+
+    private void handleInteractionClass(ResourcePhysicalState interaction) {
+        //////////////////////////////////////////////////////////////////////////
+        // TODO implement how to handle reception of the interaction            //
+        //////////////////////////////////////////////////////////////////////////
     }
 
     private void handleInteractionClass(TMYWeather interaction) {
@@ -124,24 +133,16 @@ public class Utility extends UtilityBase {
         //////////////////////////////////////////////////////////////////////////
     }
 
-    private void handleInteractionClass(ResourcePhysicalState interaction) {
-        //////////////////////////////////////////////////////////////////////////
-        // TODO implement how to handle reception of the interaction            //
-        //////////////////////////////////////////////////////////////////////////
-    }
-
     public static void main(String[] args) {
         try {
             FederateConfigParser federateConfigParser = new FederateConfigParser();
             FederateConfig federateConfig = federateConfigParser.parseArgs(args, FederateConfig.class);
             Utility federate = new Utility(federateConfig);
             federate.execute();
-
+            log.info("Done.");
             System.exit(0);
         } catch (Exception e) {
-            log.error("There was a problem executing the Utility federate: {}", e.getMessage());
             log.error(e);
-
             System.exit(1);
         }
     }

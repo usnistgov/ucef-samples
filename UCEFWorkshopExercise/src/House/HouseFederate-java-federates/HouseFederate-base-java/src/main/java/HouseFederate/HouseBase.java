@@ -10,8 +10,10 @@ import org.cpswt.hla.SubscribedInteractionFilter;
 import org.cpswt.hla.SynchronizedFederate;
 
 import org.cpswt.config.FederateConfig;
+import org.cpswt.utils.CpswtDefaults;
 
 import org.cpswt.*;
+
 
 public class HouseBase extends SynchronizedFederate {
 
@@ -38,15 +40,15 @@ public class HouseBase extends SynchronizedFederate {
 			SubscribedInteractionFilter.OriginFedFilter.ORIGIN_FILTER_DISABLED, 
 			SubscribedInteractionFilter.SourceFedFilter.SOURCE_FILTER_DISABLED 
 		);
-        Quote.subscribe(getLRC());
-        _subscribedInteractionFilter.setFedFilters( 
-			Quote.get_handle(), 
-			SubscribedInteractionFilter.OriginFedFilter.ORIGIN_FILTER_DISABLED, 
-			SubscribedInteractionFilter.SourceFedFilter.SOURCE_FILTER_DISABLED 
-		);
         SimTime.subscribe(getLRC());
         _subscribedInteractionFilter.setFedFilters( 
 			SimTime.get_handle(), 
+			SubscribedInteractionFilter.OriginFedFilter.ORIGIN_FILTER_DISABLED, 
+			SubscribedInteractionFilter.SourceFedFilter.SOURCE_FILTER_DISABLED 
+		);
+        Quote.subscribe(getLRC());
+        _subscribedInteractionFilter.setFedFilters( 
+			Quote.get_handle(), 
 			SubscribedInteractionFilter.OriginFedFilter.ORIGIN_FILTER_DISABLED, 
 			SubscribedInteractionFilter.SourceFedFilter.SOURCE_FILTER_DISABLED 
 		);		

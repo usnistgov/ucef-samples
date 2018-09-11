@@ -1,6 +1,6 @@
 {
   "__OBJECTS__": {
-    "3019c817-1efc-43f4-9100-a0743517fbc0": {
+    "37a831b8-8525-4ceb-85d3-a7137cc80f73": {
       "attributes": {
         "name": "Weather",
         "TimeRegulating": "true",
@@ -19,20 +19,22 @@
       "parameters": [],
       "inputs": [
         {
-          "GUID": "af39dc8a-5fa8-4d17-b117-f825cfc30768"
+          "GUID": "cafb642c-d79c-45c9-9830-48a85dad5fdf"
         }
       ],
       "outputs": [
         {
-          "GUID": "13f6966b-6e33-4a2f-a9f0-78db8ea4e46d"
+          "GUID": "35922600-5d5e-4bef-8b77-ef1a2cacf32c"
         }
       ],
+      "objectinputs": [],
+      "objectoutputs": [],
       "RegistryInfo": "",
       "documentation": "No documentation exists yet.",
       "repository": "No repository exists yet.",
-      "GUID": "3019c817-1efc-43f4-9100-a0743517fbc0"
+      "GUID": "37a831b8-8525-4ceb-85d3-a7137cc80f73"
     },
-    "e549681b-58be-43a7-8319-3d2edd4c65a2": {
+    "61373339-946b-4a66-98ba-0bfb37974613": {
       "attributes": {
         "name": "InteractionRoot",
         "Order": "timestamp",
@@ -41,12 +43,12 @@
         "Delivery": "reliable"
       },
       "__INTERACTION_BASE__": {
-        "GUID": "c50d07a3-ee71-4ccd-94b4-29f4125d842a"
+        "GUID": "973682f3-9d36-40f7-a4c8-282b811921d7"
       },
       "parameters": [],
-      "GUID": "e549681b-58be-43a7-8319-3d2edd4c65a2"
+      "GUID": "61373339-946b-4a66-98ba-0bfb37974613"
     },
-    "d3ed9e0d-f12d-44e0-955f-52bb33a181f5": {
+    "be3bc46b-c611-4bf3-91b0-867659331152": {
       "attributes": {
         "name": "C2WInteractionRoot",
         "Order": "timestamp",
@@ -55,7 +57,7 @@
         "Delivery": "reliable"
       },
       "__INTERACTION_BASE__": {
-        "GUID": "e549681b-58be-43a7-8319-3d2edd4c65a2"
+        "GUID": "61373339-946b-4a66-98ba-0bfb37974613"
       },
       "parameters": [
         {
@@ -79,9 +81,9 @@
           "Hidden": "false"
         }
       ],
-      "GUID": "d3ed9e0d-f12d-44e0-955f-52bb33a181f5"
+      "GUID": "be3bc46b-c611-4bf3-91b0-867659331152"
     },
-    "13f6966b-6e33-4a2f-a9f0-78db8ea4e46d": {
+    "35922600-5d5e-4bef-8b77-ef1a2cacf32c": {
       "attributes": {
         "Delivery": "reliable",
         "EnableLogging": "false",
@@ -90,7 +92,7 @@
         "name": "TMYWeather"
       },
       "__INTERACTION_BASE__": {
-        "GUID": "d3ed9e0d-f12d-44e0-955f-52bb33a181f5"
+        "GUID": "be3bc46b-c611-4bf3-91b0-867659331152"
       },
       "parameters": [
         {
@@ -504,9 +506,9 @@
           "Hidden": "false"
         }
       ],
-      "GUID": "13f6966b-6e33-4a2f-a9f0-78db8ea4e46d"
+      "GUID": "35922600-5d5e-4bef-8b77-ef1a2cacf32c"
     },
-    "af39dc8a-5fa8-4d17-b117-f825cfc30768": {
+    "cafb642c-d79c-45c9-9830-48a85dad5fdf": {
       "attributes": {
         "Delivery": "reliable",
         "EnableLogging": "false",
@@ -515,7 +517,7 @@
         "name": "SimTime"
       },
       "__INTERACTION_BASE__": {
-        "GUID": "d3ed9e0d-f12d-44e0-955f-52bb33a181f5"
+        "GUID": "be3bc46b-c611-4bf3-91b0-867659331152"
       },
       "parameters": [
         {
@@ -559,26 +561,28 @@
           "Hidden": "false"
         }
       ],
-      "GUID": "af39dc8a-5fa8-4d17-b117-f825cfc30768"
+      "GUID": "cafb642c-d79c-45c9-9830-48a85dad5fdf"
     }
   },
   "__ROOT_OBJECT__": {
-    "GUID": "3019c817-1efc-43f4-9100-a0743517fbc0",
+    "GUID": "37a831b8-8525-4ceb-85d3-a7137cc80f73",
     "name": "Weather",
     "version": "0.0.1",
     "description": ""
   },
   "Federates": {
-    "3019c817-1efc-43f4-9100-a0743517fbc0": ""
+    "37a831b8-8525-4ceb-85d3-a7137cc80f73": ""
   },
   "COAs": {},
   "Experiments": {},
   "Interactions": {
-    "e549681b-58be-43a7-8319-3d2edd4c65a2": "",
-    "d3ed9e0d-f12d-44e0-955f-52bb33a181f5": "",
-    "13f6966b-6e33-4a2f-a9f0-78db8ea4e46d": "",
-    "af39dc8a-5fa8-4d17-b117-f825cfc30768": ""
+    "61373339-946b-4a66-98ba-0bfb37974613": "",
+    "be3bc46b-c611-4bf3-91b0-867659331152": "",
+    "35922600-5d5e-4bef-8b77-ef1a2cacf32c": "",
+    "cafb642c-d79c-45c9-9830-48a85dad5fdf": ""
   },
+  "Objects": {},
+  "ObjectAttribute": {},
   "Repositories": [],
   "Builds": [],
   "Executions": []

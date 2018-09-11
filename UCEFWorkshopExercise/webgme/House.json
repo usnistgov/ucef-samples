@@ -1,6 +1,6 @@
 {
   "__OBJECTS__": {
-    "3001e125-dcf4-43b1-bf1a-0a1fedc06644": {
+    "fa363e54-95f6-4cb4-86bb-4a57bf33bb4c": {
       "attributes": {
         "name": "House",
         "TimeRegulating": "true",
@@ -19,26 +19,28 @@
       "parameters": [],
       "inputs": [
         {
-          "GUID": "6f18b3b9-e355-4c10-89ab-20713aa998d2"
+          "GUID": "e98952c0-1b0f-45a5-8eda-05822c0f3332"
         },
         {
-          "GUID": "abfa61a3-fae3-48a6-bf66-ee665715ef04"
+          "GUID": "6d4ed705-1e8f-4a04-829d-e3a624b11f4b"
         },
         {
-          "GUID": "406a055a-6d48-4db4-92d3-2d96f71e2561"
+          "GUID": "83add480-40a6-46c1-9386-2e8c7cca4204"
         }
       ],
       "outputs": [
         {
-          "GUID": "693176ad-f24c-4dd6-b007-e7381e5b20bd"
+          "GUID": "1bb33f62-7fe1-4f47-a76a-c4be8d4693c2"
         }
       ],
+      "objectinputs": [],
+      "objectoutputs": [],
       "RegistryInfo": "",
       "documentation": "No documentation exists yet.",
       "repository": "No repository exists yet.",
-      "GUID": "3001e125-dcf4-43b1-bf1a-0a1fedc06644"
+      "GUID": "fa363e54-95f6-4cb4-86bb-4a57bf33bb4c"
     },
-    "566190f6-a4b0-4d23-81fe-5fb9f465c078": {
+    "aa0d73d4-bce2-4ad0-ae61-12a5026290fd": {
       "attributes": {
         "name": "InteractionRoot",
         "Order": "timestamp",
@@ -47,12 +49,12 @@
         "Delivery": "reliable"
       },
       "__INTERACTION_BASE__": {
-        "GUID": "7487dcb7-4831-402d-b29d-f6c15aa7b3b5"
+        "GUID": "b80aacfd-ccd1-4f02-8f13-59a890d66352"
       },
       "parameters": [],
-      "GUID": "566190f6-a4b0-4d23-81fe-5fb9f465c078"
+      "GUID": "aa0d73d4-bce2-4ad0-ae61-12a5026290fd"
     },
-    "fc75bbc3-ec9b-45d3-bd44-efcaee2705dc": {
+    "3d5828d4-90ee-4259-aa49-2566c155d4ed": {
       "attributes": {
         "name": "C2WInteractionRoot",
         "Order": "timestamp",
@@ -61,7 +63,7 @@
         "Delivery": "reliable"
       },
       "__INTERACTION_BASE__": {
-        "GUID": "566190f6-a4b0-4d23-81fe-5fb9f465c078"
+        "GUID": "aa0d73d4-bce2-4ad0-ae61-12a5026290fd"
       },
       "parameters": [
         {
@@ -85,9 +87,9 @@
           "Hidden": "false"
         }
       ],
-      "GUID": "fc75bbc3-ec9b-45d3-bd44-efcaee2705dc"
+      "GUID": "3d5828d4-90ee-4259-aa49-2566c155d4ed"
     },
-    "693176ad-f24c-4dd6-b007-e7381e5b20bd": {
+    "1bb33f62-7fe1-4f47-a76a-c4be8d4693c2": {
       "attributes": {
         "Delivery": "reliable",
         "EnableLogging": "false",
@@ -96,7 +98,7 @@
         "name": "ResourcePhysicalState"
       },
       "__INTERACTION_BASE__": {
-        "GUID": "fc75bbc3-ec9b-45d3-bd44-efcaee2705dc"
+        "GUID": "3d5828d4-90ee-4259-aa49-2566c155d4ed"
       },
       "parameters": [
         {
@@ -125,9 +127,9 @@
           "Hidden": "false"
         }
       ],
-      "GUID": "693176ad-f24c-4dd6-b007-e7381e5b20bd"
+      "GUID": "1bb33f62-7fe1-4f47-a76a-c4be8d4693c2"
     },
-    "6f18b3b9-e355-4c10-89ab-20713aa998d2": {
+    "e98952c0-1b0f-45a5-8eda-05822c0f3332": {
       "attributes": {
         "Delivery": "reliable",
         "EnableLogging": "false",
@@ -136,7 +138,7 @@
         "name": "Quote"
       },
       "__INTERACTION_BASE__": {
-        "GUID": "fc75bbc3-ec9b-45d3-bd44-efcaee2705dc"
+        "GUID": "3d5828d4-90ee-4259-aa49-2566c155d4ed"
       },
       "parameters": [
         {
@@ -165,9 +167,9 @@
           "Hidden": "false"
         }
       ],
-      "GUID": "6f18b3b9-e355-4c10-89ab-20713aa998d2"
+      "GUID": "e98952c0-1b0f-45a5-8eda-05822c0f3332"
     },
-    "abfa61a3-fae3-48a6-bf66-ee665715ef04": {
+    "6d4ed705-1e8f-4a04-829d-e3a624b11f4b": {
       "attributes": {
         "Delivery": "reliable",
         "EnableLogging": "false",
@@ -176,7 +178,7 @@
         "name": "SimTime"
       },
       "__INTERACTION_BASE__": {
-        "GUID": "fc75bbc3-ec9b-45d3-bd44-efcaee2705dc"
+        "GUID": "3d5828d4-90ee-4259-aa49-2566c155d4ed"
       },
       "parameters": [
         {
@@ -220,9 +222,9 @@
           "Hidden": "false"
         }
       ],
-      "GUID": "abfa61a3-fae3-48a6-bf66-ee665715ef04"
+      "GUID": "6d4ed705-1e8f-4a04-829d-e3a624b11f4b"
     },
-    "406a055a-6d48-4db4-92d3-2d96f71e2561": {
+    "83add480-40a6-46c1-9386-2e8c7cca4204": {
       "attributes": {
         "Delivery": "reliable",
         "EnableLogging": "false",
@@ -231,7 +233,7 @@
         "name": "TMYWeather"
       },
       "__INTERACTION_BASE__": {
-        "GUID": "fc75bbc3-ec9b-45d3-bd44-efcaee2705dc"
+        "GUID": "3d5828d4-90ee-4259-aa49-2566c155d4ed"
       },
       "parameters": [
         {
@@ -645,28 +647,30 @@
           "Hidden": "false"
         }
       ],
-      "GUID": "406a055a-6d48-4db4-92d3-2d96f71e2561"
+      "GUID": "83add480-40a6-46c1-9386-2e8c7cca4204"
     }
   },
   "__ROOT_OBJECT__": {
-    "GUID": "3001e125-dcf4-43b1-bf1a-0a1fedc06644",
+    "GUID": "fa363e54-95f6-4cb4-86bb-4a57bf33bb4c",
     "name": "House",
     "version": "0.0.1",
     "description": ""
   },
   "Federates": {
-    "3001e125-dcf4-43b1-bf1a-0a1fedc06644": ""
+    "fa363e54-95f6-4cb4-86bb-4a57bf33bb4c": ""
   },
   "COAs": {},
   "Experiments": {},
   "Interactions": {
-    "566190f6-a4b0-4d23-81fe-5fb9f465c078": "",
-    "fc75bbc3-ec9b-45d3-bd44-efcaee2705dc": "",
-    "693176ad-f24c-4dd6-b007-e7381e5b20bd": "",
-    "6f18b3b9-e355-4c10-89ab-20713aa998d2": "",
-    "abfa61a3-fae3-48a6-bf66-ee665715ef04": "",
-    "406a055a-6d48-4db4-92d3-2d96f71e2561": ""
+    "aa0d73d4-bce2-4ad0-ae61-12a5026290fd": "",
+    "3d5828d4-90ee-4259-aa49-2566c155d4ed": "",
+    "1bb33f62-7fe1-4f47-a76a-c4be8d4693c2": "",
+    "e98952c0-1b0f-45a5-8eda-05822c0f3332": "",
+    "6d4ed705-1e8f-4a04-829d-e3a624b11f4b": "",
+    "83add480-40a6-46c1-9386-2e8c7cca4204": ""
   },
+  "Objects": {},
+  "ObjectAttribute": {},
   "Repositories": [],
   "Builds": [],
   "Executions": []
