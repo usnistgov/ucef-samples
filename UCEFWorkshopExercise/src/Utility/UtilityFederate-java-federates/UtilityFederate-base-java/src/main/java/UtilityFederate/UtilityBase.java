@@ -10,8 +10,10 @@ import org.cpswt.hla.SubscribedInteractionFilter;
 import org.cpswt.hla.SynchronizedFederate;
 
 import org.cpswt.config.FederateConfig;
+import org.cpswt.utils.CpswtDefaults;
 
 import org.cpswt.*;
+
 
 public class UtilityBase extends SynchronizedFederate {
 
@@ -32,6 +34,12 @@ public class UtilityBase extends SynchronizedFederate {
         
         Quote.publish(getLRC());
         
+        TMYWeather.subscribe(getLRC());
+        _subscribedInteractionFilter.setFedFilters( 
+			TMYWeather.get_handle(), 
+			SubscribedInteractionFilter.OriginFedFilter.ORIGIN_FILTER_DISABLED, 
+			SubscribedInteractionFilter.SourceFedFilter.SOURCE_FILTER_DISABLED 
+		);
         ResourcePhysicalState.subscribe(getLRC());
         _subscribedInteractionFilter.setFedFilters( 
 			ResourcePhysicalState.get_handle(), 
@@ -41,12 +49,6 @@ public class UtilityBase extends SynchronizedFederate {
         SimTime.subscribe(getLRC());
         _subscribedInteractionFilter.setFedFilters( 
 			SimTime.get_handle(), 
-			SubscribedInteractionFilter.OriginFedFilter.ORIGIN_FILTER_DISABLED, 
-			SubscribedInteractionFilter.SourceFedFilter.SOURCE_FILTER_DISABLED 
-		);
-        TMYWeather.subscribe(getLRC());
-        _subscribedInteractionFilter.setFedFilters( 
-			TMYWeather.get_handle(), 
 			SubscribedInteractionFilter.OriginFedFilter.ORIGIN_FILTER_DISABLED, 
 			SubscribedInteractionFilter.SourceFedFilter.SOURCE_FILTER_DISABLED 
 		);		

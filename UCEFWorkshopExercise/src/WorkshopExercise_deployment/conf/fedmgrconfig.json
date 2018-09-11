@@ -12,5 +12,5 @@
   "federationEndTime": 0,
   "realTimeMode": true,
   "fedFile": "fom/WorkshopExercise.fed",
-  "experimentConfig": "conf/2house/2house.json"
+  "experimentConfig": "conf/default/experimentConfig.json"
 }
