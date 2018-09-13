@@ -1,0 +1,11 @@
+bin/
+logs/
+target/
+
+.project
+.classpath
+.settings/
+
+dependency-reduced-pom.xml
+ChallengeResponse.log
+
