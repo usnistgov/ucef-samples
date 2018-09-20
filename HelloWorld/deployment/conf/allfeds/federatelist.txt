@@ -1,0 +1,14 @@
+./input/fedManager
+./output/fedManager
+./input/JavaFederate_PingCounter_0
+./output/JavaFederate_PingCounter_0
+./input/CppFederate_PingCounter2_0
+./output/CppFederate_PingCounter2_0
+./input/JavaFederate_Sink_0
+./output/JavaFederate_Sink_0
+./input/CppFederate_Sink2_0
+./output/CppFederate_Sink2_0
+./input/JavaFederate_Source_0
+./output/JavaFederate_Source_0
+./input/CppFederate_Source2_0
+./output/CppFederate_Source2_0
