@@ -117,17 +117,17 @@ while $(curl -o /dev/null -s -f -X GET http://$fedmgr_host:$fedmgr_port/fedmgr);
 done
 printf "\n"
 
-PGID=$(ps -ae -o pgid,command | grep -i HelloWorld-cpp-Source2 | grep -v $0 | grep -v grep | sort -n | head -1)
+PGID=$(ps -ae -o pgid,command | grep -i HelloWorld-Source2-cpp | grep -v $0 | grep -v grep | sort -n | head -1)
 if [ -n "$PGID" ]; then
 	set $PGID
 	kill -- -$1 > /dev/null 2>&1
 fi
-PGID=$(ps -ae -o pgid,command | grep -i HelloWorld-cpp-Sink2 | grep -v $0 | grep -v grep | sort -n | head -1)
+PGID=$(ps -ae -o pgid,command | grep -i HelloWorld-Sink2-cpp | grep -v $0 | grep -v grep | sort -n | head -1)
 if [ -n "$PGID" ]; then
 	set $PGID
 	kill -- -$1 > /dev/null 2>&1
 fi
-PGID=$(ps -ae -o pgid,command | grep -i HelloWorld-cpp-PingCounter2 | grep -v $0 | grep -v grep | sort -n | head -1)
+PGID=$(ps -ae -o pgid,command | grep -i HelloWorld-PingCounter2-cpp | grep -v $0 | grep -v grep | sort -n | head -1)
 if [ -n "$PGID" ]; then
 	set $PGID
 	kill -- -$1 > /dev/null 2>&1
