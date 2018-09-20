@@ -86,7 +86,7 @@ printf "\n"
 curl -o /dev/null -s -X POST http://$fedmgr_host:$fedmgr_port/fedmgr --data '{"action": "START"}' -H "Content-Type: application/json"
 
 # run the other federates
-cd $root_directory/src/HelloWorld_deployment
+cd $root_directory/deployment
 xterm -fg green -bg black -l -lf $logs_directory/Source-${timestamp}.log -T "Source" -geometry 140x40+80+80 -e "mvn exec:java -P ExecJava,Source" &
 waitUntilJoined Source 1
 xterm -fg green -bg black -l -lf $logs_directory/Sink-${timestamp}.log -T "Sink" -geometry 140x40+100+100 -e "mvn exec:java -P ExecJava,Sink" &
