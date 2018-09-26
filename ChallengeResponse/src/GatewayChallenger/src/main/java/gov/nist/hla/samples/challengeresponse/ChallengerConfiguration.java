@@ -3,9 +3,18 @@ package gov.nist.hla.samples.challengeresponse;
 import gov.nist.hla.gateway.GatewayFederateConfig;
 import gov.nist.hla.gateway.exception.ValueNotSet;
 
+/*
+ * A custom configuration file for the challenger federate.
+ */
 public class ChallengerConfiguration extends GatewayFederateConfig {
+    /*
+     * The number of characters to generate for the challenge string.
+     */
     private int challengeLength = 32;
     
+    /*
+     * The number of responses that should be received for each challenge.
+     */
     private int numberOfResponders;
     private boolean numberOfRespondersSet = false;
     

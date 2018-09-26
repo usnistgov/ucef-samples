@@ -2,15 +2,37 @@ package gov.nist.hla.samples.challengeresponse;
 
 import java.util.Objects;
 
+/*
+ * A simple data structure that stores variables associated with a single challenge. A challenge is a (string,index)
+ * pair where the index refers to an element in the string. The expected response to a challenge is the substring of
+ * the string that starts from the index.
+ * 
+ * Two challenges are equivalent iff they share an id.
+ */
 public class Challenge {
+    /*
+     * A unique identifier for the challenge.
+     */
     private final String id;
     
+    /*
+     * The string content of the challenge.
+     */
     private final String stringValue;
     
+    /*
+     * An index of the string value.
+     */
     private final int beginIndex;
     
+    /*
+     * The logical time after which the challenge is no longer relevant.
+     */
     private final double expirationTime;
     
+    /*
+     * The expected substring that should be provided as a response to the challenge.
+     */
     private final String correctResponse;
     
     public Challenge(String id, String stringValue, int beginIndex, double expirationTime) {

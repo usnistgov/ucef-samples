@@ -17,7 +17,7 @@ import org.apache.logging.log4j.Logger;
  * for a given challenge is the substring that starts from the challenge index. To generate the correct response, a
  * federate must understand both the string and numeric data in the challenge.
  *
- * This class generates two challenges each o time step. One challenge is sent as an interaction, and the other
+ * This class generates two challenges each logical time step. One challenge is sent as an interaction, and the other
  * challenge is sent as an update to one registered object instance. The content of the two challenges are different.
  *
  * A response to a challenge is not immediate as both the challenge and its response are TSO messages. Each challenge
