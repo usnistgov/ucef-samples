@@ -11,7 +11,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * A federate that monitors the current state of the GridLAB-D simulation.
+ * A passive federate that monitors the current state of the GridLAB-D simulation. This federate subscribes to the
+ * GridLAB-D house and clock objects, and outputs their state to the logger each time an update is received.
  */
 public class Reporter extends ReporterBase {
     private final static Logger log = LogManager.getLogger();
@@ -95,10 +96,16 @@ public class Reporter extends ReporterBase {
         exitGracefully();
     }
 
+    /*
+     * Upon receipt of the GridLAB-D clock interaction, output the current date/time of the simulation to the logger.
+     */
     private void handleInteractionClass(GLDClock interaction) {
         log.info("current GridLAB-D time is {}", interaction.get_timeStamp());
     }
 
+    /*
+     * Upon receipt of the house interaction, output its temperature and compressor count to the logger.
+     */
     private void handleInteractionClass(House interaction) {
         final String name = interaction.get_name();
         final double temperature = interaction.get_temperature();
@@ -106,6 +113,9 @@ public class Reporter extends ReporterBase {
         log.info("{} temperature={} count={}", name, temperature, compressorCount);
     }
 
+    /*
+     * Upon receipt of a house object update, output its temperature and compressor count to the logger.
+     */
     private void handleObjectClass(HouseObject object) {
         final String name = object.get_name();
         final double temperature = object.get_temperature();

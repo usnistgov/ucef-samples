@@ -7,7 +7,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * A federate that provides the SimTime interaction prior to logical time progression.
+ * A federate that provides the SimTime interaction prior to logical time progression. The parameters of the SimTime
+ * interaction are set using the values specified in the JSON configuration file. SimTime will be sent between the
+ * synchronization points readyToPopulate and readyToRun as a receive-order message.
  */
 public class SimulationTime extends SimulationTimeBase {
     private final static Logger log = LogManager.getLogger();
