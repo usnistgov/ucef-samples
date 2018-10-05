@@ -10,9 +10,15 @@ import org.cpswt.hla.base.AdvanceTimeRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/**
- * The JavaResponder type of federate for the federation designed in WebGME.
+/*
+ * This class broadcasts response interactions to the federation each time it receives a challenge.
  *
+ * A challenge is a randomly generated string paired with an integer index of one of the elements. A correct response
+ * for a given challenge is the substring that starts from the challenge index. To generate the correct response, a
+ * federate must understand both the string and numeric data in the challenge.
+ *
+ * This class generates and sends a response to challenges received as either as an interaction or an object update. It
+ * is stateless, and will generate one response per received challenge.
  */
 public class JavaResponder extends JavaResponderBase {
     private final static Logger log = LogManager.getLogger();
@@ -90,16 +96,26 @@ public class JavaResponder extends JavaResponderBase {
         exitGracefully();
     }
 
+    /*
+     * Handle and respond to challenges sent as interactions.
+     */
     private void handleInteractionClass(ChallengeInteraction interaction) {
         log.debug("received interaction: {}", interaction.toString());
         respond(interaction.get_challengeId(), interaction.get_stringValue(), interaction.get_beginIndex());
     }
 
+    /*
+     * Handle and respond to challenges sent as object updates.
+     */
     private void handleObjectClass(ChallengeObject object) {
         log.debug("received object reflection: {}", object.toString());
         respond(object.get_challengeId(), object.get_stringValue(), object.get_beginIndex());
     }
 
+    /*
+     * Send a response interaction for the given challenge. The response content will be set to the substring of the
+     * given string starting from the given index.
+     */
     private void respond(String id, String stringValue, int beginIndex) {
         log.info("on challenge: {} {} {}", id, stringValue, beginIndex);
         

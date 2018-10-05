@@ -100,9 +100,8 @@ std::string CppChallenger::generateStringValue() {
 }
 
 int CppChallenger::generateBeginIndex() {
-    // the challenge must contain at least 1 character, so beginIndex cannot be the last index
     boost::random::uniform_int_distribution<> distribution(0, m_challengeLength-2);
-    return distribution(m_randomGenerator);
+    return distribution(m_randomGenerator) + 1;
 }
 
 Challenge CppChallenger::createChallenge() {

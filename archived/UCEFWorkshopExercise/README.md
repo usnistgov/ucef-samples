@@ -1,3 +1,7 @@
+# This example is obsolete and no longer maintained!
+
+This example was last confirmed to work with the tag `v1.0.0-beta`. However, the federates were not updated to take advantage of the beta release features and will not exit properly when the federation terminates.
+
 ## Installation and Use
 1. Compile the code with `./build.sh`
 2. Run the compiled code with `./run.sh`

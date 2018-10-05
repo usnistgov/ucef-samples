@@ -9,17 +9,37 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * A federate that controls the cooling set point for 3 GridLAB-D houses based on a simple schedule.
+ * A federate that controls the cooling set point for 3 GridLAB-D houses based on a simple schedule. The schedule has
+ * two time slices: 8:00 AM to 5:00 PM which are work hours, and the remainder of the day which are at home hours. A
+ * house can have a different temperature set point for work hours and at home hours. House 1 and House 2 have higher
+ * temperature set points during work hours, while House 3 has a constant set point.
+ * 
+ * The objective of the GridLAB-D example federation is to test if the GridLAB-D federate works under normal cases. An
+ * important requirement for the GridLAB-D federate is that it support both interactions and objects for data exchange.
+ * House 1 uses interactions, and House 2 & 3 use object classes to ensure both methods of communication work.
+ * 
+ * The GridLAB-D federate publishes a special interaction called GLDClock that contains the value of its global clock
+ * variable. This federate subscribes to GLDClock and uses it to transition between work hours and at home hours to
+ * test this feature of the GridLAB-D federate.
  */
 public class HouseSchedule extends HouseScheduleBase {
     private final static Logger log = LogManager.getLogger();
 
     private double currentTime = 0;
 
+    /*
+     * True when this federate believes that GridLAB-D is between [8:00 AM, 5:00 PM).
+     */
     private boolean isWorkSchedule = false;
 
+    /*
+     * The object instance used to update the set point of House 2.
+     */
     private CoolingSetPointObject house2 = null;
 
+    /*
+     * The object instance used to update the set point of House 3.
+     */
     private CoolingSetPointObject house3 = null;
 
     public HouseSchedule(FederateConfig params) throws Exception {
@@ -87,6 +107,9 @@ public class HouseSchedule extends HouseScheduleBase {
         exitGracefully();
     }
 
+    /*
+     * Register the object instances for House 2 and House 3, and send the initial values for all houses.
+     */
     private void initializeCoolingSetPoints() {
         CoolingSetPoint house1 = create_CoolingSetPoint();
         house1.set_name("house1");
@@ -109,6 +132,9 @@ public class HouseSchedule extends HouseScheduleBase {
         log.debug("created {}", house3.toString());
     }
     
+    /*
+     * Update the cooling set point for each house.
+     */
     private void updateCoolingSetPoints() {
         double cooling_setpoint1 = getCoolingSetPoint1();
         double cooling_setpoint2 = getCoolingSetPoint2();
@@ -129,24 +155,39 @@ public class HouseSchedule extends HouseScheduleBase {
         log.info("set house3.cooling_setpoint={}", cooling_setpoint3);
     }
     
+    /*
+     * Get the set point for House 1 based on the current time of day.
+     */
     private double getCoolingSetPoint1() {
         return isWorkSchedule ? 75 : 69;
     }
 
+    /*
+     * Get the set point for House 2 based on the current time of day.
+     */
     private double getCoolingSetPoint2() {
         return isWorkSchedule ? 77 : 73;
     }
 
+    /*
+     * Get the set point for House 3.
+     */
     private double getCoolingSetPoint3() {
         return 71;
     }
     
+    /*
+     * Use the GridLAB-D clock global variable to determine if work hours have started/ended.
+     */
     private void handleInteractionClass(GLDClock interaction) {
         final String gldTimeStamp = interaction.get_timeStamp();
         log.debug("received GridLAB-D time stamp as {}", gldTimeStamp);
         handleTimeStamp(gldTimeStamp);
     }
 
+    /*
+     * Toggle the boolean that represents work schedule when entering/leaving work hours.
+     */
     private void handleTimeStamp(String gldTimeStamp) {
         boolean isWorkHours = isDuringWorkHours(gldTimeStamp);
 
@@ -160,11 +201,17 @@ public class HouseSchedule extends HouseScheduleBase {
         }
     }
 
+    /*
+     * Check if the GridLAB-D time stamp is between 8:00 AM and 5:00 PM.
+     */
     private boolean isDuringWorkHours(String gldTimeStamp) {
         int hourValue = Integer.parseInt(getHour(gldTimeStamp));
         return hourValue >= 8 && hourValue < 17;
     }
 
+    /*
+     * Extract the hour value from the GridLAB-D string time stamp.
+     */
     private String getHour(String gldTimeStamp) {
         // timestamp format is 'YYYY-MM-DD hh:mm:ss ZZZ'
         int hourStartIndex = gldTimeStamp.indexOf(' ') + 1;
