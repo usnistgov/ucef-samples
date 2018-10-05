@@ -1,3 +1,7 @@
+# This example is obsolete and no longer maintained!
+
+This example was last confirmed to work with the tag `v1.0.0-beta`.
+
 # UCEF Gateway Example: Sensor Aggregator
 
 Assume we have a sensor network with different types of sensors that measure different values using different data types. These sensors are grouped into clusters, and each cluster reports one aggregate value from its membership to reduce network traffic. The clusters have homogeneous membership, and no cluster will contain two sensors that produce different measurements.
