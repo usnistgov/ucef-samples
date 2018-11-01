@@ -5,14 +5,15 @@
     xmlns="http://standards.ieee.org/IEEE1516-2010" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelIdentification>
-        <name>GLDExample</name>
-        <type>FOM</type>
+        <name>JavaChallenger</name>
+        <type>SOM</type>
         <version>0.1.0</version>
         <modificationDate>2018-09-30</modificationDate>
         <securityClassification>Unclassified</securityClassification>
         <description>
-          This file was generated from WebGME based on the
-          GLDExample project.
+            This file was generated from WebGME based on the federate
+            JavaChallenger in the ChallengeResponse
+            project.
         </description>
         <poc>
             <pocType>Primary author</pocType>
@@ -24,66 +25,39 @@
             <name>ObjectRoot</name>
             <sharing>Neither</sharing>
             <objectClass>
-                <name>CoolingSetPointObject</name>
-                <sharing>PublishSubscribe</sharing>
+                <name>ParentObject</name>
+                <sharing>Publish</sharing>
                 <attribute>
-                    <name>cooling_setpoint</name>
-                    <dataType>double</dataType>
-                    <updateType>NA</updateType>
-                    <ownership>NoTransfer</ownership>
-                    <sharing>PublishSubscribe</sharing>
-                    <transportation>HLAreliable</transportation>
-                    <order>TimeStamp</order>
-                </attribute>
-                <attribute>
-                    <name>name</name>
+                    <name>challengeId</name>
                     <dataType>String</dataType>
                     <updateType>NA</updateType>
                     <ownership>NoTransfer</ownership>
-                    <sharing>PublishSubscribe</sharing>
+                    <sharing>Publish</sharing>
                     <transportation>HLAreliable</transportation>
                     <order>TimeStamp</order>
                 </attribute>
-            </objectClass>
-            <objectClass>
-                <name>HouseObject</name>
-                <sharing>PublishSubscribe</sharing>
-                <attribute>
-                    <name>compressor_count</name>
-                    <dataType>int</dataType>
-                    <updateType>NA</updateType>
-                    <ownership>NoTransfer</ownership>
-                    <sharing>PublishSubscribe</sharing>
-                    <transportation>HLAreliable</transportation>
-                    <order>TimeStamp</order>
-                </attribute>
-                <attribute>
-                    <name>compressor_on</name>
-                    <dataType>boolean</dataType>
-                    <updateType>NA</updateType>
-                    <ownership>NoTransfer</ownership>
-                    <sharing>PublishSubscribe</sharing>
-                    <transportation>HLAreliable</transportation>
-                    <order>TimeStamp</order>
-                </attribute>
-                <attribute>
-                    <name>name</name>
-                    <dataType>String</dataType>
-                    <updateType>NA</updateType>
-                    <ownership>NoTransfer</ownership>
-                    <sharing>PublishSubscribe</sharing>
-                    <transportation>HLAreliable</transportation>
-                    <order>TimeStamp</order>
-                </attribute>
-                <attribute>
-                    <name>temperature</name>
-                    <dataType>double</dataType>
-                    <updateType>NA</updateType>
-                    <ownership>NoTransfer</ownership>
-                    <sharing>PublishSubscribe</sharing>
-                    <transportation>HLAreliable</transportation>
-                    <order>TimeStamp</order>
-                </attribute>
+                <objectClass>
+                    <name>ChallengeObject</name>
+                    <sharing>Publish</sharing>
+                    <attribute>
+                        <name>beginIndex</name>
+                        <dataType>int</dataType>
+                        <updateType>NA</updateType>
+                        <ownership>NoTransfer</ownership>
+                        <sharing>Publish</sharing>
+                        <transportation>HLAreliable</transportation>
+                        <order>TimeStamp</order>
+                    </attribute>
+                    <attribute>
+                        <name>stringValue</name>
+                        <dataType>String</dataType>
+                        <updateType>NA</updateType>
+                        <ownership>NoTransfer</ownership>
+                        <sharing>Publish</sharing>
+                        <transportation>HLAreliable</transportation>
+                        <order>TimeStamp</order>
+                    </attribute>
+                </objectClass>
             </objectClass>
         </objectClass>
     </objects>
@@ -161,78 +135,40 @@
                         <transportation>HLAreliable</transportation>
                         <order>TimeStamp</order>
                     </interactionClass>
+                </interactionClass>
+                <interactionClass>
+                    <name>ParentInteraction</name>
+                    <sharing>Neither</sharing>
+                    <transportation>HLAreliable</transportation>
+                    <order>TimeStamp</order>
+                    <parameter> 
+                        <name>challengeId</name>
+                        <dataType>String</dataType>
+                    </parameter>
                     <interactionClass>
-                        <name>SimTime</name>
-                        <sharing>PublishSubscribe</sharing>
+                        <name>ChallengeInteraction</name>
+                        <sharing>Publish</sharing>
                         <transportation>HLAreliable</transportation>
-                        <order>Receive</order>
+                        <order>TimeStamp</order>
                         <parameter> 
-                            <name>timeScale</name>
-                            <dataType>double</dataType>
+                            <name>beginIndex</name>
+                            <dataType>int</dataType>
                         </parameter>
                         <parameter> 
-                            <name>timeZone</name>
+                            <name>stringValue</name>
                             <dataType>String</dataType>
                         </parameter>
+                    </interactionClass>
+                    <interactionClass>
+                        <name>Response</name>
+                        <sharing>Subscribe</sharing>
+                        <transportation>HLAreliable</transportation>
+                        <order>TimeStamp</order>
                         <parameter> 
-                            <name>unixTimeStart</name>
-                            <dataType>long</dataType>
-                        </parameter>
-                        <parameter> 
-                            <name>unixTimeStop</name>
-                            <dataType>long</dataType>
+                            <name>substring</name>
+                            <dataType>String</dataType>
                         </parameter>
                     </interactionClass>
-                </interactionClass>
-                <interactionClass>
-                    <name>CoolingSetPoint</name>
-                    <sharing>PublishSubscribe</sharing>
-                    <transportation>HLAreliable</transportation>
-                    <order>TimeStamp</order>
-                    <parameter> 
-                        <name>cooling_setpoint</name>
-                        <dataType>double</dataType>
-                    </parameter>
-                    <parameter> 
-                        <name>name</name>
-                        <dataType>String</dataType>
-                    </parameter>
-                </interactionClass>
-                <interactionClass>
-                    <name>GLDClock</name>
-                    <sharing>PublishSubscribe</sharing>
-                    <transportation>HLAreliable</transportation>
-                    <order>TimeStamp</order>
-                    <parameter> 
-                        <name>timeStamp</name>
-                        <dataType>String</dataType>
-                    </parameter>
-                    <parameter> 
-                        <name>unixTime</name>
-                        <dataType>long</dataType>
-                    </parameter>
-                </interactionClass>
-                <interactionClass>
-                    <name>House</name>
-                    <sharing>PublishSubscribe</sharing>
-                    <transportation>HLAreliable</transportation>
-                    <order>TimeStamp</order>
-                    <parameter> 
-                        <name>compressor_count</name>
-                        <dataType>int</dataType>
-                    </parameter>
-                    <parameter> 
-                        <name>compressor_on</name>
-                        <dataType>boolean</dataType>
-                    </parameter>
-                    <parameter> 
-                        <name>name</name>
-                        <dataType>String</dataType>
-                    </parameter>
-                    <parameter> 
-                        <name>temperature</name>
-                        <dataType>double</dataType>
-                    </parameter>
                 </interactionClass>
             </interactionClass>
         </interactionClass>
