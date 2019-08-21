@@ -12,5 +12,5 @@
   "federationEndTime": 0,
   "realTimeMode": true,
   "fedFile": "fom/HelloWorld.fed",
-  "experimentConfig": "conf/javafedswithcoas/javafedswithcoas.json"
+  "experimentConfig": "conf/default/experimentConfig.json"
 }
