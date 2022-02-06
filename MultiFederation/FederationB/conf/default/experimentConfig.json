@@ -1,0 +1,26 @@
+{
+  "federateTypesAllowed": [
+    "Generator",
+    "User"
+  ],
+  "expectedFederates": [
+    {
+      "federateType": "Generator",
+      "count": 1
+    },
+    {
+      "federateType": "User",
+      "count": 1
+    }
+  ],
+  "lateJoinerFederates": [
+    {
+      "federateType": "Generator",
+      "count": 0
+    },
+    {
+      "federateType": "User",
+      "count": 0
+    }
+  ]
+}

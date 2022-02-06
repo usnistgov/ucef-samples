@@ -1,0 +1,26 @@
+{
+  "federateTypesAllowed": [
+    "Aggregator",
+    "RandGenerator"
+  ],
+  "expectedFederates": [
+    {
+      "federateType": "Aggregator",
+      "count": 1
+    },
+    {
+      "federateType": "RandGenerator",
+      "count": 1
+    }
+  ],
+  "lateJoinerFederates": [
+    {
+      "federateType": "Aggregator",
+      "count": 0
+    },
+    {
+      "federateType": "RandGenerator",
+      "count": 0
+    }
+  ]
+}
