@@ -16,11 +16,6 @@
 
     <dependencies>
         <dependency><!-- The dependency for the user written code-->
-            <groupId>org.webgme.guest.aggregator</groupId>
-            <artifactId>Aggregator</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency><!-- The dependency for the user written code-->
             <groupId>org.webgme.guest.randgenerator</groupId>
             <artifactId>RandGenerator</artifactId>
             <version>0.1.0-SNAPSHOT</version>
@@ -156,7 +151,6 @@
                                 <tasks>
                                     <echo message="Creating folder for the execution..." />
                                     
-                                    <mkdir dir="${project.basedir}/target/Aggregator" />
                                     <mkdir dir="${project.basedir}/target/RandGenerator" />
                                 </tasks>
                             </configuration>
@@ -210,14 +204,6 @@
     </distributionManagement>
     
     <profiles>
-        <profile>
-            <id>Aggregator</id>
-            <properties>
-                <federate.name>Aggregator</federate.name>
-                <federate.config>aggregator.json</federate.config>
-                <federate.package>org.webgme.guest.aggregator</federate.package>
-            </properties>
-        </profile>
         <profile>
             <id>RandGenerator</id>
             <properties>

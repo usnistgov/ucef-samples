@@ -16,11 +16,6 @@
 
     <dependencies>
         <dependency><!-- The dependency for the user written code-->
-            <groupId>org.webgme.guest.generator</groupId>
-            <artifactId>Generator</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency><!-- The dependency for the user written code-->
             <groupId>org.webgme.guest.user</groupId>
             <artifactId>User</artifactId>
             <version>0.1.0-SNAPSHOT</version>
@@ -156,7 +151,6 @@
                                 <tasks>
                                     <echo message="Creating folder for the execution..." />
                                     
-                                    <mkdir dir="${project.basedir}/target/Generator" />
                                     <mkdir dir="${project.basedir}/target/User" />
                                 </tasks>
                             </configuration>
@@ -210,14 +204,6 @@
     </distributionManagement>
     
     <profiles>
-        <profile>
-            <id>Generator</id>
-            <properties>
-                <federate.name>Generator</federate.name>
-                <federate.config>generator.json</federate.config>
-                <federate.package>org.webgme.guest.generator</federate.package>
-            </properties>
-        </profile>
         <profile>
             <id>User</id>
             <properties>
